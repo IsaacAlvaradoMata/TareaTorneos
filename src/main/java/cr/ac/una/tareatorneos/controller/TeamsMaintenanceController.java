@@ -1,5 +1,6 @@
 package cr.ac.una.tareatorneos.controller;
 
+import cr.ac.una.tareatorneos.util.FlowController;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXFilterComboBox;
 import io.github.palexdev.materialfx.controls.MFXTableView;
@@ -85,6 +86,7 @@ public class TeamsMaintenanceController extends Controller implements Initializa
 
     @FXML
     void OnActionBtnTomarFoto(ActionEvent event) {
+        FlowController.getInstance().goViewInWindow("CameraView");
 
     }
 

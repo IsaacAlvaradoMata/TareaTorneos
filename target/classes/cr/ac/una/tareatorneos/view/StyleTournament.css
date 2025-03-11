@@ -558,3 +558,9 @@
   #btnBarrerEquipo > ImageView{-fx-image: url('../resources/ClearIcon.png');}
   #btnTomarFoto > ImageView{-fx-image: url('../resources/CameraIcon.png');}
   #btnModificarEquipo > ImageView{-fx-image: url('../resources/EditIcon.png');}
+
+  /*########################### IMAGENES DE MANTENIMIENTO DE EQUIPOS #########################################################################*/
+  #btnCapturarFoto > ImageView{-fx-image: url('../resources/CaptureIcon.png');}
+  #btnReintentarFoto > ImageView{-fx-image: url('../resources/RetryIcon.png');}
+  #btnGuardarFoto > ImageView{-fx-image: url('../resources/SaveIcon.png');}
+  #btnSalirFoto> ImageView{-fx-image: url('../resources/ExitIcon.png');}
