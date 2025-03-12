@@ -48,7 +48,7 @@ public class SportsMaintenanceController extends Controller implements Initializ
 
     @FXML
     void OnActionBtnBarrerCampos(ActionEvent event) {
-
+        imgviewImagenDeporte.setImage(null);
     }
 
     @FXML
@@ -60,7 +60,7 @@ public class SportsMaintenanceController extends Controller implements Initializ
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg", "*.gif")
         );
-        
+
         // 👉 Directorio inicial = Carpeta Imágenes del usuario
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + "/Pictures"));
 
