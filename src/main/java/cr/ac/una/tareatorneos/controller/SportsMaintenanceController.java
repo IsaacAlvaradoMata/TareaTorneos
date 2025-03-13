@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -237,5 +238,11 @@ public class SportsMaintenanceController extends Controller implements Initializ
             alert.show();
         }
     }
+
+    @FXML
+    void handleTableClickDeportesExistentes(MouseEvent event) {
+
+    }
+
 
 }
