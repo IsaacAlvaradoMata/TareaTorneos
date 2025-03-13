@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
@@ -67,7 +68,7 @@ public class TeamsMaintenanceController extends Controller implements Initializa
     private Separator sprTeamsMaintenance;
 
     @FXML
-    private MFXTableView<Team> tbvDeportesExistentes;
+    private MFXTableView<Team> tbvEquiposExistentes;
 
     @FXML
     private MFXTextField txtfieldNombreEquipos;
@@ -95,8 +96,8 @@ public class TeamsMaintenanceController extends Controller implements Initializa
         MFXTableColumn<Team> colDeporte = new MFXTableColumn<>("Deporte");
         colDeporte.setRowCellFactory(team -> new MFXTableRowCell<>(Team::getDeporte));
 
-        tbvDeportesExistentes.getTableColumns().clear();
-        tbvDeportesExistentes.getTableColumns().addAll(Arrays.asList(colNombre, colDeporte));
+        tbvEquiposExistentes.getTableColumns().clear();
+        tbvEquiposExistentes.getTableColumns().addAll(Arrays.asList(colNombre, colDeporte));
     }
 
     // -------------------------------------------------------------------
@@ -108,7 +109,7 @@ public class TeamsMaintenanceController extends Controller implements Initializa
                 new Team("Equipo B", "Baloncesto")
         );
         teamsData.setAll(sampleTeams);
-        tbvDeportesExistentes.setItems(teamsData);
+        tbvEquiposExistentes.setItems(teamsData);
     }
 
     // -------------------------------------------------------------------
@@ -126,11 +127,11 @@ public class TeamsMaintenanceController extends Controller implements Initializa
                                 || team.getDeporte().toLowerCase().contains(lowerCaseFilter);
                     })
                     .toList();
-            tbvDeportesExistentes.setItems(FXCollections.observableArrayList(filteredTeams));
+            tbvEquiposExistentes.setItems(FXCollections.observableArrayList(filteredTeams));
             System.out.println("Cantidad de elementos filtrados: " + filteredTeams.size());
         });
 
-        tbvDeportesExistentes.setItems(teamsData);
+        tbvEquiposExistentes.setItems(teamsData);
     }
 
 
@@ -158,5 +159,9 @@ public class TeamsMaintenanceController extends Controller implements Initializa
     @FXML
     void OnActionBtnTomarFoto(ActionEvent event) {
         FlowController.getInstance().goViewInWindow("CameraView");
+    }
+    @FXML
+    void handleTableClickEquiposExistentes(MouseEvent event) {
+
     }
 }
