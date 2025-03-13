@@ -66,7 +66,7 @@ public class TeamsMaintenanceController extends Controller implements Initializa
 
     @FXML
     void OnActionBtnBarrerEquipo(ActionEvent event) {
-
+        imgviewImagenDeporte.setImage(null);
     }
 
     @FXML

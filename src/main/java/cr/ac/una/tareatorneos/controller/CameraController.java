@@ -53,22 +53,27 @@ public class CameraController extends Controller implements Initializable {
 
  @FXML
  private void OnActionBtnCapturarFoto(ActionEvent event) {
+
  }
 
  @FXML
  private void OnActionBtnReintentarFoto(ActionEvent event) {
+
  }
 
  @FXML
  private void OnActionBtnGuardarFoto(ActionEvent event) {
+
  }
 
  @FXML
  private void OnActionBtnSalirFoto(ActionEvent event) {
+
  }
 
  @Override
  public void initialize() {
 
  }
+
  }
