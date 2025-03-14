@@ -124,7 +124,7 @@
                                     <ImageView fx:id="imgLupa" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
                                  </children>
                               </HBox>
-                               <MFXTableView fx:id="tbvDeportesExistentes" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="250.0" VBox.vgrow="ALWAYS">
+                               <MFXTableView fx:id="tbvDeportesExistentes" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleTableClickDeportesExistentes" prefHeight="500.0" prefWidth="250.0" VBox.vgrow="ALWAYS">
                                  <VBox.margin>
                                     <Insets bottom="10.0" right="20.0" />
                                  </VBox.margin></MFXTableView>

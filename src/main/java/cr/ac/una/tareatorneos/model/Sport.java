@@ -1,16 +1,19 @@
 package cr.ac.una.tareatorneos.model;
 
+import java.time.LocalDate;
+
 public class Sport {
 
     private String nombre;
-    private String ballImage; // Ruta o nombre del archivo de la imagen del balón
+    private String ballImage;
+    private LocalDate fechaCreacion;
 
-    public Sport() {
-    }
+    public Sport() { }
 
     public Sport(String nombre, String ballImage) {
         this.nombre = nombre;
         this.ballImage = ballImage;
+        this.fechaCreacion = LocalDate.now();
     }
 
     public String getNombre() {
@@ -29,8 +32,20 @@ public class Sport {
         this.ballImage = ballImage;
     }
 
+    public LocalDate getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(LocalDate fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
     @Override
     public String toString() {
-        return "Sport{" + "nombre=" + nombre + ", ballImage=" + ballImage + '}';
+        return "Sport{" +
+                "nombre=" + nombre +
+                ", ballImage=" + ballImage +
+                ", fechaCreacion=" + fechaCreacion +
+                '}';
     }
 }
