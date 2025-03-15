@@ -1,0 +1,44 @@
+. .stepper-button{
+    -fx-alignment: center !important;
+    -fx-background-color: #690093 !important;
+    -fx-background-radius: 4px !important;
+    -fx-border-width: 0 !important;
+    -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2) !important;
+    -fx-font-family: "Trebuchet MS", sans-serif !important;
+    -fx-font-size: 15px !important;
+    -fx-font-weight: bold !important;
+    -fx-text-fill: #ffffff !important;
+    -fx-padding: 10px 16px !important;
+    -fx-min-height: 40px !important ;
+    -fx-border-color: transparent !important;
+    -fx-cursor: hand!important;
+    -fx-transition: all 0.15s ease-in-out !important;
+
+}
+
+/* Efecto al pasar el mouse */
+.stepper-button:hover {
+    -fx-background-radius: 4px !important;
+    -fx-background-color: #38185b !important;
+    -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.5), 8, 0, 0, 4) !important;
+    -fx-translate-y: -2px !important;
+}
+
+/* Efecto al hacer clic */
+.stepper-button:pressed {
+    -fx-background-radius: 4px !important;
+    -fx-background-color: #c047ff !important;
+    -fx-effect: innershadow(three-pass-box, #D6D6E7, 7, 0, 0, 3) !important;
+    -fx-translate-y: 2px !important;
+}
+
+.stepper-button:focused {
+    -fx-background-radius: 4px !important;
+    -fx-background-color: #690093 !important;
+}
+
+.stepper-button:focused:hover{
+    -fx-background-radius: 4px !important;
+    -fx-background-color: #38185b !important;
+}
+

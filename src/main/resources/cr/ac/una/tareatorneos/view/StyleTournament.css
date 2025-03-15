@@ -413,7 +413,7 @@
   .mfx-stepper .mfx-text-field {
       -mfx-float-mode: disabled;
       -fx-font-family: "Trebuchet MS", sans-serif;
-      -fx-pref-width: 200;
+      -fx-pref-width: 265;
   }
 
   .mfx-stepper .mfx-stepper-toggle .mfx-text-field {
@@ -440,43 +440,93 @@
       -fx-text-fill: -mfx-green;
   }
 
-  .mfx-stepper .buttons-box .mfx-button {
-      -fx-alignment: center;
-      -fx-background-color: #690093;
-      -fx-background-radius: 4px;
-      -fx-border-width: 0;
-      -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
+  /*########################### CHECKLIST DE CREACION DE TORNEOS #########################################################################*/
+
+  .mfx-checklist-view {
+      -fx-background-radius: 7px !important;
+      -fx-border-color: #690093 !important;
+      -fx-border-radius: 4px !important;
+      -fx-border-width: 5px !important;
+      -fx-font-weight: bold !important;
+      -fx-text-fill: #690093 !important;
+      -fx-padding: 4;
+  }
+
+  .mfx-checklist-view .scroll-bar:vertical .track {
+      -fx-background-color: #d9a2fd !important;
+  }
+
+  .mfx-checklist-view .scroll-bar:vertical .thumb {
+      -fx-background-color: #690093 !important;
+  }
+
+  .mfx-checklist-view .scroll-bar:vertical .thumb:hover {
+      -fx-background-color: #f716ff !important;
+  }
+
+  /*########################### LISTVIEW DE CREACION DE TORNEOS #########################################################################*/
+
+  .mfx-list-view {
+      -fx-background-color: #d9a2fd !important;
+      -fx-background-radius: 7px !important;
+      -fx-border-color: #690093 !important;
+      -fx-border-radius: 4px !important;
+      -fx-border-width: 5px !important;
+      -fx-font-weight: bold !important;
+      -fx-padding: 4;
+  }
+
+  .mfx-list-view .virtual-flow {
+      -fx-background-color: transparent !important; /* Fija el fondo del área desplazable */
+  }
+
+
+  .mfx-list-view .virtual-flow .mfx-list-cell {
+      -fx-background-color: transparent !important;
+      -fx-border-color: transparent !important;
+      -fx-background-radius: 10!important;
+      -fx-border-radius: 10!important;
+  }
+
+  .mfx-list-view .virtual-flow .mfx-list-cell .data-label {
+      -fx-text-fill: #690093 !important; /* Asegura que el texto sea visible */
+  }
+
+  .mfx-list-view .virtual-flow .mfx-list-cell .mfx-ripple-generator {
+      -mfx-auto-clip: true;
+  }
+
+  .mfx-list-view .virtual-flow .mfx-list-cell:selected .mfx-ripple-generator {
+      -mfx-paused: true;
+  }
+
+
+  .mfx-list-view .scroll-bar:vertical .track {
+      -fx-background-color: #ae6ef5 !important;
+  }
+
+  .mfx-list-view .scroll-bar:vertical .thumb {
+      -fx-background-color: #690093 !important;
+  }
+
+  .mfx-list-view .scroll-bar:vertical .thumb:hover {
+      -fx-background-color: #f716ff !important;
+  }
+
+  /*########################### CHECKBOX DE CREACION DE TORNEOS #########################################################################*/
+
+
+  .mfx-checkbox {
+      -mfx-main: linear-gradient(to right, #5E0BA8, #D9A2FD, #5E0BA8, #D9A2FD);
       -fx-font-family: "Trebuchet MS", sans-serif;
-      -fx-font-size: 15px;
-      -fx-font-weight: bold;
-      -fx-text-fill: #ffffff;
-      -fx-padding: 10px 16px;
-      -fx-min-height: 40px;
-      -fx-border-color: transparent;
-      -fx-cursor: hand;
-      -fx-transition: all 0.15s ease-in-out;
+      -fx-text-fill: #690093;
+      -fx-font-weight: bold
+
   }
 
-  /* Efecto al pasar el mouse */
-  .mfx-stepper .buttons-box .mfx-button:hover {
-      -fx-background-color: #38185b;
-      -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.5), 8, 0, 0, 4);
-      -fx-translate-y: -2px;
-  }
-
-  /* Efecto al hacer clic */
-  .mfx-stepper .buttons-box .mfx-button:pressed {
-      -fx-background-color: #c047ff !important;
-      -fx-effect: innershadow(three-pass-box, #D6D6E7, 7, 0, 0, 3);
-      -fx-translate-y: 2px;
-  }
-
-  .mfx-stepper .buttons-box .mfx-button:focused {
-      -fx-background-color: #690093;
-  }
-
-  .mfx-stepper .buttons-box .mfx-button:focused:hover{
-      -fx-background-color: #38185b;
+  .mfx-checkbox .mfx-ripple-generator {
+      -mfx-ripple-color: linear-gradient(to right, #5E0BA8, #D9A2FD);
+      -fx-opacity: 0.4;
   }
 
 

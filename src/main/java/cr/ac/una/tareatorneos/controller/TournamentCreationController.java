@@ -12,6 +12,7 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -23,12 +24,13 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class TournamentCreationController extends Controller implements Initializable {
-    private final MFXTextField loginField;
-    private final MFXPasswordField passwordField;
-    private final MFXTextField firstNameField;
-    private final MFXTextField lastNameField;
-    private final MFXComboBox<String> genderCombo;
+    private final MFXTextField nombreTorneo;
+    private final MFXTextField tiempoTorneo;
+    private final MFXTextField cantidadTorneo;
+    private final MFXComboBox<String> deporteTorneo;
     private final MFXCheckbox checkbox;
+    private final MFXCheckListView<String> equiposTorneo;
+    private final MFXListView<String> seleccionadosTorneo;
 
 
 
@@ -40,40 +42,74 @@ public class TournamentCreationController extends Controller implements Initiali
 
 
     public TournamentCreationController() {
-        loginField = new MFXTextField();
-        passwordField = new MFXPasswordField();
-        firstNameField = new MFXTextField();
-        lastNameField = new MFXTextField();
-        genderCombo = new MFXComboBox<>();
-        checkbox = new MFXCheckbox("Confirm Data?");
+        nombreTorneo = new MFXTextField();
+        deporteTorneo = new MFXComboBox<>();
+        checkbox = new MFXCheckbox("Confirmar?");
+        tiempoTorneo = new MFXTextField();
+        cantidadTorneo = new MFXTextField();
+        equiposTorneo = new MFXCheckListView();
+        seleccionadosTorneo = new MFXListView();
+
     }
 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        loginField.setPromptText("Username...");
-        loginField.getValidator().constraint("The username must be at least 6 characters long", loginField.textProperty().length().greaterThanOrEqualTo(6));
-        loginField.setLeadingIcon(new MFXIconWrapper("fas-user", 16, Color.web("#4D4D4D"), 24));
-        passwordField.getValidator().constraint("The password must be at least 8 characters long", passwordField.textProperty().length().greaterThanOrEqualTo(8));
-        passwordField.setPromptText("Password...");
 
-        firstNameField.setPromptText("First Name...");
-        lastNameField.setPromptText("Last Name...");
-        genderCombo.setItems(FXCollections.observableArrayList("Male", "Female", "Other"));
+        nombreTorneo.setStyle("-fx-background-color: #d9a2fd; -fx-text-fill: #690093; -fx-border-color: #690093;");
+        tiempoTorneo.setStyle("-fx-background-color: #d9a2fd; -fx-text-fill: #690093; -fx-border-color: #690093;");
+        cantidadTorneo.setStyle("-fx-background-color: #d9a2fd; -fx-text-fill: #690093; -fx-border-color: #690093;");
+        deporteTorneo.setStyle("-fx-background-color: #d9a2fd; -fx-text-fill: #690093; -fx-border-color: #690093;");
+        checkbox.getStyleClass().add("mfx-checkbox");
+        equiposTorneo.getStyleClass().add("mfx-checklist-view");
+        seleccionadosTorneo.getStyleClass().add("mfx-list-view");
+
+        nombreTorneo.setPromptText("Escriba el Nombre del Torneo");
+        tiempoTorneo.setPromptText("Digite el Tiempo por Partido en Minutos");
+        cantidadTorneo.setPromptText("Digite la Cantidad de Equipos");
+        nombreTorneo.getValidator().constraint("Debe de Incluir el Nombre del Torneo", nombreTorneo.textProperty().length().greaterThanOrEqualTo(1));
+        nombreTorneo.setLeadingIcon(new MFXIconWrapper("fas-medal", 16, Color.web("#4D4D4D"), 15));
+        deporteTorneo.setPromptText("Escoja el Deporte");
+        deporteTorneo.setItems(FXCollections.observableArrayList("Basket", "Futbol", "PingPong"));
+        equiposTorneo.setItems(FXCollections.observableArrayList("los temerarios", "los panas", "niggers", "los gallos", "famosos", "soculentos","los temerarios", "los panas", "niggers", "los gallos", "famosos", "soculentos"));
+        seleccionadosTorneo.setItems(FXCollections.observableArrayList("los temerarios", "los panas", "niggers", "los gallos", "famosos", "soculentos","los temerarios", "los panas", "niggers", "los gallos", "famosos", "soculentos"));
 
         List<MFXStepperToggle> stepperToggles = createSteps();
         stepper.getStepperToggles().addAll(stepperToggles);
 
         Platform.runLater(() -> {
+            stepper.getScene().getStylesheets().add(
+                    getClass().getResource("/cr/ac/una/tareatorneos/view/StepperButtons.css").toExternalForm());
+
+
+            nombreTorneo.setMaxWidth(265);
+            tiempoTorneo.setMaxWidth(265);
+            cantidadTorneo.setMaxWidth(265);
+            deporteTorneo.setMaxWidth(265);
+
+
             stepper.lookupAll(".mfx-button").forEach(node -> {
+
                 if (node instanceof MFXButton) {
                     MFXButton button = (MFXButton) node;
-                    button.getStyleClass().add("outline-button");
+                    button.getStyleClass().removeAll("mfx-button");
+                    button.getStyleClass().add("stepper-button");
+
                     if (button.getText().equals("Next")) {
                         button.setText("Siguiente");
+
                     } else if (button.getText().equals("Previous")) {
                         button.setText("Atrás");
                     }
+                    button.setStyle(
+                            "-fx-background-color: #690093 !important;" +
+                                    "-fx-text-fill: white !important;" +
+                                    "-fx-font-weight: bold !important;" +
+                                    "-fx-border-radius: 4px !important;" +
+                                    "-fx-background-radius: 4px !important;" +
+                                    "-fx-padding: 5px 10px !important;"
+
+                    );
                 }
             });
         });
@@ -82,21 +118,23 @@ public class TournamentCreationController extends Controller implements Initiali
     }
 
     private List<MFXStepperToggle> createSteps() {
-        MFXStepperToggle step1 = new MFXStepperToggle("Step 1", new MFXFontIcon("fas-lock", 16, Color.web("#f1c40f")));
-        VBox step1Box = new VBox(20, wrapNodeForValidation(loginField), wrapNodeForValidation(passwordField));
+        MFXStepperToggle step1 = new MFXStepperToggle("Step 1", new MFXFontIcon("fas-1", 16, Color.web("#f1c40f")));
+        VBox step1Box = new VBox(20, deporteTorneo, wrapNodeForValidation(nombreTorneo), tiempoTorneo);
         step1Box.setAlignment(Pos.CENTER);
         step1.setContent(step1Box);
-        step1.getValidator().dependsOn(loginField.getValidator()).dependsOn(passwordField.getValidator());
+        step1.getValidator().dependsOn(nombreTorneo.getValidator());
 
-        MFXStepperToggle step2 = new MFXStepperToggle("Step 2", new MFXFontIcon("fas-user", 16, Color.web("#49a6d7")));
-        VBox step2Box = new VBox(20, firstNameField, lastNameField, genderCombo);
+        MFXStepperToggle step2 = new MFXStepperToggle("Step 2", new MFXFontIcon("fas-2", 16, Color.web("#49a6d7")));
+        VBox step2Box = new VBox(20, cantidadTorneo, equiposTorneo);
         step2Box.setAlignment(Pos.CENTER);
         step2.setContent(step2Box);
 
-        MFXStepperToggle step3 = new MFXStepperToggle("Step 3", new MFXFontIcon("fas-check", 16, Color.web("#85CB33")));
+        MFXStepperToggle step3 = new MFXStepperToggle("Step 3", new MFXFontIcon("fas-3", 16, Color.web("#85CB33")));
         Node step3Grid = createGrid();
         step3.setContent(step3Grid);
-        step3.getValidator().constraint("Data must be confirmed", checkbox.selectedProperty());
+        step3.getValidator().constraint("Se debe de confirmar la informacion", checkbox.selectedProperty());
+
+
 
         return List.of(step1, step2, step3);
     }
@@ -135,46 +173,63 @@ public class TournamentCreationController extends Controller implements Initiali
     }
 
     private Node createGrid() {
-        MFXTextField usernameLabel1 = createLabel("Username: ");
-        MFXTextField usernameLabel2 = createLabel("");
-        usernameLabel2.textProperty().bind(loginField.textProperty());
+        MFXTextField nombreTorneo1 = createLabel("Nombre del Torneo: ");
+        MFXTextField nombreTorneo2 = createLabel("");
+        nombreTorneo2.textProperty().bind(nombreTorneo.textProperty());
+        nombreTorneo2.setStyle("-fx-background-color: #d9a2fd; -fx-text-fill: #690093; -fx-border-color: #690093;");
 
-        MFXTextField firstNameLabel1 = createLabel("First Name: ");
-        MFXTextField firstNameLabel2 = createLabel("");
-        firstNameLabel2.textProperty().bind(firstNameField.textProperty());
+        MFXTextField tiempoTorneo1 = createLabel("Duracion en Minutos por Partido: ");
+        MFXTextField tiempoTorneo2 = createLabel("");
+        tiempoTorneo2.textProperty().bind(tiempoTorneo.textProperty());
+        tiempoTorneo2.setStyle("-fx-background-color: #d9a2fd; -fx-text-fill: #690093; -fx-border-color: #690093;");
 
-        MFXTextField lastNameLabel1 = createLabel("Last Name: ");
-        MFXTextField lastNameLabel2 = createLabel("");
-        lastNameLabel2.textProperty().bind(lastNameField.textProperty());
+        MFXTextField cantidadTorneo1 = createLabel("Cantidad de Equipos Participantes: ");
+        MFXTextField cantidadTorneo2 = createLabel("");
+        cantidadTorneo2.textProperty().bind(cantidadTorneo.textProperty());
+        cantidadTorneo2.setStyle("-fx-background-color: #d9a2fd; -fx-text-fill: #690093; -fx-border-color: #690093;");
 
-        MFXTextField genderLabel1 = createLabel("Gender: ");
-        MFXTextField genderLabel2 = createLabel("");
-        genderLabel2.textProperty().bind(Bindings.createStringBinding(
-                () -> genderCombo.getValue() != null ? genderCombo.getValue() : "",
-                genderCombo.valueProperty()
+        MFXTextField deporteTorneo1 = createLabel("Deporte: ");
+        MFXTextField deporteTorneo2 = createLabel("");
+        deporteTorneo2.setStyle("-fx-background-color: #d9a2fd; -fx-text-fill: #690093; -fx-border-color: #690093;");
+        deporteTorneo2.textProperty().bind(Bindings.createStringBinding(
+                () -> deporteTorneo.getValue() != null ? deporteTorneo.getValue() : "",
+                deporteTorneo.valueProperty()
         ));
 
-        usernameLabel1.getStyleClass().add("header-label");
-        firstNameLabel1.getStyleClass().add("header-label");
-        lastNameLabel1.getStyleClass().add("header-label");
-        genderLabel1.getStyleClass().add("header-label");
+        MFXTextField seleccionadosLabel = createLabel("Equipos Seleccionados:");
 
-        MFXTextField completedLabel = MFXTextField.asLabel("Completed!");
+        seleccionadosTorneo.setPrefHeight(350);
+        seleccionadosTorneo.setPrefWidth(300);
+
+        seleccionadosLabel.getStyleClass().add("header-label");
+        nombreTorneo1.getStyleClass().add("header-label");
+        tiempoTorneo1.getStyleClass().add("header-label");
+        cantidadTorneo1.getStyleClass().add("header-label");
+        deporteTorneo1.getStyleClass().add("header-label");
+
+        MFXTextField completedLabel = MFXTextField.asLabel("Torneo Creado!");
         completedLabel.getStyleClass().add("completed-label");
 
-        HBox b1 = new HBox(usernameLabel1, usernameLabel2);
-        HBox b2 = new HBox(firstNameLabel1, firstNameLabel2);
-        HBox b3 = new HBox(lastNameLabel1, lastNameLabel2);
-        HBox b4 = new HBox(genderLabel1, genderLabel2);
+        VBox b1 = new VBox(nombreTorneo1, nombreTorneo2);
+        VBox b2 = new VBox(tiempoTorneo1, tiempoTorneo2);
+        VBox b3 = new VBox(cantidadTorneo1, cantidadTorneo2);
+        VBox b4 = new VBox(deporteTorneo1, deporteTorneo2);
+        VBox b5 = new VBox(seleccionadosLabel, seleccionadosTorneo, checkbox);
 
         b1.setMaxWidth(Region.USE_PREF_SIZE);
         b2.setMaxWidth(Region.USE_PREF_SIZE);
         b3.setMaxWidth(Region.USE_PREF_SIZE);
         b4.setMaxWidth(Region.USE_PREF_SIZE);
+        b5.setMaxWidth(Region.USE_PREF_SIZE);
+        b5.setAlignment(Pos.CENTER);
+        b5.setSpacing(10);
 
-        VBox box = new VBox(10, b1, b2, b3, b4, checkbox);
+        VBox vBox = new VBox(10, b1, b2, b3, b4);
+        HBox box = new HBox(10, vBox, b5);
         box.setAlignment(Pos.CENTER);
+        box.setSpacing(50);
         StackPane.setAlignment(box, Pos.CENTER);
+        StackPane.setMargin(box, new Insets(30));
 
         stepper.setOnLastNext(event -> {
             box.getChildren().setAll(completedLabel);
@@ -192,10 +247,9 @@ public class TournamentCreationController extends Controller implements Initiali
 
     private MFXTextField createLabel(String text) {
         MFXTextField label = MFXTextField.asLabel(text);
-        label.setAlignment(Pos.CENTER_LEFT);
-        label.setPrefWidth(200);
-        label.setMinWidth(Region.USE_PREF_SIZE);
-        label.setMaxWidth(Region.USE_PREF_SIZE);
+        label.setAlignment(Pos.CENTER);
+        label.setMinWidth(270);
+        label.setStyle(" -fx-text-fill: #690093;");
         return label;
     }
 
