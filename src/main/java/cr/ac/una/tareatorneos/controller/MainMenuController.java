@@ -31,6 +31,9 @@ public class MainMenuController extends Controller implements Initializable {
     private MFXButton btnMantenimientoEquipos;
 
     @FXML
+    private MFXButton btnLogros;
+
+    @FXML
     private MFXButton btnRankings;
 
     @FXML
@@ -71,6 +74,11 @@ public class MainMenuController extends Controller implements Initializable {
 
     @FXML
     void OnActionBtnRankings(ActionEvent event) {
+
+    }
+
+    @FXML
+    void OnActionBtnLogros(ActionEvent event) {
 
     }
 

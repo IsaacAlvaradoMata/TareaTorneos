@@ -594,6 +594,8 @@
   .mfx-BtnCreacionTorneos > ImageView{-fx-image: url('../resources/TournamentIcon.png');}
   .mfx-BtnRankings > ImageView{-fx-image: url('../resources/RankingIcon.png');}
   .mfx-BtnTorneosActivos > ImageView{-fx-image: url('../resources/ActiveTournamentIcon.png');}
+  .mfx-BtnLogros > ImageView{-fx-image: url('../resources/AchievementIcon.png');}
+
 
   /*########################### IMAGENES DE MANTENIMIENTO DE DEPORTES #########################################################################*/
   #btnGuardarDeporte > ImageView{-fx-image: url('../resources/SaveIcon.png');}
