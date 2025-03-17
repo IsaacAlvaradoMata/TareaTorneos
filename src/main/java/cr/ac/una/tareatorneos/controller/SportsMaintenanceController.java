@@ -3,6 +3,7 @@ package cr.ac.una.tareatorneos.controller;
 import cr.ac.una.tareatorneos.model.Sport;
 import cr.ac.una.tareatorneos.service.SportService;
 import cr.ac.una.tareatorneos.util.FlowController;
+import cr.ac.una.tareatorneos.util.Mensaje;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTableColumn;
 import io.github.palexdev.materialfx.controls.MFXTableView;
@@ -13,14 +14,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.net.URL;
 import java.util.Arrays;
@@ -42,6 +41,7 @@ public class SportsMaintenanceController extends Controller implements Initializ
     private ObservableList<Sport> sportsData = FXCollections.observableArrayList();
     private SportService sportService;
     private String currentBallImagePath = "";
+    private Mensaje mensajeUtil = new Mensaje();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -56,7 +56,9 @@ public class SportsMaintenanceController extends Controller implements Initializ
     }
 
     @Override
-    public void initialize() { }
+    public void initialize() {
+        // Implementación vacía para cumplir con la clase abstracta.
+    }
 
     private void populateTableView() {
         MFXTableColumn<Sport> colNombre = new MFXTableColumn<>("Nombre");
@@ -74,12 +76,15 @@ public class SportsMaintenanceController extends Controller implements Initializ
         tbvDeportesExistentes.getItems().addAll(sportsData);
     }
 
+
     @FXML
     void OnActionBtnBarrerCampos(ActionEvent event) {
         imgviewImagenDeporte.setImage(null);
         txtfieldNombreDeporte.clear();
         currentBallImagePath = "";
+        tbvDeportesExistentes.getSelectionModel().clearSelection();
     }
+
 
     @FXML
     void OnActionBtnBuscarImagen(ActionEvent event) {
@@ -101,86 +106,81 @@ public class SportsMaintenanceController extends Controller implements Initializ
         }
     }
 
+
     @FXML
     void OnActionBtnEliminar(ActionEvent event) {
         List<Sport> selectedItems = tbvDeportesExistentes.getSelectionModel().getSelectedValues();
         if (selectedItems.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Eliminar Deporte");
-            alert.setHeaderText(null);
-            alert.setContentText("Seleccione un deporte para eliminar.");
-            alert.show();
+            mensajeUtil.show(javafx.scene.control.Alert.AlertType.WARNING, "Eliminar Deporte", "Seleccione un deporte para eliminar.");
             return;
         }
+
         Sport selectedSport = selectedItems.get(0);
-        boolean success = sportService.deleteSport(selectedSport.getNombre());
-        if (success) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Eliminar Deporte");
-            alert.setHeaderText(null);
-            alert.setContentText("Deporte eliminado exitosamente.");
-            alert.show();
-            loadSports();
-            OnActionBtnBarrerCampos(event);
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Eliminar Deporte");
-            alert.setHeaderText(null);
-            alert.setContentText("No se pudo eliminar el deporte.");
-            alert.show();
+
+        boolean confirmacion = mensajeUtil.showConfirmation(
+                "Confirmar Eliminación",
+                root.getScene().getWindow(),
+                "¿Está seguro de que desea eliminar el deporte \"" + selectedSport.getNombre() + "\"?"
+        );
+
+        if (confirmacion) {
+            boolean success = sportService.deleteSport(selectedSport.getNombre());
+            if (success) {
+                mensajeUtil.show(javafx.scene.control.Alert.AlertType.INFORMATION, "Eliminar Deporte", "Deporte eliminado exitosamente.");
+                loadSports();
+                OnActionBtnBarrerCampos(event);
+
+                TeamsMaintenanceController.actualizarListaDeportes();
+            } else {
+                mensajeUtil.show(javafx.scene.control.Alert.AlertType.ERROR, "Eliminar Deporte", "No se pudo eliminar el deporte.");
+            }
         }
     }
 
+
     @FXML
     void OnActionBtnGuardar(ActionEvent event) {
-        String nombre = txtfieldNombreDeporte.getText().trim();
-        if (nombre.isEmpty() || currentBallImagePath.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Guardar Deporte");
-            alert.setHeaderText(null);
-            alert.setContentText("Debe ingresar el nombre del deporte y seleccionar una imagen.");
-            alert.show();
+        if (!tbvDeportesExistentes.getSelectionModel().getSelectedValues().isEmpty()) {
+            mensajeUtil.show(javafx.scene.control.Alert.AlertType.WARNING,
+                    "Guardar Deporte", "El deporte ya está seleccionado. Use 'Modificar' en su lugar.");
             return;
         }
-        // Verificar que no exista un deporte con el mismo nombre
+
+        String nombre = txtfieldNombreDeporte.getText().trim();
+        if (nombre.isEmpty() || currentBallImagePath.isEmpty()) {
+            mensajeUtil.show(javafx.scene.control.Alert.AlertType.WARNING, "Guardar Deporte",
+                    "Debe ingresar el nombre y la imagen.");
+            return;
+        }
+
         for (Sport s : sportsData) {
             if (s.getNombre().equalsIgnoreCase(nombre)) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Guardar Deporte");
-                alert.setHeaderText(null);
-                alert.setContentText("Ya existe un deporte con ese nombre.");
-                alert.show();
+                mensajeUtil.show(javafx.scene.control.Alert.AlertType.WARNING,
+                        "Guardar Deporte", "Ya existe un deporte con ese nombre.");
                 return;
             }
         }
+
         Sport newSport = new Sport(nombre, currentBallImagePath);
         boolean success = sportService.addSport(newSport);
         if (success) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Guardar Deporte");
-            alert.setHeaderText(null);
-            alert.setContentText("Deporte guardado exitosamente.");
-            alert.show();
+            mensajeUtil.show(javafx.scene.control.Alert.AlertType.INFORMATION,
+                    "Guardar Deporte", "Deporte guardado exitosamente.");
             loadSports();
             OnActionBtnBarrerCampos(event);
+            TeamsMaintenanceController.actualizarListaDeportes();
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Guardar Deporte");
-            alert.setHeaderText(null);
-            alert.setContentText("No se pudo guardar el deporte.");
-            alert.show();
+            mensajeUtil.show(javafx.scene.control.Alert.AlertType.ERROR,
+                    "Guardar Deporte", "No se pudo guardar el deporte.");
         }
     }
+
 
     @FXML
     void OnActionBtnModificar(ActionEvent event) {
         List<Sport> selectedItems = tbvDeportesExistentes.getSelectionModel().getSelectedValues();
         if (selectedItems.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Modificar Deporte");
-            alert.setHeaderText(null);
-            alert.setContentText("Seleccione un deporte para modificar.");
-            alert.show();
+            mensajeUtil.show(javafx.scene.control.Alert.AlertType.WARNING, "Modificar Deporte", "Seleccione un deporte para modificar.");
             return;
         }
         Sport selectedSport = selectedItems.get(0);
@@ -188,39 +188,22 @@ public class SportsMaintenanceController extends Controller implements Initializ
         String newNombre = txtfieldNombreDeporte.getText().trim();
         String newImage = currentBallImagePath.isEmpty() ? selectedSport.getBallImage() : currentBallImagePath;
         if (newNombre.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Modificar Deporte");
-            alert.setHeaderText(null);
-            alert.setContentText("El nombre del deporte no puede estar vacío.");
-            alert.show();
+            mensajeUtil.show(javafx.scene.control.Alert.AlertType.WARNING, "Modificar Deporte", "El nombre del deporte no puede estar vacío.");
             return;
         }
-        // Verificar si se han realizado cambios
         if (oldNombre.equalsIgnoreCase(newNombre) && selectedSport.getBallImage().equals(newImage)) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Modificar Deporte");
-            alert.setHeaderText(null);
-            alert.setContentText("No se han realizado cambios para modificar.");
-            alert.show();
+            mensajeUtil.show(javafx.scene.control.Alert.AlertType.WARNING, "Modificar Deporte", "No se han realizado cambios para modificar.");
             return;
         }
         selectedSport.setNombre(newNombre);
         selectedSport.setBallImage(newImage);
         boolean success = sportService.updateSport(oldNombre, selectedSport);
         if (success) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Modificar Deporte");
-            alert.setHeaderText(null);
-            alert.setContentText("Deporte modificado exitosamente.");
-            alert.show();
+            mensajeUtil.show(javafx.scene.control.Alert.AlertType.INFORMATION, "Modificar Deporte", "Deporte modificado exitosamente.");
             loadSports();
             OnActionBtnBarrerCampos(event);
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Modificar Deporte");
-            alert.setHeaderText(null);
-            alert.setContentText("No se pudo modificar el deporte.");
-            alert.show();
+            mensajeUtil.show(javafx.scene.control.Alert.AlertType.ERROR, "Modificar Deporte", "No se pudo modificar el deporte.");
         }
     }
 
@@ -240,8 +223,4 @@ public class SportsMaintenanceController extends Controller implements Initializ
         }
     }
 
-    @FXML
-    void OnActionBtnTomarFoto(ActionEvent event) {
-        FlowController.getInstance().goViewInWindow("CameraView");
-    }
 }
