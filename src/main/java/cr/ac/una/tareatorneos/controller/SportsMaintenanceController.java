@@ -184,29 +184,41 @@ public class SportsMaintenanceController extends Controller implements Initializ
             mensajeUtil.show(javafx.scene.control.Alert.AlertType.WARNING, "Modificar Deporte", "Seleccione un deporte para modificar.");
             return;
         }
+
         Sport selectedSport = selectedItems.get(0);
         String oldNombre = selectedSport.getNombre();
         String newNombre = txtfieldNombreDeporte.getText().trim();
         String newImage = currentBallImagePath.isEmpty() ? selectedSport.getBallImage() : currentBallImagePath;
+
         if (newNombre.isEmpty()) {
             mensajeUtil.show(javafx.scene.control.Alert.AlertType.WARNING, "Modificar Deporte", "El nombre del deporte no puede estar vacío.");
             return;
         }
-        if (oldNombre.equalsIgnoreCase(newNombre) && selectedSport.getBallImage().equals(newImage)) {
+
+              for (Sport s : sportsData) {
+            if (!s.getNombre().equals(oldNombre) && s.getNombre().equalsIgnoreCase(newNombre)) {
+                mensajeUtil.show(javafx.scene.control.Alert.AlertType.WARNING, "Modificar Deporte", "Ya existe un deporte con ese nombre.");
+                return;
+            }
+        }
+
+           if (oldNombre.equals(newNombre) && selectedSport.getBallImage().equals(newImage)) {
             mensajeUtil.show(javafx.scene.control.Alert.AlertType.WARNING, "Modificar Deporte", "No se han realizado cambios para modificar.");
             return;
         }
-        selectedSport.setNombre(newNombre);
+              selectedSport.setNombre(newNombre);
         selectedSport.setBallImage(newImage);
         boolean success = sportService.updateSport(oldNombre, selectedSport);
+
         if (success) {
             mensajeUtil.show(javafx.scene.control.Alert.AlertType.INFORMATION, "Modificar Deporte", "Deporte modificado exitosamente.");
-            loadSports();
+            loadSports(); // Recargar la tabla
             OnActionBtnBarrerCampos(event);
         } else {
             mensajeUtil.show(javafx.scene.control.Alert.AlertType.ERROR, "Modificar Deporte", "No se pudo modificar el deporte.");
         }
     }
+
 
     @FXML
     void handleTableClickDeportesExistentes(MouseEvent event) {
