@@ -88,6 +88,7 @@ public class TeamsMaintenanceController extends Controller implements Initializa
 
     private void populateTableView() {
         MFXTableColumn<Team> colNombre = new MFXTableColumn<>("Nombre");
+        colNombre.setMinWidth(180);
         colNombre.setRowCellFactory(team -> new MFXTableRowCell<>(Team::getNombre));
         MFXTableColumn<Team> colDeporte = new MFXTableColumn<>("Deporte");
         colDeporte.setRowCellFactory(team -> new MFXTableRowCell<>(Team::getDeporte));

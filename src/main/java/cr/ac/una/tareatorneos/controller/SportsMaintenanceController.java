@@ -63,6 +63,7 @@ public class SportsMaintenanceController extends Controller implements Initializ
     private void populateTableView() {
         MFXTableColumn<Sport> colNombre = new MFXTableColumn<>("Nombre");
         colNombre.setRowCellFactory(sport -> new MFXTableRowCell<>(Sport::getNombre));
+        colNombre.setMinWidth(180);
         MFXTableColumn<Sport> colFecha = new MFXTableColumn<>("Fecha de Creación");
         colFecha.setRowCellFactory(sport -> new MFXTableRowCell<>(s -> s.getFechaCreacion().toString()));
         tbvDeportesExistentes.getTableColumns().clear();

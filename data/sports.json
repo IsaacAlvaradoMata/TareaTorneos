@@ -1,1 +1,13 @@
-[]
+[ {
+  "nombre" : "Basketaball",
+  "ballImage" : "C:\\Users\\josue_5njzopn\\OneDrive\\Escritorio\\basketball-ball.png",
+  "fechaCreacion" : [ 2025, 3, 17 ]
+}, {
+  "nombre" : "futbol",
+  "ballImage" : "C:\\Users\\josue_5njzopn\\OneDrive\\Escritorio\\ball.png",
+  "fechaCreacion" : [ 2025, 3, 17 ]
+}, {
+  "nombre" : "tenis",
+  "ballImage" : "C:\\Users\\josue_5njzopn\\OneDrive\\Escritorio\\tenis.png",
+  "fechaCreacion" : [ 2025, 3, 17 ]
+} ]
