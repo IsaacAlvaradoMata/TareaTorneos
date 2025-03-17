@@ -200,6 +200,7 @@ public class TournamentCreationController extends Controller implements Initiali
 
         seleccionadosTorneo.setPrefHeight(350);
         seleccionadosTorneo.setPrefWidth(300);
+        seleccionadosTorneo.getStyleClass().add("custom-list-view");
 
         seleccionadosLabel.getStyleClass().add("header-label");
         nombreTorneo1.getStyleClass().add("header-label");

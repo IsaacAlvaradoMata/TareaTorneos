@@ -466,7 +466,7 @@
 
   /*########################### LISTVIEW DE CREACION DE TORNEOS #########################################################################*/
 
-  .mfx-list-view {
+  .custom-list-view {
       -fx-background-color: #d9a2fd !important;
       -fx-background-radius: 7px !important;
       -fx-border-color: #690093 !important;
@@ -476,40 +476,40 @@
       -fx-padding: 4;
   }
 
-  .mfx-list-view .virtual-flow {
+  .custom-list-view .virtual-flow {
       -fx-background-color: transparent !important; /* Fija el fondo del área desplazable */
   }
 
 
-  .mfx-list-view .virtual-flow .mfx-list-cell {
+  .custom-list-view .virtual-flow .mfx-list-cell {
       -fx-background-color: transparent !important;
       -fx-border-color: transparent !important;
       -fx-background-radius: 10!important;
       -fx-border-radius: 10!important;
   }
 
-  .mfx-list-view .virtual-flow .mfx-list-cell .data-label {
+  .custom-list-view .virtual-flow .mfx-list-cell .data-label {
       -fx-text-fill: #690093 !important; /* Asegura que el texto sea visible */
   }
 
-  .mfx-list-view .virtual-flow .mfx-list-cell .mfx-ripple-generator {
+  .custom-list-view .virtual-flow .mfx-list-cell .mfx-ripple-generator {
       -mfx-auto-clip: true;
   }
 
-  .mfx-list-view .virtual-flow .mfx-list-cell:selected .mfx-ripple-generator {
+  .custom-list-view .virtual-flow .mfx-list-cell:selected .mfx-ripple-generator {
       -mfx-paused: true;
   }
 
 
-  .mfx-list-view .scroll-bar:vertical .track {
+  .custom-list-view .scroll-bar:vertical .track {
       -fx-background-color: #ae6ef5 !important;
   }
 
-  .mfx-list-view .scroll-bar:vertical .thumb {
+  .custom-list-view .scroll-bar:vertical .thumb {
       -fx-background-color: #690093 !important;
   }
 
-  .mfx-list-view .scroll-bar:vertical .thumb:hover {
+  .custom-list-view .scroll-bar:vertical .thumb:hover {
       -fx-background-color: #f716ff !important;
   }
 
@@ -586,6 +586,171 @@
   }
 
 
+  /*########################### VISTA DE TORNEOS ACTIVOS #########################################################################*/
+
+
+  .AnchorPane-ActiveTournaments {
+      -fx-background-color: #fff463;
+      -fx-border-color: #a2a000;
+      -fx-border-width: 5;
+      -fx-border-radius: 15;
+      -fx-background-radius: 19;
+      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+      -fx-font-family: "Trebuchet MS", sans-serif;
+
+  }
+
+  .StackPane-ActiveTournaments {
+      -fx-background-color: #ffffff;
+      -fx-border-color: #a2a000;
+      -fx-border-width: 5;
+      -fx-border-radius: 15;
+      -fx-background-radius: 19;
+      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+  }
+
+  .AnchorPane-TituloActiveTournaments{
+      -fx-border-color: #a2a000;
+      -fx-border-width: 5;
+      -fx-border-radius: 15;
+      -fx-background-radius: 19;
+      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+      -fx-background-color: #eee795;
+  }
+
+  /***#################TITULO DE VISTA**#################*/
+
+  #lblTorneosActivosTitulo{
+      -fx-text-fill: #858400;
+  }
+
+  .lbl-SubTitulosActiveTournaments {
+      -fx-font-size: 17px;
+      -fx-font-weight: bold;
+      -fx-text-fill: #a2a000;
+      -fx-padding: 5 0 5 0;
+      /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);*/
+  }
+
+
+  #sprActiveTournaments{
+      -fx-background-color: #a2a000;
+      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+  }
+
+
+
+
+  #imgLupaAmarilla{
+      -fx-image: url('../resources/LupaAmarillaIcon.png');
+  }
+
+
+  .lbl-informacionActiveTournaments {
+      -fx-font-size: 17px;
+      -fx-font-weight: bold;
+      -fx-text-fill: #a2a000;
+      -fx-padding: 5 0 5 0;
+      -fx-border-color: #a2a000;
+      -fx-border-width: 5;
+      -fx-border-radius: 5;
+      -fx-background-radius: 7;
+      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+      -fx-background-color: #eee795;
+
+  }
+
+  /***#################BOTOONES DE VISTA**#################*/
+
+  .btn-ActiveTournaments {
+      -fx-alignment: center;
+      -fx-background-color: #a2a000;
+      -fx-background-radius: 4px;
+      -fx-border-width: 0;
+      -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
+      -fx-font-family: "Trebuchet MS", sans-serif;
+      -fx-font-size: 15px;
+      -fx-font-weight: bold;
+      -fx-text-fill: #ffffff;
+      -fx-padding: 10px 16px;
+      -fx-min-height: 40px;
+      -fx-border-color: transparent;
+      -fx-cursor: hand;
+      -fx-transition: all 0.15s ease-in-out;
+  }
+
+  /* Efecto al pasar el mouse */
+  .btn-ActiveTournaments:hover {
+      -fx-background-color: #5b5518;
+      -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.5), 8, 0, 0, 4);
+      -fx-translate-y: -2px;
+  }
+
+  /* Efecto al hacer clic */
+  .btn-ActiveTournaments:pressed {
+      -fx-background-color: #f7ff0e !important;
+      -fx-effect: innershadow(three-pass-box, #D6D6E7, 7, 0, 0, 3);
+      -fx-translate-y: 2px;
+  }
+
+  .btn-ActiveTournaments:focused {
+      -fx-background-color: #a2a000;
+  }
+
+  .btn-ActiveTournaments:focused:hover{
+      -fx-background-color: #5b5518;
+  }
+
+  /*########################### LISTVIEW DE CREACION DE TORNEOS #########################################################################*/
+
+  .custom-list-view-ActiveTournaments {
+      -fx-background-color: #eee795 !important;
+      -fx-background-radius: 7px !important;
+      -fx-border-color: #a2a000 !important;
+      -fx-border-radius: 4px !important;
+      -fx-border-width: 5px !important;
+      -fx-font-weight: bold !important;
+      -fx-padding: 4;
+  }
+
+  .custom-list-view-ActiveTournaments .virtual-flow {
+      -fx-background-color: transparent !important; /* Fija el fondo del área desplazable */
+  }
+
+
+  .custom-list-view-ActiveTournaments .virtual-flow .mfx-list-cell {
+      -fx-background-color: transparent !important;
+      -fx-border-color: transparent !important;
+      -fx-background-radius: 10!important;
+      -fx-border-radius: 10!important;
+  }
+
+  .custom-list-view-ActiveTournaments .virtual-flow .mfx-list-cell .data-label {
+      -fx-text-fill: #a2a000 !important; /* Asegura que el texto sea visible */
+  }
+
+  .custom-list-view-ActiveTournaments .virtual-flow .mfx-list-cell .mfx-ripple-generator {
+      -mfx-auto-clip: true;
+  }
+
+  .custom-list-view-ActiveTournaments .virtual-flow .mfx-list-cell:selected .mfx-ripple-generator {
+      -mfx-paused: true;
+  }
+
+
+  .custom-list-view-ActiveTournaments .scroll-bar:vertical .track {
+      -fx-background-color: #f5df6e !important;
+  }
+
+  .custom-list-view-ActiveTournaments .scroll-bar:vertical .thumb {
+      -fx-background-color: #937f00 !important;
+  }
+
+  .custom-list-view-ActiveTournaments .scroll-bar:vertical .thumb:hover {
+      -fx-background-color: #ff6816 !important;
+  }
+
+
   /**IMAGENES DE BOTONES**/
 
   /*########################### IMAGENES DE MENU PRINCIPAL #########################################################################*/
@@ -616,3 +781,6 @@
   #btnReintentarFoto > ImageView{-fx-image: url('../resources/RetryIcon.png');}
   #btnGuardarFoto > ImageView{-fx-image: url('../resources/SaveIcon.png');}
   #btnSalirFoto> ImageView{-fx-image: url('../resources/ExitIcon.png');}
+
+  /*########################### IMAGENES DE TORNEOS ACTIVOS #########################################################################*/
+  #btnReanudarTorneo > ImageView{-fx-image: url('../resources/PlayIcon.png');}
