@@ -31,7 +31,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="701.0" styleClass="AnchorPane-SportMaintenance" stylesheets="@StyleTournament.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tareatorneos.controller.SportsMaintenanceController">
+<AnchorPane fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="700.0" styleClass="AnchorPane-SportMaintenance" stylesheets="@StyleTournament.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tareatorneos.controller.SportsMaintenanceController">
    <children>
       <StackPane prefHeight="600.0" prefWidth="701.0" styleClass="StackPane-SportMaintenance" stylesheets="@StyleTournament.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
       <BorderPane layoutX="30.285715103149414" layoutY="30.285715103149414" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
@@ -68,7 +68,7 @@
                                     </ImageView>
                                  </children>
                               </StackPane>
-                              <MFXButton fx:id="btnBuscarImagen" minHeight="-Infinity" minWidth="-Infinity" onAction="#OnActionBtnBuscarImagen" prefHeight="40.0" prefWidth="170.0" styleClass="btn-SportMaintenance" text="Buscar Imagen " VBox.vgrow="ALWAYS">
+                              <MFXButton fx:id="btnBuscarImagen" onAction="#OnActionBtnBuscarImagen" prefHeight="40.0" prefWidth="170.0" styleClass="btn-SportMaintenance" text="Buscar Imagen " VBox.vgrow="ALWAYS">
                                  <graphic>
                                     <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" />
                                  </graphic>
@@ -98,7 +98,7 @@
                                     <Insets />
                                  </VBox.margin>
                               </HBox>
-                              <MFXButton fx:id="btnBarrerDeporte" minHeight="-Infinity" minWidth="-Infinity" onAction="#OnActionBtnBarrerCampos" prefHeight="40.0" prefWidth="170.0" styleClass="btn-SportMaintenance" text="Barrer Campos" VBox.vgrow="ALWAYS">
+                              <MFXButton fx:id="btnBarrerDeporte" onAction="#OnActionBtnBarrerCampos" prefHeight="40.0" prefWidth="170.0" styleClass="btn-SportMaintenance" text="Barrer Campos" VBox.vgrow="ALWAYS">
                                  <graphic>
                                     <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" />
                                  </graphic>
@@ -124,7 +124,7 @@
                                     <ImageView fx:id="imgLupa" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
                                  </children>
                               </HBox>
-                               <MFXTableView fx:id="tbvDeportesExistentes" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleTableClickDeportesExistentes" prefHeight="500.0" prefWidth="250.0" VBox.vgrow="ALWAYS">
+                               <MFXTableView fx:id="tbvDeportesExistentes" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#handleTableClickDeportesExistentes" prefHeight="500.0" prefWidth="250.0" VBox.vgrow="ALWAYS">
                                  <VBox.margin>
                                     <Insets bottom="10.0" right="20.0" />
                                  </VBox.margin></MFXTableView>

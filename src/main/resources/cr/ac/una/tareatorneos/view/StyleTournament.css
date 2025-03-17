@@ -750,6 +750,156 @@
       -fx-background-color: #ff6816 !important;
   }
 
+  /*########################### VISTA DE RANKINGS #########################################################################*/
+
+
+  .AnchorPane-Rankings {
+      -fx-background-color: #5169ff;
+      -fx-border-color: #0500a2;
+      -fx-border-width: 5;
+      -fx-border-radius: 15;
+      -fx-background-radius: 19;
+      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+      -fx-font-family: "Trebuchet MS", sans-serif;
+
+  }
+
+  .StackPane-Rankings {
+      -fx-background-color: #ffffff;
+      -fx-border-color: #0500a2;
+      -fx-border-width: 5;
+      -fx-border-radius: 15;
+      -fx-background-radius: 19;
+      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+  }
+
+  .AnchorPane-TituloRankings{
+      -fx-border-color: #0500a2;
+      -fx-border-width: 5;
+      -fx-border-radius: 15;
+      -fx-background-radius: 19;
+      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+      -fx-background-color: #95a1ee;
+  }
+
+  /***#################TITULO DE VISTA**#################*/
+
+  #lblRankingsTitulo{
+      -fx-text-fill: #0500a2;
+  }
+
+  .lbl-SubTitulosRankings {
+      -fx-font-size: 17px;
+      -fx-font-weight: bold;
+      -fx-text-fill: #0500a2;
+      -fx-padding: 5 0 5 0;
+      /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);*/
+  }
+
+
+  #sprRankings{
+      -fx-background-color: #0500a2;
+      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+  }
+
+  #imgFlechaArriba{
+      -fx-image: url('../resources/ArrowUpIcon.png');
+  }
+
+  #imgRankingTrophyIcon{
+      -fx-image: url('../resources/RankingTrophyIcon.png');
+  }
+
+
+  /***#################BOTOONES DE VISTA**#################*/
+
+  .btn-Rankings {
+      -fx-alignment: center;
+      -fx-background-color: #0500a2;
+      -fx-background-radius: 4px;
+      -fx-border-width: 0;
+      -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
+      -fx-font-family: "Trebuchet MS", sans-serif;
+      -fx-font-size: 15px;
+      -fx-font-weight: bold;
+      -fx-text-fill: #ffffff;
+      -fx-padding: 10px 16px;
+      -fx-min-height: 40px;
+      -fx-border-color: transparent;
+      -fx-cursor: hand;
+      -fx-transition: all 0.15s ease-in-out;
+  }
+
+  /* Efecto al pasar el mouse */
+  .btn-Rankings:hover {
+      -fx-background-color: #181b5b;
+      -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.5), 8, 0, 0, 4);
+      -fx-translate-y: -2px;
+  }
+
+  /* Efecto al hacer clic */
+  .btn-Rankings:pressed {
+      -fx-background-color: #0e6eff !important;
+      -fx-effect: innershadow(three-pass-box, #D6D6E7, 7, 0, 0, 3);
+      -fx-translate-y: 2px;
+  }
+
+  .btn-Rankings:focused {
+      -fx-background-color: #0500a2;
+  }
+
+  .btn-Rankings:focused:hover{
+      -fx-background-color: #181b5b;
+  }
+
+  /*########################### LISTVIEW DE CREACION DE TORNEOS #########################################################################*/
+
+  .table-view-Rankings {
+      -fx-background-color: #5169ff !important;
+      -fx-background-radius: 7px !important;
+      -fx-border-color: #0500a2 !important;
+      -fx-border-radius: 4px !important;
+      -fx-border-width: 5px !important;
+      -fx-font-weight: bold !important;
+      -fx-padding: 4;
+  }
+
+  .table-view-Rankings .virtual-flow {
+      -fx-background-color: transparent !important; /* Fija el fondo del área desplazable */
+  }
+
+
+  .table-view-Rankings .virtual-flow .mfx-list-cell {
+      -fx-background-color: transparent !important;
+      -fx-border-color: transparent !important;
+      -fx-background-radius: 10!important;
+      -fx-border-radius: 10!important;
+  }
+
+  .table-view-Rankings .virtual-flow .mfx-list-cell .data-label {
+      -fx-text-fill: #0500a2 !important; /* Asegura que el texto sea visible */
+  }
+
+  .table-view-Rankings .virtual-flow .mfx-list-cell .mfx-ripple-generator {
+      -mfx-auto-clip: true;
+  }
+
+  .table-view-Rankings .virtual-flow .mfx-list-cell:selected .mfx-ripple-generator {
+      -mfx-paused: true;
+  }
+
+
+  .table-view-Rankings .scroll-bar:vertical .track {
+      -fx-background-color: #6e99f5 !important;
+  }
+
+  .table-view-Rankings .scroll-bar:vertical .thumb {
+      -fx-background-color: #000c93 !important;
+  }
+
+  .table-view-Rankings .scroll-bar:vertical .thumb:hover {
+      -fx-background-color: #16ecff !important;
+  }
 
   /**IMAGENES DE BOTONES**/
 

@@ -28,7 +28,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane fx:id="root1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="701.0" styleClass="AnchorPane-TournamentCreation" stylesheets="@StyleTournament.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tareatorneos.controller.TournamentCreationController">
+<AnchorPane fx:id="root1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="700.0" styleClass="AnchorPane-TournamentCreation" stylesheets="@StyleTournament.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tareatorneos.controller.TournamentCreationController">
    <children>
       <StackPane prefHeight="600.0" prefWidth="701.0" styleClass="StackPane-TournamentCreation" stylesheets="@StyleTournament.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
       <BorderPane layoutX="30.285715103149414" layoutY="30.285715103149414" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
