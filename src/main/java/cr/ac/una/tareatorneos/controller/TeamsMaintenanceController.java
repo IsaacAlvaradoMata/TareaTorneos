@@ -1,15 +1,8 @@
 package cr.ac.una.tareatorneos.controller;
 
-import cr.ac.una.tareatorneos.util.FlowController;
-import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.controls.MFXFilterComboBox;
 import cr.ac.una.tareatorneos.model.Team;
-import io.github.palexdev.materialfx.controls.MFXTableColumn;
-import io.github.palexdev.materialfx.controls.MFXTableView;
-import io.github.palexdev.materialfx.controls.MFXTextField;
-import cr.ac.una.tareatorneos.model.Sport;
-import cr.ac.una.tareatorneos.service.TeamService;
 import cr.ac.una.tareatorneos.service.SportService;
+import cr.ac.una.tareatorneos.service.TeamService;
 import cr.ac.una.tareatorneos.util.AppContext;
 import cr.ac.una.tareatorneos.util.FlowController;
 import cr.ac.una.tareatorneos.util.Mensaje;
@@ -20,30 +13,40 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+
 import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class TeamsMaintenanceController extends Controller implements Initializable {
-    @FXML private MFXButton btnBarrerEquipo, btnEliminarEquipo, btnGuardarEquipo, btnModificarEquipo, btnTomarFoto;
-    @FXML private MFXFilterComboBox<String> cmbEquipos;
-    @FXML private ImageView imgLupaRoja, imgSeleccionar, imgviewImagenDeporte;
-    @FXML private Label lblMantenimientoEquiposTitulo;
-    @FXML private AnchorPane root;
-    @FXML private StackPane spImagenEquipos;
-    @FXML private Separator sprTeamsMaintenance;
-    @FXML private MFXTableView<Team> tbvEquiposExistentes;
-    @FXML private MFXTextField txtfieldNombreEquipos;
+    @FXML
+    private MFXButton btnBarrerEquipo, btnEliminarEquipo, btnGuardarEquipo, btnModificarEquipo, btnTomarFoto;
+    @FXML
+    private MFXFilterComboBox<String> cmbEquipos;
+    @FXML
+    private ImageView imgLupaRoja, imgSeleccionar, imgviewImagenDeporte;
+    @FXML
+    private Label lblMantenimientoEquiposTitulo;
+    @FXML
+    private AnchorPane root;
+    @FXML
+    private StackPane spImagenEquipos;
+    @FXML
+    private Separator sprTeamsMaintenance;
+    @FXML
+    private MFXTableView<Team> tbvEquiposExistentes;
+    @FXML
+    private MFXTextField txtfieldNombreEquipos;
 
     private ObservableList<Team> teamsData = FXCollections.observableArrayList();
     private TeamService teamService = new TeamService();
@@ -53,6 +56,7 @@ public class TeamsMaintenanceController extends Controller implements Initializa
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         populateTableView();
         loadTeams();
         populateComboBoxDeportes();
@@ -82,9 +86,9 @@ public class TeamsMaintenanceController extends Controller implements Initializa
         });
     }
 
-
     @Override
-    public void initialize() {}
+    public void initialize() {
+    }
 
     private void populateTableView() {
         MFXTableColumn<Team> colNombre = new MFXTableColumn<>("Nombre");
@@ -127,7 +131,6 @@ public class TeamsMaintenanceController extends Controller implements Initializa
         }
     }
 
-
     @FXML
     void OnActionBtnBarrerEquipo(ActionEvent event) {
         txtfieldNombreEquipos.clear();
@@ -136,7 +139,6 @@ public class TeamsMaintenanceController extends Controller implements Initializa
         AppContext.getInstance().set("teamPhoto", null);
         tbvEquiposExistentes.getSelectionModel().clearSelection();
     }
-
 
     @FXML
     void OnActionBtnEliminarEquipo(ActionEvent event) {
@@ -196,9 +198,6 @@ public class TeamsMaintenanceController extends Controller implements Initializa
         }
     }
 
-
-
-
     @FXML
     void OnActionBtnModificarEquipo(ActionEvent event) {
         List<Team> selected = tbvEquiposExistentes.getSelectionModel().getSelectedValues();
@@ -235,8 +234,6 @@ public class TeamsMaintenanceController extends Controller implements Initializa
             mensajeUtil.show(AlertType.ERROR, "Modificar Equipo", "No se pudo modificar el equipo.");
         }
     }
-
-
 
     @FXML
     void OnActionBtnTomarFoto(ActionEvent event) {

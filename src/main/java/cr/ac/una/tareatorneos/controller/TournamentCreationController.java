@@ -1,12 +1,15 @@
-
 package cr.ac.una.tareatorneos.controller;
 
+import cr.ac.una.tareatorneos.model.Sport;
+import cr.ac.una.tareatorneos.model.Team;
+import cr.ac.una.tareatorneos.service.SportService;
+import cr.ac.una.tareatorneos.service.TeamService;
 import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.MFXStepper.MFXStepperEvent;
-import io.github.palexdev.mfxresources.fonts.MFXFontIcon;
 import io.github.palexdev.materialfx.validation.Constraint;
 import io.github.palexdev.materialfx.validation.MFXValidator;
 import io.github.palexdev.materialfx.validation.Validated;
+import io.github.palexdev.mfxresources.fonts.MFXFontIcon;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -32,14 +35,15 @@ public class TournamentCreationController extends Controller implements Initiali
     private final MFXCheckListView<String> equiposTorneo;
     private final MFXListView<String> seleccionadosTorneo;
 
-
+    private final SportService sportService = new SportService();
+    private final TeamService teamService = new TeamService();
+    private List<Team> todosLosEquipos;
 
     @FXML
     private MFXStepper stepper;
     @FXML
 
     private AnchorPane root;
-
 
     public TournamentCreationController() {
         nombreTorneo = new MFXTextField();
@@ -51,7 +55,6 @@ public class TournamentCreationController extends Controller implements Initiali
         seleccionadosTorneo = new MFXListView();
 
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -70,23 +73,29 @@ public class TournamentCreationController extends Controller implements Initiali
         nombreTorneo.getValidator().constraint("Debe de Incluir el Nombre del Torneo", nombreTorneo.textProperty().length().greaterThanOrEqualTo(1));
         nombreTorneo.setLeadingIcon(new MFXIconWrapper("fas-medal", 16, Color.web("#4D4D4D"), 15));
         deporteTorneo.setPromptText("Escoja el Deporte");
-        deporteTorneo.setItems(FXCollections.observableArrayList("Basket", "Futbol", "PingPong"));
-        equiposTorneo.setItems(FXCollections.observableArrayList("los temerarios", "los panas", "niggers", "los gallos", "famosos", "soculentos","los temerarios", "los panas", "niggers", "los gallos", "famosos", "soculentos"));
-        seleccionadosTorneo.setItems(FXCollections.observableArrayList("los temerarios", "los panas", "niggers", "los gallos", "famosos", "soculentos","los temerarios", "los panas", "niggers", "los gallos", "famosos", "soculentos"));
+        List<Sport> deportes = sportService.getAllSports();
+        List<String> nombresDeportes = deportes.stream().map(Sport::getNombre).toList();
+        deporteTorneo.setItems(FXCollections.observableArrayList(nombresDeportes));
+        todosLosEquipos = teamService.getAllTeams(); // <- Ya lo estás usando
+
+        deporteTorneo.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                List<String> equiposFiltrados = todosLosEquipos.stream().filter(team -> team.getDeporte() != null && team.getDeporte().equalsIgnoreCase(newVal)).map(Team::getNombre).distinct().toList();
+
+                equiposTorneo.setItems(FXCollections.observableArrayList(equiposFiltrados));
+                seleccionadosTorneo.getItems().clear(); // limpiar selección
+            }
+        });
 
         List<MFXStepperToggle> stepperToggles = createSteps();
         stepper.getStepperToggles().addAll(stepperToggles);
 
         Platform.runLater(() -> {
-            stepper.getScene().getStylesheets().add(
-                    getClass().getResource("/cr/ac/una/tareatorneos/view/StepperButtons.css").toExternalForm());
-
-
+            stepper.getScene().getStylesheets().add(getClass().getResource("/cr/ac/una/tareatorneos/view/StepperButtons.css").toExternalForm());
             nombreTorneo.setMaxWidth(265);
             tiempoTorneo.setMaxWidth(265);
             cantidadTorneo.setMaxWidth(265);
             deporteTorneo.setMaxWidth(265);
-
 
             stepper.lookupAll(".mfx-button").forEach(node -> {
 
@@ -101,19 +110,12 @@ public class TournamentCreationController extends Controller implements Initiali
                     } else if (button.getText().equals("Previous")) {
                         button.setText("Atrás");
                     }
-                    button.setStyle(
-                            "-fx-background-color: #690093 !important;" +
-                                    "-fx-text-fill: white !important;" +
-                                    "-fx-font-weight: bold !important;" +
-                                    "-fx-border-radius: 4px !important;" +
-                                    "-fx-background-radius: 4px !important;" +
-                                    "-fx-padding: 5px 10px !important;"
+                    button.setStyle("-fx-background-color: #690093 !important;" + "-fx-text-fill: white !important;" + "-fx-font-weight: bold !important;" + "-fx-border-radius: 4px !important;" + "-fx-background-radius: 4px !important;" + "-fx-padding: 5px 10px !important;"
 
                     );
                 }
             });
         });
-
 
     }
 
@@ -133,8 +135,6 @@ public class TournamentCreationController extends Controller implements Initiali
         Node step3Grid = createGrid();
         step3.setContent(step3Grid);
         step3.getValidator().constraint("Se debe de confirmar la informacion", checkbox.selectedProperty());
-
-
 
         return List.of(step1, step2, step3);
     }
@@ -191,10 +191,7 @@ public class TournamentCreationController extends Controller implements Initiali
         MFXTextField deporteTorneo1 = createLabel("Deporte: ");
         MFXTextField deporteTorneo2 = createLabel("");
         deporteTorneo2.setStyle("-fx-background-color: #d9a2fd; -fx-text-fill: #690093; -fx-border-color: #690093;");
-        deporteTorneo2.textProperty().bind(Bindings.createStringBinding(
-                () -> deporteTorneo.getValue() != null ? deporteTorneo.getValue() : "",
-                deporteTorneo.valueProperty()
-        ));
+        deporteTorneo2.textProperty().bind(Bindings.createStringBinding(() -> deporteTorneo.getValue() != null ? deporteTorneo.getValue() : "", deporteTorneo.valueProperty()));
 
         MFXTextField seleccionadosLabel = createLabel("Equipos Seleccionados:");
 

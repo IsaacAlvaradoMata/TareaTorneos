@@ -1,1 +1,17 @@
-[]
+[ {
+  "nombre" : "eftguwydn",
+  "deporte" : "hiygfeyuhbek",
+  "foto" : "C:\\Users\\gambo\\Desktop\\PROGRA\\Proyecto 1\\TareaTorneos\\.\\Photos\\captured_photo_1742255773812.jpg"
+}, {
+  "nombre" : "frug",
+  "deporte" : "fut",
+  "foto" : "C:\\Users\\gambo\\Desktop\\PROGRA\\Proyecto 1\\TareaTorneos\\.\\Photos\\captured_photo_1742256489192.jpg"
+}, {
+  "nombre" : "pong",
+  "deporte" : "ping",
+  "foto" : "C:\\Users\\gambo\\Desktop\\PROGRA\\Proyecto 1\\TareaTorneos\\.\\Photos\\captured_photo_1742256514357.jpg"
+}, {
+  "nombre" : "rm",
+  "deporte" : "fut",
+  "foto" : "C:\\Users\\gambo\\Desktop\\PROGRA\\Proyecto 1\\TareaTorneos\\.\\Photos\\captured_photo_1742256592221.jpg"
+} ]
