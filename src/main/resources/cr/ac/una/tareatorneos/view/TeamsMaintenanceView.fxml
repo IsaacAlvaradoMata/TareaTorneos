@@ -39,9 +39,9 @@
             <center>
                 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
                     <children>
-                        <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="701.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" prefHeight="600.0" prefWidth="701.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
-                                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="512.0" prefWidth="316.0" HBox.hgrow="ALWAYS">
+                                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="537.0" prefWidth="315.0" spacing="15.0" HBox.hgrow="ALWAYS">
                                     <children>
                                         <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="297.0" spacing="15.0">
                                             <children>
@@ -65,9 +65,9 @@
                                                 <Insets top="10.0" />
                                             </VBox.margin>
                                         </Label>
-                                        <StackPane fx:id="spImagenEquipos" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="260.0" prefWidth="260.0">
+                                        <StackPane fx:id="spImagenEquipos" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" prefHeight="260.0" prefWidth="260.0">
                                             <children>
-                                                <ImageView fx:id="imgviewImagenDeporte" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
+                                                <ImageView fx:id="imgviewImagenDeporte" fitHeight="151.0" fitWidth="220.0" pickOnBounds="true" preserveRatio="true">
                                                     <StackPane.margin>
                                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                     </StackPane.margin>
@@ -131,15 +131,15 @@
                                         <Insets bottom="5.0" />
                                     </HBox.margin>
                                 </Separator>
-                                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="547.0" prefWidth="306.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" prefHeight="547.0" prefWidth="306.0" spacing="10.0" HBox.hgrow="ALWAYS">
                                     <children>
-                                        <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+                                        <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
                                             <children>
                                                 <Label styleClass="lbl-SubTitulosTeamsMaintenance" text="Busqueda de Equipos Existentes" />
                                                 <ImageView fx:id="imgLupaRoja" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
                                             </children>
                                         </HBox>
-                                        <MFXTableView fx:id="tbvEquiposExistentes" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#handleTableClickEquiposExistentes" prefHeight="500.0" prefWidth="250.0" VBox.vgrow="ALWAYS">
+                                        <MFXTableView fx:id="tbvEquiposExistentes" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" onMouseClicked="#handleTableClickEquiposExistentes" prefHeight="500.0" prefWidth="250.0" styleClass="table-view-TeamsMaintenance" VBox.vgrow="ALWAYS">
                                             <VBox.margin>
                                                 <Insets bottom="10.0" right="20.0" />
                                             </VBox.margin></MFXTableView>
@@ -154,9 +154,9 @@
                 </AnchorPane>
             </center>
             <top>
-                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="41.0" prefWidth="641.0" styleClass="AnchorPane-TituloTeamsMaintenance" BorderPane.alignment="CENTER">
+                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="641.0" styleClass="AnchorPane-TituloTeamsMaintenance" BorderPane.alignment="CENTER">
                     <children>
-                        <Label fx:id="lblMantenimientoEquiposTitulo" alignment="CENTER" contentDisplay="CENTER" layoutX="306.0" layoutY="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="49.714285714285715" prefWidth="673.7142857142857" styleClass="lbl-Title" text="Mantenimiento de Equipos" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Label fx:id="lblMantenimientoEquiposTitulo" alignment="CENTER" contentDisplay="CENTER" layoutX="306.0" layoutY="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="673.7142857142857" styleClass="lbl-Title" text="Mantenimiento de Equipos" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                 </AnchorPane>
             </top>

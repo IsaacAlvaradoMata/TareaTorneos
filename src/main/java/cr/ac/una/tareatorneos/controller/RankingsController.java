@@ -4,6 +4,7 @@
  */
 package cr.ac.una.tareatorneos.controller;
 
+import io.github.palexdev.materialfx.controls.MFXFilterComboBox;
 import io.github.palexdev.materialfx.controls.MFXTableView;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -39,6 +40,9 @@ public class RankingsController extends Controller implements Initializable {
     private MFXTableView<?> tbvEstadisticasAvanzadas;
     @FXML
     private MFXTableView<?> tbvRankingEquipos;
+    @FXML
+    private MFXFilterComboBox<?> cmbRankings;
+
 
     /**
      * Initializes the controller class.

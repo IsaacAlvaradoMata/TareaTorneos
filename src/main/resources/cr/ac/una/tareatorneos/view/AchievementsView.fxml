@@ -124,9 +124,9 @@
                 </AnchorPane>
             </center>
             <top>
-                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="41.0" prefWidth="641.0" styleClass="AnchorPane-TituloLogros" BorderPane.alignment="CENTER">
+                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="641.0" styleClass="AnchorPane-TituloLogros" BorderPane.alignment="CENTER">
                     <children>
-                        <Label fx:id="lblLogrosTitulo" alignment="CENTER" contentDisplay="CENTER" layoutX="306.0" layoutY="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="49.714285714285715" prefWidth="673.7142857142857" styleClass="lbl-Title" text="Logros" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Label fx:id="lblLogrosTitulo" alignment="CENTER" contentDisplay="CENTER" layoutX="306.0" layoutY="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="673.7142857142857" styleClass="lbl-Title" text="Logros" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                 </AnchorPane>
             </top>

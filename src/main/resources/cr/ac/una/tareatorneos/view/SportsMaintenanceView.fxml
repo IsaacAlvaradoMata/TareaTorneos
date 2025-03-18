@@ -59,7 +59,7 @@
                                     <Insets top="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <StackPane fx:id="spImagenDeporte" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="260.0" prefWidth="260.0">
+                              <StackPane fx:id="spImagenDeporte" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" prefHeight="260.0" prefWidth="260.0">
                                  <children>
                                     <ImageView fx:id="imgviewImagenDeporte" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
                                        <StackPane.margin>
@@ -124,7 +124,7 @@
                                     <ImageView fx:id="imgLupa" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
                                  </children>
                               </HBox>
-                               <MFXTableView fx:id="tbvDeportesExistentes" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#handleTableClickDeportesExistentes" prefHeight="500.0" prefWidth="250.0" VBox.vgrow="ALWAYS">
+                               <MFXTableView fx:id="tbvDeportesExistentes" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#handleTableClickDeportesExistentes" prefHeight="500.0" prefWidth="250.0" styleClass="table-view-SportMaintenance" VBox.vgrow="ALWAYS">
                                  <VBox.margin>
                                     <Insets bottom="10.0" right="20.0" />
                                  </VBox.margin></MFXTableView>
@@ -139,9 +139,9 @@
             </AnchorPane>
          </center>
          <top>
-            <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="41.0" prefWidth="641.0" styleClass="AnchorPane-TituloSportMaintenance" BorderPane.alignment="CENTER">
+            <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="641.0" styleClass="AnchorPane-TituloSportMaintenance" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="lblMantenimientoDeportesTitulo" alignment="CENTER" contentDisplay="CENTER" layoutX="306.0" layoutY="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="49.714285714285715" prefWidth="673.7142857142857" styleClass="lbl-Title" text="Mantenimiento de Deportes " AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Label fx:id="lblMantenimientoDeportesTitulo" alignment="CENTER" contentDisplay="CENTER" layoutX="306.0" layoutY="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="673.7142857142857" styleClass="lbl-Title" text="Mantenimiento de Deportes " AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
          </top>

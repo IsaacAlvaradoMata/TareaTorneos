@@ -2,6 +2,7 @@
 package cr.ac.una.tareatorneos.controller;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXCheckListView;
 import io.github.palexdev.materialfx.controls.MFXListView;
 import io.github.palexdev.materialfx.controls.MFXTableView;
 import java.net.URL;
@@ -43,7 +44,11 @@ public class ActiveTournamentsController extends Controller implements Initializ
     @FXML
     private MFXListView<?> listviewEquiposSeleccionadosTorneo;
     @FXML
+    private MFXCheckListView<?> chklistviewEquiposDisponibles;
+    @FXML
     private MFXButton btnReanudarTorneo;
+    @FXML
+    private MFXButton btnAgregarEquipos;
 
     /**
      * Initializes the controller class.
@@ -59,6 +64,11 @@ public class ActiveTournamentsController extends Controller implements Initializ
 
     @FXML
     private void OnActionBtnReanudarTorneo(ActionEvent event) {
+    }
+
+    @FXML
+    void OnActionBtnAgregarEquipos(ActionEvent event) {
+
     }
 
     @Override

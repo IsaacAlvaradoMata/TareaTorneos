@@ -18,6 +18,7 @@
   ~ along with MaterialFX.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
+<?import io.github.palexdev.materialfx.controls.MFXFilterComboBox?>
 <?import io.github.palexdev.materialfx.controls.MFXTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -42,18 +43,14 @@
                                     <children>
                                         <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
                                             <children>
-                                                <Label styleClass="lbl-SubTitulosRankings" text="Ranking Global de Equipos" />
+                                                <Label styleClass="lbl-SubTitulosRankings" text="Ranking Global de Equipos por Deporte" />
                                                 <ImageView fx:id="imgRankingTrophyIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
                                             </children>
                                         </HBox>
-                                        <MFXTableView fx:id="tbvRankingEquipos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#handleTableClickRankingEquipos" prefHeight="500.0" prefWidth="250.0" styleClass="table-view-Rankings" VBox.vgrow="ALWAYS">
-                                            <VBox.margin>
-                                                <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
-                                            </VBox.margin></MFXTableView>
-                              <HBox>
+                              <HBox alignment="CENTER" spacing="15.0">
                                  <children>
-                                    <ImageView fx:id="imgFlechaArriba" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="200.0" styleClass="lbl-SubTitulosRankings" text="Busqueda por Filtros" />
+                                    <ImageView fx:id="imgFlechaArriba" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
+                                    <MFXFilterComboBox fx:id="cmbRankings" floatMode="DISABLED" prefHeight="38.0" prefWidth="207.0" promptText="Seleccione un Deporte" />
                                  </children>
                                  <padding>
                                     <Insets left="30.0" />
@@ -62,6 +59,10 @@
                                     <Insets bottom="10.0" />
                                  </VBox.margin>
                               </HBox>
+                                        <MFXTableView fx:id="tbvRankingEquipos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#handleTableClickRankingEquipos" prefHeight="500.0" prefWidth="250.0" styleClass="table-view-Rankings" VBox.vgrow="ALWAYS">
+                                            <VBox.margin>
+                                                <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                                            </VBox.margin></MFXTableView>
                                     </children>
                                     <padding>
                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -96,9 +97,9 @@
                 </AnchorPane>
             </center>
             <top>
-                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="41.0" prefWidth="641.0" styleClass="AnchorPane-TituloRankings" BorderPane.alignment="CENTER">
+                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="641.0" styleClass="AnchorPane-TituloRankings" BorderPane.alignment="CENTER">
                     <children>
-                        <Label fx:id="lblRankingsTitulo" alignment="CENTER" contentDisplay="CENTER" layoutX="306.0" layoutY="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="49.714285714285715" prefWidth="673.7142857142857" styleClass="lbl-Title" text="Rankings" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Label fx:id="lblRankingsTitulo" alignment="CENTER" contentDisplay="CENTER" layoutX="306.0" layoutY="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="673.7142857142857" styleClass="lbl-Title" text="Rankings" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                 </AnchorPane>
             </top>
