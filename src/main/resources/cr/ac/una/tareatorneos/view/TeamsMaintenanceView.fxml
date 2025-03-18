@@ -74,7 +74,7 @@
                                                 </ImageView>
                                             </children>
                                         </StackPane>
-                              <HBox spacing="10.0" VBox.vgrow="ALWAYS">
+                              <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" spacing="10.0" VBox.vgrow="ALWAYS">
                                  <VBox.margin>
                                     <Insets top="10.0" />
                                  </VBox.margin>

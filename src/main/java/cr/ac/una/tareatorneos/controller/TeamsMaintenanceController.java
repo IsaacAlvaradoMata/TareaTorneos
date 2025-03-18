@@ -38,6 +38,8 @@ public class TeamsMaintenanceController extends Controller implements Initializa
     @FXML
     private Label lblMantenimientoEquiposTitulo;
     @FXML
+    private MFXButton btnCargarFoto;
+    @FXML
     private AnchorPane root;
     @FXML
     private StackPane spImagenEquipos;
@@ -264,6 +266,11 @@ public class TeamsMaintenanceController extends Controller implements Initializa
                 imgviewImagenDeporte.setImage(null);
             }
         }
+    }
+
+    @FXML
+    void OnActionBtnCargarFoto(ActionEvent event) {
+
     }
 
 }
