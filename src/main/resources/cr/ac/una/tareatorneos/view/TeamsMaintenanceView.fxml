@@ -74,14 +74,23 @@
                                                 </ImageView>
                                             </children>
                                         </StackPane>
-                                        <MFXButton fx:id="btnTomarFoto" onAction="#OnActionBtnTomarFoto" prefHeight="40.0" prefWidth="170.0" styleClass="btn-TeamsMaintenance" text="Tomar Foto" VBox.vgrow="ALWAYS">
-                                            <graphic>
-                                                <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" />
-                                            </graphic>
-                                            <VBox.margin>
-                                                <Insets top="10.0" />
-                                            </VBox.margin>
-                                        </MFXButton>
+                              <HBox spacing="10.0" VBox.vgrow="ALWAYS">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                                 <children>
+                                              <MFXButton fx:id="btnTomarFoto" onAction="#OnActionBtnTomarFoto" prefHeight="40.0" prefWidth="170.0" styleClass="btn-TeamsMaintenance" text="Tomar Foto">
+                                                  <graphic>
+                                                      <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" />
+                                                  </graphic>
+                                              </MFXButton>
+                                    <MFXButton fx:id="btnCargarFoto" layoutX="10.0" layoutY="10.0" onAction="#OnActionBtnCargarFoto" prefHeight="40.0" prefWidth="170.0" styleClass="btn-TeamsMaintenance" text="Cargar Foto">
+                                       <graphic>
+                                          <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" />
+                                       </graphic>
+                                    </MFXButton>
+                                 </children>
+                              </HBox>
                                         <HBox alignment="CENTER" prefHeight="125.0" prefWidth="302.0" spacing="15.0">
                                             <children>
                                                 <MFXButton fx:id="btnGuardarEquipo" onAction="#OnActionBtnGuardarEquipo" prefHeight="40.0" prefWidth="130.0" styleClass="btn-TeamsMaintenance" text="Guardar" HBox.hgrow="ALWAYS">

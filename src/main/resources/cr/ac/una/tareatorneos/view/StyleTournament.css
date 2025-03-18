@@ -978,6 +978,8 @@
 #btnBarrerDeporte > ImageView{-fx-image: url('../resources/ClearIcon.png');}
 #btnBuscarImagen > ImageView{-fx-image: url('../resources/SearchImageSportIcon.png');}
 #btnModificar > ImageView{-fx-image: url('../resources/EditIcon.png');}
+#btnCargarFoto > ImageView{-fx-image: url('../resources/SearchImageSportIcon.png');}
+
 
 /*########################### IMAGENES DE MANTENIMIENTO DE EQUIPOS #########################################################################*/
 #btnGuardarEquipo > ImageView{-fx-image: url('../resources/SaveIcon.png');}
