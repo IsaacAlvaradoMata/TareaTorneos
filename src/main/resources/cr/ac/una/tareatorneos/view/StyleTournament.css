@@ -1,144 +1,143 @@
-  /*DISENO GENERAL DE LA VISTA SPORTMAINTENANCE*/
+/*DISENO GENERAL DE LA VISTA SPORTMAINTENANCE*/
 
-  /***#################CONTENEDORES DE ViSTA**#################*/
-  .AnchorPane-SportMaintenance {
-      -fx-background-color: #9ee8c4;
-      -fx-border-color: #30a85f;
-      -fx-border-width: 5;
-      -fx-border-radius: 15;
-      -fx-background-radius: 19;
-      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-      -fx-font-family: "Trebuchet MS", sans-serif;
+/***#################CONTENEDORES DE ViSTA**#################*/
+.AnchorPane-SportMaintenance {
+    -fx-background-color: #9ee8c4;
+    -fx-border-color: #30a85f;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
 
-  }
+}
 
-  .StackPane-SportMaintenance {
-      -fx-background-color: #ffffff;
-      -fx-border-color: #30a85f;
-      -fx-border-width: 5;
-      -fx-border-radius: 15;
-      -fx-background-radius: 19;
-      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-  }
+.StackPane-SportMaintenance {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #30a85f;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+}
 
-  .AnchorPane-TituloSportMaintenance{
-        -fx-border-color: #30a85f;
-        -fx-border-width: 5;
-        -fx-border-radius: 15;
-        -fx-background-radius: 19;
-        -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-        -fx-background-color: #d7fde7;
-  }
+.AnchorPane-TituloSportMaintenance{
+    -fx-border-color: #30a85f;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+    -fx-background-color: #d7fde7;
+}
 
-  #spImagenDeporte{
-      -fx-border-color: #30a85f;
-      -fx-border-width: 5;
-      -fx-border-radius: 15;
-      -fx-background-radius: 17;
-      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-  }
+#spImagenDeporte{
+    -fx-border-color: #30a85f;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 17;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+}
 
-  #sprSportMaintenance{
-      -fx-background-color:#30a85f ;
-      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-  }
+#sprSportMaintenance{
+    -fx-background-color:#30a85f ;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+}
 
-  #imgFlecha{
-        -fx-image: url('../resources/ArrowIcon.png');
-  }
+#imgFlecha{
+    -fx-image: url('../resources/ArrowIcon.png');
+}
 
-  #imgLupa{
-        -fx-image: url('../resources/LupaIcon.png');
-  }
-
-
-  /***#################TEXTFIELD DE VISTA**#################*/
-
-  .mfx-text-field {
-      -fx-font-weight: bold;
-      -fx-font-family: "Trebuchet MS", sans-serif;
-      -fx-border-width: 3;
-      -fx-font-size: 13px;
-  }
-
-  .mfx-text-field .floating-text {
-      -fx-font-family: "Trebuchet MS", sans-serif;
-  }
+#imgLupa{
+    -fx-image: url('../resources/LupaIcon.png');
+}
 
 
-  #txtfieldNombreDeporte {
-      -fx-border-color: #30a85f;
-  }
+/***#################TEXTFIELD DE VISTA**#################*/
 
-  #txtfieldNombreDeporte .floating-text {
-      -fx-text-fill: #185b33;
-  }
-  /***#################BOTOONES DE VISTA**#################*/
+.mfx-text-field {
+    -fx-font-weight: bold;
+    -fx-font-family: "Trebuchet MS", sans-serif;
+    -fx-border-width: 3;
+    -fx-font-size: 13px;
+}
+
+.mfx-text-field .floating-text {
+    -fx-font-family: "Trebuchet MS", sans-serif;
+}
 
 
-  .btn-SportMaintenance {
-      -fx-alignment: center;
-      -fx-background-color: #30a85f;
-      -fx-background-radius: 4px;
-      -fx-border-width: 0;
-      -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
-      -fx-font-family: "Trebuchet MS", sans-serif;
-      -fx-font-size: 15px;
-      -fx-font-weight: bold;
-      -fx-text-fill: #ffffff;
-      -fx-padding: 10px 16px;
-      -fx-min-height: 40px;
-      -fx-border-color: transparent;
-      -fx-cursor: hand;
-      -fx-transition: all 0.15s ease-in-out;
-  }
+#txtfieldNombreDeporte {
+    -fx-border-color: #30a85f;
+}
 
-  /* Efecto al pasar el mouse */
-  .btn-SportMaintenance:hover {
-      -fx-background-color: #185b33;
-      -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.5), 8, 0, 0, 4);
-      -fx-translate-y: -2px;
-  }
+#txtfieldNombreDeporte .floating-text {
+    -fx-text-fill: #185b33;
+}
+/***#################BOTOONES DE VISTA**#################*/
 
-  /* Efecto al hacer clic */
-  .btn-SportMaintenance:pressed {
-      -fx-background-color: #5fff0e !important;
-      -fx-effect: innershadow(three-pass-box, #D6D6E7, 7, 0, 0, 3);
-      -fx-translate-y: 2px;
-  }
 
-  .btn-SportMaintenance:focused {
-      -fx-background-color: #30a85f;
-  }
+.btn-SportMaintenance {
+    -fx-alignment: center;
+    -fx-background-color: #30a85f;
+    -fx-background-radius: 4px;
+    -fx-border-width: 0;
+    -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 10px 16px;
+    -fx-min-height: 40px;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-transition: all 0.15s ease-in-out;
+}
+
+/* Efecto al pasar el mouse */
+.btn-SportMaintenance:hover {
+    -fx-background-color: #185b33;
+    -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.5), 8, 0, 0, 4);
+    -fx-translate-y: -2px;
+}
+
+/* Efecto al hacer clic */
+.btn-SportMaintenance:pressed {
+    -fx-background-color: #5fff0e !important;
+    -fx-effect: innershadow(three-pass-box, #D6D6E7, 7, 0, 0, 3);
+    -fx-translate-y: 2px;
+}
+
+.btn-SportMaintenance:focused {
+    -fx-background-color: #30a85f;
+}
 
 .btn-SportMaintenance:focused:hover{
     -fx-background-color: #185b33;
 }
 
 
+/***#################TITULO DE VISTA**#################*/
 
-  /***#################TITULO DE VISTA**#################*/
+#lblMantenimientoDeportesTitulo{
+    -fx-text-fill: #30a85f;
 
-  #lblMantenimientoDeportesTitulo{
-      -fx-text-fill: #30a85f;
+}
 
-  }
+/***#################FORMA GENERAL DE LOS TITULOS DE VISTA**#################*/
+.lbl-Title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 5 0 5 0;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+}
 
-  /***#################FORMA GENERAL DE LOS TITULOS DE VISTA**#################*/
-  .lbl-Title {
-      -fx-font-size: 20px;
-      -fx-font-weight: bold;
-      -fx-padding: 5 0 5 0;
-      -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-  }
-
-  .lbl-SubTitulosSportMaintenance {
-      -fx-font-size: 17px;
-      -fx-font-weight: bold;
-      -fx-text-fill: #30a85f;
-      -fx-padding: 5 0 5 0;
-      /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);*/
-  }
+.lbl-SubTitulosSportMaintenance {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #30a85f;
+    -fx-padding: 5 0 5 0;
+    /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);*/
+}
 
 
 /**IMAGENES DE VISTA**/
@@ -213,724 +212,785 @@
     -fx-stroke-width: 10px;
 }
 
-  /*########################### VISTA DE MANTENIMIENTO DE EQUIPOS #########################################################################*/
-
-
-  .AnchorPane-TeamsMaintenance {
-      -fx-background-color: #e89e9e;
-      -fx-border-color: #a83030;
-      -fx-border-width: 5;
-      -fx-border-radius: 15;
-      -fx-background-radius: 19;
-      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-      -fx-font-family: "Trebuchet MS", sans-serif;
-
-  }
-
-  .StackPane-TeamsMaintenance {
-      -fx-background-color: #ffffff;
-      -fx-border-color: #a83030;
-      -fx-border-width: 5;
-      -fx-border-radius: 15;
-      -fx-background-radius: 19;
-      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-  }
-
-  .AnchorPane-TituloTeamsMaintenance{
-      -fx-border-color: #a83030;
-      -fx-border-width: 5;
-      -fx-border-radius: 15;
-      -fx-background-radius: 19;
-      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-      -fx-background-color: #fdd7d7;
-  }
-
-  /***#################TITULO DE VISTA**#################*/
-
-  #lblMantenimientoEquiposTitulo{
-      -fx-text-fill: #a83030;
-  }
-
-  .lbl-SubTitulosTeamsMaintenance {
-      -fx-font-size: 17px;
-      -fx-font-weight: bold;
-      -fx-text-fill: #a83030;
-      -fx-padding: 5 0 5 0;
-      /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);*/
-  }
-
-  /***#################COMBOBOX DE VISTA**#################*/
-
-  #cmbEquipos {
-      -fx-border-color: transparent;
-      -fx-border-radius: 0;
-      -fx-background-color: #e89e9e;
-      -fx-text-fill: white;
-      -fx-font-weight: bold;
-      -fx-padding: 4;
-      -fx-background-insets: 0;
-
-  }
-
-  #cmbEquipos .text-field {
-      -fx-prompt-text-fill: #a83030;
-  }
-
-  #cmbEquipos .combo-popup .text-field {
-      -fx-prompt-text-fill: -mfx-text-me;
-  }
-
-  #cmbEquipos .caret .mfx-font-icon {
-      -mfx-color: #a83030;
-      -mfx-description: "fas-angle-down";
-      -mfx-size: 16;
-  }
-
-  #cmbEquipos .caret .mfx-ripple-generator {
-      -mfx-ripple-color: rgba(255, 255, 255, 0.5);
-  }
-
-  #sprTeamsMaintenance{
-      -fx-background-color: #a83030;
-      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-  }
-
-
-  #imgSeleccionar{
-      -fx-image: url('../resources/SeleccionarIcon.png');
-  }
-
-  #spImagenEquipos{
-      -fx-border-color: #a83030;
-      -fx-border-width: 5;
-      -fx-border-radius: 15;
-      -fx-background-radius: 17;
-      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-  }
-
-  #imgLupaRoja{
-      -fx-image: url('../resources/LupaRojaIcon.png');
-  }
-
-  /***#################BOTOONES DE VISTA**#################*/
-
+/*########################### VISTA DE MANTENIMIENTO DE EQUIPOS #########################################################################*/
+
+
+.AnchorPane-TeamsMaintenance {
+    -fx-background-color: #e89e9e;
+    -fx-border-color: #a83030;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+
+}
+
+.StackPane-TeamsMaintenance {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #a83030;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+}
+
+.AnchorPane-TituloTeamsMaintenance{
+    -fx-border-color: #a83030;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+    -fx-background-color: #fdd7d7;
+}
+
+/***#################TITULO DE VISTA**#################*/
+
+#lblMantenimientoEquiposTitulo{
+    -fx-text-fill: #a83030;
+}
+
+.lbl-SubTitulosTeamsMaintenance {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #a83030;
+    -fx-padding: 5 0 5 0;
+    /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);*/
+}
+
+/***#################COMBOBOX DE VISTA**#################*/
+
+#cmbEquipos {
+    -fx-border-color: transparent;
+    -fx-border-radius: 0;
+    -fx-background-color: #e89e9e;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 4;
+    -fx-background-insets: 0;
+
+}
+
+#cmbEquipos .text-field {
+    -fx-prompt-text-fill: #a83030;
+}
+
+#cmbEquipos .combo-popup .text-field {
+    -fx-prompt-text-fill: -mfx-text-me;
+}
+
+#cmbEquipos .caret .mfx-font-icon {
+    -mfx-color: #a83030;
+    -mfx-description: "fas-angle-down";
+    -mfx-size: 16;
+}
+
+#cmbEquipos .caret .mfx-ripple-generator {
+    -mfx-ripple-color: rgba(255, 255, 255, 0.5);
+}
+
+#sprTeamsMaintenance{
+    -fx-background-color: #a83030;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+}
+
+
+#imgSeleccionar{
+    -fx-image: url('../resources/SeleccionarIcon.png');
+}
+
+#spImagenEquipos{
+    -fx-border-color: #a83030;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 17;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+}
+
+#imgLupaRoja{
+    -fx-image: url('../resources/LupaRojaIcon.png');
+}
+
+/***#################BOTOONES DE VISTA**#################*/
+
 
-  .btn-TeamsMaintenance {
-      -fx-alignment: center;
-      -fx-background-color: #a83030;
-      -fx-background-radius: 4px;
-      -fx-border-width: 0;
-      -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
-      -fx-font-family: "Trebuchet MS", sans-serif;
-      -fx-font-size: 15px;
-      -fx-font-weight: bold;
-      -fx-text-fill: #ffffff;
-      -fx-padding: 10px 16px;
-      -fx-min-height: 40px;
-      -fx-border-color: transparent;
-      -fx-cursor: hand;
-      -fx-transition: all 0.15s ease-in-out;
-  }
-
-  /* Efecto al pasar el mouse */
-  .btn-TeamsMaintenance:hover {
-      -fx-background-color: #5b1818;
-      -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.5), 8, 0, 0, 4);
-      -fx-translate-y: -2px;
-  }
-
-  /* Efecto al hacer clic */
-  .btn-TeamsMaintenance:pressed {
-      -fx-background-color: #ff0e0e !important;
-      -fx-effect: innershadow(three-pass-box, #D6D6E7, 7, 0, 0, 3);
-      -fx-translate-y: 2px;
-  }
-
-  .btn-TeamsMaintenance:focused {
-      -fx-background-color: #a83030;
-  }
-
-  .btn-TeamsMaintenance:focused:hover{
-      -fx-background-color: #5b1818;
-  }
-
-  /***#################TEXTFIELD DE VISTA**#################*/
-
-  #txtfieldNombreEquipos {
-      -fx-border-color: #a83030;
-  }
-
-  #txtfieldNombreEquipos .floating-text {
-      -fx-text-fill: #5b1818;
-  }
-
-
-  /*########################### VISTA DE CREACION DE TORNEOS #########################################################################*/
-
-  .AnchorPane-TournamentCreation {
-      -fx-background-color: #a241fc;
-      -fx-border-color: #690093;
-      -fx-border-width: 5;
-      -fx-border-radius: 15;
-      -fx-background-radius: 19;
-      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-      -fx-font-family: "Trebuchet MS", sans-serif;
-
-  }
-
-  .StackPane-TournamentCreation {
-      -fx-background-color: #ffffff;
-      -fx-border-color:#690093;
-      -fx-border-width: 5;
-      -fx-border-radius: 15;
-      -fx-background-radius: 19;
-      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-  }
-
-  .AnchorPane-TituloTournamentCreation{
-      -fx-border-color: #690093;
-      -fx-border-width: 5;
-      -fx-border-radius: 15;
-      -fx-background-radius: 19;
-      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-      -fx-background-color: #d9a2fd;
-  }
-
-  /***#################TITULO DE VISTA**#################*/
-
-  #lblTournamentCreationTitulo{
-      -fx-text-fill:#690093;
-  }
-
-  .lbl-SubTournamentCreation {
-      -fx-font-size: 17px;
-      -fx-font-weight: bold;
-      -fx-text-fill: #690093;
-      -fx-padding: 5 0 5 0;
-      /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);*/
-  }
-
-  .mfx-stepper .mfx-text-field {
-      -mfx-float-mode: disabled;
-      -fx-font-family: "Trebuchet MS", sans-serif;
-      -fx-pref-width: 265;
-  }
-
-  .mfx-stepper .mfx-stepper-toggle .mfx-text-field {
-      -fx-border-color: transparent;
-      -fx-font-family: "Trebuchet MS", sans-serif;
-      -fx-pref-width: 1;
-  }
-
-  .mfx-stepper .error-label {
-      -fx-font-family: "Trebuchet MS", sans-serif;
-      -fx-text-fill: -mfx-red;
-  }
-
-  .mfx-stepper .header-label {
-      -fx-border-color: transparent;
-      -fx-font-family: "Trebuchet MS", sans-serif;
-  }
-
-  .mfx-stepper .completed-label {
-      -fx-border-color: transparent;
-      -fx-font-family: "Trebuchet MS", sans-serif;
-      -fx-font-size: 24;
-      -fx-alignment: center;
-      -fx-text-fill: -mfx-green;
-  }
-
-  /*########################### CHECKLIST DE CREACION DE TORNEOS #########################################################################*/
-
-  .mfx-checklist-view {
-      -fx-background-radius: 7px !important;
-      -fx-border-color: #690093 !important;
-      -fx-border-radius: 4px !important;
-      -fx-border-width: 5px !important;
-      -fx-font-weight: bold !important;
-      -fx-text-fill: #690093 !important;
-      -fx-padding: 4;
-  }
-
-  .mfx-checklist-view .scroll-bar:vertical .track {
-      -fx-background-color: #d9a2fd !important;
-  }
-
-  .mfx-checklist-view .scroll-bar:vertical .thumb {
-      -fx-background-color: #690093 !important;
-  }
-
-  .mfx-checklist-view .scroll-bar:vertical .thumb:hover {
-      -fx-background-color: #f716ff !important;
-  }
-
-  /*########################### LISTVIEW DE CREACION DE TORNEOS #########################################################################*/
-
-  .custom-list-view {
-      -fx-background-color: #d9a2fd !important;
-      -fx-background-radius: 7px !important;
-      -fx-border-color: #690093 !important;
-      -fx-border-radius: 4px !important;
-      -fx-border-width: 5px !important;
-      -fx-font-weight: bold !important;
-      -fx-padding: 4;
-  }
-
-  .custom-list-view .virtual-flow {
-      -fx-background-color: transparent !important; /* Fija el fondo del área desplazable */
-  }
-
-
-  .custom-list-view .virtual-flow .mfx-list-cell {
-      -fx-background-color: transparent !important;
-      -fx-border-color: transparent !important;
-      -fx-background-radius: 10!important;
-      -fx-border-radius: 10!important;
-  }
-
-  .custom-list-view .virtual-flow .mfx-list-cell .data-label {
-      -fx-text-fill: #690093 !important; /* Asegura que el texto sea visible */
-  }
-
-  .custom-list-view .virtual-flow .mfx-list-cell .mfx-ripple-generator {
-      -mfx-auto-clip: true;
-  }
-
-  .custom-list-view .virtual-flow .mfx-list-cell:selected .mfx-ripple-generator {
-      -mfx-paused: true;
-  }
-
-
-  .custom-list-view .scroll-bar:vertical .track {
-      -fx-background-color: #ae6ef5 !important;
-  }
-
-  .custom-list-view .scroll-bar:vertical .thumb {
-      -fx-background-color: #690093 !important;
-  }
-
-  .custom-list-view .scroll-bar:vertical .thumb:hover {
-      -fx-background-color: #f716ff !important;
-  }
-
-  /*########################### CHECKBOX DE CREACION DE TORNEOS #########################################################################*/
-
-
-  .mfx-checkbox {
-      -mfx-main: linear-gradient(to right, #5E0BA8, #D9A2FD, #5E0BA8, #D9A2FD);
-      -fx-font-family: "Trebuchet MS", sans-serif;
-      -fx-text-fill: #690093;
-      -fx-font-weight: bold
-
-  }
-
-  .mfx-checkbox .mfx-ripple-generator {
-      -mfx-ripple-color: linear-gradient(to right, #5E0BA8, #D9A2FD);
-      -fx-opacity: 0.4;
-  }
-
-
-
-  /*########################### VISTA DE CAMARA #########################################################################*/
-
-  .AnchorPane-TeamsMaintenance {
-      -fx-background-color: #e89e9e;
-      -fx-border-color: #a83030;
-      -fx-border-width: 5;
-      -fx-border-radius: 15;
-      -fx-background-radius: 19;
-      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-      -fx-font-family: "Trebuchet MS", sans-serif;
-
-  }
-
-  .StackPane-TeamsMaintenance {
-      -fx-background-color: #ffffff;
-      -fx-border-color: #a83030;
-      -fx-border-width: 5;
-      -fx-border-radius: 15;
-      -fx-background-radius: 19;
-      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-  }
-
-  .AnchorPane-TituloTeamsMaintenance{
-      -fx-border-color: #a83030;
-      -fx-border-width: 5;
-      -fx-border-radius: 15;
-      -fx-background-radius: 19;
-      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-      -fx-background-color: #fdd7d7;
-  }
-
-  /***#################TITULO DE VISTA**#################*/
-
-  #lblMantenimientoEquiposTitulo{
-      -fx-text-fill: #a83030;
-  }
-
-  .lbl-SubTitulosTeamsMaintenance {
-      -fx-font-size: 17px;
-      -fx-font-weight: bold;
-      -fx-text-fill: #a83030;
-      -fx-padding: 5 0 5 0;
-      /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);*/
-  }
-
-
-  #spImagenEquiposFotoTomada{
-      -fx-border-color: #a83030;
-      -fx-border-width: 5;
-      -fx-border-radius: 15;
-      -fx-background-radius: 17;
-      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-  }
-
-
-  /*########################### VISTA DE TORNEOS ACTIVOS #########################################################################*/
-
-
-  .AnchorPane-ActiveTournaments {
-      -fx-background-color: #fff463;
-      -fx-border-color: #a2a000;
-      -fx-border-width: 5;
-      -fx-border-radius: 15;
-      -fx-background-radius: 19;
-      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-      -fx-font-family: "Trebuchet MS", sans-serif;
-
-  }
-
-  .StackPane-ActiveTournaments {
-      -fx-background-color: #ffffff;
-      -fx-border-color: #a2a000;
-      -fx-border-width: 5;
-      -fx-border-radius: 15;
-      -fx-background-radius: 19;
-      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-  }
-
-  .AnchorPane-TituloActiveTournaments{
-      -fx-border-color: #a2a000;
-      -fx-border-width: 5;
-      -fx-border-radius: 15;
-      -fx-background-radius: 19;
-      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-      -fx-background-color: #eee795;
-  }
-
-  /***#################TITULO DE VISTA**#################*/
-
-  #lblTorneosActivosTitulo{
-      -fx-text-fill: #858400;
-  }
-
-  .lbl-SubTitulosActiveTournaments {
-      -fx-font-size: 17px;
-      -fx-font-weight: bold;
-      -fx-text-fill: #a2a000;
-      -fx-padding: 5 0 5 0;
-      /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);*/
-  }
-
-
-  #sprActiveTournaments{
-      -fx-background-color: #a2a000;
-      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-  }
-
-
-
-
-  #imgLupaAmarilla{
-      -fx-image: url('../resources/LupaAmarillaIcon.png');
-  }
-
-
-  .lbl-informacionActiveTournaments {
-      -fx-font-size: 17px;
-      -fx-font-weight: bold;
-      -fx-text-fill: #a2a000;
-      -fx-padding: 5 0 5 0;
-      -fx-border-color: #a2a000;
-      -fx-border-width: 5;
-      -fx-border-radius: 5;
-      -fx-background-radius: 7;
-      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-      -fx-background-color: #eee795;
-
-  }
-
-  /***#################BOTOONES DE VISTA**#################*/
-
-  .btn-ActiveTournaments {
-      -fx-alignment: center;
-      -fx-background-color: #a2a000;
-      -fx-background-radius: 4px;
-      -fx-border-width: 0;
-      -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
-      -fx-font-family: "Trebuchet MS", sans-serif;
-      -fx-font-size: 15px;
-      -fx-font-weight: bold;
-      -fx-text-fill: #ffffff;
-      -fx-padding: 10px 16px;
-      -fx-min-height: 40px;
-      -fx-border-color: transparent;
-      -fx-cursor: hand;
-      -fx-transition: all 0.15s ease-in-out;
-  }
-
-  /* Efecto al pasar el mouse */
-  .btn-ActiveTournaments:hover {
-      -fx-background-color: #5b5518;
-      -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.5), 8, 0, 0, 4);
-      -fx-translate-y: -2px;
-  }
-
-  /* Efecto al hacer clic */
-  .btn-ActiveTournaments:pressed {
-      -fx-background-color: #f7ff0e !important;
-      -fx-effect: innershadow(three-pass-box, #D6D6E7, 7, 0, 0, 3);
-      -fx-translate-y: 2px;
-  }
-
-  .btn-ActiveTournaments:focused {
-      -fx-background-color: #a2a000;
-  }
-
-  .btn-ActiveTournaments:focused:hover{
-      -fx-background-color: #5b5518;
-  }
-
-  /*########################### LISTVIEW DE CREACION DE TORNEOS #########################################################################*/
-
-  .custom-list-view-ActiveTournaments {
-      -fx-background-color: #eee795 !important;
-      -fx-background-radius: 7px !important;
-      -fx-border-color: #a2a000 !important;
-      -fx-border-radius: 4px !important;
-      -fx-border-width: 5px !important;
-      -fx-font-weight: bold !important;
-      -fx-padding: 4;
-  }
-
-  .custom-list-view-ActiveTournaments .virtual-flow {
-      -fx-background-color: transparent !important; /* Fija el fondo del área desplazable */
-  }
-
-
-  .custom-list-view-ActiveTournaments .virtual-flow .mfx-list-cell {
-      -fx-background-color: transparent !important;
-      -fx-border-color: transparent !important;
-      -fx-background-radius: 10!important;
-      -fx-border-radius: 10!important;
-  }
-
-  .custom-list-view-ActiveTournaments .virtual-flow .mfx-list-cell .data-label {
-      -fx-text-fill: #a2a000 !important; /* Asegura que el texto sea visible */
-  }
-
-  .custom-list-view-ActiveTournaments .virtual-flow .mfx-list-cell .mfx-ripple-generator {
-      -mfx-auto-clip: true;
-  }
-
-  .custom-list-view-ActiveTournaments .virtual-flow .mfx-list-cell:selected .mfx-ripple-generator {
-      -mfx-paused: true;
-  }
-
-
-  .custom-list-view-ActiveTournaments .scroll-bar:vertical .track {
-      -fx-background-color: #f5df6e !important;
-  }
-
-  .custom-list-view-ActiveTournaments .scroll-bar:vertical .thumb {
-      -fx-background-color: #937f00 !important;
-  }
-
-  .custom-list-view-ActiveTournaments .scroll-bar:vertical .thumb:hover {
-      -fx-background-color: #ff6816 !important;
-  }
-
-  /*########################### VISTA DE RANKINGS #########################################################################*/
-
-
-  .AnchorPane-Rankings {
-      -fx-background-color: #5169ff;
-      -fx-border-color: #0500a2;
-      -fx-border-width: 5;
-      -fx-border-radius: 15;
-      -fx-background-radius: 19;
-      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-      -fx-font-family: "Trebuchet MS", sans-serif;
-
-  }
-
-  .StackPane-Rankings {
-      -fx-background-color: #ffffff;
-      -fx-border-color: #0500a2;
-      -fx-border-width: 5;
-      -fx-border-radius: 15;
-      -fx-background-radius: 19;
-      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-  }
-
-  .AnchorPane-TituloRankings{
-      -fx-border-color: #0500a2;
-      -fx-border-width: 5;
-      -fx-border-radius: 15;
-      -fx-background-radius: 19;
-      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-      -fx-background-color: #95a1ee;
-  }
-
-  /***#################TITULO DE VISTA**#################*/
-
-  #lblRankingsTitulo{
-      -fx-text-fill: #0500a2;
-  }
-
-  .lbl-SubTitulosRankings {
-      -fx-font-size: 17px;
-      -fx-font-weight: bold;
-      -fx-text-fill: #0500a2;
-      -fx-padding: 5 0 5 0;
-      /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);*/
-  }
-
-
-  #sprRankings{
-      -fx-background-color: #0500a2;
-      -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-  }
-
-  #imgFlechaArriba{
-      -fx-image: url('../resources/ArrowUpIcon.png');
-  }
-
-  #imgRankingTrophyIcon{
-      -fx-image: url('../resources/RankingTrophyIcon.png');
-  }
-
-
-  /***#################BOTOONES DE VISTA**#################*/
-
-  .btn-Rankings {
-      -fx-alignment: center;
-      -fx-background-color: #0500a2;
-      -fx-background-radius: 4px;
-      -fx-border-width: 0;
-      -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
-      -fx-font-family: "Trebuchet MS", sans-serif;
-      -fx-font-size: 15px;
-      -fx-font-weight: bold;
-      -fx-text-fill: #ffffff;
-      -fx-padding: 10px 16px;
-      -fx-min-height: 40px;
-      -fx-border-color: transparent;
-      -fx-cursor: hand;
-      -fx-transition: all 0.15s ease-in-out;
-  }
-
-  /* Efecto al pasar el mouse */
-  .btn-Rankings:hover {
-      -fx-background-color: #181b5b;
-      -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.5), 8, 0, 0, 4);
-      -fx-translate-y: -2px;
-  }
-
-  /* Efecto al hacer clic */
-  .btn-Rankings:pressed {
-      -fx-background-color: #0e6eff !important;
-      -fx-effect: innershadow(three-pass-box, #D6D6E7, 7, 0, 0, 3);
-      -fx-translate-y: 2px;
-  }
-
-  .btn-Rankings:focused {
-      -fx-background-color: #0500a2;
-  }
-
-  .btn-Rankings:focused:hover{
-      -fx-background-color: #181b5b;
-  }
-
-  /*########################### LISTVIEW DE CREACION DE TORNEOS #########################################################################*/
-
-  .table-view-Rankings {
-      -fx-background-color: #5169ff !important;
-      -fx-background-radius: 7px !important;
-      -fx-border-color: #0500a2 !important;
-      -fx-border-radius: 4px !important;
-      -fx-border-width: 5px !important;
-      -fx-font-weight: bold !important;
-      -fx-padding: 4;
-  }
-
-  .table-view-Rankings .virtual-flow {
-      -fx-background-color: transparent !important; /* Fija el fondo del área desplazable */
-  }
-
-
-  .table-view-Rankings .virtual-flow .mfx-list-cell {
-      -fx-background-color: transparent !important;
-      -fx-border-color: transparent !important;
-      -fx-background-radius: 10!important;
-      -fx-border-radius: 10!important;
-  }
-
-  .table-view-Rankings .virtual-flow .mfx-list-cell .data-label {
-      -fx-text-fill: #0500a2 !important; /* Asegura que el texto sea visible */
-  }
-
-  .table-view-Rankings .virtual-flow .mfx-list-cell .mfx-ripple-generator {
-      -mfx-auto-clip: true;
-  }
-
-  .table-view-Rankings .virtual-flow .mfx-list-cell:selected .mfx-ripple-generator {
-      -mfx-paused: true;
-  }
-
-
-  .table-view-Rankings .scroll-bar:vertical .track {
-      -fx-background-color: #6e99f5 !important;
-  }
-
-  .table-view-Rankings .scroll-bar:vertical .thumb {
-      -fx-background-color: #000c93 !important;
-  }
-
-  .table-view-Rankings .scroll-bar:vertical .thumb:hover {
-      -fx-background-color: #16ecff !important;
-  }
-
-  /**IMAGENES DE BOTONES**/
-
-  /*########################### IMAGENES DE MENU PRINCIPAL #########################################################################*/
-  .mfx-BtnMantenimientoDeportes > ImageView{-fx-image: url('../resources/SportRegisterIcon.png');}
-  .mfx-BtnMantenimientoEquipos > ImageView{-fx-image: url('../resources/TeamsMaintenanceIcon.png');}
-  .mfx-BtnCreacionTorneos > ImageView{-fx-image: url('../resources/TournamentIcon.png');}
-  .mfx-BtnRankings > ImageView{-fx-image: url('../resources/RankingIcon.png');}
-  .mfx-BtnTorneosActivos > ImageView{-fx-image: url('../resources/ActiveTournamentIcon.png');}
-  .mfx-BtnLogros > ImageView{-fx-image: url('../resources/AchievementIcon.png');}
-
-
-  /*########################### IMAGENES DE MANTENIMIENTO DE DEPORTES #########################################################################*/
-  #btnGuardarDeporte > ImageView{-fx-image: url('../resources/SaveIcon.png');}
-  #btnEliminarDeporte > ImageView{-fx-image: url('../resources/DeleteIcon.png');}
-  #btnBarrerDeporte > ImageView{-fx-image: url('../resources/ClearIcon.png');}
-  #btnBuscarImagen > ImageView{-fx-image: url('../resources/SearchImageSportIcon.png');}
-  #btnModificar > ImageView{-fx-image: url('../resources/EditIcon.png');}
-
-  /*########################### IMAGENES DE MANTENIMIENTO DE EQUIPOS #########################################################################*/
-  #btnGuardarEquipo > ImageView{-fx-image: url('../resources/SaveIcon.png');}
-  #btnEliminarEquipo > ImageView{-fx-image: url('../resources/DeleteIcon.png');}
-  #btnBarrerEquipo > ImageView{-fx-image: url('../resources/ClearIcon.png');}
-  #btnTomarFoto > ImageView{-fx-image: url('../resources/CameraIcon.png');}
-  #btnModificarEquipo > ImageView{-fx-image: url('../resources/EditIcon.png');}
-
-  /*########################### IMAGENES DE MANTENIMIENTO DE EQUIPOS #########################################################################*/
-  #btnCapturarFoto > ImageView{-fx-image: url('../resources/CaptureIcon.png');}
-  #btnReintentarFoto > ImageView{-fx-image: url('../resources/RetryIcon.png');}
-  #btnGuardarFoto > ImageView{-fx-image: url('../resources/SaveIcon.png');}
-  #btnSalirFoto> ImageView{-fx-image: url('../resources/ExitIcon.png');}
-
-  /*########################### IMAGENES DE TORNEOS ACTIVOS #########################################################################*/
-  #btnReanudarTorneo > ImageView{-fx-image: url('../resources/PlayIcon.png');}
+.btn-TeamsMaintenance {
+    -fx-alignment: center;
+    -fx-background-color: #a83030;
+    -fx-background-radius: 4px;
+    -fx-border-width: 0;
+    -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 10px 16px;
+    -fx-min-height: 40px;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-transition: all 0.15s ease-in-out;
+}
+
+/* Efecto al pasar el mouse */
+.btn-TeamsMaintenance:hover {
+    -fx-background-color: #5b1818;
+    -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.5), 8, 0, 0, 4);
+    -fx-translate-y: -2px;
+}
+
+/* Efecto al hacer clic */
+.btn-TeamsMaintenance:pressed {
+    -fx-background-color: #ff0e0e !important;
+    -fx-effect: innershadow(three-pass-box, #D6D6E7, 7, 0, 0, 3);
+    -fx-translate-y: 2px;
+}
+
+.btn-TeamsMaintenance:focused {
+    -fx-background-color: #a83030;
+}
+
+.btn-TeamsMaintenance:focused:hover{
+    -fx-background-color: #5b1818;
+}
+
+/***#################TEXTFIELD DE VISTA**#################*/
+
+#txtfieldNombreEquipos {
+    -fx-border-color: #a83030;
+}
+
+#txtfieldNombreEquipos .floating-text {
+    -fx-text-fill: #5b1818;
+}
+
+
+/*########################### VISTA DE CREACION DE TORNEOS #########################################################################*/
+
+.AnchorPane-TournamentCreation {
+    -fx-background-color: #a241fc;
+    -fx-border-color: #690093;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+
+}
+
+.StackPane-TournamentCreation {
+    -fx-background-color: #ffffff;
+    -fx-border-color:#690093;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+}
+
+.AnchorPane-TituloTournamentCreation{
+    -fx-border-color: #690093;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+    -fx-background-color: #d9a2fd;
+}
+
+/***#################TITULO DE VISTA**#################*/
+
+#lblTournamentCreationTitulo{
+    -fx-text-fill:#690093;
+}
+
+.lbl-SubTournamentCreation {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #690093;
+    -fx-padding: 5 0 5 0;
+    /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);*/
+}
+
+.mfx-stepper .mfx-text-field {
+    -mfx-float-mode: disabled;
+    -fx-font-family: "Trebuchet MS", sans-serif;
+    -fx-pref-width: 265;
+}
+
+.mfx-stepper .mfx-stepper-toggle .mfx-text-field {
+    -fx-border-color: transparent;
+    -fx-font-family: "Trebuchet MS", sans-serif;
+    -fx-pref-width: 1;
+}
+
+.mfx-stepper .error-label {
+    -fx-font-family: "Trebuchet MS", sans-serif;
+    -fx-text-fill: -mfx-red;
+}
+
+.mfx-stepper .header-label {
+    -fx-border-color: transparent;
+    -fx-font-family: "Trebuchet MS", sans-serif;
+}
+
+.mfx-stepper .completed-label {
+    -fx-border-color: transparent;
+    -fx-font-family: "Trebuchet MS", sans-serif;
+    -fx-font-size: 24;
+    -fx-alignment: center;
+    -fx-text-fill: -mfx-green;
+}
+
+/*########################### CHECKLIST DE CREACION DE TORNEOS #########################################################################*/
+
+.mfx-checklist-view {
+    -fx-background-radius: 7px !important;
+    -fx-border-color: #690093 !important;
+    -fx-border-radius: 4px !important;
+    -fx-border-width: 5px !important;
+    -fx-font-weight: bold !important;
+    -fx-text-fill: #690093 !important;
+    -fx-padding: 4;
+}
+
+.mfx-checklist-view .scroll-bar:vertical .track {
+    -fx-background-color: #d9a2fd !important;
+}
+
+.mfx-checklist-view .scroll-bar:vertical .thumb {
+    -fx-background-color: #690093 !important;
+}
+
+.mfx-checklist-view .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #f716ff !important;
+}
+
+/*########################### LISTVIEW DE CREACION DE TORNEOS #########################################################################*/
+
+.custom-list-view {
+    -fx-background-color: #d9a2fd !important;
+    -fx-background-radius: 7px !important;
+    -fx-border-color: #690093 !important;
+    -fx-border-radius: 4px !important;
+    -fx-border-width: 5px !important;
+    -fx-font-weight: bold !important;
+    -fx-padding: 4;
+}
+
+.custom-list-view .virtual-flow {
+    -fx-background-color: transparent !important; /* Fija el fondo del área desplazable */
+}
+
+
+.custom-list-view .virtual-flow .mfx-list-cell {
+    -fx-background-color: transparent !important;
+    -fx-border-color: transparent !important;
+    -fx-background-radius: 10!important;
+    -fx-border-radius: 10!important;
+}
+
+.custom-list-view .virtual-flow .mfx-list-cell .data-label {
+    -fx-text-fill: #690093 !important; /* Asegura que el texto sea visible */
+}
+
+.custom-list-view .virtual-flow .mfx-list-cell .mfx-ripple-generator {
+    -mfx-auto-clip: true;
+}
+
+.custom-list-view .virtual-flow .mfx-list-cell:selected .mfx-ripple-generator {
+    -mfx-paused: true;
+}
+
+
+.custom-list-view .scroll-bar:vertical .track {
+    -fx-background-color: #ae6ef5 !important;
+}
+
+.custom-list-view .scroll-bar:vertical .thumb {
+    -fx-background-color: #690093 !important;
+}
+
+.custom-list-view .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #f716ff !important;
+}
+
+/*########################### CHECKBOX DE CREACION DE TORNEOS #########################################################################*/
+
+
+.mfx-checkbox {
+    -mfx-main: linear-gradient(to right, #5E0BA8, #D9A2FD, #5E0BA8, #D9A2FD);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+    -fx-text-fill: #690093;
+    -fx-font-weight: bold
+
+}
+
+.mfx-checkbox .mfx-ripple-generator {
+    -mfx-ripple-color: linear-gradient(to right, #5E0BA8, #D9A2FD);
+    -fx-opacity: 0.4;
+}
+
+/*########################### VISTA DE CAMARA #########################################################################*/
+
+.AnchorPane-TeamsMaintenance {
+    -fx-background-color: #e89e9e;
+    -fx-border-color: #a83030;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+
+}
+
+.StackPane-TeamsMaintenance {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #a83030;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+}
+
+.AnchorPane-TituloTeamsMaintenance{
+    -fx-border-color: #a83030;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+    -fx-background-color: #fdd7d7;
+}
+
+/***#################TITULO DE VISTA**#################*/
+
+#lblMantenimientoEquiposTitulo{
+    -fx-text-fill: #a83030;
+}
+
+.lbl-SubTitulosTeamsMaintenance {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #a83030;
+    -fx-padding: 5 0 5 0;
+    /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);*/
+}
+
+
+#spImagenEquiposFotoTomada{
+    -fx-border-color: #a83030;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 17;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+}
+
+
+/*########################### VISTA DE TORNEOS ACTIVOS #########################################################################*/
+
+
+.AnchorPane-ActiveTournaments {
+    -fx-background-color: #fff463;
+    -fx-border-color: #a2a000;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+
+}
+
+.StackPane-ActiveTournaments {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #a2a000;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+}
+
+.AnchorPane-TituloActiveTournaments{
+    -fx-border-color: #a2a000;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+    -fx-background-color: #eee795;
+}
+
+/***#################TITULO DE VISTA**#################*/
+
+#lblTorneosActivosTitulo{
+    -fx-text-fill: #858400;
+}
+
+.lbl-SubTitulosActiveTournaments {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #a2a000;
+    -fx-padding: 5 0 5 0;
+    /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);*/
+}
+
+
+#sprActiveTournaments{
+    -fx-background-color: #a2a000;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+}
+
+
+
+
+#imgLupaAmarilla{
+    -fx-image: url('../resources/LupaAmarillaIcon.png');
+}
+
+
+.lbl-informacionActiveTournaments {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #a2a000;
+    -fx-padding: 5 0 5 0;
+    -fx-border-color: #a2a000;
+    -fx-border-width: 5;
+    -fx-border-radius: 5;
+    -fx-background-radius: 7;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+    -fx-background-color: #eee795;
+
+}
+
+/*########################### VISTA DE RANKINGS #########################################################################*/
+
+
+.AnchorPane-Rankings {
+    -fx-background-color: #5169ff;
+    -fx-border-color: #0500a2;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+
+}
+
+.StackPane-Rankings {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #0500a2;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+}
+
+.AnchorPane-TituloRankings{
+    -fx-border-color: #0500a2;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+    -fx-background-color: #95a1ee;
+}
+
+/***#################TITULO DE VISTA**#################*/
+
+#lblRankingsTitulo{
+    -fx-text-fill: #0500a2;
+}
+
+.lbl-SubTitulosRankings {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0500a2;
+    -fx-padding: 5 0 5 0;
+    /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);*/
+}
+
+
+#sprRankings{
+    -fx-background-color: #0500a2;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+}
+
+#imgFlechaArriba{
+    -fx-image: url('../resources/ArrowUpIcon.png');
+}
+
+#imgRankingTrophyIcon{
+    -fx-image: url('../resources/RankingTrophyIcon.png');
+}
+
+
+/***#################BOTOONES DE VISTA**#################*/
+
+.btn-Rankings {
+    -fx-alignment: center;
+    -fx-background-color: #0500a2;
+    -fx-background-radius: 4px;
+    -fx-border-width: 0;
+    -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 10px 16px;
+    -fx-min-height: 40px;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-transition: all 0.15s ease-in-out;
+}
+
+/* Efecto al pasar el mouse */
+.btn-Rankings:hover {
+    -fx-background-color: #181b5b;
+    -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.5), 8, 0, 0, 4);
+    -fx-translate-y: -2px;
+}
+
+/* Efecto al hacer clic */
+.btn-Rankings:pressed {
+    -fx-background-color: #0e6eff !important;
+    -fx-effect: innershadow(three-pass-box, #D6D6E7, 7, 0, 0, 3);
+    -fx-translate-y: 2px;
+}
+
+.btn-Rankings:focused {
+    -fx-background-color: #0500a2;
+}
+
+.btn-Rankings:focused:hover{
+    -fx-background-color: #181b5b;
+}
+
+/*########################### LISTVIEW DE CREACION DE TORNEOS #########################################################################*/
+
+.table-view-Rankings {
+    -fx-background-color: #5169ff !important;
+    -fx-background-radius: 7px !important;
+    -fx-border-color: #0500a2 !important;
+    -fx-border-radius: 4px !important;
+    -fx-border-width: 5px !important;
+    -fx-font-weight: bold !important;
+    -fx-padding: 4;
+}
+
+.table-view-Rankings .virtual-flow {
+    -fx-background-color: transparent !important; /* Fija el fondo del área desplazable */
+}
+
+
+.table-view-Rankings .virtual-flow .mfx-list-cell {
+    -fx-background-color: transparent !important;
+    -fx-border-color: transparent !important;
+    -fx-background-radius: 10!important;
+    -fx-border-radius: 10!important;
+}
+
+.table-view-Rankings .virtual-flow .mfx-list-cell .data-label {
+    -fx-text-fill: #0500a2 !important; /* Asegura que el texto sea visible */
+}
+
+.table-view-Rankings .virtual-flow .mfx-list-cell .mfx-ripple-generator {
+    -mfx-auto-clip: true;
+}
+
+.table-view-Rankings .virtual-flow .mfx-list-cell:selected .mfx-ripple-generator {
+    -mfx-paused: true;
+}
+
+
+.table-view-Rankings .scroll-bar:vertical .track {
+    -fx-background-color: #6e99f5 !important;
+}
+
+.table-view-Rankings .scroll-bar:vertical .thumb {
+    -fx-background-color: #000c93 !important;
+}
+
+.table-view-Rankings .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #16ecff !important;
+}
+
+
+/*########################### VISTA DE LOGROS #########################################################################*/
+
+
+.AnchorPane-Logros {
+    -fx-background-color: #ff9451;
+    -fx-border-color: #a25600;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+
+}
+
+.StackPane-Logros {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #a25600;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+}
+
+.AnchorPane-TituloLogros{
+    -fx-border-color: #a25600;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+    -fx-background-color: #eebd95;
+}
+
+/***#################TITULO DE VISTA**#################*/
+
+#lblLogrosTitulo{
+    -fx-text-fill: #944f00;
+}
+
+.lbl-SubTitulosLogros {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #a25600;
+    -fx-padding: 5 0 5 0;
+    /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);*/
+}
+
+
+#sprLogros{
+    -fx-background-color: #a25600;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+}
+
+#imgFlechaArribaLogros{
+    -fx-image: url('../resources/ArrowUpOrangeIcon.png');
+}
+
+#imgLogrosIcon{
+    -fx-image: url('../resources/WinnerAchievementsIcon.png');
+}
+
+
+/*########################### LISTVIEW DE LISTA DE LOGROS #########################################################################*/
+
+.table-view-Logros {
+    -fx-background-color: #eebd95 !important;
+    -fx-background-radius: 7px !important;
+    -fx-border-color: #a25600 !important;
+    -fx-border-radius: 4px !important;
+    -fx-border-width: 5px !important;
+    -fx-font-weight: bold !important;
+    -fx-padding: 4;
+}
+
+.table-view-Logros .virtual-flow {
+    -fx-background-color: transparent !important; /* Fija el fondo del área desplazable */
+}
+
+
+.table-view-Logros .virtual-flow .mfx-list-cell {
+    -fx-background-color: transparent !important;
+    -fx-border-color: transparent !important;
+    -fx-background-radius: 10!important;
+    -fx-border-radius: 10!important;
+}
+
+.table-view-Logros .virtual-flow .mfx-list-cell .data-label {
+    -fx-text-fill: #a25600 !important; /* Asegura que el texto sea visible */
+}
+
+.table-view-Logros .virtual-flow .mfx-list-cell .mfx-ripple-generator {
+    -mfx-auto-clip: true;
+}
+
+.table-view-Logros .virtual-flow .mfx-list-cell:selected .mfx-ripple-generator {
+    -mfx-paused: true;
+}
+
+
+.table-view-Logros .scroll-bar:vertical .track {
+    -fx-background-color: #f1985d !important;
+}
+
+.table-view-Logros .scroll-bar:vertical .thumb {
+    -fx-background-color: #935300 !important;
+}
+
+.table-view-Logros .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #ff1616 !important;
+}
+
+/**IMAGENES DE LOGROS**/
+
+#imgGanador8Torneos{
+    -fx-image: url('../resources/8TournamentsWinnerIcon.png');
+}
+
+#imgGanador6Torneos{
+    -fx-image: url('../resources/6TournamentsWinnerIcon.png');
+}
+
+#imgGanador3Torneos{
+    -fx-image: url('../resources/3TournamentsWinnerIcon.png');
+}
+
+#img20Puntos{
+    -fx-image: url('../resources/20GoalsIcon.png');
+}
+
+#imgEscudo{
+    -fx-image: url('../resources/DefenseIcon.png');
+}
+
+#imgBalanza{
+    -fx-image: url('../resources/TieIcon.png');
+}
+
+#img3Consecutivos{
+    -fx-image: url('../resources/10GamesConsecutiveIcon.png');
+}
+
+#imgMontanaRusa{
+    -fx-image: url('../resources/WinAfterLosing.png');
+}
+
+#imgMedallaTorneo{
+    -fx-image: url('../resources/TournamentWinnerIcon.png');
+}
+
+#imgInfo{
+    -fx-image: url('../resources/InfoIcon.png');
+}
+
+
+/**IMAGENES DE BOTONES**/
+
+/*########################### IMAGENES DE MENU PRINCIPAL #########################################################################*/
+.mfx-BtnMantenimientoDeportes > ImageView{-fx-image: url('../resources/SportRegisterIcon.png');}
+.mfx-BtnMantenimientoEquipos > ImageView{-fx-image: url('../resources/TeamsMaintenanceIcon.png');}
+.mfx-BtnCreacionTorneos > ImageView{-fx-image: url('../resources/TournamentIcon.png');}
+.mfx-BtnRankings > ImageView{-fx-image: url('../resources/RankingIcon.png');}
+.mfx-BtnTorneosActivos > ImageView{-fx-image: url('../resources/ActiveTournamentIcon.png');}
+.mfx-BtnLogros > ImageView{-fx-image: url('../resources/AchievementIcon.png');}
+
+/*########################### IMAGENES DE MANTENIMIENTO DE DEPORTES #########################################################################*/
+#btnGuardarDeporte > ImageView{-fx-image: url('../resources/SaveIcon.png');}
+#btnEliminarDeporte > ImageView{-fx-image: url('../resources/DeleteIcon.png');}
+#btnBarrerDeporte > ImageView{-fx-image: url('../resources/ClearIcon.png');}
+#btnBuscarImagen > ImageView{-fx-image: url('../resources/SearchImageSportIcon.png');}
+#btnModificar > ImageView{-fx-image: url('../resources/EditIcon.png');}
+
+/*########################### IMAGENES DE MANTENIMIENTO DE EQUIPOS #########################################################################*/
+#btnGuardarEquipo > ImageView{-fx-image: url('../resources/SaveIcon.png');}
+#btnEliminarEquipo > ImageView{-fx-image: url('../resources/DeleteIcon.png');}
+#btnBarrerEquipo > ImageView{-fx-image: url('../resources/ClearIcon.png');}
+#btnTomarFoto > ImageView{-fx-image: url('../resources/CameraIcon.png');}
+#btnModificarEquipo > ImageView{-fx-image: url('../resources/EditIcon.png');}
+
+/*########################### IMAGENES DE MANTENIMIENTO DE EQUIPOS #########################################################################*/
+#btnCapturarFoto > ImageView{-fx-image: url('../resources/CaptureIcon.png');}
+#btnReintentarFoto > ImageView{-fx-image: url('../resources/RetryIcon.png');}
+#btnGuardarFoto > ImageView{-fx-image: url('../resources/SaveIcon.png');}
+#btnSalirFoto> ImageView{-fx-image: url('../resources/ExitIcon.png');}
+
+/*########################### IMAGENES DE TORNEOS ACTIVOS #########################################################################*/
+#btnReanudarTorneo > ImageView{-fx-image: url('../resources/PlayIcon.png');}

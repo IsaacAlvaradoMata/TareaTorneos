@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright (C) 2022 Parisi Alessandro
+  ~ This file is part of MaterialFX (https://github.com/palexdev/MaterialFX).
+  ~
+  ~ MaterialFX is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU Lesser General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ MaterialFX is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Lesser General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Lesser General Public License
+  ~ along with MaterialFX.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<?import io.github.palexdev.materialfx.controls.MFXTableView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="701.0" styleClass="AnchorPane-Logros" stylesheets="@StyleTournament.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tareatorneos.controller.AchievementsController">
+    <children>
+        <StackPane prefHeight="600.0" prefWidth="701.0" styleClass="StackPane-Logros" stylesheets="@StyleTournament.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+        <BorderPane layoutX="30.285715103149414" layoutY="30.285715103149414" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <center>
+                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+                    <children>
+                        <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="701.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <children>
+                                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="547.0" prefWidth="306.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+                                            <children>
+                                                <Label styleClass="lbl-SubTitulosLogros" text="Lista de Equipos Existentes:" />
+                                            </children>
+                                        </HBox>
+                                        <MFXTableView fx:id="tbvLogrosEquipos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#handleTableClickLogrosEquipos" prefHeight="500.0" prefWidth="250.0" styleClass="table-view-Logros" VBox.vgrow="ALWAYS">
+                                            <VBox.margin>
+                                                <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                                            </VBox.margin></MFXTableView>
+                                        <HBox>
+                                            <children>
+                                                <ImageView fx:id="imgFlechaArribaLogros" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="200.0" styleClass="lbl-SubTitulosLogros" text="Busqueda por Filtros" />
+                                            </children>
+                                            <padding>
+                                                <Insets left="30.0" />
+                                            </padding>
+                                            <VBox.margin>
+                                                <Insets bottom="10.0" />
+                                            </VBox.margin>
+                                        </HBox>
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </padding>
+                                </VBox>
+                                <Separator fx:id="sprLogros" orientation="VERTICAL" prefHeight="512.0" prefWidth="10.0" HBox.hgrow="ALWAYS">
+                                    <HBox.margin>
+                                        <Insets bottom="5.0" />
+                                    </HBox.margin>
+                                </Separator>
+                                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="512.0" prefWidth="316.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                              <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                                 <children>
+                                                <ImageView fx:id="imgLogrosIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="169.0" styleClass="lbl-SubTitulosLogros" text="Logros Obtenidos:" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" spacing="15.0" VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <ImageView fx:id="imgGanador8Torneos" fitHeight="80.0" fitWidth="80.0" onMouseClicked="#handleImageClickGanador8Torneos" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="imgGanador6Torneos" fitHeight="80.0" fitWidth="80.0" layoutX="105.0" layoutY="39.0" onMouseClicked="#handleImageClickGanador6Torneos" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="imgGanador3Torneos" fitHeight="80.0" fitWidth="80.0" layoutX="145.0" layoutY="39.0" onMouseClicked="#handleImageClickGanador3Torneos" pickOnBounds="true" preserveRatio="true" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox alignment="CENTER" layoutX="25.0" layoutY="81.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" spacing="15.0" VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <ImageView fx:id="img20Puntos" fitHeight="80.0" fitWidth="80.0" onMouseClicked="#handleImageClick20Puntos" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="imgEscudo" fitHeight="80.0" fitWidth="80.0" onMouseClicked="#handleImageClickEscudo" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="imgBalanza" fitHeight="80.0" fitWidth="80.0" onMouseClicked="#handleImageClickBalanza" pickOnBounds="true" preserveRatio="true" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox alignment="CENTER" layoutX="25.0" layoutY="181.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" spacing="15.0" VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <ImageView fx:id="img3Consecutivos" fitHeight="80.0" fitWidth="80.0" onMouseClicked="#handleImageClick3Consecutivos" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="imgMontanaRusa" fitHeight="80.0" fitWidth="80.0" onMouseClicked="#handleImageClickMontanaRusa" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="imgMedallaTorneo" fitHeight="80.0" fitWidth="80.0" onMouseClicked="#handleImageClickMedallaTorneo" pickOnBounds="true" preserveRatio="true" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </HBox>
+                              <ImageView fx:id="imgInfo" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" />
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="25.0" left="15.0" right="30.0" top="10.0" />
+                                    </padding>
+                                </VBox>
+                            </children>
+                        </HBox>
+                    </children>
+                </AnchorPane>
+            </center>
+            <top>
+                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="41.0" prefWidth="641.0" styleClass="AnchorPane-TituloLogros" BorderPane.alignment="CENTER">
+                    <children>
+                        <Label fx:id="lblLogrosTitulo" alignment="CENTER" contentDisplay="CENTER" layoutX="306.0" layoutY="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="49.714285714285715" prefWidth="673.7142857142857" styleClass="lbl-Title" text="Logros" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                    </children>
+                </AnchorPane>
+            </top>
+        </BorderPane>
+    </children>
+</AnchorPane>

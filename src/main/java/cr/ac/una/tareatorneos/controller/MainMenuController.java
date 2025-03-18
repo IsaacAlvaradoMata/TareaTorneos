@@ -74,11 +74,12 @@ public class MainMenuController extends Controller implements Initializable {
 
     @FXML
     void OnActionBtnRankings(ActionEvent event) {
-
+        FlowController.getInstance().goView("RankingsView");
     }
 
     @FXML
     void OnActionBtnLogros(ActionEvent event) {
+        FlowController.getInstance().goView("AchievementsView");
 
     }
 
