@@ -68,7 +68,7 @@ public class MainMenuController extends Controller implements Initializable {
 
         imgFullScreen.setOnMouseClicked(event -> {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setFullScreen(!stage.isFullScreen()); // Alterna pantalla completa
+            stage.setMaximized(!stage.isMaximized()); // Alterna entre maximizado y normal
         });
 
         achpSlider.setTranslateX(-176);
