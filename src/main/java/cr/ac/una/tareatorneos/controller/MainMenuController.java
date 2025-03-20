@@ -54,15 +54,67 @@ public class MainMenuController extends Controller implements Initializable {
     @FXML
     private Label lblMenuAtras;
 
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        Platform.runLater(() -> achpSlider.requestFocus());
+        imgSalir.setOnMouseClicked(event -> {
+            System.exit(0);
+        });
+
+        imgMinimizar.setOnMouseClicked(event -> {
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setIconified(true); // Minimiza la ventana
+        });
+
+        imgFullScreen.setOnMouseClicked(event -> {
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setFullScreen(!stage.isFullScreen()); // Alterna pantalla completa
+        });
+
+        achpSlider.setTranslateX(-176);
+        lblMenu.setOnMouseClicked(event -> {
+            TranslateTransition slide = new TranslateTransition();
+            slide.setDuration(Duration.seconds(0.4));
+            slide.setNode(achpSlider);
+
+            slide.setToX(0);
+            slide.play();
+
+            achpSlider.setTranslateX(-176);
+
+            slide.setOnFinished((ActionEvent e) -> {
+                lblMenu.setVisible(false);
+                lblMenuAtras.setVisible(true);
+            });
+        });
+
+        lblMenuAtras.setOnMouseClicked(event -> {
+            TranslateTransition slide = new TranslateTransition();
+            slide.setDuration(Duration.seconds(0.4));
+            slide.setNode(achpSlider);
+
+            slide.setToX(-176);
+            slide.play();
+
+            achpSlider.setTranslateX(0);
+
+            slide.setOnFinished((ActionEvent e) -> {
+                lblMenu.setVisible(true);
+                lblMenuAtras.setVisible(false);
+            });
+        });  // Generated from nbfs://nbhost/SysteeSystem/Templates/Classes/Code/GeneratedMethodBody
+
+    }
+
     @FXML
     void OnActionBtnCreacionTorneos(ActionEvent event) {
         FlowController.getInstance().goView("TournamentCreationView");
+
     }
 
     @FXML
     void OnActionBtnMantenimientoDeportes(ActionEvent event) {
         FlowController.getInstance().goView("SportsMaintenanceView");
-
 
     }
 
@@ -75,6 +127,7 @@ public class MainMenuController extends Controller implements Initializable {
     @FXML
     void OnActionBtnRankings(ActionEvent event) {
         FlowController.getInstance().goView("RankingsView");
+
     }
 
     @FXML
@@ -91,60 +144,6 @@ public class MainMenuController extends Controller implements Initializable {
 
     @Override
     public void initialize() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
     }
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-
-        Platform.runLater(() -> achpSlider.requestFocus());
-        imgSalir.setOnMouseClicked(event -> {
-            System.exit(0);
-        });
-
-        imgMinimizar.setOnMouseClicked(event -> {
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setIconified(true); // Minimiza la ventana
-        });
-
-        imgFullScreen.setOnMouseClicked(event -> {
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setFullScreen(!stage.isFullScreen()); // Alterna pantalla completa
-        });
-
-
-        achpSlider.setTranslateX(-176);
-        lblMenu.setOnMouseClicked(event -> {
-            TranslateTransition slide = new TranslateTransition();
-            slide.setDuration(Duration.seconds(0.4));
-            slide.setNode(achpSlider);
-
-            slide.setToX(0);
-            slide.play();
-
-            achpSlider.setTranslateX(-176);
-
-            slide.setOnFinished((ActionEvent e)-> {
-                lblMenu.setVisible(false);
-                lblMenuAtras.setVisible(true);
-            });
-        });
-
-        lblMenuAtras.setOnMouseClicked(event -> {
-            TranslateTransition slide = new TranslateTransition();
-            slide.setDuration(Duration.seconds(0.4));
-            slide.setNode(achpSlider);
-
-            slide.setToX(-176);
-            slide.play();
-
-            achpSlider.setTranslateX(0);
-
-            slide.setOnFinished((ActionEvent e)-> {
-                lblMenu.setVisible(true);
-                lblMenuAtras.setVisible(false);
-            });
-        });  // Generated from nbfs://nbhost/SysteeSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
 }
