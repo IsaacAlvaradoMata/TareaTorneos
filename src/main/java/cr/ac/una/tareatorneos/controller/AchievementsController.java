@@ -4,7 +4,7 @@
  */
 package cr.ac.una.tareatorneos.controller;
 
-import cr.ac.una.tareatorneos.util.Mensaje;
+
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTableView;
 import io.github.palexdev.materialfx.dialogs.MFXGenericDialog;
@@ -15,7 +15,6 @@ import io.github.palexdev.mfxresources.fonts.MFXFontIcon;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.image.ImageView;
