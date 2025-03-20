@@ -70,7 +70,7 @@ public class TournamentCreationController extends Controller implements Initiali
         nombreTorneo.setPromptText("Escriba el Nombre del Torneo");
         tiempoTorneo.setPromptText("Digite el Tiempo por Partido en Minutos");
         cantidadTorneo.setPromptText("Digite la Cantidad de Equipos");
-        nombreTorneo.getValidator().constraint("Debe de Incluir el Nombre del Torneo", nombreTorneo.textProperty().length().greaterThanOrEqualTo(1));
+
         nombreTorneo.setLeadingIcon(new MFXIconWrapper("fas-medal", 16, Color.web("#4D4D4D"), 15));
         deporteTorneo.setPromptText("Escoja el Deporte");
         List<Sport> deportes = sportService.getAllSports();
@@ -116,20 +116,57 @@ public class TournamentCreationController extends Controller implements Initiali
                 }
             });
         });
+        stepper.addEventHandler(MFXStepperEvent.NEXT_EVENT, event -> {
+            if (stepper.getCurrentIndex() == 2) { // Paso 3 es índice 2
+                List<String> seleccionados = equiposTorneo.getSelectionModel().getSelectedValues();
+                seleccionadosTorneo.getItems().setAll(seleccionados);
+            }
+        });
+        nombreTorneo.getValidator().constraint(
+                "Debe de Incluir el Nombre del Torneo", nombreTorneo.textProperty().length().greaterThanOrEqualTo(1));
 
+        tiempoTorneo.getValidator().constraint(
+                "El tiempo debe ser numérico y obligatorio",
+                Bindings.createBooleanBinding(() -> {
+                    String text = tiempoTorneo.getText();
+                    return text != null && !text.isEmpty() && text.matches("\\d+");
+                }, tiempoTorneo.textProperty())
+        );
+
+        cantidadTorneo.getValidator().constraint(
+                "La cantidad debe ser un número entre 2 y 32",
+                Bindings.createBooleanBinding(() -> {
+                    String text = cantidadTorneo.getText();
+                    if (text == null || text.isEmpty()) return false;
+                    try {
+                        int cantidad = Integer.parseInt(text);
+                        return cantidad >= 2 && cantidad <= 32;
+                    } catch (NumberFormatException e) {
+                        return false;
+                    }
+                }, cantidadTorneo.textProperty())
+        );
+
+        deporteTorneo.getValidator().constraint(
+                "Debe seleccionar un deporte",
+                Bindings.createBooleanBinding(() -> deporteTorneo.getValue() != null, deporteTorneo.valueProperty())
+        );
     }
 
     private List<MFXStepperToggle> createSteps() {
         MFXStepperToggle step1 = new MFXStepperToggle("Step 1", new MFXFontIcon("fas-1", 16, Color.web("#f1c40f")));
-        VBox step1Box = new VBox(20, deporteTorneo, wrapNodeForValidation(nombreTorneo), tiempoTorneo);
+        VBox step1Box = new VBox(20, wrapNodeForValidation(deporteTorneo), wrapNodeForValidation(nombreTorneo), wrapNodeForValidation(tiempoTorneo));
         step1Box.setAlignment(Pos.CENTER);
         step1.setContent(step1Box);
+        step1.getValidator().dependsOn(deporteTorneo.getValidator());
         step1.getValidator().dependsOn(nombreTorneo.getValidator());
+        step1.getValidator().dependsOn(tiempoTorneo.getValidator());
 
         MFXStepperToggle step2 = new MFXStepperToggle("Step 2", new MFXFontIcon("fas-2", 16, Color.web("#49a6d7")));
-        VBox step2Box = new VBox(20, cantidadTorneo, equiposTorneo);
+        VBox step2Box = new VBox(20, wrapNodeForValidation(cantidadTorneo), equiposTorneo);
         step2Box.setAlignment(Pos.CENTER);
         step2.setContent(step2Box);
+        step2.getValidator().dependsOn(cantidadTorneo.getValidator());
 
         MFXStepperToggle step3 = new MFXStepperToggle("Step 3", new MFXFontIcon("fas-3", 16, Color.web("#85CB33")));
         Node step3Grid = createGrid();
