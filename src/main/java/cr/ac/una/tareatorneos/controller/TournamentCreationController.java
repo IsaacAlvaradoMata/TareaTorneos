@@ -58,7 +58,18 @@ public class TournamentCreationController extends Controller implements Initiali
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        configurarEstilosCampos();
+        configurarPrompts();
+        configurarIconos();
+        cargarDeportes();
+        configurarFiltroEquipos();
+        agregarPasosAlStepper();
+        configurarEstiloBotonesStepper();
+        configurarEventosStepper();
+        configurarValidaciones();
+    }
 
+    private void configurarEstilosCampos() {
         nombreTorneo.setStyle("-fx-background-color: #d9a2fd; -fx-text-fill: #690093; -fx-border-color: #690093;");
         tiempoTorneo.setStyle("-fx-background-color: #d9a2fd; -fx-text-fill: #690093; -fx-border-color: #690093;");
         cantidadTorneo.setStyle("-fx-background-color: #d9a2fd; -fx-text-fill: #690093; -fx-border-color: #690093;");
@@ -67,61 +78,86 @@ public class TournamentCreationController extends Controller implements Initiali
         equiposTorneo.getStyleClass().add("mfx-checklist-view");
         seleccionadosTorneo.getStyleClass().add("mfx-list-view");
 
+        nombreTorneo.setMaxWidth(265);
+        tiempoTorneo.setMaxWidth(265);
+        cantidadTorneo.setMaxWidth(265);
+        deporteTorneo.setMaxWidth(265);
+    }
+
+    private void configurarPrompts() {
         nombreTorneo.setPromptText("Escriba el Nombre del Torneo");
         tiempoTorneo.setPromptText("Digite el Tiempo por Partido en Minutos");
         cantidadTorneo.setPromptText("Digite la Cantidad de Equipos");
-
-        nombreTorneo.setLeadingIcon(new MFXIconWrapper("fas-medal", 16, Color.web("#4D4D4D"), 15));
         deporteTorneo.setPromptText("Escoja el Deporte");
+    }
+
+    private void configurarIconos() {
+        nombreTorneo.setLeadingIcon(new MFXIconWrapper("fas-medal", 16, Color.web("#4D4D4D"), 15));
+    }
+
+    private void cargarDeportes() {
         List<Sport> deportes = sportService.getAllSports();
         List<String> nombresDeportes = deportes.stream().map(Sport::getNombre).toList();
         deporteTorneo.setItems(FXCollections.observableArrayList(nombresDeportes));
-        todosLosEquipos = teamService.getAllTeams(); // <- Ya lo estás usando
+        todosLosEquipos = teamService.getAllTeams();
+    }
 
+    private void configurarFiltroEquipos() {
         deporteTorneo.valueProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
-                List<String> equiposFiltrados = todosLosEquipos.stream().filter(team -> team.getDeporte() != null && team.getDeporte().equalsIgnoreCase(newVal)).map(Team::getNombre).distinct().toList();
+                List<String> equiposFiltrados = todosLosEquipos.stream()
+                        .filter(team -> team.getDeporte() != null && team.getDeporte().equalsIgnoreCase(newVal))
+                        .map(Team::getNombre)
+                        .distinct()
+                        .toList();
 
                 equiposTorneo.setItems(FXCollections.observableArrayList(equiposFiltrados));
                 seleccionadosTorneo.getItems().clear(); // limpiar selección
             }
         });
+    }
 
+    private void agregarPasosAlStepper() {
         List<MFXStepperToggle> stepperToggles = createSteps();
         stepper.getStepperToggles().addAll(stepperToggles);
+    }
 
+    private void configurarEstiloBotonesStepper() {
         Platform.runLater(() -> {
             stepper.getScene().getStylesheets().add(getClass().getResource("/cr/ac/una/tareatorneos/view/StepperButtons.css").toExternalForm());
-            nombreTorneo.setMaxWidth(265);
-            tiempoTorneo.setMaxWidth(265);
-            cantidadTorneo.setMaxWidth(265);
-            deporteTorneo.setMaxWidth(265);
 
             stepper.lookupAll(".mfx-button").forEach(node -> {
-
-                if (node instanceof MFXButton) {
-                    MFXButton button = (MFXButton) node;
+                if (node instanceof MFXButton button) {
                     button.getStyleClass().removeAll("mfx-button");
                     button.getStyleClass().add("stepper-button");
 
                     if (button.getText().equals("Next")) {
                         button.setText("Siguiente");
-
                     } else if (button.getText().equals("Previous")) {
                         button.setText("Atrás");
                     }
-                    button.setStyle("-fx-background-color: #690093 !important;" + "-fx-text-fill: white !important;" + "-fx-font-weight: bold !important;" + "-fx-border-radius: 4px !important;" + "-fx-background-radius: 4px !important;" + "-fx-padding: 5px 10px !important;"
 
-                    );
+                    button.setStyle("-fx-background-color: #690093 !important;" +
+                            "-fx-text-fill: white !important;" +
+                            "-fx-font-weight: bold !important;" +
+                            "-fx-border-radius: 4px !important;" +
+                            "-fx-background-radius: 4px !important;" +
+                            "-fx-padding: 5px 10px !important;");
                 }
             });
         });
+    }
+
+    private void configurarEventosStepper() {
         stepper.addEventHandler(MFXStepperEvent.NEXT_EVENT, event -> {
             if (stepper.getCurrentIndex() == 2) { // Paso 3 es índice 2
                 List<String> seleccionados = equiposTorneo.getSelectionModel().getSelectedValues();
                 seleccionadosTorneo.getItems().setAll(seleccionados);
             }
         });
+    }
+
+    private void configurarValidaciones() {
         nombreTorneo.getValidator().constraint(
                 "Debe de Incluir el Nombre del Torneo", nombreTorneo.textProperty().length().greaterThanOrEqualTo(1));
 
@@ -209,6 +245,37 @@ public class TournamentCreationController extends Controller implements Initiali
         return wrap;
     }
 
+    private void cargarVistaDesdeCero() {
+        // 1. Limpiar el AnchorPane completamente
+        root.getChildren().clear();
+
+        // 2. Crear nuevo Stepper
+        stepper = new MFXStepper();
+
+        // 3. Reagregar pasos
+        agregarPasosAlStepper();
+
+        AnchorPane.setTopAnchor(stepper, 0.0);
+        AnchorPane.setBottomAnchor(stepper, 0.0);
+        AnchorPane.setLeftAnchor(stepper, 0.0);
+        AnchorPane.setRightAnchor(stepper, 0.0);
+        root.getChildren().add(stepper);
+
+        // 4. Reaplicar configuraciones
+        configurarEstilosCampos();
+        configurarPrompts();
+        configurarIconos();
+        cargarDeportes();
+        configurarFiltroEquipos();
+        configurarValidaciones();
+        configurarEventosStepper();
+
+        // 5. Volver a agregar el stepper al root
+
+        // 6. Reaplicar estilos visuales a los botones
+        Platform.runLater(() -> configurarEstiloBotonesStepper());
+    }
+
     private Node createGrid() {
         MFXTextField nombreTorneo1 = createLabel("Nombre del Torneo: ");
         MFXTextField nombreTorneo2 = createLabel("");
@@ -270,6 +337,7 @@ public class TournamentCreationController extends Controller implements Initiali
             box.getChildren().setAll(completedLabel);
             stepper.setMouseTransparent(true);
         });
+
         stepper.setOnBeforePrevious(event -> {
             if (stepper.isLastToggle()) {
                 checkbox.setSelected(false);
