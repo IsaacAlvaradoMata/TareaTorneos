@@ -21,6 +21,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -28,15 +29,24 @@ import java.util.ResourceBundle;
 
 public class SportsMaintenanceController extends Controller implements Initializable {
 
-    @FXML private MFXButton btnBarrerDeporte;
-    @FXML private MFXButton btnBuscarImagen;
-    @FXML private MFXButton btnEliminarDeporte;
-    @FXML private MFXButton btnGuardarDeporte;
-    @FXML private MFXButton btnModificar;
-    @FXML private ImageView imgviewImagenDeporte;
-    @FXML private AnchorPane root;
-    @FXML private MFXTableView<Sport> tbvDeportesExistentes;
-    @FXML private MFXTextField txtfieldNombreDeporte;
+    @FXML
+    private MFXButton btnBarrerDeporte;
+    @FXML
+    private MFXButton btnBuscarImagen;
+    @FXML
+    private MFXButton btnEliminarDeporte;
+    @FXML
+    private MFXButton btnGuardarDeporte;
+    @FXML
+    private MFXButton btnModificar;
+    @FXML
+    private ImageView imgviewImagenDeporte;
+    @FXML
+    private AnchorPane root;
+    @FXML
+    private MFXTableView<Sport> tbvDeportesExistentes;
+    @FXML
+    private MFXTextField txtfieldNombreDeporte;
 
     private ObservableList<Sport> sportsData = FXCollections.observableArrayList();
     private SportService sportService;
@@ -94,14 +104,14 @@ public class SportsMaintenanceController extends Controller implements Initializ
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg", "*.gif")
         );
-        File picturesDir = new File(System.getProperty("user.home") + "/Pictures");
-        if (picturesDir.exists() && picturesDir.isDirectory()) {
-            fileChooser.setInitialDirectory(picturesDir);
-        }
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         File selectedFile = fileChooser.showOpenDialog(stage);
+
         if (selectedFile != null) {
+            // ✅ Guardamos la ruta temporalmente
             currentBallImagePath = selectedFile.getAbsolutePath();
+
+            // ✅ Mostrar la imagen en la interfaz sin copiarla todavía
             Image image = new Image(selectedFile.toURI().toString());
             imgviewImagenDeporte.setImage(image);
         }
@@ -162,6 +172,30 @@ public class SportsMaintenanceController extends Controller implements Initializ
             }
         }
 
+        // 📂 Crear carpeta `sportsPhotos` dentro del proyecto si no existe
+        File directory = new File(System.getProperty("user.dir") + "/sportsPhotos");
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        // 📌 Guardar la imagen con el nombre del deporte
+        String fileName = nombre.replace(" ", "_") + ".jpg";
+        File destinationFile = new File(directory, fileName);
+
+        try {
+            java.nio.file.Files.copy(new File(currentBallImagePath).toPath(), destinationFile.toPath(),
+                    java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+
+            // ✅ Guardar solo el nombre del archivo en JSON
+            currentBallImagePath = fileName;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            mensajeUtil.show(javafx.scene.control.Alert.AlertType.ERROR, "Error", "No se pudo copiar la imagen.");
+            return;
+        }
+
+        // 📌 Crear objeto Sport con la nueva ruta de la imagen
         Sport newSport = new Sport(nombre, currentBallImagePath);
         boolean success = sportService.addSport(newSport);
         if (success) {
@@ -174,6 +208,7 @@ public class SportsMaintenanceController extends Controller implements Initializ
             mensajeUtil.show(javafx.scene.control.Alert.AlertType.ERROR,
                     "Guardar Deporte", "No se pudo guardar el deporte.");
         }
+
     }
 
 
@@ -188,36 +223,84 @@ public class SportsMaintenanceController extends Controller implements Initializ
         Sport selectedSport = selectedItems.get(0);
         String oldNombre = selectedSport.getNombre();
         String newNombre = txtfieldNombreDeporte.getText().trim();
+
+        // Si no se ha seleccionado una nueva imagen, mantener la existente sin cambiar la ruta
         String newImage = currentBallImagePath.isEmpty() ? selectedSport.getBallImage() : currentBallImagePath;
 
-        if (newNombre.isEmpty()) {
-            mensajeUtil.show(javafx.scene.control.Alert.AlertType.WARNING, "Modificar Deporte", "El nombre del deporte no puede estar vacío.");
-            return;
+        // 📌 Si se seleccionó imagen desde el explorador (ruta absoluta), copiarla al directorio
+        if (new File(newImage).isAbsolute()) {
+            File sourceFile = new File(newImage);
+            String imageFileName = newNombre.replace(" ", "_") + ".jpg";
+            File destinationFile = new File("sportsPhotos", imageFileName);
+            try {
+                java.nio.file.Files.copy(sourceFile.toPath(), destinationFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                newImage = imageFileName; // Usar solo el nombre del archivo
+            } catch (IOException e) {
+                mensajeUtil.show(javafx.scene.control.Alert.AlertType.ERROR, "Error", "No se pudo copiar la imagen seleccionada.");
+                return;
+            }
         }
 
-              for (Sport s : sportsData) {
-            if (!s.getNombre().equals(oldNombre) && s.getNombre().equalsIgnoreCase(newNombre)) {
+        // 📌 Verificar si ya existe un deporte con el nuevo nombre (distinto del actual)
+        for (Sport s : sportsData) {
+            if (!s.getNombre().equalsIgnoreCase(oldNombre) && s.getNombre().equalsIgnoreCase(newNombre)) {
                 mensajeUtil.show(javafx.scene.control.Alert.AlertType.WARNING, "Modificar Deporte", "Ya existe un deporte con ese nombre.");
                 return;
             }
         }
 
-           if (oldNombre.equals(newNombre) && selectedSport.getBallImage().equals(newImage)) {
-            mensajeUtil.show(javafx.scene.control.Alert.AlertType.WARNING, "Modificar Deporte", "No se han realizado cambios para modificar.");
+        String imagenActual = selectedSport.getBallImage() != null
+                ? selectedSport.getBallImage()
+                : "";
+
+        String imagenFinal = newImage != null
+                ? newImage
+                : "";
+
+        boolean nameChanged = !oldNombre.equalsIgnoreCase(newNombre);
+
+// Si se cargó una nueva imagen, aunque el nombre final coincida, consideramos que cambió
+        boolean imageChanged = !currentBallImagePath.isEmpty() &&
+                new File(currentBallImagePath).isAbsolute();  // indica que se cargó desde el explorador
+
+        if (!nameChanged && !imageChanged) {
+            mensajeUtil.show(javafx.scene.control.Alert.AlertType.WARNING, "Modificar Deporte", "No se han realizado cambios.");
             return;
         }
-              selectedSport.setNombre(newNombre);
-        selectedSport.setBallImage(newImage);
-        boolean success = sportService.updateSport(oldNombre, selectedSport);
 
+        // 📌 Si se cambió el nombre, renombrar archivo si es necesario
+        if (!oldNombre.equalsIgnoreCase(newNombre)) {
+            File oldFile = new File("sportsPhotos/" + selectedSport.getBallImage());
+            File renamedFile = new File("sportsPhotos/" + newNombre.replace(" ", "_") + ".jpg");
+
+            if (oldFile.exists() && !imagenActual.equalsIgnoreCase(renamedFile.getName())) {
+                boolean renamed = oldFile.renameTo(renamedFile);
+                if (renamed) {
+                    newImage = renamedFile.getName();
+                }
+            }
+        }
+
+        // 🧠 Asegurar solo guardar el nombre de la imagen
+        if (newImage.startsWith("sportsPhotos/")) {
+            newImage = newImage.replace("sportsPhotos/", "");
+        }
+
+        // ✅ Aplicar cambios
+        selectedSport.setNombre(newNombre);
+        selectedSport.setBallImage(newImage);
+
+        boolean success = sportService.updateSport(oldNombre, selectedSport);
         if (success) {
             mensajeUtil.show(javafx.scene.control.Alert.AlertType.INFORMATION, "Modificar Deporte", "Deporte modificado exitosamente.");
-            loadSports(); // Recargar la tabla
+            loadSports();
             OnActionBtnBarrerCampos(event);
         } else {
             mensajeUtil.show(javafx.scene.control.Alert.AlertType.ERROR, "Modificar Deporte", "No se pudo modificar el deporte.");
         }
     }
+
+
 
 
     @FXML
@@ -226,14 +309,21 @@ public class SportsMaintenanceController extends Controller implements Initializ
         if (!selected.isEmpty()) {
             Sport selectedSport = selected.get(0);
             txtfieldNombreDeporte.setText(selectedSport.getNombre());
+
             if (selectedSport.getBallImage() != null && !selectedSport.getBallImage().isEmpty()) {
-                currentBallImagePath = selectedSport.getBallImage();
-                Image image = new Image(new File(currentBallImagePath).toURI().toString());
-                imgviewImagenDeporte.setImage(image);
+                currentBallImagePath = "sportsPhotos/" + selectedSport.getBallImage(); // ✅ Buscar en sportsPhotos
+                File imageFile = new File(currentBallImagePath);
+                if (imageFile.exists()) {
+                    Image image = new Image(imageFile.toURI().toString());
+                    imgviewImagenDeporte.setImage(image);
+                } else {
+                    imgviewImagenDeporte.setImage(null);
+                }
             } else {
                 imgviewImagenDeporte.setImage(null);
             }
         }
+
     }
 
 }

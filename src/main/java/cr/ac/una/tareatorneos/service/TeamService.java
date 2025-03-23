@@ -55,13 +55,21 @@ public class TeamService {
     /**
      * Actualiza un equipo existente identificándolo por su nombre.
      */
-    public boolean updateTeam(Team updatedTeam) {
+    public boolean updateTeam(String oldNombre, Team updatedTeam) {
         List<Team> teams = getAllTeams();
+        boolean modified = false;
+
         for (int i = 0; i < teams.size(); i++) {
-            if (teams.get(i).getNombre().equals(updatedTeam.getNombre())) {
+            if (teams.get(i).getNombre().equalsIgnoreCase(oldNombre)) {
+                // No necesitas copiar atributos adicionales porque el objeto actualizado ya tiene todo
                 teams.set(i, updatedTeam);
-                return saveTeams(teams);
+                modified = true;
+                break;
             }
+        }
+
+        if (modified) {
+            return saveTeams(teams);
         }
         return false;
     }

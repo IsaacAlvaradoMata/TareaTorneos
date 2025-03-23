@@ -2,6 +2,8 @@ package cr.ac.una.tareatorneos.controller;
 
 import cr.ac.una.tareatorneos.util.AppContext;
 import io.github.palexdev.materialfx.controls.MFXButton;
+
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -74,23 +76,20 @@ public class CameraController extends Controller implements Initializable {
     @FXML
     private void OnActionBtnCapturarFoto() {
         try {
-            String folderPath = "./Photos";
-            File folder = new File(folderPath);
-            if (!folder.exists()) {
-                folder.mkdir();
-            }
+            BufferedImage tempImage = webcam.getImage();
 
-            String uniqueName = "captured_photo_" + System.currentTimeMillis() + ".jpg";
-            savedImageFile = new File(folder, uniqueName);
+            // 📌 Guardarla en memoria usando AppContext (sin escribir en disco aún)
+            AppContext.getInstance().set("tempTeamImage", tempImage);
+            System.out.println("Imagen capturada y almacenada en memoria temporal.");
 
-            ImageIO.write(webcam.getImage(), "JPG", savedImageFile);
-            System.out.println("Imagen guardada correctamente en: " + savedImageFile.getAbsolutePath());
+            // 📌 Mostrar la imagen en la vista de la cámara
+            imgviewDefinitivaFoto.setImage(SwingFXUtils.toFXImage(tempImage, null));
 
-            displayCapturedImage(savedImageFile);
-        } catch (IOException e) {
-            System.err.println("Error al guardar la imagen: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Error al capturar la imagen: " + e.getMessage());
         }
 
+        // ✅ Habilitar botones de reintentar y guardar
         btnReintentarFoto.setDisable(false);
         btnGuardarFoto.setDisable(false);
         btnCapturarFoto.setDisable(true);
@@ -108,10 +107,19 @@ public class CameraController extends Controller implements Initializable {
 
     @FXML
     public void OnActionBtnGuardarFoto() {
-        AppContext.getInstance().set("teamPhoto", savedImageFile.getAbsolutePath());
-        TeamsMaintenanceController.actualizarImagenEquipo(savedImageFile.getAbsolutePath());
+        BufferedImage tempImage = (BufferedImage) AppContext.getInstance().get("tempTeamImage");
 
-        showAlert("Foto guardada exitosamente.");
+        if (tempImage == null) {
+            showAlert("No hay imagen para guardar.");
+            return;
+        }
+
+        // 📌 Guardamos la imagen en AppContext para que pueda ser usada en la vista de mantenimiento de equipos
+        AppContext.getInstance().set("teamPhotoTemp", tempImage);
+        System.out.println("Imagen lista para ser guardada con el equipo.");
+
+        // ✅ Notificar al usuario y cerrar la ventana de la cámara
+        showAlert("Imagen lista para guardar con el equipo.");
         stopCamera();
         closeWindow();
     }

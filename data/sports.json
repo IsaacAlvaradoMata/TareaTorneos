@@ -1,5 +1,13 @@
 [ {
-  "nombre" : "futbol",
-  "ballImage" : "C:\\Users\\josue_5njzopn\\OneDrive\\Escritorio\\ball.png",
-  "fechaCreacion" : [ 2025, 3, 17 ]
+  "nombre" : "Baloncesto",
+  "ballImage" : "Baloncesto.jpg",
+  "fechaCreacion" : [ 2025, 3, 22 ]
+}, {
+  "nombre" : "Futbol",
+  "ballImage" : "Futbol.jpg",
+  "fechaCreacion" : [ 2025, 3, 22 ]
+}, {
+  "nombre" : "Tenis",
+  "ballImage" : "Tenis.jpg",
+  "fechaCreacion" : [ 2025, 3, 22 ]
 } ]

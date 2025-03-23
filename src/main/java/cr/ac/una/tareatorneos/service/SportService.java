@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import cr.ac.una.tareatorneos.model.Sport;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -29,6 +30,9 @@ public class SportService {
                 for (Sport sport : sports) {
                     if (sport.getFechaCreacion() == null) {
                         sport.setFechaCreacion(LocalDate.now());
+                    }
+                    if (sport.getBallImage() != null && !sport.getBallImage().isEmpty()) {
+                        sport.setBallImage(sport.getBallImage());
                     }
                 }
                 return sports;
@@ -75,10 +79,37 @@ public class SportService {
 
     public boolean deleteSport(String sportName) {
         List<Sport> sports = getAllSports();
-        boolean removed = sports.removeIf(s -> s.getNombre().equals(sportName));
-        if (removed) {
-            return saveSports(sports);
+        Sport sportToRemove = null;
+
+        for (Sport sport : sports) {
+            if (sport.getNombre().equals(sportName)) {
+                sportToRemove = sport;
+                break;
+            }
         }
+
+        if (sportToRemove != null) {
+            // 📌 Eliminar el archivo de imagen asociado
+            String imageFileName = sportToRemove.getBallImage();
+            File imageFile = new File(System.getProperty("user.dir") + "/sportsPhotos/" + imageFileName);
+
+            if (imageFile.exists()) {
+                if (imageFile.delete()) {
+                    System.out.println("✅ Imagen eliminada: " + imageFileName);
+                } else {
+                    System.out.println("⚠️ No se pudo eliminar la imagen: " + imageFileName);
+                }
+            } else {
+                System.out.println("ℹ️ La imagen no existe en la carpeta.");
+            }
+
+            // 📌 Eliminar el deporte del JSON
+            boolean removed = sports.remove(sportToRemove);
+            if (removed) {
+                return saveSports(sports);
+            }
+        }
+
         return false;
     }
 }

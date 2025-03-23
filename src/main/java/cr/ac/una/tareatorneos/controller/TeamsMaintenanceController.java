@@ -1,5 +1,6 @@
 package cr.ac.una.tareatorneos.controller;
 
+import cr.ac.una.tareatorneos.model.Sport;
 import cr.ac.una.tareatorneos.model.Team;
 import cr.ac.una.tareatorneos.service.SportService;
 import cr.ac.una.tareatorneos.service.TeamService;
@@ -8,6 +9,7 @@ import cr.ac.una.tareatorneos.util.FlowController;
 import cr.ac.una.tareatorneos.util.Mensaje;
 import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
+import io.github.palexdev.materialfx.utils.SwingFXUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,9 +23,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -51,14 +57,15 @@ public class TeamsMaintenanceController extends Controller implements Initializa
     private MFXTextField txtfieldNombreEquipos;
 
     private ObservableList<Team> teamsData = FXCollections.observableArrayList();
-    private TeamService teamService = new TeamService();
+    private TeamService teamService;
     private SportService sportService = new SportService();
     private String originalNombre, originalDeporte, originalFoto;
+    private String currentTeamImagePath = "";
     private Mensaje mensajeUtil = new Mensaje();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        teamService = new TeamService();
         populateTableView();
         loadTeams();
         populateComboBoxDeportes();
@@ -74,14 +81,7 @@ public class TeamsMaintenanceController extends Controller implements Initializa
                 Stage stage = (Stage) root.getScene().getWindow();
                 stage.focusedProperty().addListener((obsF, wasFocused, isNowFocused) -> {
                     if (isNowFocused) {
-                        String photoPath = (String) AppContext.getInstance().get("teamPhoto");
-                        if (photoPath != null && !photoPath.isEmpty()) {
-                            File file = new File(photoPath);
-                            if (file.exists()) {
-                                Image image = new Image(file.toURI().toString());
-                                imgviewImagenDeporte.setImage(image);
-                            }
-                        }
+                        updateImageFromAppContext();
                     }
                 });
             }
@@ -103,8 +103,10 @@ public class TeamsMaintenanceController extends Controller implements Initializa
     }
 
     private void loadTeams() {
-        teamsData.setAll(teamService.getAllTeams());
-        tbvEquiposExistentes.setItems(teamsData);
+        List<Team> loadedTeams = teamService.getAllTeams();
+        teamsData.setAll(loadedTeams);
+        tbvEquiposExistentes.getItems().clear();
+        tbvEquiposExistentes.getItems().addAll(teamsData);
     }
 
     private void populateComboBoxDeportes() {
@@ -151,54 +153,95 @@ public class TeamsMaintenanceController extends Controller implements Initializa
         }
         Team selectedTeam = selected.get(0);
 
-        if (mensajeUtil.showConfirmation("Confirmar Eliminación", root.getScene().getWindow(),
-                "¿Está seguro de que desea eliminar el equipo \"" + selectedTeam.getNombre() + "\"?")) {
-            if (teamService.deleteTeam(selectedTeam.getNombre())) {
-                mensajeUtil.show(AlertType.INFORMATION, "Eliminar Equipo", "Equipo eliminado exitosamente.");
+        boolean confirmacion = mensajeUtil.showConfirmation(
+                "Confirmar Eliminación",
+                root.getScene().getWindow(),
+                "¿Está seguro de que desea eliminar el equipo \"" + selectedTeam.getNombre() + "\"?"
+        );
+
+        if (confirmacion) {
+            boolean success = teamService.deleteTeam(selectedTeam.getNombre());
+            if (success) {
+                mensajeUtil.show(javafx.scene.control.Alert.AlertType.INFORMATION, "Eliminar Equipo", "Equipo eliminado exitosamente.");
                 loadTeams();
                 OnActionBtnBarrerEquipo(event);
+
             } else {
-                mensajeUtil.show(AlertType.ERROR, "Eliminar Equipo", "No se pudo eliminar el equipo.");
+                mensajeUtil.show(javafx.scene.control.Alert.AlertType.ERROR, "Eliminar Equipo", "No se pudo eliminar el Equipo.");
             }
         }
     }
 
     @FXML
     void OnActionBtnGuardarEquipo(ActionEvent event) {
-        // **SOLUCIÓN:** Quitar la selección antes de verificar si es un equipo nuevo
-        tbvEquiposExistentes.getSelectionModel().clearSelection();
-
-        String nombreEquipo = txtfieldNombreEquipos.getText().trim();
-        if (nombreEquipo.isEmpty()) {
-            mensajeUtil.show(AlertType.ERROR, "Error", "Debe ingresar un nombre de equipo.");
+        if (!tbvEquiposExistentes.getSelectionModel().getSelectedValues().isEmpty()) {
+            mensajeUtil.show(AlertType.WARNING, "Guardar Equipo", "El equipo ya está seleccionado. Use 'Modificar' en su lugar.");
             return;
         }
 
+        String nombreEquipo = txtfieldNombreEquipos.getText().trim();
         String deporteSeleccionado = cmbEquipos.getValue();
+
+        // 🔁 INTENTA GUARDAR LA IMAGEN TEMPORAL PRIMERO
+        BufferedImage tempImage = (BufferedImage) AppContext.getInstance().get("teamPhotoTemp");
+        if (tempImage != null) {
+            String fileName = nombreEquipo.replace(" ", "_") + ".jpg";
+            File destinationFile = new File("teamsPhotos", fileName);
+            try {
+                ImageIO.write(tempImage, "jpg", destinationFile);
+                currentTeamImagePath = destinationFile.getAbsolutePath(); // ✅ ACTUALIZA LA RUTA
+                AppContext.getInstance().set("teamPhotoTemp", null); // 🧹 Limpia buffer temporal
+            } catch (IOException e) {
+                mensajeUtil.show(AlertType.ERROR, "Error", "No se pudo guardar la imagen desde la cámara.");
+                return;
+            }
+        }
+
+        // ⚠️ AHORA VALIDÁS DESPUÉS DE INTENTAR GUARDAR
+        if (nombreEquipo.isEmpty() || currentTeamImagePath.isEmpty()) {
+            mensajeUtil.show(AlertType.WARNING, "Guardar Equipo", "Debe ingresar el nombre y la imagen.");
+            return;
+        }
+
         if (deporteSeleccionado == null || deporteSeleccionado.isEmpty()) {
             mensajeUtil.show(AlertType.ERROR, "Error", "Debe seleccionar un deporte.");
             return;
         }
 
         for (Team t : teamsData) {
-            if (t.getNombre().equalsIgnoreCase(nombreEquipo) && t.getDeporte().equalsIgnoreCase(deporteSeleccionado)) {
+            if (t.getNombre().equalsIgnoreCase(nombreEquipo) &&
+                    t.getDeporte().equalsIgnoreCase(deporteSeleccionado)) {
                 mensajeUtil.show(AlertType.WARNING, "Guardar Equipo", "Ya existe un equipo con ese nombre para ese deporte.");
                 return;
             }
         }
 
-        String foto = (String) AppContext.getInstance().get("teamPhoto");
-        Team newTeam = new Team(nombreEquipo, deporteSeleccionado, foto);
+        // ✅ Copiar imagen a carpeta destino y guardar solo el nombre en JSON
+        File directory = new File("teamsPhotos");
+        if (!directory.exists()) directory.mkdirs();
 
-        if (teamService.addTeam(newTeam)) {
+        File destinationFile = new File(directory, nombreEquipo.replace(" ", "_") + ".jpg");
+        try {
+            java.nio.file.Files.copy(new File(currentTeamImagePath).toPath(), destinationFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            currentTeamImagePath = destinationFile.getName(); // Solo el nombre del archivo para JSON
+        } catch (IOException e) {
+            mensajeUtil.show(AlertType.ERROR, "Error", "No se pudo copiar la imagen.");
+            return;
+        }
+
+        Team newTeam = new Team(nombreEquipo, deporteSeleccionado, currentTeamImagePath);
+        boolean success = teamService.addTeam(newTeam);
+        if (success) {
+            mensajeUtil.show(AlertType.INFORMATION, "Guardar Equipo", "Equipo guardado exitosamente.");
             teamsData.add(newTeam);
             tbvEquiposExistentes.setItems(FXCollections.observableArrayList(teamsData));
-            mensajeUtil.show(AlertType.INFORMATION, "Éxito", "Equipo guardado correctamente.");
+            loadTeams();
             OnActionBtnBarrerEquipo(event);
         } else {
-            mensajeUtil.show(AlertType.ERROR, "Error", "No se pudo guardar el equipo.");
+            mensajeUtil.show(AlertType.ERROR, "Guardar Equipo", "No se pudo guardar el Equipo.");
         }
     }
+
 
     @FXML
     void OnActionBtnModificarEquipo(ActionEvent event) {
@@ -208,34 +251,95 @@ public class TeamsMaintenanceController extends Controller implements Initializa
             return;
         }
 
+        Team selectedTeam = selected.get(0);
+        String oldNombre = selectedTeam.getNombre();
         String newNombre = txtfieldNombreEquipos.getText().trim();
         String newDeporte = cmbEquipos.getValue();
-        String newFoto = (String) AppContext.getInstance().get("teamPhoto");
 
-        if (newFoto == null || newFoto.isEmpty()) {
-            newFoto = originalFoto;
-        }
+        // Limpiar nombres de imagen
+        String imagenActual = originalFoto == null ? "" : new File(originalFoto).getName();
+        String imagenFinal = currentTeamImagePath.isEmpty()
+                ? imagenActual
+                : new File(currentTeamImagePath).getName();
 
-        if (newNombre.equalsIgnoreCase(originalNombre) &&
-                newDeporte.equals(originalDeporte) &&
-                newFoto.equals(originalFoto)) {
+        // Detectar cambios de imagen desde cámara
+        BufferedImage tempImage = (BufferedImage) AppContext.getInstance().get("teamPhotoTemp");
+        boolean imageChangedFromCamera = tempImage != null;
+
+        // Detectar cambios de imagen desde explorador
+        boolean imageChangedFromExplorer = !currentTeamImagePath.isEmpty()
+                && new File(currentTeamImagePath).isAbsolute()
+                && !imagenActual.equalsIgnoreCase(imagenFinal);
+
+        // Verificar si hubo cambios reales
+        boolean nameChanged = !oldNombre.equalsIgnoreCase(newNombre);
+        boolean sportChanged = !originalDeporte.equalsIgnoreCase(newDeporte);
+        boolean imageChanged = imageChangedFromCamera || imageChangedFromExplorer;
+
+        if (!nameChanged && !sportChanged && !imageChanged) {
             mensajeUtil.show(AlertType.WARNING, "Modificar Equipo", "No se han realizado cambios.");
             return;
         }
 
-        Team selectedTeam = selected.get(0);
+        // Si la imagen proviene de la cámara
+        if (imageChangedFromCamera) {
+            String fileName = newNombre.replace(" ", "_") + ".jpg";
+            File destination = new File("teamsPhotos", fileName);
+            try {
+                ImageIO.write(tempImage, "jpg", destination);
+                currentTeamImagePath = destination.getAbsolutePath();
+                imagenFinal = fileName;
+                AppContext.getInstance().set("teamPhotoTemp", null); // limpiar memoria
+            } catch (IOException e) {
+                mensajeUtil.show(AlertType.ERROR, "Error", "No se pudo guardar la imagen de la cámara.");
+                return;
+            }
+        }
+
+        // Si es una imagen nueva desde el explorador
+        if (imageChangedFromExplorer) {
+            File origin = new File(currentTeamImagePath);
+            String fileName = newNombre.replace(" ", "_") + ".jpg"; // 🔁 renombrar con el nombre del equipo
+            File dest = new File("teamsPhotos", fileName);
+            try {
+                java.nio.file.Files.copy(origin.toPath(), dest.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                imagenFinal = fileName; // ✅ actualizar imagenFinal para guardar correctamente en el JSON
+            } catch (IOException e) {
+                mensajeUtil.show(AlertType.ERROR, "Error", "No se pudo copiar la imagen seleccionada.");
+                return;
+            }
+        }
+
+        // Si se cambió el nombre del equipo y no la imagen
+        if (nameChanged && !imageChangedFromCamera && !imageChangedFromExplorer) {
+            File oldImageFile = new File("teamsPhotos", imagenActual);
+            File newImageFile = new File("teamsPhotos", newNombre.replace(" ", "_") + ".jpg");
+            if (oldImageFile.exists()) {
+                boolean renamed = oldImageFile.renameTo(newImageFile);
+                if (renamed) {
+                    imagenFinal = newImageFile.getName();
+                }
+            }
+        }
+
+        // Aplicar cambios
         selectedTeam.setNombre(newNombre);
         selectedTeam.setDeporte(newDeporte);
-        selectedTeam.setFoto(newFoto);
+        selectedTeam.setTeamImage(imagenFinal);
 
-        if (teamService.updateTeam(selectedTeam)) {
+        boolean success = teamService.updateTeam(oldNombre, selectedTeam);
+        if (success) {
             mensajeUtil.show(AlertType.INFORMATION, "Modificar Equipo", "Equipo modificado exitosamente.");
-            loadTeams();  // Recargar la tabla
+            loadTeams();
             OnActionBtnBarrerEquipo(event);
         } else {
             mensajeUtil.show(AlertType.ERROR, "Modificar Equipo", "No se pudo modificar el equipo.");
         }
     }
+
+
+
+
 
     @FXML
     void OnActionBtnTomarFoto(ActionEvent event) {
@@ -247,30 +351,74 @@ public class TeamsMaintenanceController extends Controller implements Initializa
         List<Team> selected = tbvEquiposExistentes.getSelectionModel().getSelectedValues();
         if (!selected.isEmpty()) {
             Team selectedTeam = selected.get(0);
+
             originalNombre = selectedTeam.getNombre();
             originalDeporte = selectedTeam.getDeporte();
-            originalFoto = selectedTeam.getFoto();
+            originalFoto = selectedTeam.getTeamImage();
 
-            txtfieldNombreEquipos.setText(selectedTeam.getNombre());
-            cmbEquipos.setValue(selectedTeam.getDeporte());
+            txtfieldNombreEquipos.setText(originalNombre);
+            cmbEquipos.setValue(originalDeporte);
 
-            if (selectedTeam.getFoto() != null && !selectedTeam.getFoto().isEmpty()) {
-                File file = new File(selectedTeam.getFoto());
-                if (file.exists()) {
-                    Image image = new Image(file.toURI().toString());
-                    imgviewImagenDeporte.setImage(image);
+            // 🧠 Cargar imagen del equipo si existe
+            if (originalFoto != null && !originalFoto.isEmpty()) {
+                File imageFile = new File("teamsPhotos/" + originalFoto);
+                if (imageFile.exists()) {
+                    imgviewImagenDeporte.setImage(new Image(imageFile.toURI().toString()));
+                    currentTeamImagePath = imageFile.getAbsolutePath(); // ✅ Actualizar ruta completa
                 } else {
                     imgviewImagenDeporte.setImage(null);
+                    currentTeamImagePath = ""; // 🧹 Limpiar ruta si no existe
                 }
             } else {
                 imgviewImagenDeporte.setImage(null);
+                currentTeamImagePath = "";
             }
         }
     }
 
+
     @FXML
     void OnActionBtnCargarFoto(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Seleccionar Imagen");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg", "*.gif")
+        );
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        File selectedFile = fileChooser.showOpenDialog(stage);
+
+        if (selectedFile != null) {
+            // ✅ Guardamos la ruta temporalmente
+            currentTeamImagePath = selectedFile.getAbsolutePath();
+
+            // ✅ Mostrar la imagen en la interfaz sin copiarla todavía
+            Image image = new Image(selectedFile.toURI().toString());
+            imgviewImagenDeporte.setImage(image);
+        }
 
     }
 
-}
+        private void updateImageFromAppContext() {
+            // 📌 Si se cargó desde archivo (explorador)
+            String photoPath = (String) AppContext.getInstance().get("teamPhoto");
+            if (photoPath != null && !photoPath.isEmpty()) {
+                File file = new File(photoPath);
+                if (file.exists()) {
+                    Image image = new Image(file.toURI().toString());
+                    imgviewImagenDeporte.setImage(image);
+                    System.out.println("✅ Imagen cargada desde disco: " + photoPath);
+                    return;
+                }
+            }
+
+            // 📌 Si fue tomada desde la cámara y aún no se guardó
+            BufferedImage tempImage = (BufferedImage) AppContext.getInstance().get("teamPhotoTemp");
+            if (tempImage != null) {
+                Image fxImage = SwingFXUtils.toFXImage(tempImage, null);
+                imgviewImagenDeporte.setImage(fxImage);
+                System.out.println("✅ Imagen mostrada desde memoria (camara)");
+            }
+        }
+
+
+    }

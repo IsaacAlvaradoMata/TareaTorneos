@@ -3,7 +3,7 @@ package cr.ac.una.tareatorneos.model;
 public class Team {
     private String nombre;
     private String deporte;
-    private String foto;
+    private String teamImage;
 
     public Team() {
     }
@@ -13,10 +13,10 @@ public class Team {
         this.deporte = deporte;
     }
 
-    public Team(String nombre, String deporte, String foto) {
+    public Team(String nombre, String deporte, String teamImage) {
         this.nombre = nombre;
         this.deporte = deporte;
-        this.foto = foto;
+        this.teamImage = teamImage;
     }
 
     public String getNombre() {
@@ -35,20 +35,23 @@ public class Team {
         this.deporte = deporte;
     }
 
-    public String getFoto() {
-        return foto;
+    public String getTeamImage() {
+        return teamImage;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+    public void setTeamImage(String teamImage) {
+        this.teamImage = teamImage;
     }
+
+
+
 
     @Override
     public String toString() {
         return "Team{" +
                 "nombre=" + nombre +
                 ", deporte=" + deporte +
-                ", foto=" + foto +
+                ", foto=" + teamImage +
                 '}';
     }
 }
