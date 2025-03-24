@@ -1,0 +1,15 @@
+[ {
+  "nombre" : "NBA",
+  "deporte" : "Baloncesto",
+  "tiempoPorPartido" : 10,
+  "cantidadEquipos" : 3,
+  "equiposParticipantes" : [ "Lakers", "lakers2", "lakers3" ],
+  "estado" : "iniciado"
+}, {
+  "nombre" : "torneo de apertura",
+  "deporte" : "Futbol",
+  "tiempoPorPartido" : 5,
+  "cantidadEquipos" : 3,
+  "equiposParticipantes" : [ "Real Madrid", "Manchester city", "saprissa" ],
+  "estado" : "iniciado"
+} ]

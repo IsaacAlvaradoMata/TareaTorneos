@@ -10,4 +10,20 @@
   "nombre" : "Melburne",
   "deporte" : "Tenis",
   "teamImage" : "Melburne.jpg"
+}, {
+  "nombre" : "lakers2",
+  "deporte" : "Baloncesto",
+  "teamImage" : "lakers2.jpg"
+}, {
+  "nombre" : "lakers3",
+  "deporte" : "Baloncesto",
+  "teamImage" : "lakers3.jpg"
+}, {
+  "nombre" : "Manchester city",
+  "deporte" : "Futbol",
+  "teamImage" : "Manchester_city.jpg"
+}, {
+  "nombre" : "saprissa",
+  "deporte" : "Futbol",
+  "teamImage" : "saprissa.jpg"
 } ]
