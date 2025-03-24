@@ -2,7 +2,6 @@ package cr.ac.una.tareatorneos.controller;
 
 import cr.ac.una.tareatorneos.model.Sport;
 import cr.ac.una.tareatorneos.service.SportService;
-import cr.ac.una.tareatorneos.util.FlowController;
 import cr.ac.una.tareatorneos.util.Mensaje;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTableColumn;
@@ -20,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -87,7 +87,6 @@ public class SportsMaintenanceController extends Controller implements Initializ
         tbvDeportesExistentes.getItems().addAll(sportsData);
     }
 
-
     @FXML
     void OnActionBtnBarrerCampos(ActionEvent event) {
         imgviewImagenDeporte.setImage(null);
@@ -95,7 +94,6 @@ public class SportsMaintenanceController extends Controller implements Initializ
         currentBallImagePath = "";
         tbvDeportesExistentes.getSelectionModel().clearSelection();
     }
-
 
     @FXML
     void OnActionBtnBuscarImagen(ActionEvent event) {
@@ -116,7 +114,6 @@ public class SportsMaintenanceController extends Controller implements Initializ
             imgviewImagenDeporte.setImage(image);
         }
     }
-
 
     @FXML
     void OnActionBtnEliminar(ActionEvent event) {
@@ -147,7 +144,6 @@ public class SportsMaintenanceController extends Controller implements Initializ
             }
         }
     }
-
 
     @FXML
     void OnActionBtnGuardar(ActionEvent event) {
@@ -211,7 +207,6 @@ public class SportsMaintenanceController extends Controller implements Initializ
 
     }
 
-
     @FXML
     void OnActionBtnModificar(ActionEvent event) {
         List<Sport> selectedItems = tbvDeportesExistentes.getSelectionModel().getSelectedValues();
@@ -257,7 +252,7 @@ public class SportsMaintenanceController extends Controller implements Initializ
                 ? newImage
                 : "";
 
-        boolean nameChanged = !oldNombre.equalsIgnoreCase(newNombre);
+        boolean nameChanged = !oldNombre.equals(newNombre);
 
 // Si se cargó una nueva imagen, aunque el nombre final coincida, consideramos que cambió
         boolean imageChanged = !currentBallImagePath.isEmpty() &&
@@ -299,9 +294,6 @@ public class SportsMaintenanceController extends Controller implements Initializ
             mensajeUtil.show(javafx.scene.control.Alert.AlertType.ERROR, "Modificar Deporte", "No se pudo modificar el deporte.");
         }
     }
-
-
-
 
     @FXML
     void handleTableClickDeportesExistentes(MouseEvent event) {

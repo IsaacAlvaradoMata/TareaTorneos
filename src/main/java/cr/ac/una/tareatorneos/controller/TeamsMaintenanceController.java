@@ -1,6 +1,5 @@
 package cr.ac.una.tareatorneos.controller;
 
-import cr.ac.una.tareatorneos.model.Sport;
 import cr.ac.una.tareatorneos.model.Team;
 import cr.ac.una.tareatorneos.service.SportService;
 import cr.ac.una.tareatorneos.service.TeamService;
@@ -242,7 +241,6 @@ public class TeamsMaintenanceController extends Controller implements Initializa
         }
     }
 
-
     @FXML
     void OnActionBtnModificarEquipo(ActionEvent event) {
         List<Team> selected = tbvEquiposExistentes.getSelectionModel().getSelectedValues();
@@ -272,7 +270,7 @@ public class TeamsMaintenanceController extends Controller implements Initializa
                 && !imagenActual.equalsIgnoreCase(imagenFinal);
 
         // Verificar si hubo cambios reales
-        boolean nameChanged = !oldNombre.equalsIgnoreCase(newNombre);
+        boolean nameChanged = !oldNombre.equals(newNombre);
         boolean sportChanged = !originalDeporte.equalsIgnoreCase(newDeporte);
         boolean imageChanged = imageChangedFromCamera || imageChangedFromExplorer;
 
@@ -337,10 +335,6 @@ public class TeamsMaintenanceController extends Controller implements Initializa
         }
     }
 
-
-
-
-
     @FXML
     void OnActionBtnTomarFoto(ActionEvent event) {
         FlowController.getInstance().goViewInWindow("CameraView");
@@ -376,7 +370,6 @@ public class TeamsMaintenanceController extends Controller implements Initializa
         }
     }
 
-
     @FXML
     void OnActionBtnCargarFoto(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
@@ -398,27 +391,26 @@ public class TeamsMaintenanceController extends Controller implements Initializa
 
     }
 
-        private void updateImageFromAppContext() {
-            // 📌 Si se cargó desde archivo (explorador)
-            String photoPath = (String) AppContext.getInstance().get("teamPhoto");
-            if (photoPath != null && !photoPath.isEmpty()) {
-                File file = new File(photoPath);
-                if (file.exists()) {
-                    Image image = new Image(file.toURI().toString());
-                    imgviewImagenDeporte.setImage(image);
-                    System.out.println("✅ Imagen cargada desde disco: " + photoPath);
-                    return;
-                }
-            }
-
-            // 📌 Si fue tomada desde la cámara y aún no se guardó
-            BufferedImage tempImage = (BufferedImage) AppContext.getInstance().get("teamPhotoTemp");
-            if (tempImage != null) {
-                Image fxImage = SwingFXUtils.toFXImage(tempImage, null);
-                imgviewImagenDeporte.setImage(fxImage);
-                System.out.println("✅ Imagen mostrada desde memoria (camara)");
+    private void updateImageFromAppContext() {
+        // 📌 Si se cargó desde archivo (explorador)
+        String photoPath = (String) AppContext.getInstance().get("teamPhoto");
+        if (photoPath != null && !photoPath.isEmpty()) {
+            File file = new File(photoPath);
+            if (file.exists()) {
+                Image image = new Image(file.toURI().toString());
+                imgviewImagenDeporte.setImage(image);
+                System.out.println("✅ Imagen cargada desde disco: " + photoPath);
+                return;
             }
         }
 
-
+        // 📌 Si fue tomada desde la cámara y aún no se guardó
+        BufferedImage tempImage = (BufferedImage) AppContext.getInstance().get("teamPhotoTemp");
+        if (tempImage != null) {
+            Image fxImage = SwingFXUtils.toFXImage(tempImage, null);
+            imgviewImagenDeporte.setImage(fxImage);
+            System.out.println("✅ Imagen mostrada desde memoria (camara)");
+        }
     }
+
+}
