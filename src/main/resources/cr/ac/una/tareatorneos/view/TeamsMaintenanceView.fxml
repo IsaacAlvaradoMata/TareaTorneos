@@ -46,7 +46,7 @@
                                         <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="297.0" spacing="15.0">
                                             <children>
                                                 <ImageView fx:id="imgSeleccionar" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                                    <MFXFilterComboBox fx:id="cmbEquipos" floatMode="DISABLED" prefHeight="34.0" prefWidth="260.0" promptText="Seleccione un Deporte Registrado" />
+                                    <MFXFilterComboBox fx:id="cmbEquipos" floatMode="DISABLED" floatingText="Seleccione un Deporte Registrado" prefHeight="34.0" prefWidth="260.0" />
                                             </children>
                                             <padding>
                                                 <Insets right="40.0" />
