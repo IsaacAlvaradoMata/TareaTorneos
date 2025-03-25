@@ -26,7 +26,8 @@ public class SportService {
     public List<Sport> getAllSports() {
         try {
             if (filePath.toFile().exists()) {
-                List<Sport> sports = mapper.readValue(filePath.toFile(), new TypeReference<List<Sport>>() {});
+                List<Sport> sports = mapper.readValue(filePath.toFile(), new TypeReference<List<Sport>>() {
+                });
                 for (Sport sport : sports) {
                     if (sport.getFechaCreacion() == null) {
                         sport.setFechaCreacion(LocalDate.now());
@@ -112,4 +113,12 @@ public class SportService {
 
         return false;
     }
+
+    public Sport getSportByName(String nombre) {
+        return getAllSports().stream()
+                .filter(sport -> sport.getNombre().equalsIgnoreCase(nombre))
+                .findFirst()
+                .orElse(null);
+    }
+
 }

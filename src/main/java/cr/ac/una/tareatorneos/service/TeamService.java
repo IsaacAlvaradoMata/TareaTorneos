@@ -22,7 +22,8 @@ public class TeamService {
     public List<Team> getAllTeams() {
         try {
             if (filePath.toFile().exists()) {
-                return mapper.readValue(filePath.toFile(), new TypeReference<List<Team>>() {});
+                return mapper.readValue(filePath.toFile(), new TypeReference<List<Team>>() {
+                });
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -84,5 +85,12 @@ public class TeamService {
             return saveTeams(teams);
         }
         return false;
+    }
+
+    public Team getTeamByName(String nombre) {
+        return getAllTeams().stream()
+                .filter(team -> team.getNombre().equalsIgnoreCase(nombre))
+                .findFirst()
+                .orElse(null);
     }
 }

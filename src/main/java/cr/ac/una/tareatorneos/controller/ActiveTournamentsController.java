@@ -1,15 +1,10 @@
 package cr.ac.una.tareatorneos.controller;
 
-import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.controls.MFXCheckListView;
-import io.github.palexdev.materialfx.controls.MFXListView;
-import io.github.palexdev.materialfx.controls.MFXTableView;
-import java.net.URL;
-import java.util.ResourceBundle;
 import cr.ac.una.tareatorneos.model.Team;
 import cr.ac.una.tareatorneos.model.Tournament;
 import cr.ac.una.tareatorneos.service.TeamService;
 import cr.ac.una.tareatorneos.service.TournamentService;
+import cr.ac.una.tareatorneos.util.FlowController;
 import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import javafx.collections.FXCollections;
@@ -103,7 +98,7 @@ public class ActiveTournamentsController extends Controller implements Initializ
 
     @FXML
     private void OnActionBtnReanudarTorneo(ActionEvent event) {
-        // Lógica para reanudar el torneo seleccionado
+        FlowController.getInstance().goView("MatchView");
     }
 
     @FXML
