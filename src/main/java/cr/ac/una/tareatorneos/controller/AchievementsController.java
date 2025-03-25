@@ -25,8 +25,7 @@ import javafx.stage.Modality;
 import javafx.stage.PopupWindow;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-
+import io.github.palexdev.materialfx.controls.MFXFilterComboBox;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -70,6 +69,9 @@ public class AchievementsController extends Controller implements Initializable 
     private ImageView imgMedallaTorneo;
     @FXML
     private ImageView imgInfo;
+
+    @FXML
+    private MFXFilterComboBox<?> cmbAchievements;
 
 
     private MFXGenericDialog dialogContent;
