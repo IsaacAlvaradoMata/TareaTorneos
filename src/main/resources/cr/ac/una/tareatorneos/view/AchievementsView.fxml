@@ -46,7 +46,7 @@
                                                 <Label styleClass="lbl-SubTitulosLogros" text="Lista de Equipos Existentes:" />
                                             </children>
                                         </HBox>
-                              <MFXFilterComboBox fx:id="cmbAchievements" floatMode="BORDER" floatingText="Busqueda por Deporte" prefHeight="40.0" prefWidth="200.0" />
+                              <MFXFilterComboBox fx:id="cmbAchievements" floatMode="BORDER" prefHeight="40.0" prefWidth="200.0" promptText="Busqueda por Deporte" />
                                         <MFXTableView fx:id="tbvLogrosEquipos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#handleTableClickLogrosEquipos" prefHeight="500.0" prefWidth="250.0" styleClass="table-view-Logros" VBox.vgrow="ALWAYS">
                                             <VBox.margin>
                                                 <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />

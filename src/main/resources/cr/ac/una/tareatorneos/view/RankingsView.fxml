@@ -50,7 +50,7 @@
                               <HBox alignment="CENTER" spacing="15.0">
                                  <children>
                                     <ImageView fx:id="imgFlechaArriba" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
-                                    <MFXFilterComboBox fx:id="cmbRankings" floatMode="DISABLED" floatingText="Busqueda por Deporte" prefHeight="38.0" prefWidth="207.0" />
+                                    <MFXFilterComboBox fx:id="cmbRankings" floatMode="DISABLED" prefHeight="38.0" prefWidth="207.0" promptText="Busqueda por Deporte" />
                                  </children>
                                  <padding>
                                     <Insets left="30.0" />

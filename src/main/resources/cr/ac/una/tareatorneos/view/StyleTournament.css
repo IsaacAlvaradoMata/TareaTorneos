@@ -345,9 +345,7 @@
     -fx-padding: 4;
     -fx-background-insets: 0;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-    -mfx-main:#a83030;
-    -mfx-float-mode : BORDER;
-    -fx-pormpt-text-fill:#a83030;
+
 }
 
 #cmbEquipos .text-field {
@@ -596,9 +594,7 @@
     -fx-padding: 4;
     -fx-background-insets: 0;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-    -mfx-main:#690093;
-    -mfx-float-mode : BORDER;
-    -fx-pormpt-text-fill:#690093;
+
 }
 
 #cmbTournamentMaintenance .text-field {
@@ -1163,9 +1159,7 @@
     -fx-padding: 4;
     -fx-background-insets: 0;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-    -mfx-main:#0500a2;
-    -mfx-float-mode : BORDER;
-    -fx-pormpt-text-fill:#0500a2;
+
 }
 
 #cmbRankings .text-field {
@@ -1249,8 +1243,6 @@
 /*COMBOBOX DE LOGROS*/
 
 #cmbAchievements {
-    -mfx-float-mode : BORDER;
-    -fx-pormpt-text-fill:#a25600;
     -fx-border-color: transparent;
     -fx-border-radius: 0;
     -fx-background-color: #eebd95;
@@ -1259,7 +1251,7 @@
     -fx-padding: 4;
     -fx-background-insets: 0;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-    -mfx-main:#a25600;
+
 }
 
 #cmbAchievements .text-field {
