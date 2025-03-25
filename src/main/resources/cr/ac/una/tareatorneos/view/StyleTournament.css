@@ -511,10 +511,108 @@
     -fx-background-color: #d9a2fd;
 }
 
+#sprTournamentMaintenance{
+    -fx-background-color: #690093;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+}
+
+.lbl-SubTitulosTournamentMaintenance {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #690093;
+    -fx-padding: 5 0 5 0;
+    /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);*/
+}
+
 /***#################TITULO DE VISTA**#################*/
 
 #lblTournamentCreationTitulo{
     -fx-text-fill:#690093;
+}
+
+/*BOTONES DE VISTA*/
+
+.btn-TournamentMaintenance {
+    -fx-alignment: center;
+    -fx-background-color: #690093;
+    -fx-background-radius: 4px;
+    -fx-border-width: 0;
+    -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 10px 16px;
+    -fx-min-height: 40px;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-transition: all 0.15s ease-in-out;
+}
+
+/* Efecto al pasar el mouse */
+.btn-TournamentMaintenance:hover {
+    -fx-background-color: #46005e;
+    -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.5), 8, 0, 0, 4);
+    -fx-translate-y: -2px;
+}
+
+/* Efecto al hacer clic */
+.btn-TournamentMaintenance:pressed {
+    -fx-background-color: #cc71ff !important;
+    -fx-effect: innershadow(three-pass-box, #D6D6E7, 7, 0, 0, 3);
+    -fx-translate-y: 2px;
+}
+
+.btn-TournamentMaintenance:focused {
+    -fx-background-color: #690093;
+}
+
+.btn-TournamentMaintenance:focused:hover{
+    -fx-background-color: #46005e;
+}
+
+/*TEXTFIELD DE VISTA*/
+
+.text-field-TournamentMaintenance {
+    -fx-border-color: #690093;
+    -fx-border-width: 2;
+    -fx-border-radius: 4;
+    -fx-background-radius: 7;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+    -fx-background-color: #d9a2fd;
+    -fx-font-weight: bold;
+    -fx-font-family: "Trebuchet MS", sans-serif;
+}
+
+/*COMBOBOX*/
+#cmbTournamentMaintenance {
+    -fx-border-color: transparent;
+    -fx-border-radius: 0;
+    -fx-background-color: #d9a2fd;
+    -fx-text-fill: #690093;
+    -fx-font-weight: bold;
+    -fx-padding: 4;
+    -fx-background-insets: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+
+}
+
+#cmbTournamentMaintenance .text-field {
+    -fx-prompt-text-fill: #690093;
+}
+
+#cmbTournamentMaintenance .combo-popup .text-field {
+    -fx-prompt-text-fill: -mfx-text-me;
+}
+
+#cmbTournamentMaintenance .caret .mfx-font-icon {
+    -mfx-color: #690093;
+    -mfx-description: "fas-angle-down";
+    -mfx-size: 16;
+}
+
+#cmbTournamentMaintenance .caret .mfx-ripple-generator {
+    -mfx-ripple-color: rgba(255, 255, 255, 0.5);
 }
 
 .lbl-SubTournamentCreation {
@@ -524,6 +622,8 @@
     -fx-padding: 5 0 5 0;
     /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);*/
 }
+
+
 
 .mfx-stepper .mfx-text-field {
     -mfx-float-mode: disabled;
@@ -995,6 +1095,9 @@
     -fx-background-color: #181b5b;
 }
 
+
+
+
 /*########################### LISTVIEW DE CREACION DE TORNEOS #########################################################################*/
 
 .table-view-Rankings {
@@ -1137,7 +1240,38 @@
     -fx-image: url('../resources/WinnerAchievementsIcon.png');
 }
 
+/*COMBOBOX DE LOGROS*/
 
+#cmbAchievements {
+    -fx-border-color: transparent;
+    -fx-border-radius: 0;
+    -fx-background-color: #eebd95;
+    -fx-text-fill: #a25600;
+    -fx-font-weight: bold;
+    -fx-padding: 4;
+    -fx-background-insets: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+    -mfx-float-mode : BORDER;
+    -fx-pormpt-text-fill:#a25600;
+}
+
+#cmbAchievements .text-field {
+    -fx-prompt-text-fill: #a25600;
+}
+
+#cmbAchievements .combo-popup .text-field {
+    -fx-prompt-text-fill: -mfx-text-me;
+}
+
+#cmbAchievements .caret .mfx-font-icon {
+    -mfx-color: #a25600;
+    -mfx-description: "fas-angle-down";
+    -mfx-size: 16;
+}
+
+#cmbAchievements .caret .mfx-ripple-generator {
+    -mfx-ripple-color: rgba(255, 255, 255, 0.5);
+}
 
 /*########################### LISTVIEW DE LISTA DE LOGROS #########################################################################*/
 
@@ -1267,3 +1401,6 @@
 /*########################### IMAGENES DE TORNEOS ACTIVOS #########################################################################*/
 #btnReanudarTorneo > ImageView{-fx-image: url('../resources/PlayIcon.png');}
 #btnAgregarEquipos > ImageView{-fx-image: url('../resources/AddTeamsIcon.png');}
+
+/*########################### IMAGENES DE CREACION DE TORNEOS #########################################################################*/
+#btnCrearTorneo > ImageView{-fx-image: url('../resources/AddTournamentIcon.png');}

@@ -156,6 +156,7 @@ public class ActiveTournamentsController extends Controller implements Initializ
 
     private void populateTableView() {
         MFXTableColumn<Tournament> colNombre = new MFXTableColumn<>("Nombre");
+        colNombre.setMinWidth(150);
         colNombre.setRowCellFactory(t -> new MFXTableRowCell<>(Tournament::getNombre));
 
         MFXTableColumn<Tournament> colDeporte = new MFXTableColumn<>("Deporte");

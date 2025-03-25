@@ -15,10 +15,7 @@ import io.github.palexdev.mfxresources.fonts.MFXFontIcon;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.IntegerBinding;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -127,7 +124,6 @@ public class TournamentCreationController extends Controller implements Initiali
                 equiposTorneo.setItems(FXCollections.observableArrayList(equiposFiltrados));
                 seleccionadosTorneo.getItems().clear();
 
-// 🔄 Actualizar lista observable al cambiar la selección
                 equiposTorneo.getSelectionModel().selectionProperty().addListener((obs2, anterior, actual) -> {
                     selectedEquipos.setAll(equiposTorneo.getSelectionModel().getSelectedValues());
                     System.out.println("✅ Equipos seleccionados: " + selectedEquipos.size() + " => " + selectedEquipos);
@@ -168,7 +164,6 @@ public class TournamentCreationController extends Controller implements Initiali
     }
 
     private void configurarEventosStepper() {
-        // Actualiza la lista observable cada vez que el usuario hace click
         equiposTorneo.getSelectionModel().selectionProperty().addListener((obs, oldSel, newSel) -> {
             selectedEquipos.setAll(equiposTorneo.getSelectionModel().getSelectedValues());
             System.out.println("📌 Checkboxes seleccionados (" + selectedEquipos.size() + "): " + selectedEquipos);
@@ -233,16 +228,16 @@ public class TournamentCreationController extends Controller implements Initiali
         step2.setContent(step2Box);
         step2.getValidator().dependsOn(cantidadTorneo.getValidator());
 
-        // 👀 Detectar cambios en la selección al hacer click
+        // Detecta los cambios en la selección al hacer click
         equiposTorneo.setOnMouseClicked(event -> {
             selectedEquipos.setAll(equiposTorneo.getSelectionModel().getSelectedValues());
             System.out.println("🧠 Equipos seleccionados (" + selectedEquipos.size() + "): " + selectedEquipos);
         });
 
-        // 🧠 Binding para la cantidad seleccionada
+        //Binding para la cantidad seleccionada
         IntegerBinding cantidadSeleccionados = Bindings.size(selectedEquipos);
 
-        // 🚫 Validar cantidad permitida
+        //Validar cantidad permitida
         step2.getValidator().constraint(
                 "No puede seleccionar más equipos de los permitidos",
                 Bindings.createBooleanBinding(() -> {
@@ -260,7 +255,7 @@ public class TournamentCreationController extends Controller implements Initiali
                 }, cantidadTorneo.textProperty(), cantidadSeleccionados)
         );
 
-        // Paso 3 - Confirmación
+        //Confirmación
         MFXStepperToggle step3 = new MFXStepperToggle("Paso 3", new MFXFontIcon("fas-3", 16, Color.web("#85CB33")));
         Node step3Grid = createGrid();
         step3.setContent(step3Grid);
@@ -277,7 +272,7 @@ public class TournamentCreationController extends Controller implements Initiali
             MFXValidator validator = node.getValidator();
             List<Constraint> validate = validator.validate();
             if (!validate.isEmpty()) {
-                errorLabel.setText(validate.get(0).getMessage());
+                errorLabel.setText(validate.getFirst().getMessage());
             }
         });
         stepper.addEventHandler(MFXStepperEvent.NEXT_EVENT, event -> errorLabel.setText(""));
@@ -324,43 +319,53 @@ public class TournamentCreationController extends Controller implements Initiali
 //        stepper.setDisable(false);
 //    }
 
-    private void cargarVistaDesdeCero() {
-//        // Limpiar contenedor raíz
-        root1.getChildren().clear();
-
-        // Reset componentes
-        nombreTorneo.clear();
-        tiempoTorneo.clear();
-        cantidadTorneo.clear();
-        deporteTorneo.clearSelection();
-        checkbox.setSelected(false);
-
-        equiposTorneo.getItems().clear();
-        equiposTorneo.getSelectionModel().clearSelection();
-        seleccionadosTorneo.getItems().clear();
-        selectedEquipos.clear();
-
-        // Crear y configurar nuevo stepper
-        stepper = new MFXStepper();  // 👉 NUEVO steper para reiniciar todo
-        agregarPasosAlStepper();
-        configurarEstilosCampos();
-        configurarPrompts();
-        configurarIconos();
-        cargarDeportes();
-        configurarFiltroEquipos();
-        configurarValidaciones();
-        configurarEventosStepper();
-
-        // Estilo botones
-        Platform.runLater(this::configurarEstiloBotonesStepper);
-
-        // Agregar stepper al root
-        AnchorPane.setTopAnchor(stepper, 0.0);
-        AnchorPane.setBottomAnchor(stepper, 0.0);
-        AnchorPane.setLeftAnchor(stepper, 0.0);
-        AnchorPane.setRightAnchor(stepper, 0.0);
-        root1.getChildren().add(stepper);
-    }
+//    private void cargarVistaDesdeCero() {
+//        nombreTorneo.clear();
+//        tiempoTorneo.clear();
+//        cantidadTorneo.clear();
+//        deporteTorneo.clearSelection();
+//        checkbox.setSelected(false);
+//        equiposTorneo.getItems().clear();
+//        equiposTorneo.getSelectionModel().clearSelection();
+//        seleccionadosTorneo.getItems().clear();
+//        selectedEquipos.clear();
+//        FlowController.getInstance().goView("TournamentCreationView");
+//////        // Limpiar contenedor raíz
+////        root1.getChildren().clear();
+////
+////        // Reset componentes
+////        nombreTorneo.clear();
+////        tiempoTorneo.clear();
+////        cantidadTorneo.clear();
+////        deporteTorneo.clearSelection();
+////        checkbox.setSelected(false);
+////
+////        equiposTorneo.getItems().clear();
+////        equiposTorneo.getSelectionModel().clearSelection();
+////        seleccionadosTorneo.getItems().clear();
+////        selectedEquipos.clear();
+////
+////        // Crear y configurar nuevo stepper
+////        stepper = new MFXStepper();
+////        agregarPasosAlStepper();
+////        configurarEstilosCampos();
+////        configurarPrompts();
+////        configurarIconos();
+////        cargarDeportes();
+////        configurarFiltroEquipos();
+////        configurarValidaciones();
+////        configurarEventosStepper();
+////
+////        // Estilo botones
+////        Platform.runLater(this::configurarEstiloBotonesStepper);
+////
+////        // Agregar stepper al root
+////        AnchorPane.setTopAnchor(stepper, 0.0);
+////        AnchorPane.setBottomAnchor(stepper, 0.0);
+////        AnchorPane.setLeftAnchor(stepper, 0.0);
+////        AnchorPane.setRightAnchor(stepper, 0.0);
+////        root1.getChildren().add(stepper);
+//  }
 
 
 
@@ -438,11 +443,13 @@ public class TournamentCreationController extends Controller implements Initiali
                 mensajeUtil.show(Alert.AlertType.ERROR, "Error", "No se pudo guardar el torneo.");
                 return;
             }
+
             MFXButton crearOtro = new MFXButton("Crear Otro Torneo");
             crearOtro.setStyle("-fx-background-color: #690093; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px;");
             crearOtro.getStyleClass().add("stepper-button");
-            crearOtro.setOnAction(e -> cargarVistaDesdeCero());
-
+            crearOtro.setOnAction(e -> {
+                System.out.println("Crear Otro");
+            });
 
             VBox contenedorFinal = new VBox(20, completedLabel, crearOtro);
             contenedorFinal.setAlignment(Pos.CENTER);
@@ -459,6 +466,7 @@ public class TournamentCreationController extends Controller implements Initiali
 
         return box;
     }
+
 
     private MFXTextField createLabel(String text) {
         MFXTextField label = MFXTextField.asLabel(text);
