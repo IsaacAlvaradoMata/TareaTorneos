@@ -3,6 +3,7 @@ package cr.ac.una.tareatorneos.controller;
 import cr.ac.una.tareatorneos.model.Team;
 import cr.ac.una.tareatorneos.service.SportService;
 import cr.ac.una.tareatorneos.service.TeamService;
+import cr.ac.una.tareatorneos.util.AchievementUtils;
 import cr.ac.una.tareatorneos.util.AppContext;
 import cr.ac.una.tareatorneos.util.FlowController;
 import cr.ac.una.tareatorneos.util.Mensaje;
@@ -229,6 +230,8 @@ public class TeamsMaintenanceController extends Controller implements Initializa
         }
 
         Team newTeam = new Team(nombreEquipo, deporteSeleccionado, currentTeamImagePath);
+        newTeam.setLogros(AchievementUtils.generarLogrosIniciales());
+
         boolean success = teamService.addTeam(newTeam);
         if (success) {
             mensajeUtil.show(AlertType.INFORMATION, "Guardar Equipo", "Equipo guardado exitosamente.");

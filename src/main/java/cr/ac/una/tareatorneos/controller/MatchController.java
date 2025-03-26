@@ -25,7 +25,7 @@ public class MatchController extends Controller implements Initializable {
 
     @FXML
     private MFXButton btnFinalizar;
-    
+
     @FXML
     private ImageView imgBalon;
 
@@ -37,9 +37,6 @@ public class MatchController extends Controller implements Initializable {
 
     @FXML
     private Label lblTiempo;
-
-    @FXML
-    private Label btnFinalizar;
 
     @FXML
     private Label lblTorneo;

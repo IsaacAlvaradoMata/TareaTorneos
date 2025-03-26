@@ -1,9 +1,13 @@
 package cr.ac.una.tareatorneos.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Team {
     private String nombre;
     private String deporte;
     private String teamImage;
+    private List<Achievement> logros = new ArrayList<>();
 
     public Team() {
     }
@@ -43,8 +47,13 @@ public class Team {
         this.teamImage = teamImage;
     }
 
+    public List<Achievement> getLogros() {
+        return logros;
+    }
 
-
+    public void setLogros(List<Achievement> logros) {
+        this.logros = logros;
+    }
 
     @Override
     public String toString() {
@@ -52,6 +61,7 @@ public class Team {
                 "nombre=" + nombre +
                 ", deporte=" + deporte +
                 ", foto=" + teamImage +
+                ", logros=" + logros +
                 '}';
     }
 }

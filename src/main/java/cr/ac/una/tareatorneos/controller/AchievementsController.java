@@ -4,29 +4,38 @@
  */
 package cr.ac.una.tareatorneos.controller;
 
-
+import cr.ac.una.tareatorneos.model.Achievement;
+import cr.ac.una.tareatorneos.model.Team;
+import cr.ac.una.tareatorneos.service.SportService;
+import cr.ac.una.tareatorneos.service.TeamService;
 import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXFilterComboBox;
+import io.github.palexdev.materialfx.controls.MFXTableColumn;
 import io.github.palexdev.materialfx.controls.MFXTableView;
+import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.dialogs.MFXGenericDialog;
 import io.github.palexdev.materialfx.dialogs.MFXGenericDialogBuilder;
 import io.github.palexdev.materialfx.dialogs.MFXStageDialog;
 import io.github.palexdev.materialfx.enums.ScrimPriority;
 import io.github.palexdev.mfxresources.fonts.MFXFontIcon;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.control.Tooltip;
 import javafx.stage.Modality;
 import javafx.stage.PopupWindow;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import io.github.palexdev.materialfx.controls.MFXFilterComboBox;
+
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -42,7 +51,7 @@ public class AchievementsController extends Controller implements Initializable 
     @FXML
     private Label lblLogrosTitulo;
     @FXML
-    private MFXTableView<?> tbvLogrosEquipos;
+    private MFXTableView<Team> tbvLogrosEquipos;
     @FXML
     private ImageView imgFlechaArribaLogros;
     @FXML
@@ -71,11 +80,14 @@ public class AchievementsController extends Controller implements Initializable 
     private ImageView imgInfo;
 
     @FXML
-    private MFXFilterComboBox<?> cmbAchievements;
-
+    private MFXFilterComboBox<String> cmbAchievements;
 
     private MFXGenericDialog dialogContent;
     private MFXStageDialog dialog;
+
+    private final SportService sportService = new SportService();
+    private final TeamService teamService = new TeamService();
+    private final ObservableList<Team> equiposFiltrados = FXCollections.observableArrayList();
 
     /**
      * Initializes the controller class.
@@ -110,12 +122,11 @@ public class AchievementsController extends Controller implements Initializable 
             double x = imgInfo.localToScene(imgInfo.getBoundsInLocal()).getMinX();
             double y = imgInfo.localToScene(imgInfo.getBoundsInLocal()).getMinY();
 
-            tooltip.show(imgInfo, imgInfo.getScene().getWindow().getX() + x -200,
-                    imgInfo.getScene().getWindow().getY() + y -52); // Ajusta posición arriba del icono
+            tooltip.show(imgInfo, imgInfo.getScene().getWindow().getX() + x - 200,
+                    imgInfo.getScene().getWindow().getY() + y - 52); // Ajusta posición arriba del icono
         });
 
         imgInfo.setOnMouseExited(event -> tooltip.hide()); // Ocultar tooltip al salir del icono
-
 
         Platform.runLater(() -> {
             Stage stage = (Stage) root.getScene().getWindow();
@@ -142,10 +153,51 @@ public class AchievementsController extends Controller implements Initializable 
 
             dialogContent.setMaxSize(400, 200);
         });
+        loadSportsInComboBox();
+
+        setupTablaEquipos();
+
+        cmbAchievements.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                System.out.println("📌 Deporte seleccionado en combo: " + newVal);
+                cargarEquiposPorDeporte(newVal);
+            } else {
+                System.out.println("⚠️ Selección en combo es null");
+            }
+        });
+
+        tbvLogrosEquipos.getSelectionModel().selectionProperty().addListener((obs, oldSel, newSel) -> {
+            if (newSel != null) {
+                handleTableClickLogrosEquipos(null);
+            }
+        });
+
     }
 
     @FXML
     private void handleTableClickLogrosEquipos(MouseEvent event) {
+        List<Team> selected = tbvLogrosEquipos.getSelectionModel().getSelectedValues();
+        if (!selected.isEmpty()) {
+            Team team = selected.get(0);
+            actualizarIconosDeLogros(team);
+        }
+    }
+
+    private void actualizarIconosDeLogros(Team team) {
+        for (Achievement logro : team.getLogros()) {
+            boolean activo = logro.isObtenido();
+            switch (logro.getNombre()) {
+                case "Dominador Supremo" -> imgGanador8Torneos.setOpacity(activo ? 1 : 0.25);
+                case "Leyenda Plateada" -> imgGanador6Torneos.setOpacity(activo ? 1 : 0.25);
+                case "Tricampeón" -> imgGanador3Torneos.setOpacity(activo ? 1 : 0.25);
+                case "Máxima Potencia" -> img20Puntos.setOpacity(activo ? 1 : 0.25);
+                case "Muralla Imbatible" -> imgEscudo.setOpacity(activo ? 1 : 0.25);
+                case "Equilibrio Perfecto" -> imgBalanza.setOpacity(activo ? 1 : 0.25);
+                case "Imparable" -> img3Consecutivos.setOpacity(activo ? 1 : 0.25);
+                case "Regreso Triunfal" -> imgMontanaRusa.setOpacity(activo ? 1 : 0.25);
+                case "Campeón Inaugural" -> imgMedallaTorneo.setOpacity(activo ? 1 : 0.25);
+            }
+        }
     }
 
     @FXML
@@ -256,6 +308,45 @@ public class AchievementsController extends Controller implements Initializable 
 
         if (styleClass != null)
             dialogContent.getStyleClass().add(styleClass);
+    }
+
+    private void setupTablaEquipos() {
+        MFXTableColumn<Team> colNombre = new MFXTableColumn<>("Equipo");
+        colNombre.setRowCellFactory(e -> new MFXTableRowCell<>(Team::getNombre));
+        colNombre.setMinWidth(200);
+
+        tbvLogrosEquipos.getTableColumns().clear();
+        tbvLogrosEquipos.getTableColumns().add(colNombre);
+        tbvLogrosEquipos.setItems(equiposFiltrados);
+    }
+
+    private void cargarEquiposPorDeporte(String deporte) {
+        equiposFiltrados.clear();
+        System.out.println("🔍 Buscando equipos para deporte: " + deporte);
+
+        List<Team> todos = teamService.getAllTeams();
+        System.out.println("🔁 Total equipos disponibles: " + todos.size());
+
+        for (Team team : todos) {
+            if (team.getDeporte() != null && team.getDeporte().equalsIgnoreCase(deporte)) {
+                System.out.println("✅ Equipo añadido: " + team.getNombre());
+                equiposFiltrados.add(team);
+            } else {
+                System.out.println("⛔ Ignorado: " + team.getNombre() + " (Deporte: " + team.getDeporte() + ")");
+            }
+        }
+
+        System.out.println("📦 Equipos cargados en tabla: " + equiposFiltrados.size());
+
+        // 🔁 Forzar actualización visual en MFXTableView
+        tbvLogrosEquipos.setItems(null);
+        tbvLogrosEquipos.setItems(equiposFiltrados);
+    }
+
+    private void loadSportsInComboBox() {
+        ObservableList<String> sports = FXCollections.observableArrayList();
+        sportService.getAllSports().forEach(s -> sports.add(s.getNombre()));
+        cmbAchievements.setItems(sports);
     }
 
 }
