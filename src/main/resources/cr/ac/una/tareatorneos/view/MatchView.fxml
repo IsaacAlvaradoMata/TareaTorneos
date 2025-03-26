@@ -1,51 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
-<AnchorPane fx:id="root"
-            xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="cr.ac.una.tareatorneos.controller.MatchController"
-            minWidth="700" minHeight="400"
-            prefWidth="800" prefHeight="500">
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-    <VBox spacing="20.0" layoutX="0" layoutY="0"
-          AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
-          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
-          alignment="CENTER">
+<AnchorPane fx:id="root" minHeight="400" minWidth="700" prefHeight="500" prefWidth="800" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tareatorneos.controller.MatchController">
+
+    <VBox alignment="CENTER" layoutX="0" layoutY="0" spacing="20.0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
 
         <!-- Nombre del torneo -->
-        <Label fx:id="lblTorneo" text="Nombre del Torneo"/>
+        <Label fx:id="lblTorneo" text="Nombre del Torneo" />
 
         <!-- Tiempo restante -->
-        <Label fx:id="lblTiempo" text="Tiempo: 00:00"/>
+        <Label fx:id="lblTiempo" text="Tiempo: 00:00" />
 
         <!-- Zona de Equipos -->
-        <HBox spacing="100" alignment="CENTER">
-            <VBox spacing="5" alignment="CENTER">
-                <ImageView fx:id="imgEquipoA"
-                           fitWidth="120" fitHeight="120"
-                           pickOnBounds="true" preserveRatio="true"/>
-                <Label fx:id="lblEquipoA" text="Equipo A"/>
-                <Label fx:id="lblPuntajeA" text="Puntaje: 0"/>
+        <HBox alignment="CENTER" spacing="100">
+            <VBox alignment="CENTER" spacing="5">
+                <ImageView fx:id="imgEquipoA" fitHeight="120" fitWidth="120" pickOnBounds="true" preserveRatio="true" />
+                <Label fx:id="lblEquipoA" text="Equipo A" />
+                <Label fx:id="lblPuntajeA" text="Puntaje: 0" />
             </VBox>
-            <VBox spacing="5" alignment="CENTER">
-                <ImageView fx:id="imgEquipoB"
-                           fitWidth="120" fitHeight="120"
-                           pickOnBounds="true" preserveRatio="true"/>
-                <Label fx:id="lblEquipoB" text="Equipo B"/>
-                <Label fx:id="lblPuntajeB" text="Puntaje: 0"/>
+            <VBox alignment="CENTER" spacing="5">
+                <ImageView fx:id="imgEquipoB" fitHeight="120" fitWidth="120" pickOnBounds="true" preserveRatio="true" />
+                <Label fx:id="lblEquipoB" text="Equipo B" />
+                <Label fx:id="lblPuntajeB" text="Puntaje: 0" />
             </VBox>
         </HBox>
 
         <!-- Imagen del balón -->
-        <ImageView fx:id="imgBalon"
-                   fitWidth="80" fitHeight="80"
-                   pickOnBounds="true" preserveRatio="true"/>
-
-        <!-- Finalizar -->
-        <Label fx:id="btnFinalizar"
-               text="Finalizar Partido"/>
+        <ImageView fx:id="imgBalon" fitHeight="80" fitWidth="80" pickOnBounds="true" preserveRatio="true" />
+      <MFXButton fx:id="btnFinalizar" text="Finalizar Partido" />
     </VBox>
 </AnchorPane>

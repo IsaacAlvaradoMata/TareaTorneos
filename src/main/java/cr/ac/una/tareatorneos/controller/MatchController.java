@@ -7,6 +7,7 @@ import cr.ac.una.tareatorneos.service.MatchService;
 import cr.ac.una.tareatorneos.service.SportService;
 import cr.ac.una.tareatorneos.service.TeamService;
 import cr.ac.una.tareatorneos.service.TournamentService;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -22,6 +23,9 @@ import java.util.ResourceBundle;
 
 public class MatchController extends Controller implements Initializable {
 
+    @FXML
+    private MFXButton btnFinalizar;
+    
     @FXML
     private ImageView imgBalon;
 
