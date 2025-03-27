@@ -33,6 +33,6 @@
 
         <!-- Imagen del balón -->
         <ImageView fx:id="imgBalon" fitHeight="80" fitWidth="80" pickOnBounds="true" preserveRatio="true" />
-      <MFXButton fx:id="btnFinalizar" text="Finalizar Partido" />
+      <MFXButton fx:id="btnFinalizar" onAction="#onActionBtnFinalizar" text="Finalizar Partido" />
     </VBox>
 </AnchorPane>

@@ -1,1 +1,65 @@
-[]
+[ {
+  "nombre" : "Real Madrid",
+  "deporte" : "Futbol",
+  "teamImage" : "Real_Madrid.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ]
+}, {
+  "nombre" : "Saprissa",
+  "deporte" : "Futbol",
+  "teamImage" : "Saprissa.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ]
+} ]

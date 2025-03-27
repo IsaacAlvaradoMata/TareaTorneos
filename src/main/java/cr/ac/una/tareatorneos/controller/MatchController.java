@@ -8,6 +8,8 @@ import cr.ac.una.tareatorneos.service.SportService;
 import cr.ac.una.tareatorneos.service.TeamService;
 import cr.ac.una.tareatorneos.service.TournamentService;
 import io.github.palexdev.materialfx.controls.MFXButton;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -57,10 +59,17 @@ public class MatchController extends Controller implements Initializable {
     private AnchorPane root;
 
     private MatchService matchService;
+    private Timeline countdown;
+    private int tiempoRestante; // en segundos
+
+    @FXML
+    void onActionBtnFinalizar(ActionEvent event) {
+
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Drag start (cuando agarro el balón)
+        // Drag start (balón)
         imgBalon.setOnDragDetected(event -> {
             Dragboard db = imgBalon.startDragAndDrop(TransferMode.MOVE);
             ClipboardContent content = new ClipboardContent();
@@ -69,7 +78,7 @@ public class MatchController extends Controller implements Initializable {
             event.consume();
         });
 
-        // Equipo A acepta balón
+        // Equipo A acepta drop (si le hacen gol, punto para B)
         imgEquipoA.setOnDragOver(event -> {
             if (event.getGestureSource() == imgBalon && event.getDragboard().hasImage()) {
                 event.acceptTransferModes(TransferMode.MOVE);
@@ -79,14 +88,14 @@ public class MatchController extends Controller implements Initializable {
 
         imgEquipoA.setOnDragDropped(event -> {
             if (matchService != null) {
-                matchService.sumarPuntoA();
-                lblPuntajeA.setText("Puntaje: " + matchService.getPuntajeA());
+                matchService.sumarPuntoB(); // ⚽ Real Madrid fue anotado => gol para Saprissa
+                lblPuntajeB.setText("Puntaje: " + matchService.getPuntajeB());
             }
             event.setDropCompleted(true);
             event.consume();
         });
 
-        // Equipo B acepta balón
+        // Equipo B acepta drop (si le hacen gol, punto para A)
         imgEquipoB.setOnDragOver(event -> {
             if (event.getGestureSource() == imgBalon && event.getDragboard().hasImage()) {
                 event.acceptTransferModes(TransferMode.MOVE);
@@ -96,8 +105,8 @@ public class MatchController extends Controller implements Initializable {
 
         imgEquipoB.setOnDragDropped(event -> {
             if (matchService != null) {
-                matchService.sumarPuntoB();
-                lblPuntajeB.setText("Puntaje: " + matchService.getPuntajeB());
+                matchService.sumarPuntoA(); // ⚽ Saprissa fue anotado => gol para Real Madrid
+                lblPuntajeA.setText("Puntaje: " + matchService.getPuntajeA());
             }
             event.setDropCompleted(true);
             event.consume();
@@ -136,8 +145,24 @@ public class MatchController extends Controller implements Initializable {
         if (balon != null) imgBalon.setImage(balon);
     }
 
+    public void pruebaSimulacion() {
+        Tournament torneo = new TournamentService().getTournamentByName("Torneo de Prueba");
+
+        if (torneo == null || torneo.getEquiposParticipantes().size() < 2) {
+            System.out.println("❌ Torneo no encontrado o no tiene suficientes equipos.");
+            return;
+        }
+
+        String equipoA = torneo.getEquiposParticipantes().get(0);
+        String equipoB = torneo.getEquiposParticipantes().get(1);
+
+        initializeMatch(torneo.getNombre(), equipoA, equipoB);
+    }
+
     @Override
     public void initialize() {
-
+        pruebaSimulacion();
+    
     }
+
 }

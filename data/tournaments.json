@@ -12,4 +12,11 @@
   "cantidadEquipos" : 3,
   "equiposParticipantes" : [ "Real Madrid", "Manchester city", "saprissa" ],
   "estado" : "iniciado"
-}]
+}, {
+  "nombre" : "Torneo de Prueba",
+  "deporte" : "Futbol",
+  "tiempoPorPartido" : 5,
+  "cantidadEquipos" : 2,
+  "equiposParticipantes" : [ "Real Madrid", "Saprissa" ],
+  "estado" : "iniciado"
+} ]
