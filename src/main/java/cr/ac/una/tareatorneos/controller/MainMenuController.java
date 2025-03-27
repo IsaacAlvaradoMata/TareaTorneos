@@ -108,7 +108,7 @@ public class MainMenuController extends Controller implements Initializable {
 
     @FXML
     void OnActionBtnCreacionTorneos(ActionEvent event) {
-        FlowController.getInstance().goView("TournamentCreationView");
+        FlowController.getInstance().goView("TournamentMaintenanceView");
 
     }
 
