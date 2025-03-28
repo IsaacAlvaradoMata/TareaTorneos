@@ -22,7 +22,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         stage.setScene(scene);
-        stage.setMinWidth(1200); // Ancho mínimo
+        stage.setMinWidth(1350); // Ancho mínimo
         stage.setMinHeight(800); // Alto mínimo
 //        stage.initStyle(StageStyle.UNDECORATED);
         FlowController.getInstance().InitializeFlow(stage, null);

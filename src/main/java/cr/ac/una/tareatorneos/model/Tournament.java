@@ -1,8 +1,10 @@
 package cr.ac.una.tareatorneos.model;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Tournament {
+    private String id;
     private String nombre;
     private String deporte;
     private int tiempoPorPartido;
@@ -11,10 +13,12 @@ public class Tournament {
     private String estado;
 
     public Tournament() {
+        this.id = UUID.randomUUID().toString();
     }
 
     public Tournament(String nombre, String deporte, int tiempoPorPartido,
                       int cantidadEquipos, List<String> equiposParticipantes, String estado) {
+        this.id = UUID.randomUUID().toString();
         this.nombre = nombre;
         this.deporte = deporte;
         this.tiempoPorPartido = tiempoPorPartido;
@@ -23,58 +27,33 @@ public class Tournament {
         this.estado = estado;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
+    // Getters y Setters
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public String getDeporte() {
-        return deporte;
-    }
+    public String getDeporte() { return deporte; }
+    public void setDeporte(String deporte) { this.deporte = deporte; }
 
-    public void setDeporte(String deporte) {
-        this.deporte = deporte;
-    }
+    public int getTiempoPorPartido() { return tiempoPorPartido; }
+    public void setTiempoPorPartido(int tiempoPorPartido) { this.tiempoPorPartido = tiempoPorPartido; }
 
-    public int getTiempoPorPartido() {
-        return tiempoPorPartido;
-    }
+    public int getCantidadEquipos() { return cantidadEquipos; }
+    public void setCantidadEquipos(int cantidadEquipos) { this.cantidadEquipos = cantidadEquipos; }
 
-    public void setTiempoPorPartido(int tiempoPorPartido) {
-        this.tiempoPorPartido = tiempoPorPartido;
-    }
+    public List<String> getEquiposParticipantes() { return equiposParticipantes; }
+    public void setEquiposParticipantes(List<String> equiposParticipantes) { this.equiposParticipantes = equiposParticipantes; }
 
-    public int getCantidadEquipos() {
-        return cantidadEquipos;
-    }
-
-    public void setCantidadEquipos(int cantidadEquipos) {
-        this.cantidadEquipos = cantidadEquipos;
-    }
-
-    public List<String> getEquiposParticipantes() {
-        return equiposParticipantes;
-    }
-
-    public void setEquiposParticipantes(List<String> equiposParticipantes) {
-        this.equiposParticipantes = equiposParticipantes;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
+    public String getEstado() { return estado; }
+    public void setEstado(String estado) { this.estado = estado; }
 
     @Override
     public String toString() {
         return "Tournament{" +
-                "nombre='" + nombre + '\'' +
+                "id='" + id + '\'' +
+                ", nombre='" + nombre + '\'' +
                 ", deporte='" + deporte + '\'' +
                 ", tiempoPorPartido=" + tiempoPorPartido +
                 ", cantidadEquipos=" + cantidadEquipos +

@@ -33,7 +33,6 @@ import javafx.stage.Modality;
 import javafx.stage.PopupWindow;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.net.URL;
 import java.util.List;
 import java.util.Map;

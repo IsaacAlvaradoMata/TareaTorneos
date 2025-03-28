@@ -1,22 +1,33 @@
 [ {
-  "nombre" : "NBA",
+  "id" : "4bd92d18-2287-49f7-8f95-fa0d3dd5f1ea",
+  "nombre" : "champions",
+  "deporte" : "Futbol",
+  "tiempoPorPartido" : 20,
+  "cantidadEquipos" : 5,
+  "equiposParticipantes" : [ "Real Madrid" ],
+  "estado" : "Por comenzar"
+}, {
+  "id" : "88c4b92e-24c4-4ec5-9514-5b8a519d54c5",
+  "nombre" : "nba",
   "deporte" : "Baloncesto",
   "tiempoPorPartido" : 10,
-  "cantidadEquipos" : 3,
-  "equiposParticipantes" : [ "Lakers", "lakers2", "lakers3" ],
-  "estado" : "iniciado"
+  "cantidadEquipos" : 30,
+  "equiposParticipantes" : [ "lakers" ],
+  "estado" : "Por comenzar"
 }, {
-  "nombre" : "torneo de apertura",
-  "deporte" : "Futbol",
-  "tiempoPorPartido" : 5,
-  "cantidadEquipos" : 3,
-  "equiposParticipantes" : [ "Real Madrid", "Manchester city", "saprissa" ],
-  "estado" : "iniciado"
+  "id" : "475c6260-6c3b-44a3-8d46-763c3fd7a061",
+  "nombre" : "playoffs",
+  "deporte" : "Baloncesto",
+  "tiempoPorPartido" : 20,
+  "cantidadEquipos" : 30,
+  "equiposParticipantes" : [ "lakers2", "lakers3", "lakers5", "lakers" ],
+  "estado" : "Por comenzar"
 }, {
-  "nombre" : "Torneo de Prueba",
-  "deporte" : "Futbol",
-  "tiempoPorPartido" : 5,
-  "cantidadEquipos" : 2,
-  "equiposParticipantes" : [ "Real Madrid", "Saprissa" ],
-  "estado" : "iniciado"
+  "id" : "e70a6588-b911-4740-99f5-475a35193987",
+  "nombre" : "open",
+  "deporte" : "Tenis",
+  "tiempoPorPartido" : 20,
+  "cantidadEquipos" : 10,
+  "equiposParticipantes" : [ ],
+  "estado" : "Por comenzar"
 } ]

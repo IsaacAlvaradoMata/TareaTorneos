@@ -52,7 +52,8 @@ public class ActiveTournamentsController extends Controller implements Initializ
     @FXML
     private MFXButton btnReanudarTorneo;
     @FXML
-    private MFXButton btnAgregarEquipos;
+    private MFXFilterComboBox<?> cmbTorneosActivos;
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -101,53 +102,7 @@ public class ActiveTournamentsController extends Controller implements Initializ
         FlowController.getInstance().goView("MatchView");
     }
 
-    @FXML
-    void OnActionBtnAgregarEquipos(ActionEvent event) {
-        List<Tournament> selectedTournaments = tbvTorneosActivos.getSelectionModel().getSelectedValues();
-        if (selectedTournaments.isEmpty()) {
-            // Opción: mostrar mensaje "No tournament selected"
-            return;
-        }
-        Tournament selectedTournament = selectedTournaments.get(0);
-        // Obtén los equipos seleccionados del CheckListView
-        List<String> teamsToAdd = chklistviewEquiposDisponibles.getSelectionModel().getSelectedValues();
-        if (teamsToAdd.isEmpty()) {
-            // Opción: mostrar mensaje "No teams selected to add"
-            return;
-        }
-        // Agrega los nuevos equipos a la lista de equipos participantes (sin duplicados)
-        List<String> currentTeams = selectedTournament.getEquiposParticipantes();
-        if (currentTeams == null) {
-            currentTeams = new ArrayList<>();
-            selectedTournament.setEquiposParticipantes(currentTeams);
-        }
-        boolean added = false;
-        for (String team : teamsToAdd) {
-            if (!currentTeams.contains(team)) {
-                currentTeams.add(team);
-                added = true;
-            }
-        }
-        if (!added) {
-            // Opción: mostrar mensaje "No new teams to add"
-            return;
-        }
-        // Actualiza el torneo en el JSON
-        TournamentService tournamentService = new TournamentService();
-        boolean success = tournamentService.updateTournament(selectedTournament.getNombre(), selectedTournament);
-        if (success) {
-            // Refresca los ListViews:
-            // - Actualiza el ListView de equipos ya agregados
-            listviewEquiposSeleccionadosTorneo.setItems(
-                    FXCollections.observableArrayList(selectedTournament.getEquiposParticipantes())
-            );
-            // - Actualiza el CheckListView de equipos disponibles
-            loadAvailableTeams(selectedTournament);
-            // Opción: mostrar mensaje de éxito
-        } else {
-            // Opción: mostrar mensaje de error
-        }
-    }
+
 
     private void populateTableView() {
         MFXTableColumn<Tournament> colNombre = new MFXTableColumn<>("Nombre");

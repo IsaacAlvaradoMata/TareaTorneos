@@ -66,4 +66,29 @@ public class TournamentService {
                 .findFirst()
                 .orElse(null);
     }
+
+    public boolean tournamentExists(String nombre) {
+        return getAllTournaments().stream()
+                .anyMatch(t -> t.getNombre().equalsIgnoreCase(nombre));
+    }
+
+    public List<Tournament> getTournamentsBySport(String deporte) {
+        return getAllTournaments().stream()
+                .filter(t -> t.getDeporte().equalsIgnoreCase(deporte))
+                .toList();
+    }
+
+    public boolean updateTournamentTeams(String nombre, List<String> nuevosEquipos) {
+        List<Tournament> tournaments = getAllTournaments();
+        boolean modified = false;
+
+        for (Tournament t : tournaments) {
+            if (t.getNombre().equalsIgnoreCase(nombre)) {
+                t.setEquiposParticipantes(nuevosEquipos);
+                modified = true;
+                break;
+            }
+        }
+        return modified && saveTournaments(tournaments);
+    }
 }

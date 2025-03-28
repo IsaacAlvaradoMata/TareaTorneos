@@ -600,6 +600,15 @@
     -fx-image: url('../resources/InfoMoradoIcon.png');
 }
 
+#imgBuscarPorNombre{
+    -fx-image: url('../resources/LupaMoradaIcon.png');
+}
+
+#imgLimpiarBusqueda{
+    -fx-image: url('../resources/ClearMoradoIcon.png');
+}
+
+
 
 /*BOTONES DE VISTA*/
 
@@ -644,7 +653,7 @@
 
 /*TEXTFIELD DE VISTA*/
 
-.text-field-TournamentMaintenance {
+.textfield-TournamentMaintenance {
     -fx-border-color: #690093;
     -fx-border-width: 4;
     -fx-border-radius: 4;
@@ -656,9 +665,8 @@
     -fx-text-fill: #690093;
 }
 
-
 /*COMBOBOX*/
-.combobox-TournamentMaintenance {
+#cmbMantenimientoTorneo {
     -fx-border-color: #690093;
     -fx-border-radius: 3;
     -fx-border-width: 4;
@@ -671,21 +679,52 @@
 
 }
 
-.combobox-TournamentMaintenance .text-field {
+#cmbMantenimientoTorneo .text-field {
     -fx-prompt-text-fill: #690093;
 }
 
-.combobox-TournamentMaintenance .combo-popup .text-field {
+#cmbMantenimientoTorneo .combo-popup .text-field {
     -fx-prompt-text-fill: #690093;
 }
 
-.combobox-TournamentMaintenance .caret .mfx-font-icon {
+#cmbMantenimientoTorneo .caret .mfx-font-icon {
     -mfx-color: #690093;
     -mfx-description: "fas-angle-down";
     -mfx-size: 16;
 }
 
-.combobox-TournamentMaintenance .caret .mfx-ripple-generator {
+#cmbMantenimientoTorneo .caret .mfx-ripple-generator {
+    -mfx-ripple-color: rgba(255, 255, 255, 0.5);
+}
+
+#cmbDeportesRegistradosMantenimiento {
+    -fx-border-color: #690093;
+    -fx-border-radius: 3;
+    -fx-border-width: 4;
+    -fx-background-color: #d9a2fd;
+    -fx-text-fill: #690093;
+    -fx-font-weight: bold;
+    -fx-padding: 4;
+    -fx-background-insets: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+
+}
+
+#cmbDeportesRegistradosMantenimiento .text-field {
+    -fx-prompt-text-fill: #690093;
+}
+
+#cmbDeportesRegistradosMantenimiento .combo-popup .text-field {
+    -fx-prompt-text-fill: #690093;
+}
+
+#cmbDeportesRegistradosMantenimiento .caret .mfx-font-icon {
+    -mfx-color: #690093;
+    -mfx-description: "fas-angle-down";
+    -mfx-size: 16;
+}
+
+#cmbDeportesRegistradosMantenimiento .caret .mfx-ripple-generator {
     -mfx-ripple-color: rgba(255, 255, 255, 0.5);
 }
 
@@ -859,6 +898,40 @@
     -fx-background-color: #eee795;
 
 }
+
+/*COMBOBOX TOREOS ACTIVOS*/
+#cmbTorneosActivos {
+    -fx-border-color: #a2a000;
+    -fx-border-radius: 3;
+    -fx-border-width: 4;
+    -fx-background-color: #eee795;
+    -fx-text-fill: #a2a000;
+    -fx-font-weight: bold;
+    -fx-padding: 4;
+    -fx-background-insets: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+
+}
+
+#cmbTorneosActivos .text-field {
+    -fx-prompt-text-fill: #a2a000;
+}
+
+#cmbTorneosActivos .combo-popup .text-field {
+    -fx-prompt-text-fill: #a2a000;
+}
+
+#cmbTorneosActivos .caret .mfx-font-icon {
+    -mfx-color: #a2a000;
+    -mfx-description: "fas-angle-down";
+    -mfx-size: 16;
+}
+
+#cmbTorneosActivos .caret .mfx-ripple-generator {
+    -mfx-ripple-color: rgba(255, 255, 255, 0.5);
+}
+
+
 
 /*BOTONES*/
 
@@ -1037,6 +1110,7 @@
 #imgRankingTrophyIcon{
     -fx-image: url('../resources/RankingTrophyIcon.png');
 }
+
 
 
 /***#################BOTOONES DE VISTA**#################*/
@@ -1397,3 +1471,5 @@
 #btnBuscarPorNombre > ImageView{-fx-image: url('../resources/LupaBlancaIcon.png ');}
 #btnAgregarEquiposSeleccionEquipos > ImageView{-fx-image: url('../resources/AddTeamsIcon.png ');}
 #btnEliminarEquipos > ImageView{-fx-image: url('../resources/DeleteIcon.png ');}
+#btnVolverMantenimiento > ImageView{-fx-image: url('../resources/GoBackIcon.png ');}
+

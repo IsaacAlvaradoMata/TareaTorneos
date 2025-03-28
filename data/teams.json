@@ -62,4 +62,196 @@
     "nombre" : "Campeón Inaugural",
     "obtenido" : false
   } ]
+}, {
+  "nombre" : "lakers",
+  "deporte" : "Baloncesto",
+  "teamImage" : "lakers.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ]
+}, {
+  "nombre" : "lakers2",
+  "deporte" : "Baloncesto",
+  "teamImage" : "lakers2.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ]
+}, {
+  "nombre" : "lakers3",
+  "deporte" : "Baloncesto",
+  "teamImage" : "lakers3.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ]
+}, {
+  "nombre" : "lakers4",
+  "deporte" : "Baloncesto",
+  "teamImage" : "lakers4.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ]
+}, {
+  "nombre" : "lakers5",
+  "deporte" : "Baloncesto",
+  "teamImage" : "lakers5.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ]
+}, {
+  "nombre" : "sidney",
+  "deporte" : "Tenis",
+  "teamImage" : "sidney.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ]
 } ]
