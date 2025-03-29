@@ -204,7 +204,7 @@
                                                       <VBox alignment="CENTER" spacing="20.0">
                                                          <children>
                                                             <Label styleClass="lbl-SubTitulosTournamentMaintenance" text="Busqueda por Nombre de Equipo:" />
-                                                            <MFXButton fx:id="btnVolverMantenimiento" maxHeight="-Infinity" onAction="#OnActionBtnVolverMantenimiento" prefHeight="40.0" prefWidth="172.0" styleClass="btn-TournamentMaintenance" text="Mantenimiento">
+                                                            <MFXButton fx:id="btnVolverMantenimiento" maxHeight="-Infinity" onAction="#OnActionBtnVolverMantenimiento" prefHeight="40.0" prefWidth="194.0" styleClass="btn-TournamentMaintenance" text="Ir a Mantenimiento">
                                                                <graphic>
                                                                   <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" />
                                                                </graphic>

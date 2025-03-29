@@ -30,4 +30,36 @@
   "cantidadEquipos" : 10,
   "equiposParticipantes" : [ ],
   "estado" : "Por comenzar"
+}, {
+  "id" : "0c7847f4-d890-437f-a553-3caeebdb3e76",
+  "nombre" : "torneo de verano",
+  "deporte" : "Futbol",
+  "tiempoPorPartido" : 10,
+  "cantidadEquipos" : 30,
+  "equiposParticipantes" : [ "Real Madrid", "Saprissa" ],
+  "estado" : "Por comenzar"
+}, {
+  "id" : "605acfcb-d276-461d-bc93-fa07f8175d91",
+  "nombre" : "nba plus",
+  "deporte" : "Baloncesto",
+  "tiempoPorPartido" : 5,
+  "cantidadEquipos" : 3,
+  "equiposParticipantes" : [ "lakers4", "lakers5", "lakers" ],
+  "estado" : "Por comenzar"
+}, {
+  "id" : "c2032d88-3570-4069-99c3-e7b93218aef6",
+  "nombre" : "champions plus",
+  "deporte" : "Futbol",
+  "tiempoPorPartido" : 5,
+  "cantidadEquipos" : 15,
+  "equiposParticipantes" : [ ],
+  "estado" : "Por comenzar"
+}, {
+  "id" : "8c55e7cc-c6be-431c-85c7-9a427e7150f3",
+  "nombre" : "nba africa",
+  "deporte" : "Baloncesto",
+  "tiempoPorPartido" : 2,
+  "cantidadEquipos" : 22,
+  "equiposParticipantes" : [ "lakers", "lakers2", "lakers3" ],
+  "estado" : "Por comenzar"
 } ]

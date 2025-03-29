@@ -169,6 +169,22 @@ public class TournamentMaintenanceController extends Controller implements Initi
             return;
         }
 
+        // ✅ Validación de rango tiempo por partido
+        if (tiempoPorPartido < 1 || tiempoPorPartido > 10) {
+            mensajeUtil.show(Alert.AlertType.ERROR,
+                    "Tiempo inválido",
+                    "El tiempo por partido debe estar entre 1 y 10 minutos.");
+            return;
+        }
+
+        // ✅ Validación de rango cantidad de equipos
+        if (cantidadEquipos < 2 || cantidadEquipos > 32) {
+            mensajeUtil.show(Alert.AlertType.ERROR,
+                    "Cantidad inválida",
+                    "La cantidad de equipos debe estar entre 2 y 32.");
+            return;
+        }
+
         TournamentService service = new TournamentService();
 
         if (service.tournamentExists(nombre)) {
@@ -247,6 +263,14 @@ public class TournamentMaintenanceController extends Controller implements Initi
 
         List<String> aEliminar = new ArrayList<>(chklistviewEquiposSeleccionados1.getSelectionModel().getSelectedValues());
 
+        // 🛑 Validar si no hay selección
+        if (aEliminar.isEmpty()) {
+            mensajeUtil.show(Alert.AlertType.WARNING,
+                    "Sin selección",
+                    "Debe seleccionar al menos un equipo para eliminar.");
+            return;
+        }
+
         torneo.getEquiposParticipantes().removeAll(aEliminar);
         service.updateTournament(torneo.getNombre(), torneo);
 
@@ -254,6 +278,7 @@ public class TournamentMaintenanceController extends Controller implements Initi
         chklistviewEquiposSeleccionados1.getItems().removeAll(aEliminar);
         chklistviewEquiposDisponibles1.getItems().addAll(aEliminar);
     }
+
 
 
 
@@ -288,6 +313,10 @@ public class TournamentMaintenanceController extends Controller implements Initi
         }
         tabPanePrincipal.getSelectionModel().select(tabSeleccionEquipos);
 
+        Platform.runLater(() -> {
+            tabSeleccionEquipos.getContent().requestFocus(); // o root.requestFocus();
+        });
+
         chklistviewEquiposSeleccionados1.getItems().setAll(torneo.getEquiposParticipantes());
 
         // Cargar disponibles (por deporte)
@@ -296,7 +325,104 @@ public class TournamentMaintenanceController extends Controller implements Initi
 
     @FXML
     private void OnActionBtnModificarTorneo(ActionEvent event) {
+        Tournament torneoSeleccionado = (Tournament) tbvMantenimientoTorneo.getSelectionModel().getSelectedValue();
+
+        if (torneoSeleccionado == null) {
+            mensajeUtil.show(Alert.AlertType.WARNING,
+                    "Modificación inválida",
+                    "Debe seleccionar un torneo de la tabla para modificarlo.");
+            return;
+        }
+
+        String nuevoNombre = txtfieldNombreMantenimiento.getText().trim();
+        String nuevoDeporte = (String) cmbDeportesRegistradosMantenimiento.getSelectedItem();
+        String nuevoTiempoStr = txtfieldTiempoMantenimiento.getText().trim();
+        String nuevaCantidadStr = txtfieldCantidadMantenimiento.getText().trim();
+
+        if (nuevoNombre.isEmpty() || nuevoDeporte == null || nuevoTiempoStr.isEmpty() || nuevaCantidadStr.isEmpty()) {
+            mensajeUtil.show(Alert.AlertType.WARNING,
+                    "Campos vacíos",
+                    "Todos los campos deben estar completos para modificar.");
+            return;
+        }
+
+        int nuevoTiempo;
+        int nuevaCantidad;
+
+        try {
+            nuevoTiempo = Integer.parseInt(nuevoTiempoStr);
+            nuevaCantidad = Integer.parseInt(nuevaCantidadStr);
+        } catch (NumberFormatException e) {
+            mensajeUtil.show(Alert.AlertType.ERROR,
+                    "Datos inválidos",
+                    "Tiempo y cantidad deben ser valores numéricos válidos.");
+            return;
+        }
+
+        if (nuevoTiempo < 1 || nuevoTiempo > 10) {
+            mensajeUtil.show(Alert.AlertType.ERROR,
+                    "Tiempo inválido",
+                    "El tiempo por partido debe estar entre 1 y 10 minutos.");
+            return;
+        }
+
+        if (nuevaCantidad < 2 || nuevaCantidad > 32) {
+            mensajeUtil.show(Alert.AlertType.ERROR,
+                    "Cantidad inválida",
+                    "La cantidad de equipos debe estar entre 2 y 32.");
+            return;
+        }
+
+        TournamentService service = new TournamentService();
+        Tournament torneoActual = service.getTournamentByName(torneoSeleccionado.getNombre());
+
+        if (torneoActual == null) {
+            mensajeUtil.show(Alert.AlertType.ERROR,
+                    "Error de datos",
+                    "No se encontró el torneo original.");
+            return;
+        }
+
+        int equiposAgregados = torneoActual.getEquiposParticipantes().size();
+
+        // 🛑 Validar si se intenta reducir cantidad por debajo de equipos existentes
+        if (nuevaCantidad < equiposAgregados) {
+            mensajeUtil.show(Alert.AlertType.ERROR,
+                    "Cantidad inválida",
+                    "Ya hay " + equiposAgregados + " equipos agregados al torneo.\n" +
+                            "No se puede reducir la cantidad por debajo de esa cifra.");
+            return;
+        }
+
+        // 🛑 Validar cambio de deporte si ya hay equipos agregados
+        if (!torneoActual.getDeporte().equalsIgnoreCase(nuevoDeporte) && equiposAgregados > 0) {
+            mensajeUtil.show(Alert.AlertType.WARNING,
+                    "Cambio de deporte no permitido",
+                    "Este torneo ya tiene equipos agregados y no se puede cambiar el deporte.");
+            return;
+        }
+
+        // ✅ Actualizar torneo
+        torneoActual.setNombre(nuevoNombre);
+        torneoActual.setDeporte(nuevoDeporte);
+        torneoActual.setTiempoPorPartido(nuevoTiempo);
+        torneoActual.setCantidadEquipos(nuevaCantidad);
+
+        boolean modificado = service.updateTournament(torneoSeleccionado.getNombre(), torneoActual);
+
+        if (modificado) {
+            mensajeUtil.show(Alert.AlertType.INFORMATION,
+                    "Torneo actualizado",
+                    "Los datos del torneo fueron modificados correctamente.");
+            limpiarFormulario();
+            cargarTorneosEnTabla();
+        } else {
+            mensajeUtil.show(Alert.AlertType.ERROR,
+                    "Error",
+                    "No se pudo modificar el torneo.");
+        }
     }
+
 
     @FXML
     private void OnActionBtnBarrerInfoTorneo(ActionEvent event) {
@@ -383,13 +509,37 @@ public class TournamentMaintenanceController extends Controller implements Initi
 
         List<String> seleccionados = new ArrayList<>(chklistviewEquiposDisponibles1.getSelectionModel().getSelectedValues());
 
+        // 🛑 Validar selección vacía
+        if (seleccionados.isEmpty()) {
+            mensajeUtil.show(Alert.AlertType.WARNING,
+                    "Sin selección",
+                    "Debe seleccionar al menos un equipo disponible para agregar.");
+            return;
+        }
+
+        int yaAgregados = torneo.getEquiposParticipantes().size();
+        int cantidadPermitida = torneo.getCantidadEquipos();
+        int totalDespuesDeAgregar = yaAgregados + seleccionados.size();
+
+        // ⚠️ Validación: excede límite
+        if (totalDespuesDeAgregar > cantidadPermitida) {
+            mensajeUtil.show(Alert.AlertType.WARNING,
+                    "Cantidad excedida",
+                    "No se pueden agregar " + seleccionados.size() + " equipos.\n" +
+                            "Actualmente hay " + yaAgregados + " equipos registrados.\n" +
+                            "El máximo permitido es " + cantidadPermitida + ".");
+            return;
+        }
+
+        // ✅ Agrega equipos válidos
         torneo.getEquiposParticipantes().addAll(seleccionados);
         service.updateTournament(torneo.getNombre(), torneo);
 
-        // Refrescar listas
         chklistviewEquiposSeleccionados1.getItems().addAll(seleccionados);
         chklistviewEquiposDisponibles1.getItems().removeAll(seleccionados);
     }
+
+
 
     @FXML
     void OnActionBtnVolverMantenimiento(ActionEvent event) {
@@ -438,23 +588,26 @@ public class TournamentMaintenanceController extends Controller implements Initi
         txtfieldCantidadMantenimiento.clear();
         lblNombreTorneoSeleccionEquipos.setText("");
         lblCantidadEquiposSeleccionEquipos.setText("");
+        tbvMantenimientoTorneo.getSelectionModel().clearSelection();
+
     }
 
     private void cargarTorneosEnTabla() {
         String deporteSeleccionado = cmbMantenimientoTorneo.getSelectedItem();
-
         TournamentService service = new TournamentService();
 
+        List<Tournament> torneos;
+
         if (deporteSeleccionado == null || deporteSeleccionado.isBlank() || deporteSeleccionado.equals("Todos")) {
-            // Mostrar todos los torneos
-            tbvMantenimientoTorneo.getItems().setAll(service.getAllTournaments());
-            return;
+            torneos = service.getAllTournaments();
+        } else {
+            torneos = service.getTournamentsBySport(deporteSeleccionado);
         }
 
-        // Mostrar filtrados por deporte
-        List<Tournament> torneosFiltrados = service.getTournamentsBySport(deporteSeleccionado);
-        tbvMantenimientoTorneo.getItems().setAll(torneosFiltrados);
+        tbvMantenimientoTorneo.getSelectionModel().clearSelection(); // 👈 Limpia la selección primero
+        tbvMantenimientoTorneo.getItems().setAll(torneos);
     }
+
 
 
     private void configurarColumnasTabla() {
@@ -476,8 +629,11 @@ public class TournamentMaintenanceController extends Controller implements Initi
     }
 
     private void toolTipInfo(){
-        Tooltip tooltip = new Tooltip("Solo podra agregar equipos despues de crear el torneo.\n" +
-                "Una vez que haya agregado equipos al torneo no podra modificar su tipo de deporte.");
+        Tooltip tooltip = new Tooltip("INFORMACION IMPORTANTE:\n\n" +
+                "➜ Solo podra agregar equipos despues de crear el torneo.\n" +
+                "➜ Una vez que haya agregado equipos al torneo no podra modificar su tipo de deporte.\n" +
+                "➜ El tiempo por partido debe de ser igual o mayor a 1 minuto, o menor o igual a 10 minutos.\n"+
+                "➜ La cantidad de equipos participantes debe de ser igual o mayor a 2 equipos, o igual o menor a 32 equipos.");
         tooltip.setStyle("-fx-background-color: rgba(217, 162, 253, 0.9); " +
                 "-fx-text-fill: #690093; " +
                 "fx-min-width: 150px; " +
@@ -502,8 +658,8 @@ public class TournamentMaintenanceController extends Controller implements Initi
             double x = imgInfoCreacionTorneo.localToScene(imgInfoCreacionTorneo.getBoundsInLocal()).getMinX();
             double y = imgInfoCreacionTorneo.localToScene(imgInfoCreacionTorneo.getBoundsInLocal()).getMinY();
 
-            tooltip.show(imgInfoCreacionTorneo, imgInfoCreacionTorneo.getScene().getWindow().getX() + x - 510,
-                    imgInfoCreacionTorneo.getScene().getWindow().getY() + y +5 ); // Ajusta posición arriba del icono
+            tooltip.show(imgInfoCreacionTorneo, imgInfoCreacionTorneo.getScene().getWindow().getX() + x - 645,
+                    imgInfoCreacionTorneo.getScene().getWindow().getY() + y -55 ); // Ajusta posición arriba del icono
         });
 
         imgInfoCreacionTorneo.setOnMouseExited(event -> tooltip.hide()); // Ocultar tooltip al salir del icono
