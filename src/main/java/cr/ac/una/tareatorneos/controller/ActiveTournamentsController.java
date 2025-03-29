@@ -2,6 +2,7 @@ package cr.ac.una.tareatorneos.controller;
 
 import cr.ac.una.tareatorneos.model.Team;
 import cr.ac.una.tareatorneos.model.Tournament;
+import cr.ac.una.tareatorneos.service.SportService;
 import cr.ac.una.tareatorneos.service.TeamService;
 import cr.ac.una.tareatorneos.service.TournamentService;
 import cr.ac.una.tareatorneos.util.FlowController;
@@ -18,7 +19,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -52,19 +52,26 @@ public class ActiveTournamentsController extends Controller implements Initializ
     @FXML
     private MFXButton btnReanudarTorneo;
     @FXML
-    private MFXFilterComboBox<?> cmbTorneosActivos;
-
+    private MFXFilterComboBox<String> cmbTorneosActivos;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         populateTableView();
         loadTournaments();
+        loadSportsToComboBox();
         // Listener para actualizar información y listas cuando se seleccione un torneo
         tbvTorneosActivos.getSelectionModel().selectionProperty().addListener((obs, oldSel, newSel) -> {
             if (newSel != null) {
                 handleTableClickTorneosActivos(null);
             }
         });
+
+        cmbTorneosActivos.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                filterTournamentsBySport(newVal.toString());
+            }
+        });
+
     }
 
     @FXML
@@ -102,17 +109,17 @@ public class ActiveTournamentsController extends Controller implements Initializ
         FlowController.getInstance().goView("MatchView");
     }
 
-
-
     private void populateTableView() {
         MFXTableColumn<Tournament> colNombre = new MFXTableColumn<>("Nombre");
         colNombre.setMinWidth(150);
         colNombre.setRowCellFactory(t -> new MFXTableRowCell<>(Tournament::getNombre));
 
         MFXTableColumn<Tournament> colDeporte = new MFXTableColumn<>("Deporte");
+        colDeporte.setMinWidth(150);
         colDeporte.setRowCellFactory(t -> new MFXTableRowCell<>(Tournament::getDeporte));
 
         MFXTableColumn<Tournament> colEstado = new MFXTableColumn<>("Estado");
+        colEstado.setMinWidth(150);
         colEstado.setRowCellFactory(t -> new MFXTableRowCell<>(Tournament::getEstado));
 
         tbvTorneosActivos.getTableColumns().clear();
@@ -128,6 +135,35 @@ public class ActiveTournamentsController extends Controller implements Initializ
                 .toList();
         tbvTorneosActivos.getItems().clear();
         tbvTorneosActivos.getItems().addAll(activeTournaments);
+    }
+
+    private void loadSportsToComboBox() {
+        SportService sportService = new SportService();
+        List<String> nombresDeportes = sportService.getAllSports().stream()
+                .map(s -> s.getNombre())
+                .toList();
+        cmbTorneosActivos.setItems(FXCollections.observableArrayList(nombresDeportes));
+    }
+
+    private void filterTournamentsBySport(String deporte) {
+        TournamentService tournamentService = new TournamentService();
+        List<Tournament> tournaments = tournamentService.getAllTournaments();
+
+        System.out.println("🔍 Torneos en JSON:");
+        tournaments.forEach(t -> System.out.println("- " + t.getNombre() + " | Deporte: " + t.getDeporte() + " | Estado: " + t.getEstado()));
+
+        List<Tournament> filtered = tournaments.stream()
+                .filter(t -> t.getDeporte().equalsIgnoreCase(deporte))
+                .filter(t -> {
+                    String estado = t.getEstado().toLowerCase();
+                    return estado.equals("iniciado") || estado.equals("por comenzar");
+                })
+                .toList();
+
+        System.out.println("🎯 Torneos filtrados para el deporte " + deporte + ": " + filtered.size());
+
+        tbvTorneosActivos.getItems().clear();
+        tbvTorneosActivos.getItems().addAll(filtered);
     }
 
     @Override
