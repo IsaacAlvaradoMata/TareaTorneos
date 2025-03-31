@@ -13,6 +13,7 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -67,12 +68,30 @@ public class MatchController extends Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         configurarEventosDragAndDrop();
-        // Ya no se llama aquí ningún torneo de prueba por defecto
     }
 
     @Override
     public void initialize() {
-        // Método vacío por la clase base
+        // requerido por clase Controller base
+    }
+
+    private void mostrarPopupFinalizado() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Partido Finalizado");
+        alert.setHeaderText("✔ El partido ha finalizado");
+
+        String equipoA = lblEquipoA.getText();
+        String equipoB = lblEquipoB.getText();
+        int puntajeA = matchService.getPuntajeA();
+        int puntajeB = matchService.getPuntajeB();
+
+        StringBuilder resultado = new StringBuilder();
+        resultado.append("📊 Resultado Final\n\n");
+        resultado.append(String.format("🏅 %-15s | %2d pts\n", equipoA, puntajeA));
+        resultado.append(String.format("🏅 %-15s | %2d pts\n", equipoB, puntajeB));
+
+        alert.setContentText(resultado.toString());
+        alert.showAndWait();
     }
 
     private void configurarEventosDragAndDrop() {
@@ -117,44 +136,98 @@ public class MatchController extends Controller implements Initializable {
         });
     }
 
+    private void reanudarCuentaRegresiva() {
+        countdown = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+            if (tiempoRestante <= 0) {
+                detenerTiempo();
+                if (matchService != null && !matchService.getMatch().isFinalizado()) {
+                    matchService.finalizarPartido();
+                    mostrarPopupFinalizado();
+                }
+                lblTiempo.setText("Tiempo: 00:00");
+                desactivarControles();
+                return;
+            }
+
+            int min = tiempoRestante / 60;
+            int seg = tiempoRestante % 60;
+            lblTiempo.setText(String.format("Tiempo: %02d:%02d", min, seg));
+            tiempoRestante--;
+        }));
+        countdown.setCycleCount(Timeline.INDEFINITE);
+        countdown.play();
+    }
+
     @FXML
     void onActionBtnFinalizar(ActionEvent event) {
-        if (countdown != null) {
-            countdown.stop();
-            countdown = null;
-        }
+        detenerTiempo(); // pausa antes de mostrar confirmación
 
-        if (matchService != null && !matchService.getMatch().isFinalizado()) {
-            matchService.finalizarPartido();
-        }
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmar Finalización");
+        alert.setHeaderText("¿Estás seguro de que deseas finalizar el partido?");
+        alert.setContentText("Esta acción no se puede deshacer.");
 
-        btnFinalizar.setDisable(true);
-        imgEquipoA.setDisable(true);
-        imgEquipoB.setDisable(true);
-        imgBalon.setDisable(true);
-
-        System.out.println("🛑 Partido finalizado manualmente.");
+        alert.showAndWait().ifPresent(response -> {
+            switch (response.getButtonData()) {
+                case OK_DONE -> {
+                    if (matchService != null && !matchService.getMatch().isFinalizado()) {
+                        matchService.finalizarPartido();
+                    }
+                    lblTiempo.setText("Tiempo: 00:00");
+                    desactivarControles();
+                    mostrarPopupFinalizado();
+                }
+                default -> {
+                    // Usuario canceló, reanudar desde donde se pausó ⏸️
+                    reanudarCuentaRegresiva();
+                }
+            }
+        });
     }
 
     private void iniciarCuentaRegresiva(int minutos) {
         tiempoRestante = minutos * 60;
 
         countdown = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+            if (tiempoRestante <= 0) {
+                detenerTiempo();
+                if (matchService != null && !matchService.getMatch().isFinalizado()) {
+                    matchService.finalizarPartido();
+                    System.out.println("🛎️ Tiempo finalizado automáticamente.");
+                }
+                desactivarControles();
+                mostrarPopupFinalizado();
+                return;
+            }
+
             int min = tiempoRestante / 60;
             int seg = tiempoRestante % 60;
             lblTiempo.setText(String.format("Tiempo: %02d:%02d", min, seg));
             tiempoRestante--;
-
-            if (tiempoRestante < 0) {
-                countdown.stop();
-                matchService.finalizarPartido();
-                btnFinalizar.setDisable(true);
-                System.out.println("🛎️ Tiempo finalizado automáticamente.");
-            }
         }));
 
         countdown.setCycleCount(Timeline.INDEFINITE);
         countdown.play();
+    }
+
+    private void detenerTiempo() {
+        if (countdown != null) {
+            countdown.stop();
+            countdown = null;
+        }
+    }
+
+    private void activarControlesDragAndDrop() {
+        imgEquipoA.setDisable(false);
+        imgEquipoB.setDisable(false);
+        imgBalon.setDisable(false);
+    }
+
+    private void desactivarControles() {
+        btnFinalizar.setDisable(true);
+        imgEquipoA.setDisable(true);
+        imgEquipoB.setDisable(true);
+        imgBalon.setDisable(true);
     }
 
     public void initializeMatch(String torneoNombre, String nombreEquipoA, String nombreEquipoB) {
@@ -171,8 +244,11 @@ public class MatchController extends Controller implements Initializable {
 
         lblTorneo.setText(torneo.getNombre());
         lblTiempo.setText("Tiempo: " + torneo.getTiempoPorPartido() + ":00");
-        iniciarCuentaRegresiva(torneo.getTiempoPorPartido());
 
+        btnFinalizar.setDisable(false); // Por si venimos de otra vista
+
+        iniciarCuentaRegresiva(torneo.getTiempoPorPartido());
+        activarControlesDragAndDrop();
         lblEquipoA.setText(equipoA.getNombre());
         lblPuntajeA.setText("Puntaje: 0");
 
@@ -189,7 +265,6 @@ public class MatchController extends Controller implements Initializable {
         if (balon != null) imgBalon.setImage(balon);
     }
 
-    // ✅ Llamado desde ActiveTournamentsController
     public void mostrarPrimerosDosEquiposDelTorneo(String nombreTorneo) {
         Tournament torneo = new TournamentService().getTournamentByName(nombreTorneo);
 
