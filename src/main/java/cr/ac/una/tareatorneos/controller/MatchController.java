@@ -41,6 +41,8 @@ public class MatchController extends Controller implements Initializable {
     private Timeline countdown;
     private int tiempoRestante;
 
+    private boolean popupMostrado = false;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         configurarEventosDragAndDrop();
@@ -125,6 +127,7 @@ public class MatchController extends Controller implements Initializable {
                 }
                 lblTiempo.setText("Tiempo: 00:00");
                 desactivarControles();
+                popupMostrado = true;
                 javafx.application.Platform.runLater(() -> mostrarPopupFinalizado());
                 return;
             }
@@ -177,6 +180,7 @@ public class MatchController extends Controller implements Initializable {
                 }
                 lblTiempo.setText("Tiempo: 00:00");
                 desactivarControles();
+                popupMostrado = true;
                 javafx.application.Platform.runLater(() -> mostrarPopupFinalizado());
 
                 return;
