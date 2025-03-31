@@ -4,7 +4,7 @@
   "deporte" : "Baloncesto",
   "tiempoPorPartido" : 10,
   "cantidadEquipos" : 13,
-  "equiposParticipantes" : [ "lolas", "lakers", "lakers2" ],
+  "equiposParticipantes" : [ "lolas" ],
   "estado" : "Por comenzar"
 }, {
   "id" : "5dcb4a5a-8f77-45dc-8e19-1c598ef3a7a1",
@@ -12,7 +12,7 @@
   "deporte" : "Baloncesto",
   "tiempoPorPartido" : 5,
   "cantidadEquipos" : 5,
-  "equiposParticipantes" : [ "lakers", "lakers2", "lakers3", "lakers4" ],
+  "equiposParticipantes" : [ "lakers", "lakers2", "lakers3", "lakers4", "lolas" ],
   "estado" : "Por comenzar"
 }, {
   "id" : "fc545c5e-843c-4ee1-8258-6942a10b6973",
@@ -21,5 +21,13 @@
   "tiempoPorPartido" : 1,
   "cantidadEquipos" : 2,
   "equiposParticipantes" : [ "lakers", "lakers2" ],
+  "estado" : "Por comenzar"
+}, {
+  "id" : "e6c73cac-6239-45d9-aee1-12c6ef66b117",
+  "nombre" : "lol",
+  "deporte" : "test2",
+  "tiempoPorPartido" : 7,
+  "cantidadEquipos" : 3,
+  "equiposParticipantes" : [ "saprisssa365" ],
   "estado" : "Por comenzar"
 } ]

@@ -202,6 +202,10 @@ public class ActiveTournamentsController extends Controller implements Initializ
         });
     }
 
+    public void actualizarComboBoxActiveTournaments() {
+        loadSportsToComboBox();
+    }
+
     @Override
     public void initialize() {
         // Método vacío para cumplir con la clase abstracta.

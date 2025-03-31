@@ -781,6 +781,12 @@ public class TournamentMaintenanceController extends Controller implements Initi
         imageView.setCursor(Cursor.HAND);
     }
 
+    public void actualizarComboBoxesDeportes() {
+        populateComboBoxMantenimientoDeporte();
+        populateComboBoxRegistroDeporte();
+    }
+
+
     @Override
     public void initialize() {
 

@@ -2,6 +2,7 @@ package cr.ac.una.tareatorneos.controller;
 
 import cr.ac.una.tareatorneos.model.Sport;
 import cr.ac.una.tareatorneos.service.SportService;
+import cr.ac.una.tareatorneos.util.FlowController;
 import cr.ac.una.tareatorneos.util.Mensaje;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTableColumn;
@@ -137,8 +138,12 @@ public class SportsMaintenanceController extends Controller implements Initializ
                 mensajeUtil.show(javafx.scene.control.Alert.AlertType.INFORMATION, "Eliminar Deporte", "Deporte eliminado exitosamente.");
                 loadSports();
                 OnActionBtnBarrerCampos(event);
-
                 TeamsMaintenanceController.actualizarListaDeportes();
+                notificarActualizacionComboBoxesTorneo();
+                ActualizacionComboBoxTeamsManintenace();
+                ActualizacionComboBoxActiveTournaments();
+                ActualizacionComboBoxAchievements();
+
             } else {
                 mensajeUtil.show(javafx.scene.control.Alert.AlertType.ERROR, "Eliminar Deporte", "No se pudo eliminar el deporte.");
             }
@@ -200,6 +205,11 @@ public class SportsMaintenanceController extends Controller implements Initializ
             loadSports();
             OnActionBtnBarrerCampos(event);
             TeamsMaintenanceController.actualizarListaDeportes();
+            notificarActualizacionComboBoxesTorneo();
+            ActualizacionComboBoxTeamsManintenace();
+            ActualizacionComboBoxActiveTournaments();
+            ActualizacionComboBoxAchievements();
+
         } else {
             mensajeUtil.show(javafx.scene.control.Alert.AlertType.ERROR,
                     "Guardar Deporte", "No se pudo guardar el deporte.");
@@ -290,6 +300,10 @@ public class SportsMaintenanceController extends Controller implements Initializ
             mensajeUtil.show(javafx.scene.control.Alert.AlertType.INFORMATION, "Modificar Deporte", "Deporte modificado exitosamente.");
             loadSports();
             OnActionBtnBarrerCampos(event);
+            notificarActualizacionComboBoxesTorneo();
+            ActualizacionComboBoxTeamsManintenace();
+            ActualizacionComboBoxActiveTournaments();
+            ActualizacionComboBoxAchievements();
         } else {
             mensajeUtil.show(javafx.scene.control.Alert.AlertType.ERROR, "Modificar Deporte", "No se pudo modificar el deporte.");
         }
@@ -317,5 +331,51 @@ public class SportsMaintenanceController extends Controller implements Initializ
         }
 
     }
+
+    private void notificarActualizacionComboBoxesTorneo() {
+        TournamentMaintenanceController torneoController = (TournamentMaintenanceController)
+                FlowController.getInstance().getController("TournamentMaintenanceView");
+
+        if (torneoController != null) {
+            torneoController.actualizarComboBoxesDeportes();
+        }
+    }
+
+    private void ActualizacionComboBoxTeamsManintenace() {
+        TeamsMaintenanceController EquiposController = (TeamsMaintenanceController)
+                FlowController.getInstance().getController("TeamsMaintenanceView");
+
+        if (EquiposController != null) {
+            EquiposController.actualizarComboBoxTeamsManintenance();
+        }
+    }
+
+    private void ActualizacionComboBoxActiveTournaments() {
+        ActiveTournamentsController ActiveController = (ActiveTournamentsController)
+                FlowController.getInstance().getController("ActiveTournamentsView");
+
+        if (ActiveController != null) {
+            ActiveController.actualizarComboBoxActiveTournaments();
+        }
+    }
+
+    private void ActualizacionComboBoxAchievements() {
+        AchievementsController ActiveController = (AchievementsController)
+                FlowController.getInstance().getController("AchievementsView");
+
+        if (ActiveController != null) {
+            ActiveController.actualizarComboBoxAchievements();
+        }
+    }
+
+    private void ActualizacionComboBoxRankings() {
+        RankingsController ActiveController = (RankingsController)
+                FlowController.getInstance().getController("RankingsView");
+
+        if (ActiveController != null) {
+            ActiveController.actualizarComboBoxRankings();
+        }
+    }
+
 
 }

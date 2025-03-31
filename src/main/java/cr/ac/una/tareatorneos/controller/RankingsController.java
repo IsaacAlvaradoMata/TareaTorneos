@@ -4,8 +4,13 @@
  */
 package cr.ac.una.tareatorneos.controller;
 
+import cr.ac.una.tareatorneos.model.Team;
+import cr.ac.una.tareatorneos.service.SportService;
+import cr.ac.una.tareatorneos.service.TeamService;
 import io.github.palexdev.materialfx.controls.MFXFilterComboBox;
 import io.github.palexdev.materialfx.controls.MFXTableView;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -35,21 +40,25 @@ public class RankingsController extends Controller implements Initializable {
     @FXML
     private Separator sprRankings;
     @FXML
-    private MFXTableView<?> tbvEstadisticasGenerales;
+    private MFXTableView<Team> tbvEstadisticasGenerales;
     @FXML
-    private MFXTableView<?> tbvEstadisticasAvanzadas;
+    private MFXTableView<Team> tbvEstadisticasAvanzadas;
     @FXML
-    private MFXTableView<?> tbvRankingEquipos;
+    private MFXTableView<Team> tbvRankingEquipos;
     @FXML
-    private MFXFilterComboBox<?> cmbRankings;
+    private MFXFilterComboBox<String> cmbRankings;
 
+    private ObservableList<Team> teamsData = FXCollections.observableArrayList();
+    private TeamService teamService;
+    private SportService sportService = new SportService();
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        teamService = new TeamService();
+        populateComboBoxRankings();
     }
 
     @FXML
@@ -67,5 +76,18 @@ public class RankingsController extends Controller implements Initializable {
     @Override
     public void initialize() {
 
+    }
+
+
+    private void populateComboBoxRankings() {
+        ObservableList<String> sports = FXCollections.observableArrayList();
+        sports.add("Todos"); // 👈 Agregar opción especial
+        sportService.getAllSports().forEach(s -> sports.add(s.getNombre()));
+        cmbRankings.setItems(sports);
+        cmbRankings.selectFirst(); // Selecciona "Todos" al cargar
+    }
+
+    public void actualizarComboBoxRankings() {
+        populateComboBoxRankings();
     }
 }

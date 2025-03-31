@@ -443,5 +443,8 @@ public class TeamsMaintenanceController extends Controller implements Initializa
         tbvEquiposExistentes.setItems(FXCollections.observableArrayList(teamsData));
     }
 
+    public void actualizarComboBoxTeamsManintenance() {
+        populateComboBoxDeportes();
+    }
 
 }

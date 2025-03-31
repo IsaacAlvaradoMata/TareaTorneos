@@ -370,4 +370,8 @@ public class AchievementsController extends Controller implements Initializable 
         cmbAchievements.selectFirst(); // Selecciona "Todos" al cargar
     }
 
+    public void actualizarComboBoxAchievements() {
+        loadSportsInComboBox();
+    }
+
 }
