@@ -93,11 +93,6 @@ public class AchievementsController extends Controller implements Initializable 
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }
-
-    @Override
-    public void initialize() {
         Tooltip tooltip = new Tooltip("Haga click sobre los logros para ver la descripción de cada uno de ellos.");
         tooltip.setStyle("-fx-background-color: rgba(238, 189, 149, 0.9); " +
                 "-fx-text-fill: #a25600; " +
@@ -158,10 +153,11 @@ public class AchievementsController extends Controller implements Initializable 
 
         cmbAchievements.valueProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
-                System.out.println("📌 Deporte seleccionado en combo: " + newVal);
-                cargarEquiposPorDeporte(newVal);
-            } else {
-                System.out.println("⚠️ Selección en combo es null");
+                if (newVal.equalsIgnoreCase("Todos")) {
+                    loadAllTeams(); // Mostrar todos
+                } else {
+                    cargarEquiposPorDeporte(newVal);
+                }
             }
         });
 
@@ -170,6 +166,14 @@ public class AchievementsController extends Controller implements Initializable 
                 handleTableClickLogrosEquipos(null);
             }
         });
+
+        loadAllTeams(); // Carga todos los equipos al iniciar
+
+    }
+
+    @Override
+    public void initialize() {
+
 
     }
 
@@ -300,6 +304,23 @@ public class AchievementsController extends Controller implements Initializable 
 
     }
 
+    private void loadAllTeams() {
+        equiposFiltrados.clear();
+        equiposFiltrados.addAll(teamService.getAllTeams());
+
+        tbvLogrosEquipos.getSelectionModel().clearSelection(); // Limpia selección previa
+        tbvLogrosEquipos.setItems(null); // Resetea items
+        tbvLogrosEquipos.setItems(equiposFiltrados); // Refresca lista
+
+        // 👇 Este bloque es crucial
+        Platform.runLater(() -> {
+            tbvLogrosEquipos.getSelectionModel().clearSelection();
+            tbvLogrosEquipos.requestFocus(); // Recupera el foco
+        });
+    }
+
+
+
     private void convertDialogTo(String styleClass) {
         dialogContent.getStyleClass().removeIf(
                 s -> s.equals("mfx-info-dialog") || s.equals("mfx-warn-dialog") || s.equals("mfx-error-dialog")
@@ -321,31 +342,32 @@ public class AchievementsController extends Controller implements Initializable 
 
     private void cargarEquiposPorDeporte(String deporte) {
         equiposFiltrados.clear();
-        System.out.println("🔍 Buscando equipos para deporte: " + deporte);
 
         List<Team> todos = teamService.getAllTeams();
-        System.out.println("🔁 Total equipos disponibles: " + todos.size());
-
         for (Team team : todos) {
             if (team.getDeporte() != null && team.getDeporte().equalsIgnoreCase(deporte)) {
-                System.out.println("✅ Equipo añadido: " + team.getNombre());
                 equiposFiltrados.add(team);
-            } else {
-                System.out.println("⛔ Ignorado: " + team.getNombre() + " (Deporte: " + team.getDeporte() + ")");
             }
         }
 
-        System.out.println("📦 Equipos cargados en tabla: " + equiposFiltrados.size());
-
-        // 🔁 Forzar actualización visual en MFXTableView
+        tbvLogrosEquipos.getSelectionModel().clearSelection();
         tbvLogrosEquipos.setItems(null);
         tbvLogrosEquipos.setItems(equiposFiltrados);
+
+        // 🔥 Clave para evitar el doble clic
+        Platform.runLater(() -> {
+            tbvLogrosEquipos.getSelectionModel().clearSelection();
+            tbvLogrosEquipos.requestFocus();
+        });
     }
+
 
     private void loadSportsInComboBox() {
         ObservableList<String> sports = FXCollections.observableArrayList();
+        sports.add("Todos"); // 👈 Agregar opción especial
         sportService.getAllSports().forEach(s -> sports.add(s.getNombre()));
         cmbAchievements.setItems(sports);
+        cmbAchievements.selectFirst(); // Selecciona "Todos" al cargar
     }
 
 }
