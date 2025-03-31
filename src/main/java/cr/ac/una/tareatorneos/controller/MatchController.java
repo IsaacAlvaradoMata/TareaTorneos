@@ -30,34 +30,10 @@ public class MatchController extends Controller implements Initializable {
 
     @FXML
     private MFXButton btnFinalizar;
-
     @FXML
-    private ImageView imgBalon;
-
+    private ImageView imgBalon, imgEquipoA, imgEquipoB;
     @FXML
-    private ImageView imgEquipoA;
-
-    @FXML
-    private ImageView imgEquipoB;
-
-    @FXML
-    private Label lblTiempo;
-
-    @FXML
-    private Label lblTorneo;
-
-    @FXML
-    private Label lblEquipoA;
-
-    @FXML
-    private Label lblEquipoB;
-
-    @FXML
-    private Label lblPuntajeA;
-
-    @FXML
-    private Label lblPuntajeB;
-
+    private Label lblTiempo, lblTorneo, lblEquipoA, lblEquipoB, lblPuntajeA, lblPuntajeB;
     @FXML
     private AnchorPane root;
 
@@ -77,8 +53,8 @@ public class MatchController extends Controller implements Initializable {
 
     private void mostrarPopupFinalizado() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Partido Finalizado");
-        alert.setHeaderText("✔ El partido ha finalizado");
+        alert.setTitle("🎉 Partido Finalizado");
+        alert.setHeaderText("✅ ¡El partido ha concluido!");
 
         String equipoA = lblEquipoA.getText();
         String equipoB = lblEquipoB.getText();
@@ -86,9 +62,9 @@ public class MatchController extends Controller implements Initializable {
         int puntajeB = matchService.getPuntajeB();
 
         StringBuilder resultado = new StringBuilder();
-        resultado.append("📊 Resultado Final\n\n");
-        resultado.append(String.format("🏅 %-15s | %2d pts\n", equipoA, puntajeA));
-        resultado.append(String.format("🏅 %-15s | %2d pts\n", equipoB, puntajeB));
+        resultado.append("📊 *Marcador Final*\n\n");
+        resultado.append(String.format("⚽ %-15s | %2d pts\n", equipoA, puntajeA));
+        resultado.append(String.format("⚽ %-15s | %2d pts\n", equipoB, puntajeB));
 
         alert.setContentText(resultado.toString());
         alert.showAndWait();
@@ -138,21 +114,23 @@ public class MatchController extends Controller implements Initializable {
 
     private void reanudarCuentaRegresiva() {
         countdown = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+            int min = tiempoRestante / 60;
+            int seg = tiempoRestante % 60;
+            lblTiempo.setText(String.format("Tiempo: %02d:%02d", min, seg));
+
             if (tiempoRestante <= 0) {
                 detenerTiempo();
                 if (matchService != null && !matchService.getMatch().isFinalizado()) {
                     matchService.finalizarPartido();
-                    mostrarPopupFinalizado();
                 }
                 lblTiempo.setText("Tiempo: 00:00");
                 desactivarControles();
+                javafx.application.Platform.runLater(() -> mostrarPopupFinalizado());
                 return;
             }
 
-            int min = tiempoRestante / 60;
-            int seg = tiempoRestante % 60;
-            lblTiempo.setText(String.format("Tiempo: %02d:%02d", min, seg));
             tiempoRestante--;
+
         }));
         countdown.setCycleCount(Timeline.INDEFINITE);
         countdown.play();
@@ -163,9 +141,9 @@ public class MatchController extends Controller implements Initializable {
         detenerTiempo(); // pausa antes de mostrar confirmación
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmar Finalización");
-        alert.setHeaderText("¿Estás seguro de que deseas finalizar el partido?");
-        alert.setContentText("Esta acción no se puede deshacer.");
+        alert.setTitle("🚨 Confirmar Finalización");
+        alert.setHeaderText("¿Deseas finalizar este partido?");
+        alert.setContentText("⚠ Esta acción detendrá el tiempo y guardará el resultado final.");
 
         alert.showAndWait().ifPresent(response -> {
             switch (response.getButtonData()) {
@@ -178,7 +156,6 @@ public class MatchController extends Controller implements Initializable {
                     mostrarPopupFinalizado();
                 }
                 default -> {
-                    // Usuario canceló, reanudar desde donde se pausó ⏸️
                     reanudarCuentaRegresiva();
                 }
             }
@@ -189,21 +166,24 @@ public class MatchController extends Controller implements Initializable {
         tiempoRestante = minutos * 60;
 
         countdown = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+            int min = tiempoRestante / 60;
+            int seg = tiempoRestante % 60;
+            lblTiempo.setText(String.format("Tiempo: %02d:%02d", min, seg));
+
             if (tiempoRestante <= 0) {
                 detenerTiempo();
                 if (matchService != null && !matchService.getMatch().isFinalizado()) {
                     matchService.finalizarPartido();
-                    System.out.println("🛎️ Tiempo finalizado automáticamente.");
                 }
+                lblTiempo.setText("Tiempo: 00:00");
                 desactivarControles();
-                mostrarPopupFinalizado();
+                javafx.application.Platform.runLater(() -> mostrarPopupFinalizado());
+
                 return;
             }
 
-            int min = tiempoRestante / 60;
-            int seg = tiempoRestante % 60;
-            lblTiempo.setText(String.format("Tiempo: %02d:%02d", min, seg));
             tiempoRestante--;
+
         }));
 
         countdown.setCycleCount(Timeline.INDEFINITE);
@@ -245,10 +225,10 @@ public class MatchController extends Controller implements Initializable {
         lblTorneo.setText(torneo.getNombre());
         lblTiempo.setText("Tiempo: " + torneo.getTiempoPorPartido() + ":00");
 
-        btnFinalizar.setDisable(false); // Por si venimos de otra vista
-
+        btnFinalizar.setDisable(false);
         iniciarCuentaRegresiva(torneo.getTiempoPorPartido());
         activarControlesDragAndDrop();
+
         lblEquipoA.setText(equipoA.getNombre());
         lblPuntajeA.setText("Puntaje: 0");
 

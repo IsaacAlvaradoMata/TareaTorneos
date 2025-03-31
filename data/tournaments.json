@@ -14,4 +14,12 @@
   "cantidadEquipos" : 5,
   "equiposParticipantes" : [ ],
   "estado" : "Por comenzar"
+}, {
+  "id" : "fc545c5e-843c-4ee1-8258-6942a10b6973",
+  "nombre" : "PRUEBA",
+  "deporte" : "Baloncesto",
+  "tiempoPorPartido" : 1,
+  "cantidadEquipos" : 2,
+  "equiposParticipantes" : [ "lakers", "lakers2" ],
+  "estado" : "Por comenzar"
 } ]
