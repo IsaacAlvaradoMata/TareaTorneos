@@ -73,7 +73,6 @@ public class ActiveTournamentsController extends Controller implements Initializ
         });
     }
 
-
     @FXML
     private void handleTableClickTorneosActivos(MouseEvent event) {
         List<Tournament> selected = tbvTorneosActivos.getSelectionModel().getSelectedValues();
@@ -106,6 +105,17 @@ public class ActiveTournamentsController extends Controller implements Initializ
 
     @FXML
     private void OnActionBtnReanudarTorneo(ActionEvent event) {
+        List<Tournament> selected = tbvTorneosActivos.getSelectionModel().getSelectedValues();
+        if (selected.isEmpty()) {
+            System.out.println("❌ No se ha seleccionado ningún torneo.");
+            return;
+        }
+
+        Tournament torneoSeleccionado = selected.get(0);
+
+        MatchController controller = (MatchController) FlowController.getInstance().getController("MatchView");
+        controller.mostrarPrimerosDosEquiposDelTorneo(torneoSeleccionado.getNombre());
+
         FlowController.getInstance().goView("MatchView");
     }
 
@@ -152,7 +162,6 @@ public class ActiveTournamentsController extends Controller implements Initializ
         cmbTorneosActivos.selectFirst(); // Auto-selecciona "Todos" al inicio
     }
 
-
     private void filterTournamentsBySport(String deporte) {
         TournamentService tournamentService = new TournamentService();
         List<Tournament> tournaments = tournamentService.getAllTournaments();
@@ -185,7 +194,6 @@ public class ActiveTournamentsController extends Controller implements Initializ
             tbvTorneosActivos.requestFocus();
         });
     }
-
 
     @Override
     public void initialize() {

@@ -19,7 +19,6 @@ public class MatchService {
     private Team equipoA;
     private Team equipoB;
     private Sport deporte;
-
     private Match match;
 
     public MatchService(Tournament torneo, Team equipoA, Team equipoB) {
@@ -51,20 +50,25 @@ public class MatchService {
     }
 
     public Image getImagenEquipoA() {
-        return cargarImagen("teamsPhotos/" + equipoA.getTeamImage());
+        return cargarImagen("teamsPhotos/" + equipoA.getTeamImage(), "Equipo A");
     }
 
     public Image getImagenEquipoB() {
-        return cargarImagen("teamsPhotos/" + equipoB.getTeamImage());
+        return cargarImagen("teamsPhotos/" + equipoB.getTeamImage(), "Equipo B");
     }
 
     public Image getImagenBalon() {
-        return cargarImagen("sportsPhotos/" + deporte.getBallImage());
+        return cargarImagen("sportsPhotos/" + deporte.getBallImage(), "Balón/Deporte");
     }
 
-    private Image cargarImagen(String path) {
+    private Image cargarImagen(String path, String tipo) {
         File file = new File(path);
-        return file.exists() ? new Image(file.toURI().toString()) : null;
+        if (!file.exists()) {
+            System.err.println("⚠️ Imagen no encontrada para " + tipo + ": " + path);
+            return null;
+        }
+        System.out.println("✅ Imagen cargada para " + tipo + ": " + path);
+        return new Image(file.toURI().toString());
     }
 
     public void finalizarPartido() {
@@ -85,9 +89,11 @@ public class MatchService {
 
             partidos.add(matchFinalizado);
             mapper.writerWithDefaultPrettyPrinter().writeValue(archivo, partidos);
+            System.out.println("💾 Partido guardado exitosamente en matches.json");
 
         } catch (IOException e) {
             e.printStackTrace();
+            System.err.println("❌ Error al guardar partido en JSON");
         }
     }
 }

@@ -8,6 +8,7 @@ import cr.ac.una.tareatorneos.service.SportService;
 import cr.ac.una.tareatorneos.service.TeamService;
 import cr.ac.una.tareatorneos.service.TournamentService;
 import io.github.palexdev.materialfx.controls.MFXButton;
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +20,7 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -60,16 +62,20 @@ public class MatchController extends Controller implements Initializable {
 
     private MatchService matchService;
     private Timeline countdown;
-    private int tiempoRestante; // en segundos
-
-    @FXML
-    void onActionBtnFinalizar(ActionEvent event) {
-
-    }
+    private int tiempoRestante;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Drag start (balón)
+        configurarEventosDragAndDrop();
+        // Ya no se llama aquí ningún torneo de prueba por defecto
+    }
+
+    @Override
+    public void initialize() {
+        // Método vacío por la clase base
+    }
+
+    private void configurarEventosDragAndDrop() {
         imgBalon.setOnDragDetected(event -> {
             Dragboard db = imgBalon.startDragAndDrop(TransferMode.MOVE);
             ClipboardContent content = new ClipboardContent();
@@ -78,7 +84,6 @@ public class MatchController extends Controller implements Initializable {
             event.consume();
         });
 
-        // Equipo A acepta drop (si le hacen gol, punto para B)
         imgEquipoA.setOnDragOver(event -> {
             if (event.getGestureSource() == imgBalon && event.getDragboard().hasImage()) {
                 event.acceptTransferModes(TransferMode.MOVE);
@@ -88,14 +93,13 @@ public class MatchController extends Controller implements Initializable {
 
         imgEquipoA.setOnDragDropped(event -> {
             if (matchService != null) {
-                matchService.sumarPuntoB(); // ⚽ Real Madrid fue anotado => gol para Saprissa
+                matchService.sumarPuntoB();
                 lblPuntajeB.setText("Puntaje: " + matchService.getPuntajeB());
             }
             event.setDropCompleted(true);
             event.consume();
         });
 
-        // Equipo B acepta drop (si le hacen gol, punto para A)
         imgEquipoB.setOnDragOver(event -> {
             if (event.getGestureSource() == imgBalon && event.getDragboard().hasImage()) {
                 event.acceptTransferModes(TransferMode.MOVE);
@@ -105,12 +109,52 @@ public class MatchController extends Controller implements Initializable {
 
         imgEquipoB.setOnDragDropped(event -> {
             if (matchService != null) {
-                matchService.sumarPuntoA(); // ⚽ Saprissa fue anotado => gol para Real Madrid
+                matchService.sumarPuntoA();
                 lblPuntajeA.setText("Puntaje: " + matchService.getPuntajeA());
             }
             event.setDropCompleted(true);
             event.consume();
         });
+    }
+
+    @FXML
+    void onActionBtnFinalizar(ActionEvent event) {
+        if (countdown != null) {
+            countdown.stop();
+            countdown = null;
+        }
+
+        if (matchService != null && !matchService.getMatch().isFinalizado()) {
+            matchService.finalizarPartido();
+        }
+
+        btnFinalizar.setDisable(true);
+        imgEquipoA.setDisable(true);
+        imgEquipoB.setDisable(true);
+        imgBalon.setDisable(true);
+
+        System.out.println("🛑 Partido finalizado manualmente.");
+    }
+
+    private void iniciarCuentaRegresiva(int minutos) {
+        tiempoRestante = minutos * 60;
+
+        countdown = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+            int min = tiempoRestante / 60;
+            int seg = tiempoRestante % 60;
+            lblTiempo.setText(String.format("Tiempo: %02d:%02d", min, seg));
+            tiempoRestante--;
+
+            if (tiempoRestante < 0) {
+                countdown.stop();
+                matchService.finalizarPartido();
+                btnFinalizar.setDisable(true);
+                System.out.println("🛎️ Tiempo finalizado automáticamente.");
+            }
+        }));
+
+        countdown.setCycleCount(Timeline.INDEFINITE);
+        countdown.play();
     }
 
     public void initializeMatch(String torneoNombre, String nombreEquipoA, String nombreEquipoB) {
@@ -127,6 +171,7 @@ public class MatchController extends Controller implements Initializable {
 
         lblTorneo.setText(torneo.getNombre());
         lblTiempo.setText("Tiempo: " + torneo.getTiempoPorPartido() + ":00");
+        iniciarCuentaRegresiva(torneo.getTiempoPorPartido());
 
         lblEquipoA.setText(equipoA.getNombre());
         lblPuntajeA.setText("Puntaje: 0");
@@ -134,7 +179,6 @@ public class MatchController extends Controller implements Initializable {
         lblEquipoB.setText(equipoB.getNombre());
         lblPuntajeB.setText("Puntaje: 0");
 
-        // Cargar imágenes
         Image imgA = matchService.getImagenEquipoA();
         if (imgA != null) imgEquipoA.setImage(imgA);
 
@@ -145,24 +189,18 @@ public class MatchController extends Controller implements Initializable {
         if (balon != null) imgBalon.setImage(balon);
     }
 
-    public void pruebaSimulacion() {
-        Tournament torneo = new TournamentService().getTournamentByName("Torneo de Prueba");
+    // ✅ Llamado desde ActiveTournamentsController
+    public void mostrarPrimerosDosEquiposDelTorneo(String nombreTorneo) {
+        Tournament torneo = new TournamentService().getTournamentByName(nombreTorneo);
 
         if (torneo == null || torneo.getEquiposParticipantes().size() < 2) {
-            System.out.println("❌ Torneo no encontrado o no tiene suficientes equipos.");
+            System.out.println("❌ Torneo inválido o con menos de 2 equipos.");
             return;
         }
 
         String equipoA = torneo.getEquiposParticipantes().get(0);
         String equipoB = torneo.getEquiposParticipantes().get(1);
 
-        initializeMatch(torneo.getNombre(), equipoA, equipoB);
+        initializeMatch(nombreTorneo, equipoA, equipoB);
     }
-
-    @Override
-    public void initialize() {
-        pruebaSimulacion();
-    
-    }
-
 }
