@@ -21,9 +21,11 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class MatchController extends Controller implements Initializable {
@@ -40,12 +42,18 @@ public class MatchController extends Controller implements Initializable {
     private MatchService matchService;
     private Timeline countdown;
     private int tiempoRestante;
+    @FXML
+    private ImageView imgFondoDeporte;
+    @FXML
+    private StackPane spMatch;
 
     private boolean popupMostrado = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         configurarEventosDragAndDrop();
+        imgFondoDeporte.fitHeightProperty().bind(spMatch.heightProperty());
+        imgFondoDeporte.fitWidthProperty().bind(spMatch.widthProperty());
     }
 
     @Override
@@ -226,6 +234,7 @@ public class MatchController extends Controller implements Initializable {
 
         matchService = new MatchService(torneo, equipoA, equipoB);
 
+        // Establecer texto en etiquetas
         lblTorneo.setText(torneo.getNombre());
         lblTiempo.setText("Tiempo: " + torneo.getTiempoPorPartido() + ":00");
 
@@ -239,6 +248,7 @@ public class MatchController extends Controller implements Initializable {
         lblEquipoB.setText(equipoB.getNombre());
         lblPuntajeB.setText("Puntaje: 0");
 
+        // Imágenes de equipos y balón
         Image imgA = matchService.getImagenEquipoA();
         if (imgA != null) imgEquipoA.setImage(imgA);
 
@@ -247,6 +257,9 @@ public class MatchController extends Controller implements Initializable {
 
         Image balon = matchService.getImagenBalon();
         if (balon != null) imgBalon.setImage(balon);
+
+        // Fondo dinámico según el deporte
+        cargarFondoDeporte(sport.getNombre());
     }
 
     public void mostrarPrimerosDosEquiposDelTorneo(String nombreTorneo) {
@@ -262,4 +275,33 @@ public class MatchController extends Controller implements Initializable {
 
         initializeMatch(nombreTorneo, equipoA, equipoB);
     }
+
+    private final Map<String, String> fondoDeporteMap = Map.ofEntries(
+            Map.entry("futbol", "/cr/ac/una/tareatorneos/resources/FondoFutbol.png"),
+            Map.entry("soccer", "/cr/ac/una/tareatorneos/resources/FondoFutbol.png"),
+            Map.entry("futbol 7", "/cr/ac/una/tareatorneos/resources/FondoFutbol.png"),
+            Map.entry("futbol 5", "/cr/ac/una/tareatorneos/resources/FondoFutbol.png"),
+            Map.entry("baloncesto", "/cr/ac/una/tareatorneos/resources/FondoBaloncesto.png"),
+            Map.entry("basketball", "/cr/ac/una/tareatorneos/resources/FondoBaloncesto.png"),
+            Map.entry("basket", "/cr/ac/una/tareatorneos/resources/FondoBaloncesto.png"),
+            Map.entry("voley", "/cr/ac/una/tareatorneos/resources/FondoVoleibol.png"),
+            Map.entry("voleibol", "/cr/ac/una/tareatorneos/resources/FondoVoleibol.png"),
+            Map.entry("tenis", "/cr/ac/una/tareatorneos/resources/FondoTenis.png"),
+            Map.entry("pinpog", "/cr/ac/una/tareatorneos/resources/FondoPinpog.png")
+    );
+
+    private void cargarFondoDeporte(String nombreDeporte) {
+        if (nombreDeporte == null) return;
+
+        String deporteNormalizado = nombreDeporte.trim().toLowerCase();
+        String rutaImagen = fondoDeporteMap.get(deporteNormalizado);
+
+        if (rutaImagen != null) {
+            Image fondo = new Image(getClass().getResourceAsStream(rutaImagen));
+            imgFondoDeporte.setImage(fondo);
+        } else {
+            System.out.println("⚠ No hay fondo definido para el deporte: " + nombreDeporte);
+        }
+    }
+
 }

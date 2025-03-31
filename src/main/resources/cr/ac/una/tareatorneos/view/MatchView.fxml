@@ -11,50 +11,57 @@
 <AnchorPane fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="700.0" styleClass="AnchorPane-MatchView" stylesheets="@StyleTournament.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tareatorneos.controller.MatchController">
 
     <children>
-        <StackPane prefHeight="600.0" prefWidth="701.0" styleClass="StackPane-MatchView" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
-
-        <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="400" minWidth="700" prefHeight="600.0" prefWidth="819.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <StackPane fx:id="spMatch" prefHeight="500.0" prefWidth="600.0" styleClass="StackPane-MatchView" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
             <children>
-                <VBox alignment="CENTER" layoutX="50.0" prefHeight="563.0" prefWidth="800.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="-50.0" AnchorPane.topAnchor="0.0">
 
-                    <children>
-                        <Label fx:id="lblTorneo" styleClass="lbl-Title" text="Nombre del Torneo" />
-                        <Label fx:id="lblTiempo" styleClass="lbl-SubTitulosMatchView" text="Tiempo: 00:00" />
-
-                        <HBox alignment="CENTER" prefWidth="607.0" spacing="100">
-                            <children>
-                                <VBox alignment="CENTER" spacing="5">
-                                    <children>
-                                        <StackPane fx:id="spImagenEquipoA" styleClass="spImagenEquipoA" VBox.vgrow="ALWAYS">
-                                            <children>
-                                                <ImageView fx:id="imgEquipoA" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
-                                            </children>
-                                        </StackPane>
-                                        <Label fx:id="lblEquipoA" styleClass="lbl-SubTitulosMatchView" text="Equipo A" />
-                                        <Label fx:id="lblPuntajeA" styleClass="lbl-SubTitulosMatchView" text="Puntaje: 0" />
-                                    </children>
-                                </VBox>
-
-                                <VBox alignment="CENTER" spacing="5">
-                                    <children>
-                                        <StackPane fx:id="spImagenEquipoB" styleClass="spImagenEquipoB" VBox.vgrow="ALWAYS">
-                                            <children>
-                                                <ImageView fx:id="imgEquipoB" fitHeight="120" fitWidth="120" pickOnBounds="true" preserveRatio="true" />
-                                            </children>
-                                        </StackPane>
-                                        <Label fx:id="lblEquipoB" styleClass="lbl-SubTitulosMatchView" text="Equipo B" />
-                                        <Label fx:id="lblPuntajeB" styleClass="lbl-SubTitulosMatchView" text="Puntaje: 0" />
-                                    </children>
-                                </VBox>
-                            </children>
-                        </HBox>
-
-                        <ImageView fx:id="imgBalon" fitHeight="80" fitWidth="80" pickOnBounds="true" preserveRatio="true" />
-
-                        <MFXButton fx:id="btnFinalizar" onAction="#onActionBtnFinalizar" styleClass="btn-MatchView" text="Finalizar Partido" />
-                    </children>
-                </VBox>
+                <!-- Imagen de fondo dentro del AnchorPane del contenido -->
+                <ImageView fx:id="imgFondoDeporte" fitHeight="600.0" fitWidth="820.0" pickOnBounds="true" />
+      
+              <AnchorPane minHeight="400" minWidth="700" prefHeight="600.0" prefWidth="819.6">
+                  <children>
+      
+                      <VBox alignment="CENTER" layoutY="-7.0" prefHeight="563.0" prefWidth="800.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      
+                          <children>
+                              <Label fx:id="lblTorneo" styleClass="lbl-Title" text="Nombre del Torneo" />
+                              <Label fx:id="lblTiempo" styleClass="lbl-SubTitulosMatchView" text="Tiempo: 00:00" />
+      
+                              <HBox alignment="CENTER" prefWidth="607.0" spacing="100">
+                                  <children>
+                                      <VBox alignment="CENTER" spacing="5">
+                                          <children>
+                                              <StackPane fx:id="spImagenEquipoA" styleClass="spImagenEquipoA" VBox.vgrow="ALWAYS">
+                                                  <children>
+                                                      <ImageView fx:id="imgEquipoA" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                                                  </children>
+                                              </StackPane>
+                                              <Label fx:id="lblEquipoA" styleClass="lbl-SubTitulosMatchView" text="Equipo A" />
+                                              <Label fx:id="lblPuntajeA" styleClass="lbl-SubTitulosMatchView" text="Puntaje: 0" />
+                                          </children>
+                                      </VBox>
+      
+                                      <VBox alignment="CENTER" spacing="5">
+                                          <children>
+                                              <StackPane fx:id="spImagenEquipoB" styleClass="spImagenEquipoB" VBox.vgrow="ALWAYS">
+                                                  <children>
+                                                      <ImageView fx:id="imgEquipoB" fitHeight="120" fitWidth="120" pickOnBounds="true" preserveRatio="true" />
+                                                  </children>
+                                              </StackPane>
+                                              <Label fx:id="lblEquipoB" styleClass="lbl-SubTitulosMatchView" text="Equipo B" />
+                                              <Label fx:id="lblPuntajeB" styleClass="lbl-SubTitulosMatchView" text="Puntaje: 0" />
+                                          </children>
+                                      </VBox>
+                                  </children>
+                              </HBox>
+      
+                              <ImageView fx:id="imgBalon" fitHeight="80" fitWidth="80" pickOnBounds="true" preserveRatio="true" />
+      
+                              <MFXButton fx:id="btnFinalizar" onAction="#onActionBtnFinalizar" styleClass="btn-MatchView" text="Finalizar Partido" />
+                          </children>
+                      </VBox>
+                  </children>
+              </AnchorPane>
             </children>
-        </AnchorPane>
+        </StackPane>
     </children>
 </AnchorPane>
