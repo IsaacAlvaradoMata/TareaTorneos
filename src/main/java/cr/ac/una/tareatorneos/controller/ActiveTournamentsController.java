@@ -77,20 +77,27 @@ public class ActiveTournamentsController extends Controller implements Initializ
     private void handleTableClickTorneosActivos(MouseEvent event) {
         List<Tournament> selected = tbvTorneosActivos.getSelectionModel().getSelectedValues();
         if (!selected.isEmpty()) {
-            Tournament selectedTournament = selected.get(0);
-            // Actualiza los labels con la información del torneo
+            TournamentService service = new TournamentService();
+            Tournament selectedTournament = service.getTournamentByName(selected.get(0).getNombre()); // 🔁 Relee desde JSON actualizado
+
+            if (selectedTournament == null) return;
+
+            // 🟨 Actualiza los labels
             lblNombreTorneo.setText(selectedTournament.getNombre());
             lblDeporteTorneo.setText(selectedTournament.getDeporte());
             lblTiempoTorneo.setText(String.valueOf(selectedTournament.getTiempoPorPartido()));
             lblCantidadEquiposTorneo.setText(String.valueOf(selectedTournament.getCantidadEquipos()));
-            // Carga el ListView con los equipos ya incluidos (tomados del JSON del torneo)
+
+            // ✅ Refresca lista de equipos actuales en el torneo
             listviewEquiposSeleccionadosTorneo.setItems(
                     FXCollections.observableArrayList(selectedTournament.getEquiposParticipantes())
             );
-            // Carga el CheckListView con los equipos disponibles: los equipos del mismo deporte que aún NO están en el torneo
+
+            // ✅ Refresca equipos disponibles también
             loadAvailableTeams(selectedTournament);
         }
     }
+
 
     private void loadAvailableTeams(Tournament tournament) {
         TeamService teamService = new TeamService();

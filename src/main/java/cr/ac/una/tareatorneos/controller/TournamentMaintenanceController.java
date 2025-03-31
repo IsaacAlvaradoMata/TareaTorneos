@@ -583,8 +583,6 @@ public class TournamentMaintenanceController extends Controller implements Initi
     }
 
 
-
-
     @FXML
     void OnActionBtnVolverMantenimiento(ActionEvent event) {
         tabPanePrincipal.getSelectionModel().select(tabMantenimientoTorneos);

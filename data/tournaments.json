@@ -2,9 +2,9 @@
   "id" : "1f4419fc-262b-464b-9d47-e8b459806ec6",
   "nombre" : "nba",
   "deporte" : "Baloncesto",
-  "tiempoPorPartido" : 5,
-  "cantidadEquipos" : 5,
-  "equiposParticipantes" : [ "lakers2" ],
+  "tiempoPorPartido" : 10,
+  "cantidadEquipos" : 13,
+  "equiposParticipantes" : [ "lolas", "lakers", "lakers2" ],
   "estado" : "Por comenzar"
 }, {
   "id" : "5dcb4a5a-8f77-45dc-8e19-1c598ef3a7a1",
@@ -12,7 +12,7 @@
   "deporte" : "Baloncesto",
   "tiempoPorPartido" : 5,
   "cantidadEquipos" : 5,
-  "equiposParticipantes" : [ ],
+  "equiposParticipantes" : [ "lakers", "lakers2", "lakers3", "lakers4" ],
   "estado" : "Por comenzar"
 }, {
   "id" : "fc545c5e-843c-4ee1-8258-6942a10b6973",
