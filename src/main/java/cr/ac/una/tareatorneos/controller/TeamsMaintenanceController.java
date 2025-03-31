@@ -437,4 +437,11 @@ public class TeamsMaintenanceController extends Controller implements Initializa
         }
     }
 
+    public void recargarEquiposDesdeJSON() {
+        List<Team> loadedTeams = teamService.getAllTeams();
+        teamsData.setAll(loadedTeams);
+        tbvEquiposExistentes.setItems(FXCollections.observableArrayList(teamsData));
+    }
+
+
 }

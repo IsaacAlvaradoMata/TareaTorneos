@@ -42,7 +42,7 @@
     "anotaciones" : 0,
     "anotacionesEnContra" : 0
   },
-  "estado" : "disponible"
+  "estado" : "participante"
 }, {
   "nombre" : "lakers",
   "deporte" : "Baloncesto",
@@ -87,7 +87,7 @@
     "anotaciones" : 0,
     "anotacionesEnContra" : 0
   },
-  "estado" : "disponible"
+  "estado" : "participante"
 }, {
   "nombre" : "lakers2",
   "deporte" : "Baloncesto",
@@ -177,7 +177,7 @@
     "anotaciones" : 0,
     "anotacionesEnContra" : 0
   },
-  "estado" : "disponible"
+  "estado" : "participante"
 }, {
   "nombre" : "lakers4",
   "deporte" : "Baloncesto",
@@ -222,5 +222,5 @@
     "anotaciones" : 0,
     "anotacionesEnContra" : 0
   },
-  "estado" : "disponible"
+  "estado" : "participante"
 } ]

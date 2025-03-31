@@ -6,6 +6,7 @@ import cr.ac.una.tareatorneos.model.Tournament;
 import cr.ac.una.tareatorneos.service.SportService;
 import cr.ac.una.tareatorneos.service.TeamService;
 import cr.ac.una.tareatorneos.service.TournamentService;
+import cr.ac.una.tareatorneos.util.FlowController;
 import cr.ac.una.tareatorneos.util.Mensaje;
 import io.github.palexdev.materialfx.controls.*;
 import java.net.URL;
@@ -294,6 +295,13 @@ public class TournamentMaintenanceController extends Controller implements Initi
         // 🧼 Refrescar interfaz
         chklistviewEquiposSeleccionados1.getItems().removeAll(aEliminar);
         chklistviewEquiposDisponibles1.getItems().addAll(aEliminar);
+
+        TeamsMaintenanceController controller = (TeamsMaintenanceController)
+                FlowController.getInstance().getController("TeamsMaintenanceView");
+
+        if (controller != null) {
+            controller.recargarEquiposDesdeJSON();
+        }
     }
 
 
@@ -563,6 +571,15 @@ public class TournamentMaintenanceController extends Controller implements Initi
 
         chklistviewEquiposSeleccionados1.getItems().addAll(seleccionados);
         chklistviewEquiposDisponibles1.getItems().removeAll(seleccionados);
+
+        // 🔄 Refrescar la vista de mantenimiento si está cargada
+        TeamsMaintenanceController controller = (TeamsMaintenanceController)
+                FlowController.getInstance().getController("TeamsMaintenanceView");
+
+        if (controller != null) {
+            controller.recargarEquiposDesdeJSON();
+        }
+
     }
 
 
