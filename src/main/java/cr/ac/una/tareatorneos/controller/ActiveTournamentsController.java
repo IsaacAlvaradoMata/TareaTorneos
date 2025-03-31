@@ -57,9 +57,9 @@ public class ActiveTournamentsController extends Controller implements Initializ
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         populateTableView();
-        loadTournaments();
         loadSportsToComboBox();
-        // Listener para actualizar información y listas cuando se seleccione un torneo
+        filterTournamentsBySport("Todos"); // 👈 carga todos los torneos activos desde el inicio
+
         tbvTorneosActivos.getSelectionModel().selectionProperty().addListener((obs, oldSel, newSel) -> {
             if (newSel != null) {
                 handleTableClickTorneosActivos(null);
@@ -71,8 +71,8 @@ public class ActiveTournamentsController extends Controller implements Initializ
                 filterTournamentsBySport(newVal.toString());
             }
         });
-
     }
+
 
     @FXML
     private void handleTableClickTorneosActivos(MouseEvent event) {
@@ -142,29 +142,50 @@ public class ActiveTournamentsController extends Controller implements Initializ
         List<String> nombresDeportes = sportService.getAllSports().stream()
                 .map(s -> s.getNombre())
                 .toList();
-        cmbTorneosActivos.setItems(FXCollections.observableArrayList(nombresDeportes));
+
+        // Agrega la opción "Todos" al principio
+        List<String> opciones = FXCollections.observableArrayList();
+        opciones.add("Todos");
+        opciones.addAll(nombresDeportes);
+
+        cmbTorneosActivos.setItems(FXCollections.observableArrayList(opciones));
+        cmbTorneosActivos.selectFirst(); // Auto-selecciona "Todos" al inicio
     }
+
 
     private void filterTournamentsBySport(String deporte) {
         TournamentService tournamentService = new TournamentService();
         List<Tournament> tournaments = tournamentService.getAllTournaments();
 
-        System.out.println("🔍 Torneos en JSON:");
-        tournaments.forEach(t -> System.out.println("- " + t.getNombre() + " | Deporte: " + t.getDeporte() + " | Estado: " + t.getEstado()));
+        List<Tournament> filtered;
 
-        List<Tournament> filtered = tournaments.stream()
-                .filter(t -> t.getDeporte().equalsIgnoreCase(deporte))
-                .filter(t -> {
-                    String estado = t.getEstado().toLowerCase();
-                    return estado.equals("iniciado") || estado.equals("por comenzar");
-                })
-                .toList();
-
-        System.out.println("🎯 Torneos filtrados para el deporte " + deporte + ": " + filtered.size());
+        if (deporte.equalsIgnoreCase("Todos")) {
+            // Mostrar todos los torneos activos (iniciados o por comenzar)
+            filtered = tournaments.stream()
+                    .filter(t -> {
+                        String estado = t.getEstado().toLowerCase();
+                        return estado.equals("iniciado") || estado.equals("por comenzar");
+                    })
+                    .toList();
+        } else {
+            // Filtrar por deporte
+            filtered = tournaments.stream()
+                    .filter(t -> t.getDeporte().equalsIgnoreCase(deporte))
+                    .filter(t -> {
+                        String estado = t.getEstado().toLowerCase();
+                        return estado.equals("iniciado") || estado.equals("por comenzar");
+                    })
+                    .toList();
+        }
 
         tbvTorneosActivos.getItems().clear();
         tbvTorneosActivos.getItems().addAll(filtered);
+
+        javafx.application.Platform.runLater(() -> {
+            tbvTorneosActivos.requestFocus();
+        });
     }
+
 
     @Override
     public void initialize() {
