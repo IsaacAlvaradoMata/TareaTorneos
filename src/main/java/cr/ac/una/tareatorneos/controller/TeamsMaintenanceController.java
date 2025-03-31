@@ -96,11 +96,19 @@ public class TeamsMaintenanceController extends Controller implements Initializa
         MFXTableColumn<Team> colNombre = new MFXTableColumn<>("Nombre");
         colNombre.setMinWidth(180);
         colNombre.setRowCellFactory(team -> new MFXTableRowCell<>(Team::getNombre));
+
         MFXTableColumn<Team> colDeporte = new MFXTableColumn<>("Deporte");
+        colDeporte.setMinWidth(150);
         colDeporte.setRowCellFactory(team -> new MFXTableRowCell<>(Team::getDeporte));
+
+        MFXTableColumn<Team> colEstado = new MFXTableColumn<>("Estado");
+        colEstado.setMinWidth(130);
+        colEstado.setRowCellFactory(team -> new MFXTableRowCell<>(Team::getEstado));
+
         tbvEquiposExistentes.getTableColumns().clear();
-        tbvEquiposExistentes.getTableColumns().addAll(colNombre, colDeporte);
+        tbvEquiposExistentes.getTableColumns().addAll(colNombre, colDeporte, colEstado);
     }
+
 
     private void loadTeams() {
         List<Team> loadedTeams = teamService.getAllTeams();
@@ -152,6 +160,12 @@ public class TeamsMaintenanceController extends Controller implements Initializa
             return;
         }
         Team selectedTeam = selected.get(0);
+
+        if ("participante".equalsIgnoreCase(selectedTeam.getEstado())) {
+            mensajeUtil.show(AlertType.WARNING, "Eliminar Equipo",
+                    "Este equipo está participando en un torneo y no puede ser eliminado.");
+            return;
+        }
 
         boolean confirmacion = mensajeUtil.showConfirmation(
                 "Confirmar Eliminación",
@@ -253,6 +267,13 @@ public class TeamsMaintenanceController extends Controller implements Initializa
         }
 
         Team selectedTeam = selected.get(0);
+
+        if ("participante".equalsIgnoreCase(selectedTeam.getEstado())) {
+            mensajeUtil.show(AlertType.WARNING, "Modificar Equipo",
+                    "Este equipo está participando en un torneo y no puede ser modificado.");
+            return;
+        }
+
         String oldNombre = selectedTeam.getNombre();
         String newNombre = txtfieldNombreEquipos.getText().trim();
         String newDeporte = cmbEquipos.getValue();

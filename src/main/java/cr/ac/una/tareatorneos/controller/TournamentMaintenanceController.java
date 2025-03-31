@@ -256,14 +256,14 @@ public class TournamentMaintenanceController extends Controller implements Initi
     @FXML
     private void OnActionBtnEliminarEquipos(ActionEvent event) {
         TournamentService service = new TournamentService();
-        String nombreTorneo = lblNombreTorneoSeleccionEquipos.getText();
+        TeamService teamService = new TeamService();
 
+        String nombreTorneo = lblNombreTorneoSeleccionEquipos.getText();
         Tournament torneo = service.getTournamentByName(nombreTorneo);
         if (torneo == null) return;
 
         List<String> aEliminar = new ArrayList<>(chklistviewEquiposSeleccionados1.getSelectionModel().getSelectedValues());
 
-        // 🛑 Validar si no hay selección
         if (aEliminar.isEmpty()) {
             mensajeUtil.show(Alert.AlertType.WARNING,
                     "Sin selección",
@@ -274,10 +274,29 @@ public class TournamentMaintenanceController extends Controller implements Initi
         torneo.getEquiposParticipantes().removeAll(aEliminar);
         service.updateTournament(torneo.getNombre(), torneo);
 
-        // Refrescar listas
+        List<Tournament> todosLosTorneos = service.getAllTournaments();
+
+        for (String nombre : aEliminar) {
+            Team equipo = teamService.getTeamByName(nombre);
+            if (equipo != null) {
+                // ✅ Verifica si sigue participando en algún otro torneo distinto al actual
+                boolean participaEnOtro = todosLosTorneos.stream()
+                        .filter(t -> !t.getNombre().equalsIgnoreCase(torneo.getNombre()))
+                        .anyMatch(t -> t.getEquiposParticipantes().contains(nombre));
+
+                if (!participaEnOtro) {
+                    equipo.setEstado("disponible");
+                    teamService.updateTeam(equipo.getNombre(), equipo);
+                }
+            }
+        }
+
+        // 🧼 Refrescar interfaz
         chklistviewEquiposSeleccionados1.getItems().removeAll(aEliminar);
         chklistviewEquiposDisponibles1.getItems().addAll(aEliminar);
     }
+
+
 
 
 
@@ -502,14 +521,14 @@ public class TournamentMaintenanceController extends Controller implements Initi
     @FXML
     private void OnActionBtnAgregarEquiposSeleccionEquipos(ActionEvent event) {
         TournamentService service = new TournamentService();
-        String nombreTorneo = lblNombreTorneoSeleccionEquipos.getText();
+        TeamService teamService = new TeamService(); // 👈 Agregado
 
+        String nombreTorneo = lblNombreTorneoSeleccionEquipos.getText();
         Tournament torneo = service.getTournamentByName(nombreTorneo);
         if (torneo == null) return;
 
         List<String> seleccionados = new ArrayList<>(chklistviewEquiposDisponibles1.getSelectionModel().getSelectedValues());
 
-        // 🛑 Validar selección vacía
         if (seleccionados.isEmpty()) {
             mensajeUtil.show(Alert.AlertType.WARNING,
                     "Sin selección",
@@ -521,7 +540,6 @@ public class TournamentMaintenanceController extends Controller implements Initi
         int cantidadPermitida = torneo.getCantidadEquipos();
         int totalDespuesDeAgregar = yaAgregados + seleccionados.size();
 
-        // ⚠️ Validación: excede límite
         if (totalDespuesDeAgregar > cantidadPermitida) {
             mensajeUtil.show(Alert.AlertType.WARNING,
                     "Cantidad excedida",
@@ -531,13 +549,22 @@ public class TournamentMaintenanceController extends Controller implements Initi
             return;
         }
 
-        // ✅ Agrega equipos válidos
+        // ✅ Agregar equipos y actualizar su estado
         torneo.getEquiposParticipantes().addAll(seleccionados);
         service.updateTournament(torneo.getNombre(), torneo);
+
+        for (String nombre : seleccionados) {
+            Team equipo = teamService.getTeamByName(nombre);
+            if (equipo != null) {
+                equipo.setEstado("participante");
+                teamService.updateTeam(equipo.getNombre(), equipo);
+            }
+        }
 
         chklistviewEquiposSeleccionados1.getItems().addAll(seleccionados);
         chklistviewEquiposDisponibles1.getItems().removeAll(seleccionados);
     }
+
 
 
 
