@@ -342,7 +342,7 @@ public class MatchController extends Controller implements Initializable {
             Map.entry("voley", "/cr/ac/una/tareatorneos/resources/FondoVoleibol.png"),
             Map.entry("voleibol", "/cr/ac/una/tareatorneos/resources/FondoVoleibol.png"),
             Map.entry("tenis", "/cr/ac/una/tareatorneos/resources/FondoTenis.png"),
-            Map.entry("pinpog", "/cr/ac/una/tareatorneos/resources/FondoPinpog.png"),
+            Map.entry("pinpong", "/cr/ac/una/tareatorneos/resources/FondoPinpog.png"),
             Map.entry("tenis de mesa", "/cr/ac/una/tareatorneos/resources/FondoPinpog.png"),
             Map.entry("baseball", "/cr/ac/una/tareatorneos/resources/FondoBaseball.png")
     );
