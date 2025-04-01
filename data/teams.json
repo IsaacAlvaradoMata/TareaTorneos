@@ -132,7 +132,7 @@
     "anotaciones" : 0,
     "anotacionesEnContra" : 0
   },
-  "estado" : "disponible"
+  "estado" : "participante"
 }, {
   "nombre" : "Manchester city",
   "deporte" : "Futbol",
@@ -177,7 +177,7 @@
     "anotaciones" : 0,
     "anotacionesEnContra" : 0
   },
-  "estado" : "disponible"
+  "estado" : "participante"
 }, {
   "nombre" : "china team",
   "deporte" : "Pingpong",
@@ -402,7 +402,7 @@
     "anotaciones" : 0,
     "anotacionesEnContra" : 0
   },
-  "estado" : "disponible"
+  "estado" : "participante"
 }, {
   "nombre" : "brazil team",
   "deporte" : "Volleyball",
@@ -447,7 +447,7 @@
     "anotaciones" : 0,
     "anotacionesEnContra" : 0
   },
-  "estado" : "disponible"
+  "estado" : "participante"
 }, {
   "nombre" : "new york team",
   "deporte" : "Baseball",
@@ -492,7 +492,7 @@
     "anotaciones" : 0,
     "anotacionesEnContra" : 0
   },
-  "estado" : "disponible"
+  "estado" : "participante"
 }, {
   "nombre" : "boston team",
   "deporte" : "Baseball",
@@ -537,5 +537,5 @@
     "anotaciones" : 0,
     "anotacionesEnContra" : 0
   },
-  "estado" : "disponible"
+  "estado" : "participante"
 } ]

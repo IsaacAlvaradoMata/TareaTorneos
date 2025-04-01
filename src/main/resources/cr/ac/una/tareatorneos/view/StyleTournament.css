@@ -1445,17 +1445,36 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
 }
 
-.AnchorPane-TituloMatchView {
-    -fx-border-color: #8b5a2b;
-    -fx-border-width: 5;
-    -fx-border-radius: 15;
-    -fx-background-radius: 19;
-    -fx-background-color: #f5e8d0;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+.label-TituloMatchView {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #8b5a2b;
+    -fx-padding: 5 0 5 0;
+    -fx-font-family: "Trebuchet MS", sans-serif;
 }
 
 #lblTorneo {
-    -fx-text-fill: #8b5a2b; /* Color del título del torneo */
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #8b5a2b;
+    -fx-padding: 5 0 5 0;
+    -fx-background-color: #f5e8d0;
+    -fx-border-color: #8b5a2b;
+    -fx-border-width: 3;
+    -fx-border-radius: 4;
+    -fx-background-radius: 6;
+    -fx-min-height: 40;
+    -fx-min-width: 150;
+    -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+}
+
+.imgBannerA{
+    -fx-image: url('../resources/TeamAIcon.png');
+}
+
+.imgBannerB{
+    -fx-image: url('../resources/TeamBIcon.png');
 }
 
 .lbl-SubTitulosMatchView {
@@ -1463,18 +1482,27 @@
     -fx-font-weight: bold;
     -fx-text-fill: #8b5a2b;
     -fx-padding: 5 0 5 0;
+    -fx-background-color: #f5e8d0;
+    -fx-border-color: #8b5a2b;
+    -fx-border-width: 3;
+    -fx-border-radius: 4;
+    -fx-background-radius: 6;
+    -fx-min-height: 40;
+    -fx-min-width: 200;
+    -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
 }
 
 .btn-MatchView {
     -fx-alignment: center;
-    -fx-background-color: #8b5a2b;
+    -fx-background-color: #f5e8d0;
     -fx-background-radius: 4px;
     -fx-border-width: 0;
     -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
     -fx-font-family: "Trebuchet MS", sans-serif;
     -fx-font-size: 15px;
     -fx-font-weight: bold;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #5a3e1b;
     -fx-padding: 10px 16px;
     -fx-min-height: 40px;
     -fx-border-color: transparent;
@@ -1483,7 +1511,7 @@
 }
 
 .btn-MatchView:hover {
-    -fx-background-color: #5a3e1b;
+    -fx-background-color: #fc5959;
     -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.5), 8, 0, 0, 4);
     -fx-translate-y: -2px;
 }
@@ -1495,19 +1523,19 @@
 }
 
 .btn-MatchView:focused {
-    -fx-background-color: #8b5a2b;
+    -fx-background-color: #f5e8d0;
 }
 
 .btn-MatchView:focused:hover {
-    -fx-background-color: #5a3e1b;
+    -fx-background-color: #fc5959;
 }
 
 /* StackPane para imágenes de equipos */
 #spImagenEquipoA, #spImagenEquipoB {
     -fx-border-color: #8b5a2b;
     -fx-border-width: 5;
-    -fx-border-radius: 15;
-    -fx-background-radius: 17;
+    -fx-border-radius: 3;
+    -fx-background-radius: 6;
     -fx-background-color: #f5e8d0;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
 }

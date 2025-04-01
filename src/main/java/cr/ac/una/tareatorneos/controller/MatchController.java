@@ -85,13 +85,13 @@ public class MatchController extends Controller implements Initializable {
         }
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("🎉 Partido Finalizado");
-        alert.setHeaderText("✅ ¡El partido ha concluido!");
+        alert.setTitle("Partido Finalizado");
+        alert.setHeaderText("¡El partido ha concluido!");
 
         StringBuilder resultado = new StringBuilder();
-        resultado.append("📊 *Marcador Final*\n\n");
-        resultado.append(String.format("⚽ %-15s | %2d pts\n", equipoA, puntajeA));
-        resultado.append(String.format("⚽ %-15s | %2d pts\n", equipoB, puntajeB));
+        resultado.append("📊 Marcador Final\n\n");
+        resultado.append(String.format("%-15s | %2d pts\n", equipoA, puntajeA));
+        resultado.append(String.format("%-15s | %2d pts\n", equipoB, puntajeB));
 
         alert.setContentText(resultado.toString());
         alert.showAndWait();
@@ -189,7 +189,7 @@ public class MatchController extends Controller implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("🚨 Confirmar Finalización");
         alert.setHeaderText("¿Deseas finalizar este partido?");
-        alert.setContentText("⚠ Esta acción detendrá el tiempo y guardará el resultado final.");
+        alert.setContentText("Esta acción detendrá el tiempo y guardará el resultado final.");
 
         alert.showAndWait().ifPresent(response -> {
             switch (response.getButtonData()) {
@@ -342,7 +342,9 @@ public class MatchController extends Controller implements Initializable {
             Map.entry("basketball", "/cr/ac/una/tareatorneos/resources/FondoBaloncesto.png"),
             Map.entry("basket", "/cr/ac/una/tareatorneos/resources/FondoBaloncesto.png"),
             Map.entry("voley", "/cr/ac/una/tareatorneos/resources/FondoVoleibol.png"),
+            Map.entry("volleyball", "/cr/ac/una/tareatorneos/resources/FondoVoleibol.png"),
             Map.entry("voleibol", "/cr/ac/una/tareatorneos/resources/FondoVoleibol.png"),
+            Map.entry("volibol", "/cr/ac/una/tareatorneos/resources/FondoVoleibol.png"),
             Map.entry("tenis", "/cr/ac/una/tareatorneos/resources/FondoTenis.png"),
             Map.entry("pingpong", "/cr/ac/una/tareatorneos/resources/FondoPinpog.png"),
             Map.entry("tenis de mesa", "/cr/ac/una/tareatorneos/resources/FondoPinpog.png"),
