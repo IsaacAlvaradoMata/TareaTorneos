@@ -43,14 +43,14 @@ public class TieBreakerController implements Initializable {
         turnoEquipoA = true;
         lblTurno.setText("Turno: " + equipoA);
 
-        // Cargar imagen dinámicamente desde MatchService
+        // Imagen del balón desde MatchService
         try {
             imgBalon.setImage(matchService.getImagenBalon());
         } catch (Exception e) {
             System.out.println("⚠ No se pudo cargar imagen del balón desde MatchService");
         }
 
-        // Cargar imagen en las cajas
+        // Imagen de las cajas
         try {
             Image imgCaja = new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/caja-empate.png"));
             cajaA.setImage(imgCaja);
@@ -58,10 +58,9 @@ public class TieBreakerController implements Initializable {
             cajaC.setImage(imgCaja);
         } catch (Exception e) {
             System.out.println("⚠ No se pudo cargar la imagen de caja-empate.png");
-            e.printStackTrace();
         }
 
-        prepararNuevaRonda();
+        prepararNuevaRonda(); // Mezcla inicial
     }
 
     private void configurarDragAndDrop() {
@@ -98,11 +97,6 @@ public class TieBreakerController implements Initializable {
     private void prepararNuevaRonda() {
         valoresCajas = Arrays.asList(0, 0, 1);
         Collections.shuffle(valoresCajas);
-
-        equipoAAcierto = false;
-        equipoBAcierto = false;
-        turnoEquipoA = true;
-        lblTurno.setText("Turno: " + equipoA);
     }
 
     private void evaluarIntento(int cajaSeleccionada) {
@@ -110,11 +104,23 @@ public class TieBreakerController implements Initializable {
 
         if (turnoEquipoA) {
             equipoAAcierto = acierto;
+            System.out.println(acierto
+                    ? "✅ ACIERTO - " + equipoA
+                    : "❌ FALLÓ - " + equipoA);
+
             turnoEquipoA = false;
             lblTurno.setText("Turno: " + equipoB);
+
+            prepararNuevaRonda(); // Mezcla para equipo B
+
         } else {
             equipoBAcierto = acierto;
+            System.out.println(acierto
+                    ? "✅ ACIERTO - " + equipoB
+                    : "❌ FALLÓ - " + equipoB);
+
             verificarGanador();
+            prepararNuevaRonda(); // Mezcla para siguiente ronda si es necesaria
         }
     }
 
@@ -125,7 +131,8 @@ public class TieBreakerController implements Initializable {
             mostrarGanador("🏆 " + equipoB + " gana el desempate");
         } else {
             mostrarEmpateParcial();
-            prepararNuevaRonda();
+            turnoEquipoA = true;
+            lblTurno.setText("Turno: " + equipoA);
         }
     }
 
