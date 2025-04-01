@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -29,6 +30,12 @@ public class TieBreakerController implements Initializable {
     @FXML
     private Label lblTurno;
 
+    @FXML
+    private ImageView imgFondoDeporte;
+
+    @FXML
+    private StackPane spTieBreaker;
+
     private List<Integer> valoresCajas;
     private final Random random = new Random();
 
@@ -41,6 +48,8 @@ public class TieBreakerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         configurarDragAndDrop();
+        imgFondoDeporte.fitWidthProperty().bind(spTieBreaker.widthProperty());
+        cargarFondoPredeterminado();
     }
 
     public void initializeTieBreaker(String equipoA, String equipoB, MatchService matchService) {
@@ -221,4 +230,15 @@ public class TieBreakerController implements Initializable {
         });
         shake.play();
     }
+
+    private void cargarFondoPredeterminado() {
+        try {
+            Image fondo = new Image(getClass().getResourceAsStream(
+                    "/cr/ac/una/tareatorneos/resources/FondoGeneral.png")); // fondo genérico
+            imgFondoDeporte.setImage(fondo);
+        } catch (Exception e) {
+            System.out.println("⚠ No se pudo cargar FondoGeneral.png");
+        }
+    }
+
 }
