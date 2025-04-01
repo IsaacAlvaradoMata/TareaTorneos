@@ -30,4 +30,12 @@
   "cantidadEquipos" : 3,
   "equiposParticipantes" : [ "saprisssa365" ],
   "estado" : "Por comenzar"
+}, {
+  "id" : "2217b473-a140-4030-a4b8-c1d4e974006c",
+  "nombre" : "prueba fut",
+  "deporte" : "Futbol",
+  "tiempoPorPartido" : 1,
+  "cantidadEquipos" : 2,
+  "equiposParticipantes" : [ "liga", "real" ],
+  "estado" : "Por comenzar"
 } ]

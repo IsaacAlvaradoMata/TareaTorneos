@@ -12,7 +12,10 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -22,8 +25,11 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -62,15 +68,26 @@ public class MatchController extends Controller implements Initializable {
     }
 
     private void mostrarPopupFinalizado() {
+        int puntajeA = matchService.getPuntajeA();
+        int puntajeB = matchService.getPuntajeB();
+        String equipoA = lblEquipoA.getText();
+        String equipoB = lblEquipoB.getText();
+
+        if (puntajeA == puntajeB) {
+            Alert empateAlert = new Alert(Alert.AlertType.INFORMATION);
+            empateAlert.setTitle("🏁 Empate Detectado");
+            empateAlert.setHeaderText("⚠ El partido terminó en empate");
+            empateAlert.setContentText("Se iniciará una ronda de desempate.");
+            empateAlert.showAndWait();
+
+            iniciarPantallaDesempate(equipoA, equipoB);
+            return;
+        }
+
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("🎉 Partido Finalizado");
         alert.setHeaderText("✅ ¡El partido ha concluido!");
-
-        String equipoA = lblEquipoA.getText();
-        String equipoB = lblEquipoB.getText();
-        int puntajeA = matchService.getPuntajeA();
-        int puntajeB = matchService.getPuntajeB();
-
+        
         StringBuilder resultado = new StringBuilder();
         resultado.append("📊 *Marcador Final*\n\n");
         resultado.append(String.format("⚽ %-15s | %2d pts\n", equipoA, puntajeA));
@@ -78,6 +95,24 @@ public class MatchController extends Controller implements Initializable {
 
         alert.setContentText(resultado.toString());
         alert.showAndWait();
+    }
+
+    private void iniciarPantallaDesempate(String equipoA, String equipoB) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/cr/ac/una/tareatorneos/view/TieBreakerView.fxml"));
+            Parent root = loader.load();
+
+            TieBreakerController controller = loader.getController();
+            controller.initializeTieBreaker(equipoA, equipoB, matchService);
+
+            Stage stage = new Stage();
+            stage.setTitle("Desempate ⚔️");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL); // bloquea hasta cerrar
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void configurarEventosDragAndDrop() {
@@ -186,10 +221,17 @@ public class MatchController extends Controller implements Initializable {
                 if (matchService != null && !matchService.getMatch().isFinalizado()) {
                     matchService.finalizarPartido();
                 }
+
                 lblTiempo.setText("Tiempo: 00:00");
                 desactivarControles();
-                popupMostrado = true;
-                javafx.application.Platform.runLater(() -> mostrarPopupFinalizado());
+
+                boolean esEmpate = matchService.getPuntajeA() == matchService.getPuntajeB();
+
+                if (esEmpate) {
+                    javafx.application.Platform.runLater(() -> mostrarPopupEmpate());
+                } else {
+                    javafx.application.Platform.runLater(() -> mostrarPopupFinalizado());
+                }
 
                 return;
             }
@@ -200,6 +242,19 @@ public class MatchController extends Controller implements Initializable {
 
         countdown.setCycleCount(Timeline.INDEFINITE);
         countdown.play();
+    }
+
+    private void mostrarPopupEmpate() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("⏱️ Partido Empatado");
+        alert.setHeaderText("El partido terminó en empate");
+        alert.setContentText("Será necesario un desempate para definir al ganador.");
+
+        alert.getButtonTypes().setAll(javafx.scene.control.ButtonType.OK);
+
+        alert.showAndWait().ifPresent(response -> {
+            iniciarPantallaDesempate(matchService.getMatch().getEquipoA(), matchService.getMatch().getEquipoB());
+        });
     }
 
     private void detenerTiempo() {

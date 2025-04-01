@@ -1,5 +1,7 @@
 package cr.ac.una.tareatorneos.model;
 
+import cr.ac.una.tareatorneos.service.TournamentService;
+
 public class Match {
     private String torneoNombre;
     private String equipoA;
@@ -22,6 +24,11 @@ public class Match {
 
     public String getTorneoNombre() {
         return torneoNombre;
+    }
+
+    public String getDeporte() {
+        Tournament torneo = new TournamentService().getTournamentByName(torneoNombre);
+        return torneo != null ? torneo.getDeporte() : null;
     }
 
     public void setTorneoNombre(String torneoNombre) {
