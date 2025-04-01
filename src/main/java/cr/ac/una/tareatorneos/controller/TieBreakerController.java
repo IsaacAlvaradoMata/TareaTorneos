@@ -1,15 +1,20 @@
 package cr.ac.una.tareatorneos.controller;
 
 import cr.ac.una.tareatorneos.service.MatchService;
+import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.*;
@@ -101,6 +106,18 @@ public class TieBreakerController implements Initializable {
 
     private void evaluarIntento(int cajaSeleccionada) {
         boolean acierto = valoresCajas.get(cajaSeleccionada) == 1;
+        ImageView caja = switch (cajaSeleccionada) {
+            case 0 -> cajaA;
+            case 1 -> cajaB;
+            case 2 -> cajaC;
+            default -> null;
+        };
+
+        if (acierto && caja != null) {
+            animarAcierto(caja);
+        } else if (caja != null) {
+            animarFallo(caja);
+        }
 
         if (turnoEquipoA) {
             equipoAAcierto = acierto;
@@ -110,9 +127,7 @@ public class TieBreakerController implements Initializable {
 
             turnoEquipoA = false;
             lblTurno.setText("Turno: " + equipoB);
-
             prepararNuevaRonda(); // Mezcla para equipo B
-
         } else {
             equipoBAcierto = acierto;
             System.out.println(acierto
@@ -154,4 +169,46 @@ public class TieBreakerController implements Initializable {
         alert.setContentText("Nueva ronda de desempate.");
         alert.showAndWait();
     }
+
+    private void animarAcierto(ImageView caja) {
+        // Efecto glow
+        Glow glow = new Glow(0.8);
+        caja.setEffect(glow);
+
+        // Animación de escala
+        ScaleTransition scale = new ScaleTransition(Duration.seconds(0.4), caja);
+        scale.setFromX(1.0);
+        scale.setFromY(1.0);
+        scale.setToX(1.3);
+        scale.setToY(1.3);
+        scale.setAutoReverse(true);
+        scale.setCycleCount(2);
+
+        // Al terminar, quitar glow
+        scale.setOnFinished(e -> caja.setEffect(null));
+        scale.play();
+    }
+
+    private void animarFallo(ImageView caja) {
+        // Color rojo temporal
+        ColorAdjust red = new ColorAdjust();
+        red.setBrightness(-0.3);
+        red.setHue(-0.05);
+        caja.setEffect(red);
+
+        // Temblor horizontal
+        TranslateTransition shake = new TranslateTransition(Duration.millis(60), caja);
+        shake.setByX(10);
+        shake.setAutoReverse(true);
+        shake.setCycleCount(6);
+
+        // Reset posición y efecto
+        shake.setOnFinished(e -> {
+            caja.setTranslateX(0);
+            caja.setEffect(null);
+        });
+
+        shake.play();
+    }
+
 }
