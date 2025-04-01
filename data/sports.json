@@ -1,25 +1,25 @@
 [ {
-  "nombre" : "Baloncesto",
-  "ballImage" : "Baloncesto.jpg",
-  "fechaCreacion" : [ 2025, 3, 22 ]
+  "nombre" : "Basketball",
+  "ballImage" : "Basketball.jpg",
+  "fechaCreacion" : [ 2025, 3, 31 ]
 }, {
   "nombre" : "Futbol",
   "ballImage" : "Futbol.jpg",
-  "fechaCreacion" : [ 2025, 3, 22 ]
-}, {
-  "nombre" : "Tetocito",
-  "ballImage" : "Tetocito.jpg",
-  "fechaCreacion" : [ 2025, 3, 22 ]
-}, {
-  "nombre" : "testosterona",
-  "ballImage" : "testosterona.jpg",
   "fechaCreacion" : [ 2025, 3, 31 ]
 }, {
-  "nombre" : "test4",
-  "ballImage" : "test4.jpg",
+  "nombre" : "Volleyball",
+  "ballImage" : "Volleyball.jpg",
   "fechaCreacion" : [ 2025, 3, 31 ]
 }, {
-  "nombre" : "vaginota",
-  "ballImage" : "vaginota.jpg",
+  "nombre" : "Tenis",
+  "ballImage" : "Tenis.jpg",
+  "fechaCreacion" : [ 2025, 3, 31 ]
+}, {
+  "nombre" : "Baseball",
+  "ballImage" : "Baseball.jpg",
+  "fechaCreacion" : [ 2025, 3, 31 ]
+}, {
+  "nombre" : "Pingpong",
+  "ballImage" : "Pingpong.jpg",
   "fechaCreacion" : [ 2025, 3, 31 ]
 } ]

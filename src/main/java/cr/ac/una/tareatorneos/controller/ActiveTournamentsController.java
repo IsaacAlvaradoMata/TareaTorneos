@@ -43,12 +43,8 @@ public class ActiveTournamentsController extends Controller implements Initializ
     private Label lblTiempoTorneo;
     @FXML
     private Label lblCantidadEquiposTorneo;
-    // ListView para los equipos ya agregados al torneo
     @FXML
     private MFXListView<String> listviewEquiposSeleccionadosTorneo;
-    // CheckListView para los equipos disponibles (del mismo deporte y no incluidos aún)
-    @FXML
-    private MFXCheckListView<String> chklistviewEquiposDisponibles;
     @FXML
     private MFXButton btnReanudarTorneo;
     @FXML
@@ -92,23 +88,9 @@ public class ActiveTournamentsController extends Controller implements Initializ
             listviewEquiposSeleccionadosTorneo.setItems(
                     FXCollections.observableArrayList(selectedTournament.getEquiposParticipantes())
             );
-
-            // ✅ Refresca equipos disponibles también
-            loadAvailableTeams(selectedTournament);
         }
     }
 
-
-    private void loadAvailableTeams(Tournament tournament) {
-        TeamService teamService = new TeamService();
-        List<Team> allTeams = teamService.getAllTeams();
-        List<String> availableTeamNames = allTeams.stream()
-                .filter(team -> team.getDeporte().equalsIgnoreCase(tournament.getDeporte()))
-                .map(Team::getNombre)
-                .filter(name -> !tournament.getEquiposParticipantes().contains(name))
-                .toList();
-        chklistviewEquiposDisponibles.setItems(FXCollections.observableArrayList(availableTeamNames));
-    }
 
     @FXML
     private void OnActionBtnReanudarTorneo(ActionEvent event) {

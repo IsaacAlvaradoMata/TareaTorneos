@@ -39,7 +39,7 @@
                     <children>
                         <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="701.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
-                                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="547.0" prefWidth="306.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="547.0" prefWidth="250.0" spacing="10.0" HBox.hgrow="ALWAYS">
                                     <children>
                                         <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
                                             <children>
@@ -59,9 +59,9 @@
                                     <Insets bottom="10.0" />
                                  </VBox.margin>
                               </HBox>
-                                        <MFXTableView fx:id="tbvRankingEquipos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#handleTableClickRankingEquipos" prefHeight="500.0" prefWidth="250.0" styleClass="table-view-Rankings" VBox.vgrow="ALWAYS">
+                                        <MFXTableView fx:id="tbvRankingEquipos" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" onMouseClicked="#handleTableClickRankingEquipos" prefHeight="500.0" prefWidth="450.0" styleClass="table-view-Rankings" VBox.vgrow="ALWAYS">
                                             <VBox.margin>
-                                                <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                                                <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
                                             </VBox.margin></MFXTableView>
                                     </children>
                                     <padding>
