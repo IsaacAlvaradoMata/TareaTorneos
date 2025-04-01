@@ -1469,11 +1469,11 @@
     -fx-font-family: "Trebuchet MS", sans-serif;
 }
 
-.imgBannerA{
+.imgBannerA {
     -fx-image: url('../resources/TeamAIcon.png');
 }
 
-.imgBannerB{
+.imgBannerB {
     -fx-image: url('../resources/TeamBIcon.png');
 }
 
@@ -1709,5 +1709,9 @@
     -fx-border-color: #d2b48c;
     -fx-border-radius: 12;
     -fx-background-radius: 14;
+}
+
+#imgInfoTie {
+    -fx-image: url('../resources/InfoTieIcon.png');
 }
 

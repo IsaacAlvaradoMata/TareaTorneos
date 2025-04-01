@@ -25,7 +25,7 @@ import java.util.*;
 public class TieBreakerController implements Initializable {
 
     @FXML
-    private ImageView cajaA, cajaB, cajaC, imgBalon;
+    private ImageView cajaA, cajaB, cajaC, imgBalon, ImgInfoTie;
 
     @FXML
     private Label lblTurno;

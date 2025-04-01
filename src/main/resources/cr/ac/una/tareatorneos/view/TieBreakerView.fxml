@@ -1,47 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<AnchorPane fx:id="root"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="cr.ac.una.tareatorneos.controller.TieBreakerController"
-            prefWidth="800.0" prefHeight="600.0"
-            stylesheets="@StyleTournament.css">
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
-    <StackPane fx:id="spTieBreaker"
-               prefWidth="800.0" prefHeight="600.0"
-               AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
-               AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+<AnchorPane fx:id="root" prefHeight="600.0" prefWidth="800.0" stylesheets="@StyleTournament.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="cr.ac.una.tareatorneos.controller.TieBreakerController">
+
+    <StackPane fx:id="spTieBreaker" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
 
         <!-- Imagen de fondo que se adapta al StackPane -->
-        <ImageView fx:id="imgFondoDeporte"
-                   fitWidth="800.0" fitHeight="600.0"
-                   preserveRatio="true" pickOnBounds="true"/>
+        <ImageView fx:id="imgFondoDeporte" fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true" />
 
         <!-- Contenido principal -->
-        <VBox alignment="CENTER" spacing="20"
-              AnchorPane.topAnchor="20"
-              AnchorPane.leftAnchor="0"
-              AnchorPane.rightAnchor="0"
-              AnchorPane.bottomAnchor="20">
+        <VBox alignment="CENTER" spacing="20" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="20">
+         <HBox alignment="CENTER">
+            <children>
+      
+                  <Label fx:id="lblInstruccion" styleClass="lbl-Instruccion" text="Arrastra el balón a una caja para intentar anotar" />
+               <ImageView fx:id="imgInfoTie" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                  <HBox.margin>
+                     <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                  </HBox.margin>
+               </ImageView>
+            </children>
+         </HBox>
 
-            <Label fx:id="lblInstruccion" text="Arrastra el balón a una caja para intentar anotar"
-                   styleClass="lbl-Instruccion"/>
-
-            <HBox fx:id="hboxCajas" alignment="CENTER" spacing="40" id="hboxCajas">
-                <ImageView fx:id="cajaA" fitHeight="100.0" fitWidth="100.0" preserveRatio="true"
-                           styleClass="img-CajaDesempate"/>
-                <ImageView fx:id="cajaB" fitHeight="100.0" fitWidth="100.0" preserveRatio="true"
-                           styleClass="img-CajaDesempate"/>
-                <ImageView fx:id="cajaC" fitHeight="100.0" fitWidth="100.0" preserveRatio="true"
-                           styleClass="img-CajaDesempate"/>
+            <HBox id="hboxCajas" fx:id="hboxCajas" alignment="CENTER" spacing="40">
+                <ImageView fx:id="cajaA" fitHeight="100.0" fitWidth="100.0" preserveRatio="true" styleClass="img-CajaDesempate" />
+                <ImageView fx:id="cajaB" fitHeight="100.0" fitWidth="100.0" preserveRatio="true" styleClass="img-CajaDesempate" />
+                <ImageView fx:id="cajaC" fitHeight="100.0" fitWidth="100.0" preserveRatio="true" styleClass="img-CajaDesempate" />
             </HBox>
 
-            <ImageView fx:id="imgBalon" fitWidth="100.0" fitHeight="100.0" preserveRatio="true" id="imgBalon"/>
+            <ImageView id="imgBalon" fx:id="imgBalon" fitHeight="100.0" fitWidth="100.0" preserveRatio="true" />
 
-            <Label fx:id="lblTurno" text="Turno: Equipo A"
-                   styleClass="lbl-Turno"/>
+            <Label fx:id="lblTurno" styleClass="lbl-Turno" text="Turno: Equipo A" />
         </VBox>
     </StackPane>
 </AnchorPane>
