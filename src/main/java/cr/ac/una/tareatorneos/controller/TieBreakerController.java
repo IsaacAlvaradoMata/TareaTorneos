@@ -1,8 +1,10 @@
 package cr.ac.una.tareatorneos.controller;
 
 import cr.ac.una.tareatorneos.service.MatchService;
+import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -48,14 +50,14 @@ public class TieBreakerController implements Initializable {
         turnoEquipoA = true;
         lblTurno.setText("Turno: " + equipoA);
 
-        // Imagen del balón desde MatchService
+        // Cargar imagen del balón desde MatchService (se carga dinámicamente desde disco)
         try {
             imgBalon.setImage(matchService.getImagenBalon());
         } catch (Exception e) {
             System.out.println("⚠ No se pudo cargar imagen del balón desde MatchService");
         }
 
-        // Imagen de las cajas
+        // Cargar imagen de las cajas
         try {
             Image imgCaja = new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/caja-empate.png"));
             cajaA.setImage(imgCaja);
@@ -72,7 +74,10 @@ public class TieBreakerController implements Initializable {
         imgBalon.setOnDragDetected(event -> {
             Dragboard db = imgBalon.startDragAndDrop(TransferMode.MOVE);
             ClipboardContent content = new ClipboardContent();
+
             content.putString("balon");
+            content.putImage(imgBalon.getImage()); // para que se vea el balón al arrastrar
+
             db.setContent(content);
             event.consume();
         });
@@ -124,18 +129,15 @@ public class TieBreakerController implements Initializable {
             System.out.println(acierto
                     ? "✅ ACIERTO - " + equipoA
                     : "❌ FALLÓ - " + equipoA);
-
             turnoEquipoA = false;
             lblTurno.setText("Turno: " + equipoB);
-            prepararNuevaRonda(); // Mezcla para equipo B
+            prepararNuevaRonda(); // se mezcla para que el siguiente intento tenga nuevos valores
         } else {
             equipoBAcierto = acierto;
             System.out.println(acierto
                     ? "✅ ACIERTO - " + equipoB
                     : "❌ FALLÓ - " + equipoB);
-
             verificarGanador();
-            prepararNuevaRonda(); // Mezcla para siguiente ronda si es necesaria
         }
     }
 
@@ -146,28 +148,42 @@ public class TieBreakerController implements Initializable {
             mostrarGanador("🏆 " + equipoB + " gana el desempate");
         } else {
             mostrarEmpateParcial();
-            turnoEquipoA = true;
-            lblTurno.setText("Turno: " + equipoA);
         }
     }
 
     private void mostrarGanador(String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("🎯 Desempate Resuelto");
-        alert.setHeaderText(mensaje);
-        alert.setContentText("¡Felicidades al equipo ganador!");
-        alert.showAndWait();
-
         lblTurno.setText("Juego Finalizado");
         imgBalon.setDisable(true);
+
+        PauseTransition delay = new PauseTransition(Duration.seconds(0.5));
+        delay.setOnFinished(event -> {
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("🎯 Desempate Resuelto");
+                alert.setHeaderText(mensaje);
+                alert.setContentText("¡Felicidades al equipo ganador!");
+                alert.showAndWait();
+                lblTurno.setText("Fin del juego");
+            });
+        });
+        delay.play();
     }
 
     private void mostrarEmpateParcial() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("🔁 Empate");
-        alert.setHeaderText("Ambos equipos fallaron o acertaron.");
-        alert.setContentText("Nueva ronda de desempate.");
-        alert.showAndWait();
+        PauseTransition delay = new PauseTransition(Duration.seconds(0.5));
+        delay.setOnFinished(event -> {
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("🔁 Empate");
+                alert.setHeaderText("Ambos equipos fallaron o acertaron.");
+                alert.setContentText("Nueva ronda de desempate.");
+                alert.showAndWait();
+                turnoEquipoA = true;
+                lblTurno.setText("Turno: " + equipoA);
+                prepararNuevaRonda();
+            });
+        });
+        delay.play();
     }
 
     private void animarAcierto(ImageView caja) {
@@ -175,7 +191,7 @@ public class TieBreakerController implements Initializable {
         Glow glow = new Glow(0.8);
         caja.setEffect(glow);
 
-        // Animación de escala
+        // Animación de escala (rebote)
         ScaleTransition scale = new ScaleTransition(Duration.seconds(0.4), caja);
         scale.setFromX(1.0);
         scale.setFromY(1.0);
@@ -183,32 +199,26 @@ public class TieBreakerController implements Initializable {
         scale.setToY(1.3);
         scale.setAutoReverse(true);
         scale.setCycleCount(2);
-
-        // Al terminar, quitar glow
         scale.setOnFinished(e -> caja.setEffect(null));
         scale.play();
     }
 
     private void animarFallo(ImageView caja) {
-        // Color rojo temporal
+        // Efecto de color rojo temporal
         ColorAdjust red = new ColorAdjust();
         red.setBrightness(-0.3);
         red.setHue(-0.05);
         caja.setEffect(red);
 
-        // Temblor horizontal
+        // Animación de sacudida
         TranslateTransition shake = new TranslateTransition(Duration.millis(60), caja);
         shake.setByX(10);
         shake.setAutoReverse(true);
         shake.setCycleCount(6);
-
-        // Reset posición y efecto
         shake.setOnFinished(e -> {
             caja.setTranslateX(0);
             caja.setEffect(null);
         });
-
         shake.play();
     }
-
 }
