@@ -87,7 +87,7 @@ public class MatchController extends Controller implements Initializable {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("🎉 Partido Finalizado");
         alert.setHeaderText("✅ ¡El partido ha concluido!");
-        
+
         StringBuilder resultado = new StringBuilder();
         resultado.append("📊 *Marcador Final*\n\n");
         resultado.append(String.format("⚽ %-15s | %2d pts\n", equipoA, puntajeA));
@@ -342,7 +342,9 @@ public class MatchController extends Controller implements Initializable {
             Map.entry("voley", "/cr/ac/una/tareatorneos/resources/FondoVoleibol.png"),
             Map.entry("voleibol", "/cr/ac/una/tareatorneos/resources/FondoVoleibol.png"),
             Map.entry("tenis", "/cr/ac/una/tareatorneos/resources/FondoTenis.png"),
-            Map.entry("pinpog", "/cr/ac/una/tareatorneos/resources/FondoPinpog.png")
+            Map.entry("pinpog", "/cr/ac/una/tareatorneos/resources/FondoPinpog.png"),
+            Map.entry("tenis de mesa", "/cr/ac/una/tareatorneos/resources/FondoPinpog.png"),
+            Map.entry("baseball", "/cr/ac/una/tareatorneos/resources/FondoBaseball.png")
     );
 
     private void cargarFondoDeporte(String nombreDeporte) {
