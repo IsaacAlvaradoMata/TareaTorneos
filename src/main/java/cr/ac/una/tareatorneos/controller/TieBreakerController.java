@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
@@ -47,6 +48,17 @@ public class TieBreakerController implements Initializable {
             imgBalon.setImage(matchService.getImagenBalon());
         } catch (Exception e) {
             System.out.println("⚠ No se pudo cargar imagen del balón desde MatchService");
+        }
+
+        // Cargar imagen en las cajas
+        try {
+            Image imgCaja = new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/caja-empate.png"));
+            cajaA.setImage(imgCaja);
+            cajaB.setImage(imgCaja);
+            cajaC.setImage(imgCaja);
+        } catch (Exception e) {
+            System.out.println("⚠ No se pudo cargar la imagen de caja-empate.png");
+            e.printStackTrace();
         }
 
         prepararNuevaRonda();
