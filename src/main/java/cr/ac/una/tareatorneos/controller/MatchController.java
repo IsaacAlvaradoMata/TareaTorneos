@@ -199,6 +199,7 @@ public class MatchController extends Controller implements Initializable {
                     }
                     lblTiempo.setText("Tiempo: 00:00");
                     desactivarControles();
+                    popupMostrado = true;
                     mostrarPopupFinalizado();
                 }
                 default -> {
