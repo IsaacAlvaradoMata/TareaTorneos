@@ -351,13 +351,13 @@ public class MatchController extends Controller implements Initializable {
         if (nombreDeporte == null) return;
 
         String deporteNormalizado = nombreDeporte.trim().toLowerCase();
-        String rutaImagen = fondoDeporteMap.get(deporteNormalizado);
+        String rutaImagen = fondoDeporteMap.getOrDefault(deporteNormalizado, "/cr/ac/una/tareatorneos/resources/FondoGeneral.png");
 
-        if (rutaImagen != null) {
+        try {
             Image fondo = new Image(getClass().getResourceAsStream(rutaImagen));
             imgFondoDeporte.setImage(fondo);
-        } else {
-            System.out.println("⚠ No hay fondo definido para el deporte: " + nombreDeporte);
+        } catch (Exception e) {
+            System.out.println("⚠ No se pudo cargar la imagen de fondo: " + rutaImagen);
         }
     }
 
