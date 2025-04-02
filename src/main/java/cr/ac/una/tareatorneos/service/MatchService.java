@@ -26,7 +26,7 @@ public class MatchService {
         this.equipoA = equipoA;
         this.equipoB = equipoB;
         this.deporte = new SportService().getSportByName(torneo.getDeporte());
-        this.match = new Match(torneo.getNombre(), equipoA.getNombre(), equipoB.getNombre());
+        this.match = new Match(torneo.getNombre(), equipoA.getNombre(), equipoB.getNombre(), torneo.getDeporte());
     }
 
     public Match getMatch() {

@@ -1,8 +1,10 @@
 package cr.ac.una.tareatorneos.model;
 
-import cr.ac.una.tareatorneos.service.TournamentService;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true) // opcional para proteger de otros errores
 public class Match {
+
     private String torneoNombre;
     private String equipoA;
     private String equipoB;
@@ -10,25 +12,24 @@ public class Match {
     private int puntajeB;
     private boolean finalizado;
 
+    private String deporte; // <--- este es el nuevo campo que se necesita
+
     public Match() {
     }
 
-    public Match(String torneoNombre, String equipoA, String equipoB) {
+    public Match(String torneoNombre, String equipoA, String equipoB, String deporte) {
         this.torneoNombre = torneoNombre;
         this.equipoA = equipoA;
         this.equipoB = equipoB;
+        this.deporte = deporte;
         this.puntajeA = 0;
         this.puntajeB = 0;
         this.finalizado = false;
     }
 
+    // Getters y Setters
     public String getTorneoNombre() {
         return torneoNombre;
-    }
-
-    public String getDeporte() {
-        Tournament torneo = new TournamentService().getTournamentByName(torneoNombre);
-        return torneo != null ? torneo.getDeporte() : null;
     }
 
     public void setTorneoNombre(String torneoNombre) {
@@ -75,6 +76,14 @@ public class Match {
         this.finalizado = finalizado;
     }
 
+    public String getDeporte() {
+        return deporte;
+    }
+
+    public void setDeporte(String deporte) {
+        this.deporte = deporte;
+    }
+
     @Override
     public String toString() {
         return "Match{" +
@@ -84,6 +93,7 @@ public class Match {
                 ", puntajeA=" + puntajeA +
                 ", puntajeB=" + puntajeB +
                 ", finalizado=" + finalizado +
+                ", deporte='" + deporte + '\'' +
                 '}';
     }
 }
