@@ -1540,6 +1540,57 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
 }
 
+/* ########################### VISTA DE TIEBREAKER ################################# */
+
+/* Instrucción y texto de turno */
+.lbl-Instruccion, .lbl-Turno {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #8b5a2b;
+    -fx-padding: 5 0 5 0;
+    -fx-background-color: #f5e8d0;
+    -fx-border-color: #8b5a2b;
+    -fx-border-width: 3;
+    -fx-border-radius: 4;
+    -fx-background-radius: 6;
+    -fx-min-height: 40;
+    -fx-min-width: 200;
+    -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+}
+
+/* Imagen de balón */
+#imgBalon {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 6, 0.2, 0, 2);
+}
+
+/* Cajas de destino (ImageView) */
+.img-CajaDesempate {
+    -fx-cursor: hand;
+    -fx-border-color: #deb887; /* Marrón claro */
+    -fx-border-width: 3;
+    -fx-border-radius: 12;
+    -fx-background-radius: 14;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 6, 0.2, 0, 2);
+    -fx-padding: 6;
+}
+
+/* Estilo HBox que contiene las cajas */
+#hboxCajas {
+    -fx-background-color: #f5e8d0;
+    -fx-border-color: #8b5a2b;
+    -fx-border-width: 4;
+    -fx-border-radius: 4;
+    -fx-background-radius: 6;
+    -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
+}
+
+#imgInfoTie {
+    -fx-image: url('../resources/InfoTieIcon.png');
+}
+
+
+
 /**IMAGENES DE BOTONES**/
 
 /*########################### IMAGENES DE MENU PRINCIPAL #########################################################################*/
@@ -1677,41 +1728,5 @@
     -fx-image: url('../resources/GoBackIcon.png ');
 }
 
-/* ########################### VISTA DE TIEBREAKER ################################# */
 
-/* Instrucción y texto de turno */
-.lbl-Instruccion, .lbl-Turno {
-    -fx-font-size: 18px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #8b5a2b;
-}
-
-/* Imagen de balón */
-#imgBalon {
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 6, 0.2, 0, 2);
-}
-
-/* Cajas de destino (ImageView) */
-.img-CajaDesempate {
-    -fx-cursor: hand;
-    -fx-border-color: #deb887; /* Marrón claro */
-    -fx-border-width: 3;
-    -fx-border-radius: 12;
-    -fx-background-radius: 14;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 6, 0.2, 0, 2);
-    -fx-padding: 6;
-}
-
-/* Estilo HBox que contiene las cajas */
-#hboxCajas {
-    -fx-padding: 10;
-    -fx-background-color: rgba(255, 248, 220, 0.3); /* Fondo crema transparente */
-    -fx-border-color: #d2b48c;
-    -fx-border-radius: 12;
-    -fx-background-radius: 14;
-}
-
-#imgInfoTie {
-    -fx-image: url('../resources/InfoTieIcon.png');
-}
 

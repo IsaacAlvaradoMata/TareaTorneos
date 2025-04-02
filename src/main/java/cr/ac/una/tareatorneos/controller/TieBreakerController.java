@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
@@ -16,25 +17,26 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.PopupWindow;
 import javafx.util.Duration;
-
 import java.net.URL;
 import java.util.*;
 
 public class TieBreakerController implements Initializable {
-
     @FXML
-    private ImageView cajaA, cajaB, cajaC, imgBalon, ImgInfoTie;
-
+    private ImageView cajaA, cajaB, cajaC, imgBalon;
+    @FXML
+    private ImageView imgInfoTie;
     @FXML
     private Label lblTurno;
-
     @FXML
     private ImageView imgFondoDeporte;
-
     @FXML
     private StackPane spTieBreaker;
+    @FXML
+    private AnchorPane root;
 
     private List<Integer> valoresCajas;
     private final Random random = new Random();
@@ -50,7 +52,46 @@ public class TieBreakerController implements Initializable {
         configurarDragAndDrop();
         imgFondoDeporte.fitWidthProperty().bind(spTieBreaker.widthProperty());
         cargarFondoPredeterminado();
+
+        Tooltip tooltip = new Tooltip("Objetivo:\n\n" +
+                "Cada equipo debe intentar acertar la caja correcta arrastrando el balón hacia una de las tres cajas\n" +
+                "disponibles. La caja ganadora es seleccionada aleatoriamente en cada ronda.\n\n" +
+                "Instrucciones:\n\n" +
+                "① Turno por equipo: El equipo en turno arrastra el balón y lo suelta sobre una caja.\n" +
+                "② Resultado inmediato:\n" +
+                "    → Si acierta: gana el desempate si el otro equipo falla.\n" +
+                "    → Si falla: el turno pasa al siguiente equipo.\n" +
+                "③ Finaliza cuando uno acierta y el otro falla. Si ambos fallan o aciertan, se repite.");
+        tooltip.setStyle("-fx-background-color: rgba(245, 232, 208, 0.9); " +
+                "-fx-text-fill: #8b5a2b; " +
+                "-fx-padding: 8px; " +
+                "-fx-border-radius: 5px; " +
+                "-fx-background-radius: 5px; " +
+                "-fx-font-family: \"Trebuchet MS\", sans-serif; " +
+                "-fx-border-color: #8b5a2b; " +
+                "-fx-font-weight: bold; " +
+                "-fx-font-size: 12px;");
+
+        tooltip.setShowDelay(Duration.millis(200)); // Aparece después de 200ms
+        tooltip.setHideDelay(Duration.millis(100)); // Desaparece rápido al salir
+        tooltip.setAnchorLocation(PopupWindow.AnchorLocation.WINDOW_TOP_LEFT);
+
+        imgInfoTie.setOnMouseEntered(event -> {
+            Platform.runLater(() -> {
+                double x = imgInfoTie.localToScene(imgInfoTie.getBoundsInLocal()).getMinX();
+                double y = imgInfoTie.localToScene(imgInfoTie.getBoundsInLocal()).getMinY();
+
+                tooltip.show(imgInfoTie,
+                        imgInfoTie.getScene().getWindow().getX() + imgInfoTie.getScene().getX() + x -492,
+                        imgInfoTie.getScene().getWindow().getY() + imgInfoTie.getScene().getY() + y + 50);
+            });
+        });
+
+        imgInfoTie.setOnMouseExited(event -> tooltip.hide()); // Ocultar tooltip al salir del icono
+
+
     }
+
 
     public void initializeTieBreaker(String equipoA, String equipoB, MatchService matchService) {
         this.equipoA = equipoA;
@@ -163,6 +204,9 @@ public class TieBreakerController implements Initializable {
     private void mostrarGanador(String mensaje) {
         lblTurno.setText("Juego Finalizado");
         imgBalon.setDisable(true);
+        cajaA.setDisable(true);
+        cajaB.setDisable(true);
+        cajaC.setDisable(true);
 
         PauseTransition delay = new PauseTransition(Duration.seconds(0.5));
         delay.setOnFinished(event -> {

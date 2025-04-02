@@ -1,1 +1,9 @@
-[]
+[ {
+  "torneoNombre" : "copa baseball",
+  "equipoA" : "new york team",
+  "equipoB" : "boston team",
+  "puntajeA" : 0,
+  "puntajeB" : 0,
+  "finalizado" : true,
+  "deporte" : "Baseball"
+} ]

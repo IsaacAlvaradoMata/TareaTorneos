@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="root" prefHeight="600.0" prefWidth="800.0" stylesheets="@StyleTournament.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="cr.ac.una.tareatorneos.controller.TieBreakerController">
+<AnchorPane fx:id="root" prefHeight="600.0" prefWidth="800.0" stylesheets="@StyleTournament.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tareatorneos.controller.TieBreakerController">
 
     <StackPane fx:id="spTieBreaker" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
 
@@ -20,16 +20,19 @@
          <HBox alignment="CENTER">
             <children>
       
-                  <Label fx:id="lblInstruccion" styleClass="lbl-Instruccion" text="Arrastra el balón a una caja para intentar anotar" />
+                  <Label fx:id="lblInstruccion" alignment="CENTER" prefHeight="40.0" prefWidth="420.0" styleClass="lbl-Instruccion" text="Arrastra el balón a una caja para intentar acertar" />
                <ImageView fx:id="imgInfoTie" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                   <HBox.margin>
                      <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
                   </HBox.margin>
                </ImageView>
             </children>
+            <VBox.margin>
+               <Insets bottom="50.0" />
+            </VBox.margin>
          </HBox>
 
-            <HBox id="hboxCajas" fx:id="hboxCajas" alignment="CENTER" spacing="40">
+            <HBox id="hboxCajas" fx:id="hboxCajas" alignment="CENTER" maxWidth="-Infinity" prefHeight="122.0" prefWidth="500.0" spacing="60.0">
                 <ImageView fx:id="cajaA" fitHeight="100.0" fitWidth="100.0" preserveRatio="true" styleClass="img-CajaDesempate" />
                 <ImageView fx:id="cajaB" fitHeight="100.0" fitWidth="100.0" preserveRatio="true" styleClass="img-CajaDesempate" />
                 <ImageView fx:id="cajaC" fitHeight="100.0" fitWidth="100.0" preserveRatio="true" styleClass="img-CajaDesempate" />
@@ -37,7 +40,7 @@
 
             <ImageView id="imgBalon" fx:id="imgBalon" fitHeight="100.0" fitWidth="100.0" preserveRatio="true" />
 
-            <Label fx:id="lblTurno" styleClass="lbl-Turno" text="Turno: Equipo A" />
+            <Label fx:id="lblTurno" alignment="CENTER" prefHeight="40.0" prefWidth="250.0" styleClass="lbl-Turno" text="Turno: Equipo A" />
         </VBox>
     </StackPane>
 </AnchorPane>
