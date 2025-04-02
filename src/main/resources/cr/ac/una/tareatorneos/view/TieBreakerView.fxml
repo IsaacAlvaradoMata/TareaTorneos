@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="root" prefHeight="600.0" prefWidth="800.0" stylesheets="@StyleTournament.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tareatorneos.controller.TieBreakerController">
+<AnchorPane fx:id="root" prefHeight="600.0" prefWidth="800.0" styleClass="AnchorPane-TieView" stylesheets="@StyleTournament.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tareatorneos.controller.TieBreakerController">
 
-    <StackPane fx:id="spTieBreaker" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+    <StackPane fx:id="spTieBreaker" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
 
         <!-- Imagen de fondo que se adapta al StackPane -->
         <ImageView fx:id="imgFondoDeporte" fitHeight="600.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true" />

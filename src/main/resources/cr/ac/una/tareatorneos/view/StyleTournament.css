@@ -1542,6 +1542,27 @@
 
 /* ########################### VISTA DE TIEBREAKER ################################# */
 
+.AnchorPane-TieView {
+    -fx-background-color: #d2b48c; /* Café suave claro */
+    -fx-border-color: #8b5a2b; /* Café medio */
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+}
+
+.StackPane-TieView {
+    -fx-background-color: #ffffff; /* Café suave claro */
+    -fx-border-color: #8b5a2b; /* Café medio */
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+}
+
+
 /* Instrucción y texto de turno */
 .lbl-Instruccion, .lbl-Turno {
     -fx-font-size: 17px;
