@@ -1,25 +1,5 @@
 [ {
-  "nombre" : "Basketball",
-  "ballImage" : "Basketball.jpg",
-  "fechaCreacion" : [ 2025, 3, 31 ]
-}, {
   "nombre" : "Futbol",
   "ballImage" : "Futbol.jpg",
-  "fechaCreacion" : [ 2025, 3, 31 ]
-}, {
-  "nombre" : "Volleyball",
-  "ballImage" : "Volleyball.jpg",
-  "fechaCreacion" : [ 2025, 3, 31 ]
-}, {
-  "nombre" : "Tenis",
-  "ballImage" : "Tenis.jpg",
-  "fechaCreacion" : [ 2025, 3, 31 ]
-}, {
-  "nombre" : "Baseball",
-  "ballImage" : "Baseball.jpg",
-  "fechaCreacion" : [ 2025, 3, 31 ]
-}, {
-  "nombre" : "Pingpong",
-  "ballImage" : "Pingpong.jpg",
   "fechaCreacion" : [ 2025, 3, 31 ]
 } ]

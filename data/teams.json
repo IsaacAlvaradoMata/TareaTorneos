@@ -180,7 +180,7 @@
   "estado" : "participante"
 }, {
   "nombre" : "china team",
-  "deporte" : "Pingpong",
+  "deporte" : "Futbol",
   "teamImage" : "china_team.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
@@ -222,10 +222,10 @@
     "anotaciones" : 0,
     "anotacionesEnContra" : 0
   },
-  "estado" : "disponible"
+  "estado" : "participante"
 }, {
   "nombre" : "japan team",
-  "deporte" : "Pingpong",
+  "deporte" : "Futbol",
   "teamImage" : "japan_team.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
@@ -267,10 +267,10 @@
     "anotaciones" : 0,
     "anotacionesEnContra" : 0
   },
-  "estado" : "disponible"
+  "estado" : "participante"
 }, {
   "nombre" : "govs",
-  "deporte" : "Tenis",
+  "deporte" : "Futbol",
   "teamImage" : "govs.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
@@ -312,10 +312,10 @@
     "anotaciones" : 0,
     "anotacionesEnContra" : 0
   },
-  "estado" : "disponible"
+  "estado" : "participante"
 }, {
   "nombre" : "toronto",
-  "deporte" : "Tenis",
+  "deporte" : "Futbol",
   "teamImage" : "toronto.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
@@ -357,7 +357,7 @@
     "anotaciones" : 0,
     "anotacionesEnContra" : 0
   },
-  "estado" : "disponible"
+  "estado" : "participante"
 }, {
   "nombre" : "usa team",
   "deporte" : "Volleyball",

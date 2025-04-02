@@ -1,9 +1,7 @@
 package cr.ac.una.tareatorneos.controller;
 
-import cr.ac.una.tareatorneos.model.Team;
 import cr.ac.una.tareatorneos.model.Tournament;
 import cr.ac.una.tareatorneos.service.SportService;
-import cr.ac.una.tareatorneos.service.TeamService;
 import cr.ac.una.tareatorneos.service.TournamentService;
 import cr.ac.una.tareatorneos.util.FlowController;
 import io.github.palexdev.materialfx.controls.*;
@@ -91,21 +89,27 @@ public class ActiveTournamentsController extends Controller implements Initializ
         }
     }
 
-
     @FXML
     private void OnActionBtnReanudarTorneo(ActionEvent event) {
         List<Tournament> selected = tbvTorneosActivos.getSelectionModel().getSelectedValues();
-        if (selected.isEmpty()) {
+
+        if (selected == null || selected.isEmpty()) {
             System.out.println("❌ No se ha seleccionado ningún torneo.");
             return;
         }
 
         Tournament torneoSeleccionado = selected.get(0);
 
-        MatchController controller = (MatchController) FlowController.getInstance().getController("MatchView");
-        controller.mostrarPrimerosDosEquiposDelTorneo(torneoSeleccionado.getNombre());
+        // Obtener el controlador de la vista de brackets
+        BracketGeneratorController controller = (BracketGeneratorController)
+                FlowController.getInstance().getController("BracketGeneratorView");
 
-        FlowController.getInstance().goView("MatchView");
+        if (controller != null) {
+            controller.inicializarBracketDesdeTorneo(torneoSeleccionado);
+            FlowController.getInstance().goView("BracketGeneratorView");
+        } else {
+            System.out.println("⚠️ No se pudo cargar el controlador de BracketGeneratorView.");
+        }
     }
 
     private void populateTableView() {

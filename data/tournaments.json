@@ -1,33 +1,9 @@
 [ {
-  "id" : "2141ae7b-010b-4ec2-bf03-3b46cce6f962",
-  "nombre" : "nba",
-  "deporte" : "Basketball",
-  "tiempoPorPartido" : 5,
-  "cantidadEquipos" : 2,
-  "equiposParticipantes" : [ "lakers", "warriors" ],
-  "estado" : "Por comenzar"
-}, {
   "id" : "5f794de2-7c20-4449-a073-028d420345db",
   "nombre" : "champions",
   "deporte" : "Futbol",
   "tiempoPorPartido" : 5,
-  "cantidadEquipos" : 4,
-  "equiposParticipantes" : [ "Manchester city", "real madrid" ],
-  "estado" : "Por comenzar"
-}, {
-  "id" : "927bad3c-a06d-4c22-8dc2-0793a88d4640",
-  "nombre" : "copa baseball",
-  "deporte" : "Baseball",
-  "tiempoPorPartido" : 8,
-  "cantidadEquipos" : 4,
-  "equiposParticipantes" : [ "new york team", "boston team" ],
-  "estado" : "Por comenzar"
-}, {
-  "id" : "0298eb6f-315d-4a33-a830-f80ecfcdf553",
-  "nombre" : "voliboll de playa",
-  "deporte" : "Volleyball",
-  "tiempoPorPartido" : 5,
-  "cantidadEquipos" : 4,
-  "equiposParticipantes" : [ "usa team", "brazil team" ],
+  "cantidadEquipos" : 6,
+  "equiposParticipantes" : [ "Manchester city", "real madrid", "japan team", "china team", "toronto", "govs" ],
   "estado" : "Por comenzar"
 } ]

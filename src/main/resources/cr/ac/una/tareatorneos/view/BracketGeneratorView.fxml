@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<AnchorPane fx:id="root" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tareatorneos.controller.BracketGeneratorController">
+
+    <!-- Fondo o color base -->
+    <Pane prefWidth="1200" prefHeight="800">
+        <!-- Aquí se dibujarán dinámicamente los nodos y líneas -->
+        <ScrollPane fitToHeight="true" fitToWidth="true" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+                    AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+            <AnchorPane fx:id="bracketContainer" minWidth="1600" minHeight="1000" style="-fx-background-color: #f0f4f8;">
+                <!-- Los nodos y líneas se agregan desde el controller -->
+            </AnchorPane>
+        </ScrollPane>
+    </Pane>
+</AnchorPane>
