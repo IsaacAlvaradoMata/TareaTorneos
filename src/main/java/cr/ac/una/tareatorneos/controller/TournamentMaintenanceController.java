@@ -216,13 +216,23 @@ public class TournamentMaintenanceController extends Controller implements Initi
 
     @FXML
     private void OnActionBtnEliminarTorneo(ActionEvent event) {
-        // Asegúrate de castear correctamente el tipo si usas generics personalizados
+        TournamentService service = new TournamentService();
         Tournament torneoSeleccionado = (Tournament) tbvMantenimientoTorneo.getSelectionModel().getSelectedValue();
 
         if (torneoSeleccionado == null) {
             mensajeUtil.show(javafx.scene.control.Alert.AlertType.WARNING,
                     "Eliminación inválida",
                     "Debe seleccionar un torneo de la tabla para eliminar.");
+            return;
+        }
+
+        Tournament torneoActual = service.getTournamentByName(torneoSeleccionado.getNombre());
+        int equiposAgregados = torneoActual.getEquiposParticipantes().size();
+
+        if (equiposAgregados > 0) {
+            mensajeUtil.show(Alert.AlertType.WARNING,
+                    "Cambio de deporte no permitido",
+                    "Este torneo ya tiene equipos agregados y no se puede eliminar.");
             return;
         }
 
@@ -236,7 +246,6 @@ public class TournamentMaintenanceController extends Controller implements Initi
             return;
         }
 
-        TournamentService service = new TournamentService();
         boolean eliminado = service.deleteTournament(torneoSeleccionado.getNombre());
 
         if (eliminado) {
@@ -258,6 +267,7 @@ public class TournamentMaintenanceController extends Controller implements Initi
     private void OnActionBtnEliminarEquipos(ActionEvent event) {
         TournamentService service = new TournamentService();
         TeamService teamService = new TeamService();
+        Tournament torneoSeleccionado = (Tournament) tbvMantenimientoTorneo.getSelectionModel().getSelectedValue();
 
         String nombreTorneo = lblNombreTorneoSeleccionEquipos.getText();
         Tournament torneo = service.getTournamentByName(nombreTorneo);

@@ -121,6 +121,8 @@ public class TeamsMaintenanceController extends Controller implements Initializa
         ObservableList<String> sportsNames = FXCollections.observableArrayList();
         sportService.getAllSports().forEach(sport -> sportsNames.add(sport.getNombre()));
         cmbEquipos.setItems(sportsNames);
+        cmbEquipos.getSelectionModel().clearSelection();
+        cmbEquipos.setValue(null);
     }
 
     public static void actualizarListaDeportes() {
@@ -252,7 +254,12 @@ public class TeamsMaintenanceController extends Controller implements Initializa
             teamsData.add(newTeam);
             tbvEquiposExistentes.setItems(FXCollections.observableArrayList(teamsData));
             loadTeams();
-            OnActionBtnBarrerEquipo(event);
+            OnActionBtnBarrerEquipo(event); // Limpia campos
+            cmbEquipos.getSelectionModel().clearSelection();
+            cmbEquipos.setValue(null);
+            cmbEquipos.clearSelection();
+            cmbEquipos.getSelectionModel().clearSelection();
+            cmbEquipos.setText("");
         } else {
             mensajeUtil.show(AlertType.ERROR, "Guardar Equipo", "No se pudo guardar el Equipo.");
         }
