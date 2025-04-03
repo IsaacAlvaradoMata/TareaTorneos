@@ -46,14 +46,11 @@ public class BracketGeneratorController extends Controller implements Initializa
 
     public void cargarBracket(List<BracketGenerator> equiposIniciales) {
         bracketContainer.getChildren().clear();
-
-        // Esta lista guardará cada ronda
         List<List<StackPane>> rondasVisuales = new ArrayList<>();
-
-        // 🟡 Ronda inicial (dibuja los equipos originales)
         List<StackPane> rondaActual = new ArrayList<>();
         double x = 0;
 
+        // Crear nodos visuales de la ronda inicial
         for (int i = 0; i < equiposIniciales.size(); i++) {
             BracketGenerator equipo = equiposIniciales.get(i);
             StackPane nodo = crearNodoVisual(equipo);
@@ -65,30 +62,38 @@ public class BracketGeneratorController extends Controller implements Initializa
 
         rondasVisuales.add(rondaActual);
 
-        // 🔁 Generar rondas hasta que quede 1 equipo
+        // Generar rondas
         while (rondaActual.size() > 1) {
             List<StackPane> siguienteRonda = new ArrayList<>();
             x += H_GAP;
+            int i = 0;
 
-            for (int i = 0; i < rondaActual.size(); i += 2) {
+            while (i < rondaActual.size()) {
                 StackPane equipo1 = rondaActual.get(i);
                 StackPane equipo2 = (i + 1 < rondaActual.size()) ? rondaActual.get(i + 1) : null;
 
-                // Posición promedio de los 2
-                double y = equipo2 != null
-                        ? (equipo1.getLayoutY() + equipo2.getLayoutY()) / 2
-                        : equipo1.getLayoutY();
+                // Nodo ganador
+                StackPane nodoGanador;
+                double y;
 
-                StackPane nodoGanador = crearNodoVisualVacio();
-                double separation = 30 * rondasVisuales.size();
-                nodoGanador.setLayoutX(x + separation);
-                nodoGanador.setLayoutY(y);
+                if (equipo2 == null) {
+                    // ✅ Pasa directo sin enfrentamiento
+                    nodoGanador = equipo1; // reutilizamos el mismo
+                    siguienteRonda.add(nodoGanador); // lo agregamos como está
+                    i += 1; // avanzar solo uno
+                    continue;
+                } else {
+                    nodoGanador = crearNodoVisualVacio();
+                    y = (equipo1.getLayoutY() + equipo2.getLayoutY()) / 2;
+                    nodoGanador.setLayoutX(x + 30 * rondasVisuales.size());
+                    nodoGanador.setLayoutY(y);
 
-                bracketContainer.getChildren().add(nodoGanador);
-                siguienteRonda.add(nodoGanador);
+                    bracketContainer.getChildren().add(nodoGanador);
+                    siguienteRonda.add(nodoGanador);
 
-                // 🧩 Conexiones visuales
-                dibujarConexionesBracket(equipo1, equipo2, nodoGanador);
+                    dibujarConexionesBracket(equipo1, equipo2, nodoGanador);
+                    i += 2;
+                }
             }
 
             rondasVisuales.add(siguienteRonda);

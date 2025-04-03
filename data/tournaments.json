@@ -3,7 +3,8 @@
   "nombre" : "champions",
   "deporte" : "Futbol",
   "tiempoPorPartido" : 5,
+  "tiempoPorPartido" : 1,
   "cantidadEquipos" : 6,
-  "equiposParticipantes" : [ "Manchester city", "real madrid", "japan team", "china team", "toronto", "govs" ],
-  "estado" : "Por comenzar"
+  "equiposParticipantes" : [ "real madrid", "toronto", "china team", "govs", "Manchester city", "japan team" ],
+  "estado" : "Iniciado"
 } ]
