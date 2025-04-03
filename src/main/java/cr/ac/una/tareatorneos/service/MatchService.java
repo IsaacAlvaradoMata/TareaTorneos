@@ -74,6 +74,8 @@ public class MatchService {
     public void finalizarPartido() {
         match.setFinalizado(true);
         guardarMatchEnJson(match);
+        new TeamTournamentStatsService().guardarEstadisticaDelPartido(match);
+
     }
 
     private void guardarMatchEnJson(Match matchFinalizado) {
