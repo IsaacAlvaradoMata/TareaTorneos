@@ -6,4 +6,12 @@
   "puntajeB" : 0,
   "finalizado" : true,
   "deporte" : "Baseball"
+}, {
+  "torneoNombre" : "champions",
+  "equipoA" : "Manchester city",
+  "equipoB" : "real madrid",
+  "puntajeA" : 1,
+  "puntajeB" : 2,
+  "finalizado" : true,
+  "deporte" : "Futbol"
 } ]

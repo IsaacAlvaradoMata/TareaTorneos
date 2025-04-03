@@ -12,14 +12,14 @@ import io.github.palexdev.materialfx.controls.MFXTableColumn;
 import io.github.palexdev.materialfx.controls.MFXTableView;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -29,7 +29,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
-import javafx.scene.control.TableView;
 
 /**
  * FXML Controller class
@@ -74,7 +73,7 @@ public class RankingsController extends Controller implements Initializable {
     @FXML
     private MFXButton btnEstadisticasAvanzadas;
     @FXML
-    private TableView<?> tbvStatsTorneos;
+    private TableView<ObservableList<String>> tbvStatsTorneos;
     @FXML
     private MFXButton btnEstadisticasGenerales;
     
@@ -91,6 +90,7 @@ public class RankingsController extends Controller implements Initializable {
         teamService = new TeamService();
         populateComboBoxRankings();
         populateTableViewTeams();
+        populateTableViewAdvanceStats();
         loadAllTeams();
         cmbRankings.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
@@ -196,6 +196,44 @@ public class RankingsController extends Controller implements Initializable {
                 colNombre, colDeporte, colPuntosGlobales
         ));
     }
+
+    private void populateTableViewAdvanceStats() {
+        tbvStatsTorneos.getColumns().clear();
+
+        // Columna de Torneo
+        TableColumn<ObservableList<String>, String> torneoCol = new TableColumn<>("Torneo");
+        torneoCol.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().get(0)));
+        torneoCol.setMinWidth(100);
+        tbvStatsTorneos.getColumns().add(torneoCol);
+
+        // Columnas de los 5 partidos
+        for (int i = 0; i < 5; i++) {
+            int baseIndex = 1 + (i * 3);
+
+            TableColumn<ObservableList<String>, String> rivalCol = new TableColumn<>("Rival " + (i + 1));
+            rivalCol.setMinWidth(100);
+            rivalCol.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().get(baseIndex)));
+
+            TableColumn<ObservableList<String>, String> marcadorCol = new TableColumn<>("Marcador " + (i + 1));
+            marcadorCol.setMinWidth(100);
+            marcadorCol.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().get(baseIndex + 1)));
+
+            TableColumn<ObservableList<String>, String> resultadoCol = new TableColumn<>("Resultado " + (i + 1));
+            resultadoCol.setMinWidth(100);
+            resultadoCol.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().get(baseIndex + 2)));
+
+            tbvStatsTorneos.getColumns().addAll(rivalCol, marcadorCol, resultadoCol);
+        }
+
+        // Columna de resultado final del torneo
+        TableColumn<ObservableList<String>, String> resultadoTorneoCol = new TableColumn<>("Resultado Torneo");
+        resultadoTorneoCol.setCellValueFactory(data ->
+                new ReadOnlyStringWrapper(data.getValue().get(data.getValue().size() - 1))
+        );
+        tbvStatsTorneos.getColumns().add(resultadoTorneoCol);
+    }
+
+
 
 
 
