@@ -80,8 +80,8 @@ public class BracketGeneratorController extends Controller implements Initializa
                         : equipo1.getLayoutY();
 
                 StackPane nodoGanador = crearNodoVisualVacio();
-                double offset = 30;
-                nodoGanador.setLayoutX(x);
+                double separation = 30 * rondasVisuales.size();
+                nodoGanador.setLayoutX(x + separation);
                 nodoGanador.setLayoutY(y);
 
                 bracketContainer.getChildren().add(nodoGanador);
@@ -131,7 +131,7 @@ public class BracketGeneratorController extends Controller implements Initializa
         Line l1 = new Line(x1, y1, midX, y1);
         Line l2 = new Line(x2, y2, midX, y2);
         Line l3 = new Line(midX, y1, midX, y2);
-        Line l4 = new Line(midX, midY, destino.getLayoutX() + 10, midY);
+        Line l4 = new Line(midX, midY, destino.getLayoutX(), midY);
 
         for (Line l : List.of(l1, l2, l3, l4)) {
             l.setStroke(Color.GRAY);
