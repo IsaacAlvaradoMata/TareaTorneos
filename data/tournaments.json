@@ -2,7 +2,6 @@
   "id" : "5f794de2-7c20-4449-a073-028d420345db",
   "nombre" : "champions",
   "deporte" : "Futbol",
-  "tiempoPorPartido" : 5,
   "tiempoPorPartido" : 1,
   "cantidadEquipos" : 6,
   "equiposParticipantes" : [ "real madrid", "toronto", "china team", "govs", "Manchester city", "japan team" ],
