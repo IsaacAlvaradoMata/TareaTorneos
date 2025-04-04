@@ -116,7 +116,7 @@ public class MatchController extends Controller implements Initializable {
 
         javafx.application.Platform.runLater(() -> {
             bracketParent.cargarBracket(bracketService.getEstadoVisualActual());
-            Stage stage = (Stage) root.getScene().getWindow();
+            Stage stage = (Stage) btnFinalizar.getScene().getWindow();
             stage.close();
         });
     }
