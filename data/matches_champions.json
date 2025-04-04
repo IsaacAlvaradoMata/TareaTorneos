@@ -1,0 +1,29 @@
+[ {
+  "torneo" : "champions",
+  "ronda" : 1,
+  "equipo1" : "real madrid",
+  "equipo2" : "toronto",
+  "ganador" : "real madrid",
+  "jugado" : true
+}, {
+  "torneo" : "champions",
+  "ronda" : 1,
+  "equipo1" : "china team",
+  "equipo2" : "govs",
+  "ganador" : null,
+  "jugado" : false
+}, {
+  "torneo" : "champions",
+  "ronda" : 1,
+  "equipo1" : "Manchester city",
+  "equipo2" : "japan team",
+  "ganador" : null,
+  "jugado" : false
+}, {
+  "torneo" : "champions",
+  "ronda" : 2,
+  "equipo1" : "real madrid",
+  "equipo2" : null,
+  "ganador" : null,
+  "jugado" : false
+} ]

@@ -194,19 +194,7 @@ public class ActiveTournamentsController extends Controller implements Initializ
 
     @FXML
     private void onActionBtnAbrirMatchView(ActionEvent event) {
-        List<Tournament> selected = tbvTorneosActivos.getSelectionModel().getSelectedValues();
-        if (selected == null || selected.isEmpty()) {
-            System.out.println("❌ No se ha seleccionado ningún torneo.");
-            return;
-        }
-
-        Tournament torneoSeleccionado = selected.get(0);
-
-        // Abre MatchView y le pasa el torneo
-        MatchController matchController = (MatchController) FlowController.getInstance().getController("MatchView");
-        matchController.mostrarPrimerosDosEquiposDelTorneo(torneoSeleccionado.getNombre());
-
-        FlowController.getInstance().goView("MatchView");
+        
     }
 
     @Override

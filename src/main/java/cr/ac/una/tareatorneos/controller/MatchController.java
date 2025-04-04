@@ -1,12 +1,10 @@
 package cr.ac.una.tareatorneos.controller;
 
+import cr.ac.una.tareatorneos.model.BracketMatch;
 import cr.ac.una.tareatorneos.model.Sport;
 import cr.ac.una.tareatorneos.model.Team;
 import cr.ac.una.tareatorneos.model.Tournament;
-import cr.ac.una.tareatorneos.service.MatchService;
-import cr.ac.una.tareatorneos.service.SportService;
-import cr.ac.una.tareatorneos.service.TeamService;
-import cr.ac.una.tareatorneos.service.TournamentService;
+import cr.ac.una.tareatorneos.service.*;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -39,21 +37,22 @@ public class MatchController extends Controller implements Initializable {
     @FXML
     private MFXButton btnFinalizar;
     @FXML
-    private ImageView imgBalon, imgEquipoA, imgEquipoB;
+    private ImageView imgBalon, imgEquipoA, imgEquipoB, imgFondoDeporte;
     @FXML
     private Label lblTiempo, lblTorneo, lblEquipoA, lblEquipoB, lblPuntajeA, lblPuntajeB;
     @FXML
     private AnchorPane root;
+    @FXML
+    private StackPane spMatch;
 
     private MatchService matchService;
     private Timeline countdown;
     private int tiempoRestante;
-    @FXML
-    private ImageView imgFondoDeporte;
-    @FXML
-    private StackPane spMatch;
-
     private boolean popupMostrado = false;
+
+    private BracketMatch partidoActual;
+    private BracketMatchService bracketService;
+    private BracketGeneratorController bracketParent;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -67,7 +66,24 @@ public class MatchController extends Controller implements Initializable {
         // requerido por clase Controller base
     }
 
+    public void inicializarMatch(BracketMatch partido, BracketMatchService bracketMatchService, BracketGeneratorController parentController) {
+        this.matchService = new MatchService(
+                new TournamentService().getTournamentByName(partido.getTorneo()),
+                new TeamService().getTeamByName(partido.getEquipo1()),
+                new TeamService().getTeamByName(partido.getEquipo2())
+        );
+
+        this.partidoActual = partido;
+        this.bracketService = bracketMatchService;
+        this.bracketParent = parentController;
+
+        initializeMatch(partido.getTorneo(), partido.getEquipo1(), partido.getEquipo2());
+    }
+
     private void mostrarPopupFinalizado() {
+        if (popupMostrado) return;
+        popupMostrado = true;
+
         int puntajeA = matchService.getPuntajeA();
         int puntajeB = matchService.getPuntajeB();
         String equipoA = lblEquipoA.getText();
@@ -79,7 +95,6 @@ public class MatchController extends Controller implements Initializable {
             empateAlert.setHeaderText("⚠ El partido terminó en empate");
             empateAlert.setContentText("Se iniciará una ronda de desempate.");
             empateAlert.showAndWait();
-
             iniciarPantallaDesempate(equipoA, equipoB);
             return;
         }
@@ -95,20 +110,28 @@ public class MatchController extends Controller implements Initializable {
 
         alert.setContentText(resultado.toString());
         alert.showAndWait();
+
+        String equipoGanador = puntajeA > puntajeB ? equipoA : equipoB;
+        bracketService.registrarGanador(partidoActual, equipoGanador);
+
+        javafx.application.Platform.runLater(() -> {
+            bracketParent.cargarBracket(bracketService.getEstadoVisualActual());
+            Stage stage = (Stage) root.getScene().getWindow();
+            stage.close();
+        });
     }
 
     private void iniciarPantallaDesempate(String equipoA, String equipoB) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/cr/ac/una/tareatorneos/view/TieBreakerView.fxml"));
             Parent root = loader.load();
-
             TieBreakerController controller = loader.getController();
             controller.initializeTieBreaker(equipoA, equipoB, matchService);
-
             Stage stage = new Stage();
             stage.setTitle("Desempate ⚔️");
             stage.setScene(new Scene(root));
-            stage.initModality(Modality.APPLICATION_MODAL); // bloquea hasta cerrar
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setOnCloseRequest(e -> e.consume());
             stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
@@ -132,10 +155,8 @@ public class MatchController extends Controller implements Initializable {
         });
 
         imgEquipoA.setOnDragDropped(event -> {
-            if (matchService != null) {
-                matchService.sumarPuntoB();
-                lblPuntajeB.setText("Puntaje: " + matchService.getPuntajeB());
-            }
+            matchService.sumarPuntoB();
+            lblPuntajeB.setText("Puntaje: " + matchService.getPuntajeB());
             event.setDropCompleted(true);
             event.consume();
         });
@@ -148,16 +169,15 @@ public class MatchController extends Controller implements Initializable {
         });
 
         imgEquipoB.setOnDragDropped(event -> {
-            if (matchService != null) {
-                matchService.sumarPuntoA();
-                lblPuntajeA.setText("Puntaje: " + matchService.getPuntajeA());
-            }
+            matchService.sumarPuntoA();
+            lblPuntajeA.setText("Puntaje: " + matchService.getPuntajeA());
             event.setDropCompleted(true);
             event.consume();
         });
     }
 
-    private void reanudarCuentaRegresiva() {
+    private void iniciarCuentaRegresiva(int minutos) {
+        tiempoRestante = minutos * 60;
         countdown = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
             int min = tiempoRestante / 60;
             int seg = tiempoRestante % 60;
@@ -165,18 +185,15 @@ public class MatchController extends Controller implements Initializable {
 
             if (tiempoRestante <= 0) {
                 detenerTiempo();
-                if (matchService != null && !matchService.getMatch().isFinalizado()) {
+                if (!matchService.getMatch().isFinalizado()) {
                     matchService.finalizarPartido();
                 }
                 lblTiempo.setText("Tiempo: 00:00");
                 desactivarControles();
-                popupMostrado = true;
                 javafx.application.Platform.runLater(() -> mostrarPopupFinalizado());
-                return;
             }
 
             tiempoRestante--;
-
         }));
         countdown.setCycleCount(Timeline.INDEFINITE);
         countdown.play();
@@ -184,7 +201,7 @@ public class MatchController extends Controller implements Initializable {
 
     @FXML
     void onActionBtnFinalizar(ActionEvent event) {
-        detenerTiempo(); // pausa antes de mostrar confirmación
+        detenerTiempo();
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("🚨 Confirmar Finalización");
@@ -192,71 +209,21 @@ public class MatchController extends Controller implements Initializable {
         alert.setContentText("Esta acción detendrá el tiempo y guardará el resultado final.");
 
         alert.showAndWait().ifPresent(response -> {
-            switch (response.getButtonData()) {
-                case OK_DONE -> {
-                    if (matchService != null && !matchService.getMatch().isFinalizado()) {
-                        matchService.finalizarPartido();
-                    }
-                    lblTiempo.setText("Tiempo: 00:00");
-                    desactivarControles();
-                    popupMostrado = true;
-                    mostrarPopupFinalizado();
-                }
-                default -> {
-                    reanudarCuentaRegresiva();
-                }
-            }
-        });
-    }
-
-    private void iniciarCuentaRegresiva(int minutos) {
-        tiempoRestante = minutos * 60;
-
-        countdown = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
-            int min = tiempoRestante / 60;
-            int seg = tiempoRestante % 60;
-            lblTiempo.setText(String.format("Tiempo: %02d:%02d", min, seg));
-
-            if (tiempoRestante <= 0) {
-                detenerTiempo();
-                if (matchService != null && !matchService.getMatch().isFinalizado()) {
+            if (response.getButtonData().isDefaultButton()) {
+                if (!matchService.getMatch().isFinalizado()) {
                     matchService.finalizarPartido();
                 }
-
                 lblTiempo.setText("Tiempo: 00:00");
-                popupMostrado = true;
                 desactivarControles();
-
-                boolean esEmpate = matchService.getPuntajeA() == matchService.getPuntajeB();
-
-                if (esEmpate) {
-                    javafx.application.Platform.runLater(() -> mostrarPopupEmpate());
-                } else {
-                    javafx.application.Platform.runLater(() -> mostrarPopupFinalizado());
-                }
-
-                return;
+                mostrarPopupFinalizado();
+            } else {
+                reanudarCuentaRegresiva();
             }
-
-            tiempoRestante--;
-
-        }));
-
-        countdown.setCycleCount(Timeline.INDEFINITE);
-        countdown.play();
+        });
     }
 
-    private void mostrarPopupEmpate() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("⏱️ Partido Empatado");
-        alert.setHeaderText("El partido terminó en empate");
-        alert.setContentText("Será necesario un desempate para definir al ganador.");
-
-        alert.getButtonTypes().setAll(javafx.scene.control.ButtonType.OK);
-
-        alert.showAndWait().ifPresent(response -> {
-            iniciarPantallaDesempate(matchService.getMatch().getEquipoA(), matchService.getMatch().getEquipoB());
-        });
+    private void reanudarCuentaRegresiva() {
+        iniciarCuentaRegresiva(tiempoRestante / 60);
     }
 
     private void detenerTiempo() {
@@ -281,56 +248,44 @@ public class MatchController extends Controller implements Initializable {
 
     public void initializeMatch(String torneoNombre, String nombreEquipoA, String nombreEquipoB) {
         Tournament torneo = new TournamentService().getTournamentByName(torneoNombre);
-        if (torneo == null) return;
-
         Team equipoA = new TeamService().getTeamByName(nombreEquipoA);
         Team equipoB = new TeamService().getTeamByName(nombreEquipoB);
         Sport sport = new SportService().getSportByName(torneo.getDeporte());
 
-        if (equipoA == null || equipoB == null || sport == null) return;
+        if (torneo == null || equipoA == null || equipoB == null || sport == null) return;
 
         matchService = new MatchService(torneo, equipoA, equipoB);
 
-        // Establecer texto en etiquetas
         lblTorneo.setText(torneo.getNombre());
         lblTiempo.setText("Tiempo: " + torneo.getTiempoPorPartido() + ":00");
-
-        btnFinalizar.setDisable(false);
-        iniciarCuentaRegresiva(torneo.getTiempoPorPartido());
-        activarControlesDragAndDrop();
-
         lblEquipoA.setText(equipoA.getNombre());
-        lblPuntajeA.setText("Puntaje: 0");
-
         lblEquipoB.setText(equipoB.getNombre());
+        lblPuntajeA.setText("Puntaje: 0");
         lblPuntajeB.setText("Puntaje: 0");
 
-        // Imágenes de equipos y balón
         Image imgA = matchService.getImagenEquipoA();
         if (imgA != null) imgEquipoA.setImage(imgA);
-
         Image imgB = matchService.getImagenEquipoB();
         if (imgB != null) imgEquipoB.setImage(imgB);
-
         Image balon = matchService.getImagenBalon();
         if (balon != null) imgBalon.setImage(balon);
 
-        // Fondo dinámico según el deporte
         cargarFondoDeporte(sport.getNombre());
+        iniciarCuentaRegresiva(torneo.getTiempoPorPartido());
+        activarControlesDragAndDrop();
     }
 
-    public void mostrarPrimerosDosEquiposDelTorneo(String nombreTorneo) {
-        Tournament torneo = new TournamentService().getTournamentByName(nombreTorneo);
+    private void cargarFondoDeporte(String nombreDeporte) {
+        if (nombreDeporte == null) return;
+        String deporteNormalizado = nombreDeporte.trim().toLowerCase();
+        String rutaImagen = fondoDeporteMap.getOrDefault(deporteNormalizado, "/cr/ac/una/tareatorneos/resources/FondoGeneral.png");
 
-        if (torneo == null || torneo.getEquiposParticipantes().size() < 2) {
-            System.out.println("❌ Torneo inválido o con menos de 2 equipos.");
-            return;
+        try {
+            Image fondo = new Image(getClass().getResourceAsStream(rutaImagen));
+            imgFondoDeporte.setImage(fondo);
+        } catch (Exception e) {
+            System.out.println("⚠ No se pudo cargar la imagen de fondo: " + rutaImagen);
         }
-
-        String equipoA = torneo.getEquiposParticipantes().get(0);
-        String equipoB = torneo.getEquiposParticipantes().get(1);
-
-        initializeMatch(nombreTorneo, equipoA, equipoB);
     }
 
     private final Map<String, String> fondoDeporteMap = Map.ofEntries(
@@ -350,19 +305,4 @@ public class MatchController extends Controller implements Initializable {
             Map.entry("tenis de mesa", "/cr/ac/una/tareatorneos/resources/FondoPinpog.png"),
             Map.entry("baseball", "/cr/ac/una/tareatorneos/resources/FondoBaseball.png")
     );
-
-    private void cargarFondoDeporte(String nombreDeporte) {
-        if (nombreDeporte == null) return;
-
-        String deporteNormalizado = nombreDeporte.trim().toLowerCase();
-        String rutaImagen = fondoDeporteMap.getOrDefault(deporteNormalizado, "/cr/ac/una/tareatorneos/resources/FondoGeneral.png");
-
-        try {
-            Image fondo = new Image(getClass().getResourceAsStream(rutaImagen));
-            imgFondoDeporte.setImage(fondo);
-        } catch (Exception e) {
-            System.out.println("⚠ No se pudo cargar la imagen de fondo: " + rutaImagen);
-        }
-    }
-
 }

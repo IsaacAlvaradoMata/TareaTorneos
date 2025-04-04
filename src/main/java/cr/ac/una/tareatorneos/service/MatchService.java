@@ -2,10 +2,7 @@ package cr.ac.una.tareatorneos.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cr.ac.una.tareatorneos.model.Match;
-import cr.ac.una.tareatorneos.model.Sport;
-import cr.ac.una.tareatorneos.model.Team;
-import cr.ac.una.tareatorneos.model.Tournament;
+import cr.ac.una.tareatorneos.model.*;
 import javafx.scene.image.Image;
 
 import java.io.File;
@@ -21,10 +18,20 @@ public class MatchService {
     private Sport deporte;
     private Match match;
 
+    // 🔹 Constructor normal
     public MatchService(Tournament torneo, Team equipoA, Team equipoB) {
         this.torneo = torneo;
         this.equipoA = equipoA;
         this.equipoB = equipoB;
+        this.deporte = new SportService().getSportByName(torneo.getDeporte());
+        this.match = new Match(torneo.getNombre(), equipoA.getNombre(), equipoB.getNombre(), torneo.getDeporte());
+    }
+
+    // 🔹 Constructor para BracketMatch
+    public MatchService(BracketMatch matchData) {
+        this.torneo = new TournamentService().getTournamentByName(matchData.getTorneo());
+        this.equipoA = new TeamService().getTeamByName(matchData.getEquipo1());
+        this.equipoB = new TeamService().getTeamByName(matchData.getEquipo2());
         this.deporte = new SportService().getSportByName(torneo.getDeporte());
         this.match = new Match(torneo.getNombre(), equipoA.getNombre(), equipoB.getNombre(), torneo.getDeporte());
     }
@@ -75,7 +82,22 @@ public class MatchService {
         match.setFinalizado(true);
         guardarMatchEnJson(match);
         new TeamTournamentStatsService().guardarEstadisticaDelPartido(match);
+    }
 
+    public String getGanador() {
+        if (match.getPuntajeA() > match.getPuntajeB()) {
+            return equipoA.getNombre();
+        } else {
+            return equipoB.getNombre();
+        }
+    }
+
+    public String getNombreEquipoA() {
+        return equipoA.getNombre();
+    }
+
+    public String getNombreEquipoB() {
+        return equipoB.getNombre();
     }
 
     private void guardarMatchEnJson(Match matchFinalizado) {

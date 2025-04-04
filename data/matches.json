@@ -14,4 +14,12 @@
   "puntajeB" : 2,
   "finalizado" : true,
   "deporte" : "Futbol"
+}, {
+  "torneoNombre" : "champions",
+  "equipoA" : "real madrid",
+  "equipoB" : "toronto",
+  "puntajeA" : 2,
+  "puntajeB" : 1,
+  "finalizado" : true,
+  "deporte" : "Futbol"
 } ]
