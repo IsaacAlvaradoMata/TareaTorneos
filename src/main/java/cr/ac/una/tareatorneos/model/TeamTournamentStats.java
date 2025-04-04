@@ -59,6 +59,8 @@ public class TeamTournamentStats {
         private int anotaciones;
         private int anotacionesEnContra;
         private String resultado; // "Ganado", "Perdido", "Empatado"
+        private boolean conDesempate; // nuevo
+        private String resultadoReal; // nuevo
 
         public int getNumeroPartido() {
             return numeroPartido;
@@ -99,5 +101,22 @@ public class TeamTournamentStats {
         public void setResultado(String resultado) {
             this.resultado = resultado;
         }
+
+        public boolean isConDesempate() {
+            return conDesempate;
+        }
+
+        public void setConDesempate(boolean conDesempate) {
+            this.conDesempate = conDesempate;
+        }
+
+        public String getResultadoReal() {
+            return resultadoReal;
+        }
+
+        public void setResultadoReal(String resultadoReal) {
+            this.resultadoReal = resultadoReal;
+        }
+
     }
 }

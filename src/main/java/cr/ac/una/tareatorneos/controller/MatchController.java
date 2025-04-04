@@ -29,6 +29,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -185,9 +186,6 @@ public class MatchController extends Controller implements Initializable {
 
             if (tiempoRestante <= 0) {
                 detenerTiempo();
-                if (!matchService.getMatch().isFinalizado()) {
-                    matchService.finalizarPartido();
-                }
                 lblTiempo.setText("Tiempo: 00:00");
                 desactivarControles();
                 javafx.application.Platform.runLater(() -> mostrarPopupFinalizado());
@@ -206,13 +204,11 @@ public class MatchController extends Controller implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("🚨 Confirmar Finalización");
         alert.setHeaderText("¿Deseas finalizar este partido?");
-        alert.setContentText("Esta acción detendrá el tiempo y guardará el resultado final.");
+        alert.setContentText("Esta acción detendrá el tiempo y mostrará el resultado final.");
 
         alert.showAndWait().ifPresent(response -> {
             if (response.getButtonData().isDefaultButton()) {
-                if (!matchService.getMatch().isFinalizado()) {
-                    matchService.finalizarPartido();
-                }
+                // ⚠️ NO guardar aquí, esperar a mostrarPopupFinalizado()
                 lblTiempo.setText("Tiempo: 00:00");
                 desactivarControles();
                 mostrarPopupFinalizado();
@@ -305,4 +301,18 @@ public class MatchController extends Controller implements Initializable {
             Map.entry("tenis de mesa", "/cr/ac/una/tareatorneos/resources/FondoPinpog.png"),
             Map.entry("baseball", "/cr/ac/una/tareatorneos/resources/FondoBaseball.png")
     );
+
+    public void inicializarMatchDesdeTorneo(Tournament torneo) {
+        List<String> equipos = torneo.getEquiposParticipantes();
+        if (equipos.size() < 2) {
+            System.out.println("❌ El torneo no tiene suficientes equipos para iniciar un partido.");
+            return;
+        }
+
+        String equipoA = equipos.get(0);
+        String equipoB = equipos.get(1);
+
+        initializeMatch(torneo.getNombre(), equipoA, equipoB);
+    }
+
 }

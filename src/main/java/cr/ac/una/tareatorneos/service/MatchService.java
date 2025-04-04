@@ -120,4 +120,11 @@ public class MatchService {
             System.err.println("❌ Error al guardar partido en JSON");
         }
     }
+    
+    public void finalizarPartidoConDesempate(String ganadorDesempate) {
+        match.setFinalizado(true);
+        guardarMatchEnJson(match);
+        new TeamTournamentStatsService().guardarEstadisticaDelPartido(match, ganadorDesempate);
+    }
+
 }

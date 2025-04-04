@@ -21,6 +21,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.PopupWindow;
 import javafx.util.Duration;
+
 import java.net.URL;
 import java.util.*;
 
@@ -46,6 +47,7 @@ public class TieBreakerController implements Initializable {
     private boolean turnoEquipoA;
     private boolean equipoAAcierto;
     private boolean equipoBAcierto;
+    private MatchService matchService;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -82,21 +84,19 @@ public class TieBreakerController implements Initializable {
                 double y = imgInfoTie.localToScene(imgInfoTie.getBoundsInLocal()).getMinY();
 
                 tooltip.show(imgInfoTie,
-                        imgInfoTie.getScene().getWindow().getX() + imgInfoTie.getScene().getX() + x -492,
+                        imgInfoTie.getScene().getWindow().getX() + imgInfoTie.getScene().getX() + x - 492,
                         imgInfoTie.getScene().getWindow().getY() + imgInfoTie.getScene().getY() + y + 50);
             });
         });
 
         imgInfoTie.setOnMouseExited(event -> tooltip.hide()); // Ocultar tooltip al salir del icono
 
-
     }
-
 
     public void initializeTieBreaker(String equipoA, String equipoB, MatchService matchService) {
         this.equipoA = equipoA;
         this.equipoB = equipoB;
-
+        this.matchService = matchService;
         turnoEquipoA = true;
         lblTurno.setText("Turno: " + equipoA);
 
@@ -207,6 +207,10 @@ public class TieBreakerController implements Initializable {
         cajaA.setDisable(true);
         cajaB.setDisable(true);
         cajaC.setDisable(true);
+
+        // 🆕 Registrar estadística con el ganador por desempate
+        String ganadorDesempate = equipoAAcierto ? equipoA : equipoB;
+        matchService.finalizarPartidoConDesempate(ganadorDesempate);
 
         PauseTransition delay = new PauseTransition(Duration.seconds(0.5));
         delay.setOnFinished(event -> {

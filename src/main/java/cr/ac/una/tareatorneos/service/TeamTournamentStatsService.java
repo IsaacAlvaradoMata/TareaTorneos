@@ -29,14 +29,15 @@ public class TeamTournamentStatsService {
         return new ArrayList<>();
     }
 
-    public void guardarEstadisticaDelPartido(Match match) {
+    // 🔄 NUEVO MÉTODO: versión extendida con ganadorDesempate
+    public void guardarEstadisticaDelPartido(Match match, String ganadorDesempate) {
         List<TeamTournamentStats> stats = getAllStats();
 
         actualizarStatsEquipo(stats, match.getEquipoA(), match.getEquipoB(), match.getTorneoNombre(),
-                match.getPuntajeA(), match.getPuntajeB());
+                match.getPuntajeA(), match.getPuntajeB(), ganadorDesempate);
 
         actualizarStatsEquipo(stats, match.getEquipoB(), match.getEquipoA(), match.getTorneoNombre(),
-                match.getPuntajeB(), match.getPuntajeA());
+                match.getPuntajeB(), match.getPuntajeA(), ganadorDesempate);
 
         try {
             mapper.writerWithDefaultPrettyPrinter().writeValue(archivo, stats);
@@ -45,8 +46,14 @@ public class TeamTournamentStatsService {
         }
     }
 
+    // 🔄 MÉTODO ORIGINAL - sigue existiendo para compatibilidad si no hay desempate
+    public void guardarEstadisticaDelPartido(Match match) {
+        guardarEstadisticaDelPartido(match, null);
+    }
+
+    // 🔄 NUEVO: actualiza estadísticas con opción de ganadorDesempate
     private void actualizarStatsEquipo(List<TeamTournamentStats> stats, String equipo, String rival,
-                                       String torneo, int anotaciones, int enContra) {
+                                       String torneo, int anotaciones, int enContra, String ganadorDesempate) {
 
         TeamTournamentStats equipoStats = stats.stream()
                 .filter(e -> e.getNombreEquipo().equalsIgnoreCase(equipo))
@@ -73,8 +80,22 @@ public class TeamTournamentStatsService {
         nuevoPartido.setRival(rival);
         nuevoPartido.setAnotaciones(anotaciones);
         nuevoPartido.setAnotacionesEnContra(enContra);
-        nuevoPartido.setResultado(anotaciones > enContra ? "Ganado" :
-                (anotaciones < enContra ? "Perdido" : "Empatado"));
+
+        boolean empate = anotaciones == enContra;
+        nuevoPartido.setResultado(empate ? "Empatado" :
+                (anotaciones > enContra ? "Ganado" : "Perdido"));
+
+        if (empate && ganadorDesempate != null) {
+            nuevoPartido.setConDesempate(true);
+            if (equipo.equalsIgnoreCase(ganadorDesempate)) {
+                nuevoPartido.setResultadoReal("Ganado (desempate)");
+            } else {
+                nuevoPartido.setResultadoReal("Perdido (desempate)");
+            }
+        } else {
+            nuevoPartido.setConDesempate(false);
+            nuevoPartido.setResultadoReal(nuevoPartido.getResultado());
+        }
 
         torneoStat.getPartidos().add(nuevoPartido);
     }
