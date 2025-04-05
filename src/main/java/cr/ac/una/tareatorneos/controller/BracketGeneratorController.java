@@ -151,7 +151,7 @@ public class BracketGeneratorController extends Controller implements Initializa
             List<StackPane> siguiente = rondasVisuales.get(ronda + 1);
 
             for (int i = 0; i < actual.size(); i += 2) {
-                if (i / 2 < siguiente.size()) {
+                if (i + 1 < actual.size() && (i / 2 < siguiente.size())) {
                     dibujarConexionesBracket(actual.get(i), actual.get(i + 1), siguiente.get(i / 2));
                 }
             }

@@ -8,6 +8,7 @@ import cr.ac.una.tareatorneos.service.*;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -115,11 +116,17 @@ public class MatchController extends Controller implements Initializable {
         String equipoGanador = puntajeA > puntajeB ? equipoA : equipoB;
         bracketService.registrarGanador(partidoActual, equipoGanador);
 
-        javafx.application.Platform.runLater(() -> {
+        Platform.runLater(() -> {
             bracketParent.cargarBracketDesdePartidos(bracketService.getTodosLosPartidos());
-            Stage stage = (Stage) btnFinalizar.getScene().getWindow();
-            stage.close();
+
+            try {
+                Stage stage = (Stage) btnFinalizar.getScene().getWindow();
+                if (stage != null) stage.close();
+            } catch (Exception e) {
+                System.out.println("❌ Error al cerrar la ventana de la final: " + e.getMessage());
+            }
         });
+
     }
 
     private void iniciarPantallaDesempate(String equipoA, String equipoB) {
