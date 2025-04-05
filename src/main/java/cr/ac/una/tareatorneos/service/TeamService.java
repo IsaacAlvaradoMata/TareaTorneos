@@ -2,6 +2,7 @@ package cr.ac.una.tareatorneos.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import cr.ac.una.tareatorneos.model.Achievement;
 import cr.ac.una.tareatorneos.model.Team;
 import cr.ac.una.tareatorneos.model.TeamStats;
 
@@ -23,7 +24,8 @@ public class TeamService {
     public List<Team> getAllTeams() {
         try {
             if (filePath.toFile().exists()) {
-                List<Team> equipos = mapper.readValue(filePath.toFile(), new TypeReference<List<Team>>() {});
+                List<Team> equipos = mapper.readValue(filePath.toFile(), new TypeReference<List<Team>>() {
+                });
                 // 🧠 Asegurarse de que todos los equipos tengan estadísticas y estado
                 for (Team t : equipos) {
                     if (t.getEstadisticas() == null) {
@@ -117,4 +119,19 @@ public class TeamService {
                 .findFirst()
                 .orElse(null);
     }
+
+    public void actualizarLogrosDeEquipo(Team equipo) {
+        AchievementService achievementService = new AchievementService();
+        List<Achievement> nuevosLogros = achievementService.calcularLogrosParaEquipo(equipo.getNombre());
+        equipo.setLogros(nuevosLogros);
+        updateTeam(equipo.getNombre(), equipo); // Esto también guarda el cambio
+    }
+
+    public void actualizarLogrosDeTodosLosEquipos() {
+        List<Team> equipos = getAllTeams();
+        for (Team equipo : equipos) {
+            actualizarLogrosDeEquipo(equipo);
+        }
+    }
+
 }
