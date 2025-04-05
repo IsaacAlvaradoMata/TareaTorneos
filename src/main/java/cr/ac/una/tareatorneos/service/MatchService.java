@@ -81,7 +81,17 @@ public class MatchService {
     public void finalizarPartido() {
         match.setFinalizado(true);
         guardarMatchEnJson(match);
-        new TeamTournamentStatsService().guardarEstadisticaDelPartido(match);
+        TeamTournamentStatsService statsService = new TeamTournamentStatsService();
+        statsService.guardarEstadisticaDelPartido(match);
+        statsService.actualizarPuntosDeTodosLosTorneos();
+    }
+
+    public void finalizarPartidoConDesempate(String ganadorDesempate) {
+        match.setFinalizado(true);
+        guardarMatchEnJson(match);
+        TeamTournamentStatsService statsService = new TeamTournamentStatsService();
+        statsService.guardarEstadisticaDelPartido(match, ganadorDesempate);
+        statsService.actualizarPuntosDeTodosLosTorneos();
     }
 
     public String getGanador() {
@@ -119,12 +129,6 @@ public class MatchService {
             e.printStackTrace();
             System.err.println("❌ Error al guardar partido en JSON");
         }
-    }
-    
-    public void finalizarPartidoConDesempate(String ganadorDesempate) {
-        match.setFinalizado(true);
-        guardarMatchEnJson(match);
-        new TeamTournamentStatsService().guardarEstadisticaDelPartido(match, ganadorDesempate);
     }
 
 }

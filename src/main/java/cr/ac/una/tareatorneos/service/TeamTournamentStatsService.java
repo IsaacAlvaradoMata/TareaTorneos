@@ -118,4 +118,31 @@ public class TeamTournamentStatsService {
             e.printStackTrace();
         }
     }
+
+    public void actualizarPuntosDeTodosLosTorneos() {
+        List<TeamTournamentStats> statsEquipos = getAllStats();
+        for (TeamTournamentStats equipo : statsEquipos) {
+            for (TeamTournamentStats.TournamentStat torneo : equipo.getTorneos()) {
+                int puntos = 0;
+                for (TeamTournamentStats.MatchStat partido : torneo.getPartidos()) {
+                    switch (partido.getResultadoReal()) {
+                        case "Ganado" -> puntos += 3;
+                        case "Ganado (desempate)" -> puntos += 2;
+                    }
+
+                }
+                torneo.setPuntos(puntos);
+            }
+        }
+        saveAllStats(statsEquipos); // Guarda todo en el JSON
+    }
+
+    public void saveAllStats(List<TeamTournamentStats> stats) {
+        try {
+            mapper.writerWithDefaultPrettyPrinter().writeValue(archivo, stats);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
