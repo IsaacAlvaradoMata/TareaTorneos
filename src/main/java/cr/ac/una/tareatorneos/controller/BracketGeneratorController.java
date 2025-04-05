@@ -1,9 +1,9 @@
 package cr.ac.una.tareatorneos.controller;
 
-import cr.ac.una.tareatorneos.model.BracketGenerator;
 import cr.ac.una.tareatorneos.model.BracketMatch;
 import cr.ac.una.tareatorneos.model.Tournament;
 import cr.ac.una.tareatorneos.service.BracketMatchService;
+import cr.ac.una.tareatorneos.service.TeamService;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -19,6 +19,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
@@ -60,7 +61,7 @@ public class BracketGeneratorController extends Controller implements Initializa
     public void inicializarBracketDesdeTorneo(Tournament torneo) {
         this.torneoActual = torneo; // ✅ Asignar torneo actual
         matchService.generarPartidosDesdeEquipos(torneo); // Cargar desde archivo si ya existen
-        cargarBracket(matchService.getEstadoVisualActual());
+        cargarBracketDesdePartidos(matchService.getTodosLosPartidos());
         actualizarLabelPartidoPendiente();
     }
 
@@ -93,7 +94,7 @@ public class BracketGeneratorController extends Controller implements Initializa
         if (equipo2 == null) {
             matchService.registrarGanador(siguientePartido, equipo1);
             lblPartidoActual.setText("⚠ " + equipo1 + " pasa automáticamente");
-            cargarBracket(matchService.getEstadoVisualActual());
+            cargarBracketDesdePartidos(matchService.getTodosLosPartidos());
             actualizarLabelPartidoPendiente();
             return;
         }
@@ -119,95 +120,105 @@ public class BracketGeneratorController extends Controller implements Initializa
         }
     }
 
-    public void cargarBracket(List<BracketGenerator> equiposIniciales) {
+    public void cargarBracketDesdePartidos(List<BracketMatch> partidos) {
         bracketContainer.getChildren().clear();
         List<List<StackPane>> rondasVisuales = new ArrayList<>();
-        List<StackPane> rondaActual = new ArrayList<>();
-        double x = 0;
 
-        for (int i = 0; i < equiposIniciales.size(); i++) {
-            BracketGenerator equipo = equiposIniciales.get(i);
-            StackPane nodo = crearNodoVisual(equipo);
-            nodo.setLayoutX(x);
-            nodo.setLayoutY(i * (NODE_HEIGHT + V_GAP));
-            bracketContainer.getChildren().add(nodo);
-            rondaActual.add(nodo);
+        // Agrupar partidos por ronda
+        int maxRonda = partidos.stream().mapToInt(BracketMatch::getRonda).max().orElse(1);
+        for (int i = 0; i < maxRonda; i++) {
+            rondasVisuales.add(new ArrayList<>());
         }
 
-        rondasVisuales.add(rondaActual);
+        for (int ronda = 1; ronda <= maxRonda; ronda++) {
+            List<BracketMatch> rondaPartidos = matchService.getPartidosPorRonda(ronda);
+            double x = (ronda - 1) * H_GAP;
 
-        while (rondaActual.size() > 1) {
-            List<StackPane> siguienteRonda = new ArrayList<>();
-            x += H_GAP;
-            int i = 0;
+            for (int i = 0; i < rondaPartidos.size(); i++) {
+                BracketMatch match = rondaPartidos.get(i);
+                StackPane nodo = crearNodoMatch(match);
+                double y = i * (NODE_HEIGHT + V_GAP) * Math.pow(2, ronda - 1);
+                nodo.setLayoutX(x);
+                nodo.setLayoutY(y);
+                bracketContainer.getChildren().add(nodo);
+                rondasVisuales.get(ronda - 1).add(nodo);
+            }
+        }
 
-            while (i < rondaActual.size()) {
-                StackPane equipo1 = rondaActual.get(i);
-                StackPane equipo2 = (i + 1 < rondaActual.size()) ? rondaActual.get(i + 1) : null;
+        // Dibujar conexiones visuales entre rondas
+        for (int ronda = 0; ronda < rondasVisuales.size() - 1; ronda++) {
+            List<StackPane> actual = rondasVisuales.get(ronda);
+            List<StackPane> siguiente = rondasVisuales.get(ronda + 1);
 
-                StackPane nodoGanador;
-                double y;
-
-                if (equipo2 == null) {
-                    nodoGanador = equipo1;
-                    siguienteRonda.add(nodoGanador);
-                    i++;
-                    continue;
-                } else {
-                    nodoGanador = crearNodoVisualVacio();
-                    y = (equipo1.getLayoutY() + equipo2.getLayoutY()) / 2;
-                    nodoGanador.setLayoutX(x + 30 * rondasVisuales.size());
-                    nodoGanador.setLayoutY(y);
-
-                    bracketContainer.getChildren().add(nodoGanador);
-                    siguienteRonda.add(nodoGanador);
-
-                    dibujarConexionesBracket(equipo1, equipo2, nodoGanador);
-                    i += 2;
+            for (int i = 0; i < actual.size(); i += 2) {
+                if (i / 2 < siguiente.size()) {
+                    dibujarConexionesBracket(actual.get(i), actual.get(i + 1), siguiente.get(i / 2));
                 }
             }
-
-            rondasVisuales.add(siguienteRonda);
-            rondaActual = siguienteRonda;
         }
     }
 
-    private StackPane crearNodoVisual(BracketGenerator equipo) {
+    private StackPane crearNodoMatch(BracketMatch match) {
         StackPane contenedor = new StackPane();
         contenedor.setPrefSize(NODE_WIDTH, NODE_HEIGHT);
         contenedor.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-background-radius: 5; -fx-border-radius: 5;");
 
+        String equipo1 = match.getEquipo1();
+        String equipo2 = match.getEquipo2();
+
+        VBox box = new VBox(5);
+        box.setAlignment(Pos.CENTER_LEFT);
+
+        if (equipo1 != null) box.getChildren().add(crearItemEquipo(equipo1));
+        if (equipo2 != null) box.getChildren().add(crearItemEquipo(equipo2));
+
+        if (equipo1 == null && equipo2 == null) {
+            Label label = new Label("??? vs ???");
+            label.setFont(new Font("Arial", 13));
+            box.getChildren().add(label);
+        }
+
+        if (match.isJugado()) {
+            Label ganador = new Label("🏆 " + match.getGanador());
+            ganador.setFont(new Font("Arial", 12));
+            box.getChildren().add(ganador);
+        }
+
+        contenedor.getChildren().add(box);
+        return contenedor;
+    }
+
+    private HBox crearItemEquipo(String nombreEquipo) {
         ImageView escudo = new ImageView();
-        escudo.setFitHeight(40);
-        escudo.setFitWidth(40);
+        escudo.setFitHeight(25);
+        escudo.setFitWidth(25);
+
+        String logoPath = "file:teamsPhotos/default.png";
         try {
-            escudo.setImage(new Image(equipo.getLogoPath()));
+            String rawPath = new TeamService().getTeamByName(nombreEquipo).getTeamImage();
+            if (rawPath != null && !rawPath.isBlank()) {
+                if (!rawPath.startsWith("file:") && !rawPath.startsWith("http")) {
+                    logoPath = "file:teamsPhotos/" + rawPath;
+                } else {
+                    logoPath = rawPath;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("⚠ Error obteniendo logo de " + nombreEquipo);
+        }
+
+        try {
+            escudo.setImage(new Image(logoPath));
         } catch (Exception e) {
             escudo.setImage(new Image("file:teamsPhotos/default.png"));
         }
 
-        Label nombre = new Label(equipo.getTeamName());
-        nombre.setFont(new Font("Arial", 14));
+        Label nombre = new Label(nombreEquipo);
+        nombre.setFont(new Font("Arial", 13));
 
-        HBox box = new HBox(10, escudo, nombre);
-        box.setAlignment(Pos.CENTER_LEFT);
-        contenedor.getChildren().add(box);
-
-        return contenedor;
-    }
-
-    private StackPane crearNodoVisualVacio() {
-        StackPane contenedor = new StackPane();
-        contenedor.setPrefSize(NODE_WIDTH, NODE_HEIGHT);
-        contenedor.setStyle(
-                "-fx-background-color: #f9f9f9;" +
-                        "-fx-border-color: black;" +
-                        "-fx-background-radius: 5;" +
-                        "-fx-border-radius: 5;" +
-                        "-fx-padding: 10 0 10 5;"
-        );
-        contenedor.getChildren().add(new Label(""));
-        return contenedor;
+        HBox item = new HBox(6, escudo, nombre);
+        item.setAlignment(Pos.CENTER_LEFT);
+        return item;
     }
 
     private void dibujarConexionesBracket(StackPane nodo1, StackPane nodo2, StackPane destino) {

@@ -116,7 +116,7 @@ public class MatchController extends Controller implements Initializable {
         bracketService.registrarGanador(partidoActual, equipoGanador);
 
         javafx.application.Platform.runLater(() -> {
-            bracketParent.cargarBracket(bracketService.getEstadoVisualActual());
+            bracketParent.cargarBracketDesdePartidos(bracketService.getTodosLosPartidos());
             Stage stage = (Stage) btnFinalizar.getScene().getWindow();
             stage.close();
         });

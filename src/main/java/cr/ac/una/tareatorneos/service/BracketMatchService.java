@@ -47,29 +47,37 @@ public class BracketMatchService {
             return;
         }
 
-        List<String> equipos = torneo.getEquiposParticipantes();
+        List<String> equipos = new ArrayList<>(torneo.getEquiposParticipantes());
         allMatches.clear();
 
-        int ronda = 1;
-        List<String> rondaActual = new ArrayList<>(equipos);
+        // 1. Calcular la cantidad de rondas necesarias
+        int totalEquipos = equipos.size();
+        int rondas = (int) Math.ceil(Math.log(totalEquipos) / Math.log(2)); // ej: 8 equipos = 3 rondas
 
-        while (rondaActual.size() > 1) {
+        // 2. Rellenar con "BYEs" si es necesario
+        int totalSlots = (int) Math.pow(2, rondas); // ej: 8 → 8, 6 → 8
+        while (equipos.size() < totalSlots) {
+            equipos.add(null); // espacio vacío
+        }
+
+        // 3. Crear partidos por rondas (estructura completa)
+        List<String> rondaActual = new ArrayList<>(equipos);
+        int matchId = 0;
+
+        for (int ronda = 1; ronda <= rondas; ronda++) {
             List<String> siguienteRonda = new ArrayList<>();
 
             for (int i = 0; i < rondaActual.size(); i += 2) {
                 String equipo1 = rondaActual.get(i);
-                String equipo2 = (i + 1 < rondaActual.size()) ? rondaActual.get(i + 1) : null;
+                String equipo2 = rondaActual.get(i + 1);
 
                 BracketMatch match = new BracketMatch(torneo.getNombre(), ronda, equipo1, equipo2);
                 allMatches.add(match);
 
-                // Si tiene rival automático (BYE), pasa directo
-                if (equipo2 == null) {
-                    siguienteRonda.add(equipo1);
-                }
+                // En la siguiente ronda solo agregamos espacios vacíos por ahora
+                siguienteRonda.add(null);
             }
 
-            ronda++;
             rondaActual = siguienteRonda;
         }
 
@@ -77,17 +85,10 @@ public class BracketMatchService {
     }
 
     /**
-     * Retorna el siguiente partido pendiente por jugar.
-     */
-    public BracketMatch getSiguientePartidoPendiente() {
-        return allMatches.stream()
-                .filter(p -> !p.isJugado() && p.getEquipo1() != null && p.getEquipo2() != null)
-                .findFirst()
-                .orElse(null);
-    }
-
-    /**
      * Marca el resultado de un partido y genera el próximo match si aplica.
+     */
+    /**
+     * Marca el resultado de un partido y coloca el ganador en la siguiente ronda correctamente.
      */
     public void registrarGanador(BracketMatch partido, String equipoGanador) {
         if (!partido.getEquipo1().equals(equipoGanador) &&
@@ -98,22 +99,77 @@ public class BracketMatchService {
         partido.setGanador(equipoGanador);
         partido.setJugado(true);
 
-        // ➕ Avanza a la próxima ronda
+        // ➕ Avanza a la próxima ronda colocándolo en el primer espacio vacío disponible
         allMatches.stream()
                 .filter(p -> p.getRonda() == partido.getRonda() + 1)
-                .filter(p -> p.getEquipo2() == null)
+                .filter(p -> p.getEquipo1() == null || p.getEquipo2() == null)
                 .findFirst()
-                .ifPresentOrElse(
-                        p -> p.setEquipo2(equipoGanador),
-                        () -> allMatches.add(new BracketMatch(
-                                partido.getTorneo(),
-                                partido.getRonda() + 1,
-                                equipoGanador,
-                                null
-                        ))
-                );
+                .ifPresentOrElse(p -> {
+                    if (p.getEquipo1() == null) {
+                        p.setEquipo1(equipoGanador);
+                    } else {
+                        p.setEquipo2(equipoGanador);
+                    }
+                }, () -> {
+                    // Solo se llega aquí si no existía nodo en la siguiente ronda (respaldo)
+                    allMatches.add(new BracketMatch(
+                            partido.getTorneo(),
+                            partido.getRonda() + 1,
+                            equipoGanador,
+                            null
+                    ));
+                });
 
         guardarPartidosEnArchivo(partido.getTorneo());
+    }
+
+    /**
+     * Retorna el siguiente partido pendiente por jugar.
+     */
+    public BracketMatch getSiguientePartidoPendiente() {
+        List<BracketMatch> partidos = getTodosLosPartidos();
+
+        // Obtener rondas ordenadas
+        int maxRonda = partidos.stream().mapToInt(BracketMatch::getRonda).max().orElse(1);
+
+        for (int ronda = 1; ronda <= maxRonda; ronda++) {
+            final int rondaActual = ronda;
+            List<BracketMatch> rondaPendientes = partidos.stream()
+                    .filter(p -> p.getRonda() == rondaActual && !p.isJugado())
+                    .toList();
+
+            if (rondaPendientes.isEmpty()) continue;
+
+            long partidosJugables = rondaPendientes.stream()
+                    .filter(p -> p.getEquipo1() != null && p.getEquipo2() != null)
+                    .count();
+
+            long conBye = rondaPendientes.stream()
+                    .filter(p -> (p.getEquipo1() == null || p.getEquipo2() == null))
+                    .count();
+
+            // Caso: solo 1 partido con dos equipos -> final
+            if (rondaPendientes.size() == 1 && partidosJugables == 1) {
+                return rondaPendientes.get(0);
+            }
+
+            // Permitir pasar equipos que estén solos
+            for (BracketMatch p : rondaPendientes) {
+                if ((p.getEquipo1() == null && p.getEquipo2() != null) ||
+                        (p.getEquipo2() == null && p.getEquipo1() != null)) {
+                    return p; // avanzar este equipo automáticamente
+                }
+            }
+
+            // Luego retornar partidos normales
+            for (BracketMatch p : rondaPendientes) {
+                if (p.getEquipo1() != null && p.getEquipo2() != null) {
+                    return p;
+                }
+            }
+        }
+
+        return null; // todos jugados
     }
 
     /**
