@@ -4,6 +4,7 @@ import cr.ac.una.tareatorneos.model.BracketMatch;
 import cr.ac.una.tareatorneos.model.Tournament;
 import cr.ac.una.tareatorneos.service.BracketMatchService;
 import cr.ac.una.tareatorneos.service.TeamService;
+import cr.ac.una.tareatorneos.service.TournamentService;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -65,15 +66,51 @@ public class BracketGeneratorController extends Controller implements Initializa
         actualizarLabelPartidoPendiente();
     }
 
-    private void actualizarLabelPartidoPendiente() {
-        BracketMatch p = matchService.getSiguientePartidoPendiente();
-        if (p != null && p.getEquipo1() != null) {
-            String texto = "🎯 Partido pendiente: " + p.getEquipo1() + (p.getEquipo2() != null ? " vs " + p.getEquipo2() : " (sin rival)");
-            lblPartidoActual.setText(texto);
-        } else {
-            lblPartidoActual.setText("✅ Todos los partidos han sido jugados.");
+    public void actualizarLabelPartidoPendiente() {
+        torneoActual = new TournamentService().getTournamentByName(torneoActual.getNombre());
+
+        // Filtra solo partidos válidos
+        List<BracketMatch> pendientes = matchService.getPartidosPendientes().stream()
+                .filter(p -> p.getEquipo1() != null || p.getEquipo2() != null)
+                .toList();
+
+        if (pendientes.isEmpty()) {
+            if ("Finalizado".equalsIgnoreCase(torneoActual.getEstado())) {
+                lblPartidoActual.setText("🏆 El torneo ha finalizado.");
+            } else {
+                lblPartidoActual.setText("✅ Todos los partidos han sido jugados.");
+            }
             btnPlay.setDisable(true);
+            return;
         }
+
+        BracketMatch siguiente = pendientes.get(0);
+        String equipo1 = siguiente.getEquipo1();
+        String equipo2 = siguiente.getEquipo2();
+
+        boolean esUltimo = pendientes.size() == 1;
+
+        if (equipo1 != null && equipo2 == null && esUltimo && "Finalizado".equalsIgnoreCase(torneoActual.getEstado())) {
+            lblPartidoActual.setText("🏆 El torneo ha finalizado.");
+            btnPlay.setDisable(true);
+            return;
+        }
+
+        if (equipo1 != null && equipo2 == null) {
+            lblPartidoActual.setText("⚠ " + equipo1 + " pasa automáticamente");
+            btnPlay.setDisable(false);
+            return;
+        }
+
+        if (equipo1 != null && equipo2 != null) {
+            lblPartidoActual.setText("🎯 Partido pendiente: " + equipo1 + " vs " + equipo2);
+            btnPlay.setDisable(false);
+            return;
+        }
+
+        // 🔒 Caso de seguridad
+        lblPartidoActual.setText("⌛ Esperando equipos para siguiente partido...");
+        btnPlay.setDisable(true);
     }
 
     @FXML
@@ -89,15 +126,32 @@ public class BracketGeneratorController extends Controller implements Initializa
         String equipo1 = siguientePartido.getEquipo1();
         String equipo2 = siguientePartido.getEquipo2();
 
-        lblPartidoActual.setText("🎯 Partido pendiente: " + equipo1 + (equipo2 != null ? " vs " + equipo2 : " (sin rival)"));
+        boolean esUltimo = matchService.getPartidosPendientes().size() == 1;
 
-        if (equipo2 == null) {
+        // 🏆 Si es el último partido y solo hay un equipo → declarar campeón y refrescar todo
+        if (equipo1 != null && equipo2 == null && esUltimo) {
             matchService.registrarGanador(siguientePartido, equipo1);
-            lblPartidoActual.setText("⚠ " + equipo1 + " pasa automáticamente");
+
+            // 🔁 Refrescar estado del torneo para que diga "Finalizado"
+            this.torneoActual = new TournamentService().getTournamentByName(torneoActual.getNombre());
+
+            // 🔄 Redibujar todo y actualizar texto
             cargarBracketDesdePartidos(matchService.getTodosLosPartidos());
             actualizarLabelPartidoPendiente();
             return;
         }
+
+        // ⚠️ Caso normal de BYE (no final)
+        if (equipo1 != null && equipo2 == null) {
+            matchService.registrarGanador(siguientePartido, equipo1);
+            this.torneoActual = new TournamentService().getTournamentByName(torneoActual.getNombre());
+            cargarBracketDesdePartidos(matchService.getTodosLosPartidos());
+            actualizarLabelPartidoPendiente();
+            return;
+        }
+
+        // 🎯 Partido regular
+        lblPartidoActual.setText("🎯 Partido pendiente: " + equipo1 + " vs " + equipo2);
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/cr/ac/una/tareatorneos/view/MatchView.fxml"));
@@ -120,11 +174,14 @@ public class BracketGeneratorController extends Controller implements Initializa
         }
     }
 
+    public void setTorneoActual(Tournament torneoActual) {
+        this.torneoActual = torneoActual;
+    }
+
     public void cargarBracketDesdePartidos(List<BracketMatch> partidos) {
         bracketContainer.getChildren().clear();
         List<List<StackPane>> rondasVisuales = new ArrayList<>();
 
-        // Agrupar partidos por ronda
         int maxRonda = partidos.stream().mapToInt(BracketMatch::getRonda).max().orElse(1);
         for (int i = 0; i < maxRonda; i++) {
             rondasVisuales.add(new ArrayList<>());
@@ -145,7 +202,6 @@ public class BracketGeneratorController extends Controller implements Initializa
             }
         }
 
-        // Dibujar conexiones visuales entre rondas
         for (int ronda = 0; ronda < rondasVisuales.size() - 1; ronda++) {
             List<StackPane> actual = rondasVisuales.get(ronda);
             List<StackPane> siguiente = rondasVisuales.get(ronda + 1);
@@ -156,6 +212,60 @@ public class BracketGeneratorController extends Controller implements Initializa
                 }
             }
         }
+
+        // ✅ Refrescar estado del torneo para verificar si terminó
+        torneoActual = new TournamentService().getTournamentByName(torneoActual.getNombre());
+
+        if ("Finalizado".equalsIgnoreCase(torneoActual.getEstado())) {
+            BracketMatch finalMatch = matchService.getFinalMatch();
+            if (finalMatch != null && finalMatch.getGanador() != null) {
+                // ⚠️ Verifica que el nodo no haya sido dibujado antes para evitar duplicados
+                if (!bracketContainer.getChildren().stream().anyMatch(n ->
+                        n instanceof StackPane &&
+                                ((StackPane) n).getChildren().stream()
+                                        .anyMatch(c -> c instanceof VBox &&
+                                                ((VBox) c).getChildren().stream()
+                                                        .anyMatch(l -> l instanceof Label && ((Label) l).getText().contains("🏆 " + finalMatch.getGanador()))
+                                        )
+                )) {
+                    StackPane nodoCampeon = crearNodoCampeon(finalMatch.getGanador());
+                    double x = maxRonda * H_GAP;
+                    double y = 0;
+                    nodoCampeon.setLayoutX(x);
+                    nodoCampeon.setLayoutY(y);
+                    bracketContainer.getChildren().add(nodoCampeon);
+                }
+            }
+        }
+    }
+
+    private StackPane crearNodoCampeon(String nombreEquipo) {
+        StackPane contenedor = new StackPane();
+        contenedor.setPrefSize(NODE_WIDTH, NODE_HEIGHT);
+        contenedor.setStyle("-fx-background-color: gold; -fx-border-color: black; -fx-background-radius: 5; -fx-border-radius: 5;");
+
+        VBox box = new VBox(6);
+        box.setAlignment(Pos.CENTER);
+
+        ImageView escudo = new ImageView();
+        escudo.setFitHeight(30);
+        escudo.setFitWidth(30);
+
+        try {
+            String rawPath = new TeamService().getTeamByName(nombreEquipo).getTeamImage();
+            String logoPath = rawPath != null ? "file:teamsPhotos/" + rawPath : "file:teamsPhotos/default.png";
+            escudo.setImage(new Image(logoPath));
+        } catch (Exception e) {
+            escudo.setImage(new Image("file:teamsPhotos/default.png"));
+        }
+
+        Label label = new Label("🏆 " + nombreEquipo);
+        label.setFont(new Font("Arial Bold", 14));
+        label.setTextFill(Color.DARKBLUE);
+
+        box.getChildren().addAll(escudo, label);
+        contenedor.getChildren().add(box);
+        return contenedor;
     }
 
     private StackPane crearNodoMatch(BracketMatch match) {

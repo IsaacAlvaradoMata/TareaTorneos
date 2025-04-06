@@ -237,6 +237,15 @@ public class BracketMatchService {
     }
 
     /**
+     * Retorna los partidos pendientes (no jugados).
+     */
+    public List<BracketMatch> getPartidosPendientes() {
+        return allMatches.stream()
+                .filter(p -> !p.isJugado())
+                .collect(Collectors.toList());
+    }
+
+    /**
      * Carga los partidos desde JSON.
      */
     public void cargarPartidosDesdeArchivo(String torneo) {

@@ -82,6 +82,8 @@ public class MatchController extends Controller implements Initializable {
         initializeMatch(partido.getTorneo(), partido.getEquipo1(), partido.getEquipo2());
     }
 
+    // 🟢 Dentro de mostrarPopupFinalizado() (solamente ese método modificado)
+
     private void mostrarPopupFinalizado() {
         if (popupMostrado) return;
         popupMostrado = true;
@@ -113,12 +115,26 @@ public class MatchController extends Controller implements Initializable {
         alert.setContentText(resultado.toString());
         alert.showAndWait();
 
+        // 🏆 Asignar ganador
         String equipoGanador = puntajeA > puntajeB ? equipoA : equipoB;
         bracketService.registrarGanador(partidoActual, equipoGanador);
 
-        Platform.runLater(() -> {
-            bracketParent.cargarBracketDesdePartidos(bracketService.getTodosLosPartidos());
+        // 🔄 Forzar recarga desde archivo actualizado
+        bracketService.cargarPartidosDesdeArchivo(partidoActual.getTorneo());
 
+        // 🧠 Obtener estado actualizado
+        Tournament torneo = new TournamentService().getTournamentByName(partidoActual.getTorneo());
+
+        // 🧪 DEBUG - Mostrar estado actual
+        System.out.println("🔁 Partidos pendientes: " + bracketService.getPartidosPendientes().size());
+        System.out.println("🏁 Estado torneo tras el partido: " + torneo.getEstado());
+
+        // ✅ Cerrar ventana del match
+        Platform.runLater(() -> {
+            Tournament torneoActualizado = new TournamentService().getTournamentByName(partidoActual.getTorneo());
+            bracketParent.setTorneoActual(torneoActualizado);
+            bracketParent.cargarBracketDesdePartidos(bracketService.getTodosLosPartidos());
+            bracketParent.actualizarLabelPartidoPendiente();
             try {
                 Stage stage = (Stage) btnFinalizar.getScene().getWindow();
                 if (stage != null) stage.close();
@@ -126,7 +142,6 @@ public class MatchController extends Controller implements Initializable {
                 System.out.println("❌ Error al cerrar la ventana de la final: " + e.getMessage());
             }
         });
-
     }
 
     private void iniciarPantallaDesempate(String equipoA, String equipoB) {
