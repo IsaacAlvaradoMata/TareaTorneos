@@ -102,16 +102,29 @@ public class TeamTournamentStatsService {
 
     public void asignarResultadoFinalTorneo(String equipo, String torneo, String resultado) {
         List<TeamTournamentStats> stats = getAllStats();
-        for (TeamTournamentStats equipoStats : stats) {
-            if (equipoStats.getNombreEquipo().equalsIgnoreCase(equipo)) {
-                for (TournamentStat torneoStat : equipoStats.getTorneos()) {
-                    if (torneoStat.getNombreTorneo().equalsIgnoreCase(torneo)) {
-                        torneoStat.setResultadoTorneo(resultado);
-                        break;
-                    }
-                }
-            }
-        }
+
+        TeamTournamentStats equipoStats = stats.stream()
+                .filter(e -> e.getNombreEquipo().equalsIgnoreCase(equipo))
+                .findFirst()
+                .orElseGet(() -> {
+                    TeamTournamentStats nuevo = new TeamTournamentStats();
+                    nuevo.setNombreEquipo(equipo);
+                    stats.add(nuevo);
+                    return nuevo;
+                });
+
+        TournamentStat torneoStat = equipoStats.getTorneos().stream()
+                .filter(t -> t.getNombreTorneo().equalsIgnoreCase(torneo))
+                .findFirst()
+                .orElseGet(() -> {
+                    TournamentStat nuevoTorneo = new TournamentStat();
+                    nuevoTorneo.setNombreTorneo(torneo);
+                    equipoStats.getTorneos().add(nuevoTorneo);
+                    return nuevoTorneo;
+                });
+
+        torneoStat.setResultadoTorneo(resultado);
+
         try {
             mapper.writerWithDefaultPrettyPrinter().writeValue(archivo, stats);
         } catch (IOException e) {

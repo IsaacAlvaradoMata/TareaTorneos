@@ -18,22 +18,30 @@ public class MatchService {
     private Sport deporte;
     private Match match;
 
-    // 🔹 Constructor normal
+    // 🔹 Constructor normal (modificado)
     public MatchService(Tournament torneo, Team equipoA, Team equipoB) {
         this.torneo = torneo;
         this.equipoA = equipoA;
         this.equipoB = equipoB;
         this.deporte = new SportService().getSportByName(torneo.getDeporte());
-        this.match = new Match(torneo.getNombre(), equipoA.getNombre(), equipoB.getNombre(), torneo.getDeporte());
+
+        String nombreA = equipoA != null ? equipoA.getNombre() : "Equipo A";
+        String nombreB = equipoB != null ? equipoB.getNombre() : null;
+
+        this.match = new Match(torneo.getNombre(), nombreA, nombreB, torneo.getDeporte());
     }
 
-    // 🔹 Constructor para BracketMatch
+    // 🔹 Constructor para BracketMatch (igual pero con null-safe)
     public MatchService(BracketMatch matchData) {
         this.torneo = new TournamentService().getTournamentByName(matchData.getTorneo());
         this.equipoA = new TeamService().getTeamByName(matchData.getEquipo1());
-        this.equipoB = new TeamService().getTeamByName(matchData.getEquipo2());
+        this.equipoB = matchData.getEquipo2() != null ? new TeamService().getTeamByName(matchData.getEquipo2()) : null;
         this.deporte = new SportService().getSportByName(torneo.getDeporte());
-        this.match = new Match(torneo.getNombre(), equipoA.getNombre(), equipoB.getNombre(), torneo.getDeporte());
+
+        String nombreA = equipoA != null ? equipoA.getNombre() : "Equipo A";
+        String nombreB = equipoB != null ? equipoB.getNombre() : null;
+
+        this.match = new Match(torneo.getNombre(), nombreA, nombreB, torneo.getDeporte());
     }
 
     public Match getMatch() {
@@ -61,6 +69,7 @@ public class MatchService {
     }
 
     public Image getImagenEquipoB() {
+        if (equipoB == null) return null;
         return cargarImagen("teamsPhotos/" + equipoB.getTeamImage(), "Equipo B");
     }
 
@@ -98,7 +107,7 @@ public class MatchService {
         if (match.getPuntajeA() > match.getPuntajeB()) {
             return equipoA.getNombre();
         } else {
-            return equipoB.getNombre();
+            return equipoB != null ? equipoB.getNombre() : "Desconocido";
         }
     }
 
@@ -107,7 +116,7 @@ public class MatchService {
     }
 
     public String getNombreEquipoB() {
-        return equipoB.getNombre();
+        return equipoB != null ? equipoB.getNombre() : "(BYE)";
     }
 
     private void guardarMatchEnJson(Match matchFinalizado) {
@@ -130,5 +139,4 @@ public class MatchService {
             System.err.println("❌ Error al guardar partido en JSON");
         }
     }
-
 }

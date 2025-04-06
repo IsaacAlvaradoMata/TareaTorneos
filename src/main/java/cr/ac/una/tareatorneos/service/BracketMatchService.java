@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cr.ac.una.tareatorneos.model.BracketGenerator;
 import cr.ac.una.tareatorneos.model.BracketMatch;
+import cr.ac.una.tareatorneos.model.Team;
 import cr.ac.una.tareatorneos.model.Tournament;
 
 import java.io.File;
@@ -82,6 +83,10 @@ public class BracketMatchService {
         }
 
         guardarPartidosEnArchivo(torneo.getNombre());
+
+        // ✅ Actualiza el estado del torneo a "Iniciado" y guarda el cambio
+        torneo.setEstado("Iniciado");
+        new TournamentService().updateTournament(torneo.getNombre(), torneo);
     }
 
     /**
@@ -91,15 +96,42 @@ public class BracketMatchService {
      * Marca el resultado de un partido y coloca el ganador en la siguiente ronda correctamente.
      */
     public void registrarGanador(BracketMatch partido, String equipoGanador) {
-        if (!partido.getEquipo1().equals(equipoGanador) &&
-                (partido.getEquipo2() == null || !partido.getEquipo2().equals(equipoGanador))) {
+        if (!equipoGanador.equals(partido.getEquipo1()) &&
+                (partido.getEquipo2() == null || !equipoGanador.equals(partido.getEquipo2()))) {
             throw new IllegalArgumentException("El equipo ganador no está en este partido.");
         }
 
         partido.setGanador(equipoGanador);
         partido.setJugado(true);
 
-        // ➕ Avanza a la próxima ronda colocándolo en el primer espacio vacío disponible
+        // ⚠ Validar si equipo2 es null antes de instanciar el MatchService
+        TournamentService torneoService = new TournamentService();
+        Tournament torneo = torneoService.getTournamentByName(partido.getTorneo());
+        Team equipoA = new TeamService().getTeamByName(partido.getEquipo1());
+        Team equipoB = partido.getEquipo2() != null ? new TeamService().getTeamByName(partido.getEquipo2()) : null;
+
+        MatchService matchService;
+
+        if (equipoB == null) {
+            // ⚠️ Partido con avance automático (bye)
+            matchService = new MatchService(torneo, equipoA, null);
+            matchService.getMatch().setPuntajeA(1); // Victoria automática
+            matchService.getMatch().setPuntajeB(0);
+        } else {
+            matchService = new MatchService(torneo, equipoA, equipoB);
+            matchService.getMatch().setPuntajeA(equipoA.getNombre().equals(equipoGanador) ? 1 : 0);
+            matchService.getMatch().setPuntajeB(equipoB.getNombre().equals(equipoGanador) ? 1 : 0);
+        }
+
+        matchService.finalizarPartido(); // ✅ Guarda match, estadísticas, puntos
+
+        // ✅ Cambiar estado del torneo si es la primera vez que se juega
+        if (torneo.getEstado().equalsIgnoreCase("Por comenzar")) {
+            torneo.setEstado("Iniciado");
+            torneoService.updateTournament(torneo.getNombre(), torneo);
+        }
+
+        // ➕ Avanza a la siguiente ronda
         allMatches.stream()
                 .filter(p -> p.getRonda() == partido.getRonda() + 1)
                 .filter(p -> p.getEquipo1() == null || p.getEquipo2() == null)
@@ -111,7 +143,7 @@ public class BracketMatchService {
                         p.setEquipo2(equipoGanador);
                     }
                 }, () -> {
-                    // Solo se llega aquí si no existía nodo en la siguiente ronda (respaldo)
+                    // Crear nuevo partido si no existía
                     allMatches.add(new BracketMatch(
                             partido.getTorneo(),
                             partido.getRonda() + 1,
@@ -121,6 +153,9 @@ public class BracketMatchService {
                 });
 
         guardarPartidosEnArchivo(partido.getTorneo());
+
+        // 🏆 Verificar si el torneo terminó
+        verificarYGuardarGanadorDelTorneo();
     }
 
     /**
@@ -225,4 +260,37 @@ public class BracketMatchService {
         getMatchFile(torneo).delete();
         allMatches.clear();
     }
+
+    public void verificarYGuardarGanadorDelTorneo() {
+        BracketMatch finalMatch = getFinalMatch();
+        if (finalMatch == null || !finalMatch.isJugado()) return;
+
+        TournamentService torneoService = new TournamentService();
+        Tournament torneo = torneoService.getTournamentByName(finalMatch.getTorneo());
+
+        int cantidadEquipos = torneo.getCantidadEquipos();
+        int partidosEsperados = cantidadEquipos - 1;
+        long partidosJugados = allMatches.stream().filter(BracketMatch::isJugado).count();
+
+        // Solo si se han jugado todos los partidos esperados
+        if (partidosJugados == partidosEsperados) {
+            String ganador = finalMatch.getGanador();
+
+            torneo.setGanador(ganador);
+            torneo.setEstado("Finalizado"); // ✅ PASO 3: cambiar estado
+
+            torneoService.updateTournament(torneo.getNombre(), torneo);
+
+            // También actualiza en TeamTournamentStats
+            new TeamTournamentStatsService().asignarResultadoFinalTorneo(ganador, torneo.getNombre(), "Ganador");
+        }
+    }
+
+    public BracketMatch getFinalMatch() {
+        return allMatches.stream()
+                .filter(BracketMatch::isJugado)
+                .max(Comparator.comparingInt(BracketMatch::getRonda))
+                .orElse(null);
+    }
+
 }
