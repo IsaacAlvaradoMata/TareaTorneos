@@ -18,7 +18,6 @@
   ~ along with MaterialFX.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXFilterComboBox?>
 <?import io.github.palexdev.materialfx.controls.MFXTableView?>
 <?import javafx.geometry.Insets?>
@@ -145,21 +144,16 @@
                                                 <Label fx:id="lblAnotacionesContra" alignment="CENTER" contentDisplay="CENTER" layoutX="123.0" layoutY="24.0" prefHeight="30.0" prefWidth="150.0" styleClass="lbl-informacionRankings" HBox.hgrow="ALWAYS" />
                                              </children>
                                           </HBox>
-                                          <MFXButton fx:id="btnEstadisticasAvanzadas" onAction="#onActionBtnEstadisticasAvanzadas" styleClass="btn-Rankings" text="Estadisticas Avanzadas">
-                                             <VBox.margin>
-                                                <Insets bottom="15.0" top="20.0" />
-                                             </VBox.margin>
-                                          </MFXButton>
                                                 </children>
                                                 <padding>
-                                                    <Insets bottom="5.0" left="15.0" right="30.0" top="10.0" />
+                                                    <Insets bottom="20.0" left="15.0" right="30.0" top="10.0" />
                                                 </padding>
                                             </VBox>
                                  </content>
                               </Tab>
                               <Tab closable="false" text="Estadisticas Avanzadas">
                                  <content>
-                                    <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="512.0" prefWidth="316.0" spacing="20.0">
+                                    <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="512.0" prefWidth="316.0" spacing="15.0">
                                        <children>
                                           <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="300.0" styleClass="lbl-SubTitulosRankings" text="Estadisticas Avanzadas Por Torneo:" VBox.vgrow="ALWAYS">
                                              <VBox.margin>
@@ -171,14 +165,9 @@
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                              </columnResizePolicy>
                                           </TableView>
-                                          <MFXButton fx:id="btnEstadisticasGenerales" onAction="#onActionBtnEstadisticasGenerales" styleClass="btn-Rankings" text="Estadisticas Generales">
-                                             <VBox.margin>
-                                                <Insets bottom="15.0" />
-                                             </VBox.margin>
-                                          </MFXButton>
                                        </children>
                                        <padding>
-                                          <Insets bottom="5.0" left="15.0" right="30.0" top="10.0" />
+                                          <Insets bottom="25.0" left="15.0" right="30.0" top="10.0" />
                                        </padding>
                                     </VBox>
                                  </content>

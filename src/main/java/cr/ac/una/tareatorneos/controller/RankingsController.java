@@ -47,7 +47,6 @@ public class RankingsController extends Controller implements Initializable {
     private ImageView imgFlechaArriba;
     @FXML
     private Separator sprRankings;
-    private MFXTableView<Team> tbvEstadisticasGenerales;
     @FXML
     private MFXTableView<Team> tbvRankingEquipos;
     @FXML
@@ -71,11 +70,7 @@ public class RankingsController extends Controller implements Initializable {
     @FXML
     private Label lblAnotacionesContra;
     @FXML
-    private MFXButton btnEstadisticasAvanzadas;
-    @FXML
     private TableView<ObservableList<String>> tbvStatsTorneos;
-    @FXML
-    private MFXButton btnEstadisticasGenerales;
     
     private ObservableList<Team> teamsData = FXCollections.observableArrayList();
     private TeamService teamService;
@@ -119,17 +114,6 @@ public class RankingsController extends Controller implements Initializable {
             mostrarEstadisticasEquipo(seleccionado);
         }
     }
-
-
-
-    @FXML
-    private void onActionBtnEstadisticasAvanzadas(ActionEvent event) {
-    }
-
-    @FXML
-    private void onActionBtnEstadisticasGenerales(ActionEvent event) {
-    }
-
 
 
     private void mostrarEstadisticasEquipo(Team team) {
@@ -232,10 +216,6 @@ public class RankingsController extends Controller implements Initializable {
         );
         tbvStatsTorneos.getColumns().add(resultadoTorneoCol);
     }
-
-
-
-
 
     private void loadAllTeams() {
         equiposFiltrados.clear();

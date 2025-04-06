@@ -1625,6 +1625,95 @@
     -fx-image: url('../resources/InfoTieIcon.png');
 }
 
+/*########################### VISTA DE GANADOR ANIMADA #########################################################################*/
+
+.AnchorPane-WinnerView {
+    -fx-background-color: #ffd500; /* Café suave claro */
+    -fx-border-color: #b69a00; /* Café medio */
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+}
+
+.StackPane-WinnerView {
+    -fx-background-color: #fff0d9;
+    -fx-border-color:#b69a00;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+}
+
+/*COMPONENTES*/
+
+/* Título */
+.title-label {
+    -fx-font-size: 28px;
+    -fx-text-fill: #FFD700;
+    -fx-font-weight: bold;
+}
+
+/* Nombre del equipo */
+.team-name {
+    -fx-font-size: 22px;
+    -fx-text-fill: #222;
+    -fx-font-weight: bold;
+    -fx-background-color: #574b01;;
+    -fx-border-color: #FFD700;
+    -fx-border-width: 3;
+    -fx-border-radius: 4;
+    -fx-background-radius: 6;
+    -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+}
+
+/* Botón imprimir */
+.print-button {
+    -fx-background-color: #FFD700;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(one-pass-box, #d4af37, 5, 0, 0, 2);
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+}
+
+.print-button:hover {
+    -fx-background-color: #ffea00;
+}
+
+/* Contenedor con borde dorado animado */
+.gold-border {
+    -fx-padding: 5;
+    -fx-border-color: linear-gradient(
+            from 0% 0% to 100% 100%,
+            #FFD700,
+            #FFFACD,
+            #FFD700
+    );
+    -fx-border-width: 5;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, #FFD700, 12, 0.5, 0, 0);
+    -fx-background-color: transparent;
+    -fx-animation: shine 2s infinite linear;
+}
+
+/* Animación CSS simulada por transición desde JavaFX, pero agregamos brillo visual aquí */
+@keyframes shine {
+    from {
+        -fx-border-color: linear-gradient(from 0% 0% to 100% 100%, #FFD700, #FFFACD, #FFD700);
+    }
+    to {
+        -fx-border-color: linear-gradient(from 100% 0% to 0% 100%, #FFD700, #FFFACD, #FFD700);
+    }
+}
+
+
 
 
 /**IMAGENES DE BOTONES**/

@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <AnchorPane fx:id="root1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="AnchorPane-MatchView" stylesheets="@StyleTournament.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tareatorneos.controller.MatchController">
    <children>
       <StackPane fx:id="spMatch" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" styleClass="StackPane-MatchView" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
@@ -68,9 +67,9 @@
                <top>
                   <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="33.0" prefWidth="741.0" spacing="10.0" BorderPane.alignment="CENTER">
                      <children>
-                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="imgBannerA" />
+                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" styleClass="imgBannerA" />
                         <Label fx:id="lblTorneo" alignment="CENTER" prefHeight="40.0" prefWidth="400.0" styleClass="label-TituloMatchView" text="Nombre del Torneo" HBox.hgrow="ALWAYS" />
-                        <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="160.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" styleClass="imgBannerB" />
+                        <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="160.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" styleClass="imgBannerB" />
                      </children>
                      <padding>
                         <Insets top="10.0" />
