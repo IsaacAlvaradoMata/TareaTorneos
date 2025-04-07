@@ -16,7 +16,7 @@ public class AchievementService {
         List<Achievement> logros = AchievementUtils.generarLogrosIniciales(); // ✅ base con los 9 logros predefinidos
 
         TeamTournamentStats stats = statsService.getAllStats().stream()
-                .filter(e -> e.getNombreEquipo().equalsIgnoreCase(nombreEquipo))
+                .filter(e -> e.getNombreEquipo() != null && e.getNombreEquipo().equalsIgnoreCase(nombreEquipo))
                 .findFirst()
                 .orElse(null);
 

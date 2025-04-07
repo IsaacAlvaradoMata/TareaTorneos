@@ -122,6 +122,7 @@ public class MatchController extends Controller implements Initializable {
 
         // 🏆 Asignar ganador en el objeto del bracket
         String equipoGanador = puntajeA > puntajeB ? equipoA : equipoB;
+        bracketService.registrarGanador(partidoActual, equipoGanador);
         partidoActual.setGanador(equipoGanador);
         partidoActual.setJugado(true);
 
