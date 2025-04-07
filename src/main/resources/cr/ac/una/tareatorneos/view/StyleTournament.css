@@ -1714,6 +1714,67 @@
 }
 
 
+/*########################### VISTA DE LOGROS ANIMADA #########################################################################*/
+
+.AnchorPane-LogrosAnimado {
+    -fx-background-color: #00fff4; /* Café suave claro */
+    -fx-border-color: #006ab6; /* Café medio */
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+}
+
+.StackPane-LogrosAnimado {
+    -fx-background-color: #cdfaf2;
+    -fx-border-color:#006ab6;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+}
+
+/*COMPONENTES*/
+
+/* Título */
+.title-LogrosAnimado {
+    -fx-font-size: 28px;
+    -fx-text-fill: #006ab6;
+    -fx-font-weight: bold;
+}
+
+/* Nombre del equipo */
+.team-name-LogrosAnimado {
+    -fx-font-size: 22px;
+    -fx-text-fill: #222;
+    -fx-font-weight: bold;
+    -fx-background-color: #014675;
+    -fx-border-color: #3177a9;
+    -fx-border-width: 3;
+    -fx-border-radius: 4;
+    -fx-background-radius: 6;
+    -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+}
+
+/* Botón imprimir */
+.close-btn-LogrosAnimado {
+    -fx-background-color: #006ab6;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(one-pass-box, #006ab6, 5, 0, 0, 2);
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+}
+
+.close-btn-LogrosAnimado:hover {
+    -fx-background-color: #006ab6;
+}
+
 
 
 /**IMAGENES DE BOTONES**/

@@ -8,6 +8,7 @@
     import cr.ac.una.tareatorneos.model.Team;
     import cr.ac.una.tareatorneos.service.SportService;
     import cr.ac.una.tareatorneos.service.TeamService;
+    import cr.ac.una.tareatorneos.util.FlowController;
     import io.github.palexdev.materialfx.controls.MFXButton;
     import io.github.palexdev.materialfx.controls.MFXFilterComboBox;
     import io.github.palexdev.materialfx.controls.MFXTableColumn;
@@ -34,6 +35,7 @@
     import javafx.stage.Stage;
     import javafx.util.Duration;
 
+    import javafx.event.ActionEvent;
     import java.net.URL;
     import java.util.List;
     import java.util.Map;
@@ -52,8 +54,6 @@
         private Label lblLogrosTitulo;
         @FXML
         private MFXTableView<Team> tbvLogrosEquipos;
-        @FXML
-        private ImageView imgFlechaArribaLogros;
         @FXML
         private Separator sprLogros;
         @FXML
@@ -78,9 +78,10 @@
         private ImageView imgMedallaTorneo;
         @FXML
         private ImageView imgInfo;
-
         @FXML
         private MFXFilterComboBox<String> cmbAchievements;
+        @FXML
+        private MFXButton btnLogrosAnimacion;
 
         private MFXGenericDialog dialogContent;
         private MFXStageDialog dialog;
@@ -237,8 +238,8 @@
             MFXFontIcon infoIcon = new MFXFontIcon("fas-bolt-lightning", 18);
             dialogContent.setHeaderIcon(infoIcon);
             dialogContent.setHeaderText("Máxima Potencia");
-            dialogContent.setContentText("¡Pura ofensiva! Tu equipo ha logrado marcar más de 20 puntos en un solo torneo, demostrando que el ataque es su mejor defensa.\n\n" +
-                    "🔓 Cómo conseguirlo: Anota más de 20 puntos a lo largo de un torneo.");
+            dialogContent.setContentText("¡Pura ofensiva! Tu equipo ha logrado marcar 20 anotaciones o más en un solo torneo, demostrando que el ataque es su mejor defensa.\n\n" +
+                    "🔓 Cómo conseguirlo: Anota 20 anotaciones o más a lo largo de un torneo.");
             convertDialogTo("mfx-info-dialog");
             dialog.showDialog();
         }
@@ -299,6 +300,19 @@
             dialog.showDialog();
 
         }
+        @FXML
+        private void onActionBtnLogrosAnimacion(ActionEvent event) {
+            // 1. Navega a la vista
+            FlowController.getInstance().goView("UnlockAchievementView");
+
+            // 2. Obtiene el controller
+            UnlockAchievementController controller = (UnlockAchievementController)
+                    FlowController.getInstance().getController("UnlockAchievementView");
+
+            // 3. Llama al reset completo con el nombre del equipo
+            controller.resetAndRunAnimationsLogros("Dominador Supremo"); // O usa un nombre dinámico
+        }
+
 
         private void loadAllTeams() {
             equiposFiltrados.clear();
@@ -366,5 +380,8 @@
         public void actualizarComboBoxAchievements() {
             loadSportsInComboBox();
         }
+
+
+
 
     }
