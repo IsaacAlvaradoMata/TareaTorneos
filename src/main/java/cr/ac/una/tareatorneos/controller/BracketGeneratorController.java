@@ -194,6 +194,9 @@ public class BracketGeneratorController extends Controller implements Initializa
             for (int i = 0; i < rondaPartidos.size(); i++) {
                 BracketMatch match = rondaPartidos.get(i);
                 StackPane nodo = crearNodoMatch(match);
+                if (nodo == null) {
+                    continue; // Evitar nodos basura
+                }
                 double y = i * (NODE_HEIGHT + V_GAP) * Math.pow(2, ronda - 1);
                 nodo.setLayoutX(x);
                 nodo.setLayoutY(y);
@@ -207,8 +210,19 @@ public class BracketGeneratorController extends Controller implements Initializa
             List<StackPane> siguiente = rondasVisuales.get(ronda + 1);
 
             for (int i = 0; i < actual.size(); i += 2) {
-                if (i + 1 < actual.size() && (i / 2 < siguiente.size())) {
-                    dibujarConexionesBracket(actual.get(i), actual.get(i + 1), siguiente.get(i / 2));
+                StackPane nodo1 = actual.get(i);
+                StackPane nodo2 = (i + 1 < actual.size()) ? actual.get(i + 1) : null;
+
+                int indexDestino = i / 2;
+                if (indexDestino >= siguiente.size()) continue;
+
+                StackPane destino = siguiente.get(indexDestino);
+
+                if (nodo2 != null) {
+                    dibujarConexionesBracket(nodo1, nodo2, destino);
+                } else {
+                    // 🧠 Dibujar línea solo desde nodo1 al destino
+                    dibujarLineaSimple(nodo1, destino);
                 }
             }
         }
@@ -236,6 +250,26 @@ public class BracketGeneratorController extends Controller implements Initializa
                     bracketContainer.getChildren().add(nodoCampeon);
                 }
             }
+        }
+    }
+
+    private void dibujarLineaSimple(StackPane origen, StackPane destino) {
+        double x1 = origen.getLayoutX() + NODE_WIDTH;
+        double y1 = origen.getLayoutY() + NODE_HEIGHT / 2;
+
+        double x2 = destino.getLayoutX();
+        double y2 = destino.getLayoutY() + NODE_HEIGHT / 2;
+
+        double midX = x1 + 40;
+
+        Line l1 = new Line(x1, y1, midX, y1);
+        Line l2 = new Line(midX, y1, midX, y2);
+        Line l3 = new Line(midX, y2, x2, y2);
+
+        for (Line l : List.of(l1, l2, l3)) {
+            l.setStroke(Color.GRAY);
+            l.setStrokeWidth(2);
+            bracketContainer.getChildren().add(l);
         }
     }
 
@@ -269,26 +303,27 @@ public class BracketGeneratorController extends Controller implements Initializa
     }
 
     private StackPane crearNodoMatch(BracketMatch match) {
+        String equipo1 = match.getEquipo1();
+        String equipo2 = match.getEquipo2();
+
+        // ✅ Evitar nodos basura en ronda 1 (ambos null)
+        if (match.getRonda() == 1 && equipo1 == null && equipo2 == null) {
+            return null;
+        }
+
         StackPane contenedor = new StackPane();
         contenedor.setPrefSize(NODE_WIDTH, NODE_HEIGHT);
         contenedor.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-background-radius: 5; -fx-border-radius: 5;");
 
-        String equipo1 = match.getEquipo1();
-        String equipo2 = match.getEquipo2();
-
         VBox box = new VBox(5);
         box.setAlignment(Pos.CENTER_LEFT);
 
-        if (equipo1 != null) box.getChildren().add(crearItemEquipo(equipo1));
-        if (equipo2 != null) box.getChildren().add(crearItemEquipo(equipo2));
+        // Mostrar placeholders o equipos reales
+        box.getChildren().add(crearItemEquipoConNull(equipo1));
+        box.getChildren().add(crearItemEquipoConNull(equipo2));
 
-        if (equipo1 == null && equipo2 == null) {
-            Label label = new Label("??? vs ???");
-            label.setFont(new Font("Arial", 13));
-            box.getChildren().add(label);
-        }
-
-        if (match.isJugado()) {
+        // 🏆 Mostrar ganador si aplica
+        if (match.isJugado() && match.getGanador() != null) {
             Label ganador = new Label("🏆 " + match.getGanador());
             ganador.setFont(new Font("Arial", 12));
             box.getChildren().add(ganador);
@@ -296,6 +331,37 @@ public class BracketGeneratorController extends Controller implements Initializa
 
         contenedor.getChildren().add(box);
         return contenedor;
+    }
+
+    private HBox crearItemEquipoConNull(String nombreEquipo) {
+        ImageView escudo = new ImageView();
+        escudo.setFitHeight(25);
+        escudo.setFitWidth(25);
+
+        String logoPath = "file:teamsPhotos/default.png";
+        if (nombreEquipo != null) {
+            try {
+                String rawPath = new TeamService().getTeamByName(nombreEquipo).getTeamImage();
+                if (rawPath != null && !rawPath.isBlank()) {
+                    logoPath = rawPath.startsWith("file:") ? rawPath : "file:teamsPhotos/" + rawPath;
+                }
+            } catch (Exception e) {
+                System.out.println("⚠ Error obteniendo logo de " + nombreEquipo);
+            }
+        }
+
+        try {
+            escudo.setImage(new Image(logoPath));
+        } catch (Exception e) {
+            escudo.setImage(new Image("file:teamsPhotos/default.png"));
+        }
+
+        Label label = new Label(nombreEquipo != null ? nombreEquipo : "???");
+        label.setFont(new Font("Arial", 13));
+
+        HBox item = new HBox(6, escudo, label);
+        item.setAlignment(Pos.CENTER_LEFT);
+        return item;
     }
 
     private HBox crearItemEquipo(String nombreEquipo) {
