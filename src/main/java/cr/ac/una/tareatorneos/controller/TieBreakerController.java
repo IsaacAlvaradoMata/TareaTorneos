@@ -220,7 +220,13 @@ public class TieBreakerController implements Initializable {
                 alert.setHeaderText(mensaje);
                 alert.setContentText("¡Felicidades al equipo ganador!");
                 alert.showAndWait();
-                lblTurno.setText("Fin del juego");
+
+                // 🚪 Cerrar la ventana del TieBreaker automáticamente
+                try {
+                    root.getScene().getWindow().hide(); // cerrar ventana tie-breaker
+                } catch (Exception e) {
+                    System.out.println("❌ Error al cerrar TieBreaker window: " + e.getMessage());
+                }
             });
         });
         delay.play();

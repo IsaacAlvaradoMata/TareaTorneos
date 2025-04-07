@@ -146,16 +146,27 @@ public class MatchController extends Controller implements Initializable {
 
     private void iniciarPantallaDesempate(String equipoA, String equipoB) {
         try {
+            // 🚪 Cerrar la ventana actual de partido antes de abrir desempate
+            Stage matchStage = (Stage) btnFinalizar.getScene().getWindow();
+            if (matchStage != null) {
+                matchStage.close(); // <- 💥 cierra MatchView.fxml
+            }
+
+            // 🆕 Cargar vista de desempate
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/cr/ac/una/tareatorneos/view/TieBreakerView.fxml"));
             Parent root = loader.load();
+
             TieBreakerController controller = loader.getController();
             controller.initializeTieBreaker(equipoA, equipoB, matchService);
+
             Stage stage = new Stage();
             stage.setTitle("Desempate ⚔️");
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setOnCloseRequest(e -> e.consume());
+            stage.setResizable(false);
+            stage.setOnCloseRequest(e -> e.consume()); // evitar bugs por cierre manual
             stage.showAndWait();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
