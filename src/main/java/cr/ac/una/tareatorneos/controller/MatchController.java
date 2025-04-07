@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -32,6 +33,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MatchController extends Controller implements Initializable {
@@ -210,8 +212,11 @@ public class MatchController extends Controller implements Initializable {
         });
     }
 
-    private void iniciarCuentaRegresiva(int minutos) {
-        tiempoRestante = minutos * 60;
+    private void iniciarCuentaRegresiva(int segundos) {
+        tiempoRestante = segundos;
+
+        if (tiempoRestante <= 0) return;
+
         countdown = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
             int min = tiempoRestante / 60;
             int seg = tiempoRestante % 60;
@@ -221,38 +226,43 @@ public class MatchController extends Controller implements Initializable {
                 detenerTiempo();
                 lblTiempo.setText("Tiempo: 00:00");
                 desactivarControles();
-                javafx.application.Platform.runLater(() -> mostrarPopupFinalizado());
+                Platform.runLater(() -> mostrarPopupFinalizado());
             }
 
             tiempoRestante--;
         }));
+
         countdown.setCycleCount(Timeline.INDEFINITE);
         countdown.play();
     }
 
     @FXML
     void onActionBtnFinalizar(ActionEvent event) {
-        detenerTiempo();
+        detenerTiempo(); // ⏸️ Pausar temporamente el tiempo
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("🚨 Confirmar Finalización");
         alert.setHeaderText("¿Deseas finalizar este partido?");
         alert.setContentText("Esta acción detendrá el tiempo y mostrará el resultado final.");
 
-        alert.showAndWait().ifPresent(response -> {
-            if (response.getButtonData().isDefaultButton()) {
-                // ⚠️ NO guardar aquí, esperar a mostrarPopupFinalizado()
-                lblTiempo.setText("Tiempo: 00:00");
-                desactivarControles();
-                mostrarPopupFinalizado();
-            } else {
-                reanudarCuentaRegresiva();
-            }
-        });
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            // ✅ Confirmado: terminar partido
+            lblTiempo.setText("Tiempo: 00:00");
+            desactivarControles();
+            mostrarPopupFinalizado();
+        } else {
+            // ❌ Cancelado o cerró con la X: reanudar normal
+            activarControlesDragAndDrop();
+            reanudarCuentaRegresiva();
+        }
     }
 
     private void reanudarCuentaRegresiva() {
-        iniciarCuentaRegresiva(tiempoRestante / 60);
+        if (tiempoRestante > 0) {
+            iniciarCuentaRegresiva(tiempoRestante);
+        }
     }
 
     private void detenerTiempo() {
@@ -263,6 +273,7 @@ public class MatchController extends Controller implements Initializable {
     }
 
     private void activarControlesDragAndDrop() {
+        btnFinalizar.setDisable(false);
         imgEquipoA.setDisable(false);
         imgEquipoB.setDisable(false);
         imgBalon.setDisable(false);
@@ -300,7 +311,7 @@ public class MatchController extends Controller implements Initializable {
         if (balon != null) imgBalon.setImage(balon);
 
         cargarFondoDeporte(sport.getNombre());
-        iniciarCuentaRegresiva(torneo.getTiempoPorPartido());
+        iniciarCuentaRegresiva(torneo.getTiempoPorPartido() * 60);
         activarControlesDragAndDrop();
     }
 
