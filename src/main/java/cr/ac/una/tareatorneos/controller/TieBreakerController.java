@@ -1,5 +1,7 @@
 package cr.ac.una.tareatorneos.controller;
 
+import cr.ac.una.tareatorneos.model.BracketMatch;
+import cr.ac.una.tareatorneos.service.BracketMatchService;
 import cr.ac.una.tareatorneos.service.MatchService;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
@@ -25,7 +27,7 @@ import javafx.util.Duration;
 import java.net.URL;
 import java.util.*;
 
-public class TieBreakerController implements Initializable {
+public class TieBreakerController extends Controller implements Initializable {
     @FXML
     private ImageView cajaA, cajaB, cajaC, imgBalon;
     @FXML
@@ -48,6 +50,9 @@ public class TieBreakerController implements Initializable {
     private boolean equipoAAcierto;
     private boolean equipoBAcierto;
     private MatchService matchService;
+    private BracketMatchService bracketMatchService;
+    private BracketMatch bracketMatch;
+    private BracketGeneratorController parentController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -93,21 +98,23 @@ public class TieBreakerController implements Initializable {
 
     }
 
-    public void initializeTieBreaker(String equipoA, String equipoB, MatchService matchService) {
+    public void initializeTieBreaker(String equipoA, String equipoB, MatchService matchService, BracketMatchService bracketMatchService, BracketGeneratorController parentController) {
         this.equipoA = equipoA;
         this.equipoB = equipoB;
         this.matchService = matchService;
+        this.bracketMatchService = bracketMatchService;
+        this.parentController = parentController;
+        this.bracketMatch = null; // ← puedes usarlo más adelante si querés guardar referencia específica
+
         turnoEquipoA = true;
         lblTurno.setText("Turno: " + equipoA);
 
-        // Cargar imagen del balón desde MatchService (se carga dinámicamente desde disco)
         try {
             imgBalon.setImage(matchService.getImagenBalon());
         } catch (Exception e) {
             System.out.println("⚠ No se pudo cargar imagen del balón desde MatchService");
         }
 
-        // Cargar imagen de las cajas
         try {
             Image imgCaja = new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/caja-empate.png"));
             cajaA.setImage(imgCaja);
@@ -117,7 +124,7 @@ public class TieBreakerController implements Initializable {
             System.out.println("⚠ No se pudo cargar la imagen de caja-empate.png");
         }
 
-        prepararNuevaRonda(); // Mezcla inicial
+        prepararNuevaRonda();
     }
 
     private void configurarDragAndDrop() {
@@ -228,6 +235,10 @@ public class TieBreakerController implements Initializable {
                     System.out.println("❌ Error al cerrar TieBreaker window: " + e.getMessage());
                 }
             });
+            // ✅ Refrescar visual del bracket
+            parentController.cargarBracketDesdePartidos(bracketMatchService.getTodosLosPartidos());
+            parentController.actualizarLabelPartidoPendiente();
+
         });
         delay.play();
     }
@@ -295,4 +306,8 @@ public class TieBreakerController implements Initializable {
         }
     }
 
+    @Override
+    public void initialize() {
+
+    }
 }

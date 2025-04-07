@@ -97,10 +97,38 @@ public class MatchService {
 
     public void finalizarPartidoConDesempate(String ganadorDesempate) {
         match.setFinalizado(true);
+
+        // 1. Guardar en archivo de estadísticas
         guardarMatchEnJson(match);
+
         TeamTournamentStatsService statsService = new TeamTournamentStatsService();
         statsService.guardarEstadisticaDelPartido(match, ganadorDesempate);
         statsService.actualizarPuntosDeTodosLosTorneos();
+
+        // 2. Actualizar estado en el bracket correctamente
+        BracketMatchService bracketService = new BracketMatchService();
+        bracketService.cargarPartidosDesdeArchivo(match.getTorneoNombre()); // ❗ FALTA ESTO
+
+        List<BracketMatch> partidos = bracketService.getTodosLosPartidos();
+
+        for (BracketMatch bm : partidos) {
+            System.out.println("🔎 Comparando contra BM: " + bm.getTorneo() + " | " + bm.getEquipo1() + " vs " + bm.getEquipo2());
+
+            if (bm.getTorneo().equals(match.getTorneoNombre())
+                    && bm.getEquipo1().equals(match.getEquipoA())
+                    && bm.getEquipo2().equals(match.getEquipoB())
+                    && !bm.isJugado()) {
+
+                System.out.println("🎯 ¡Match encontrado!");
+
+                bm.setGanador(ganadorDesempate);
+                bm.setJugado(true);
+
+                bracketService.registrarGanador(bm, ganadorDesempate);  // actualiza brackets
+                break;
+            }
+        }
+        bracketService.guardarPartidosEnArchivo(match.getTorneoNombre()); // ✅ siempre guardar
     }
 
     public String getGanador() {
