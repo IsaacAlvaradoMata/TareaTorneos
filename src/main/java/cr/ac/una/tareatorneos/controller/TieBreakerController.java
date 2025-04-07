@@ -3,6 +3,7 @@ package cr.ac.una.tareatorneos.controller;
 import cr.ac.una.tareatorneos.model.BracketMatch;
 import cr.ac.una.tareatorneos.service.BracketMatchService;
 import cr.ac.una.tareatorneos.service.MatchService;
+import cr.ac.una.tareatorneos.service.TournamentService;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
@@ -215,7 +216,6 @@ public class TieBreakerController extends Controller implements Initializable {
         cajaB.setDisable(true);
         cajaC.setDisable(true);
 
-        // 🆕 Registrar estadística con el ganador por desempate
         String ganadorDesempate = equipoAAcierto ? equipoA : equipoB;
         matchService.finalizarPartidoConDesempate(ganadorDesempate);
 
@@ -228,17 +228,19 @@ public class TieBreakerController extends Controller implements Initializable {
                 alert.setContentText("¡Felicidades al equipo ganador!");
                 alert.showAndWait();
 
-                // 🚪 Cerrar la ventana del TieBreaker automáticamente
+                // ✅ Cerrar ventana
                 try {
-                    root.getScene().getWindow().hide(); // cerrar ventana tie-breaker
+                    root.getScene().getWindow().hide();
                 } catch (Exception e) {
-                    System.out.println("❌ Error al cerrar TieBreaker window: " + e.getMessage());
+                    System.out.println("❌ Error al cerrar TieBreaker: " + e.getMessage());
                 }
-            });
-            // ✅ Refrescar visual del bracket
-            parentController.cargarBracketDesdePartidos(bracketMatchService.getTodosLosPartidos());
-            parentController.actualizarLabelPartidoPendiente();
 
+                // ✅ ⚠ REFORZAMOS: recarga de torneo y partidos desde archivo
+                bracketMatchService.cargarPartidosDesdeArchivo(matchService.getMatch().getTorneoNombre());
+                parentController.setTorneoActual(new TournamentService().getTournamentByName(matchService.getMatch().getTorneoNombre()));
+                parentController.cargarBracketDesdePartidos(bracketMatchService.getTodosLosPartidos());
+                parentController.actualizarLabelPartidoPendiente();
+            });
         });
         delay.play();
     }

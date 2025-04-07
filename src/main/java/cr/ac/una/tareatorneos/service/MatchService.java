@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MatchService {
 
@@ -115,8 +116,8 @@ public class MatchService {
             System.out.println("🔎 Comparando contra BM: " + bm.getTorneo() + " | " + bm.getEquipo1() + " vs " + bm.getEquipo2());
 
             if (bm.getTorneo().equals(match.getTorneoNombre())
-                    && bm.getEquipo1().equals(match.getEquipoA())
-                    && bm.getEquipo2().equals(match.getEquipoB())
+                    && Objects.equals(bm.getEquipo1(), match.getEquipoA())
+                    && Objects.equals(bm.getEquipo2(), match.getEquipoB())
                     && !bm.isJugado()) {
 
                 System.out.println("🎯 ¡Match encontrado!");
