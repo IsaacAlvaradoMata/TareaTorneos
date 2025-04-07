@@ -11,7 +11,6 @@ import cr.ac.una.tareatorneos.util.Mensaje;
 import io.github.palexdev.materialfx.controls.*;
 import java.net.URL;
 import java.util.*;
-
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
@@ -312,12 +311,10 @@ public class TournamentMaintenanceController extends Controller implements Initi
         if (controller != null) {
             controller.recargarEquiposDesdeJSON();
         }
+        // 🔁 Limpiar selección restante en la lista seleccionada
+        chklistviewEquiposSeleccionados1.getSelectionModel().clearSelection();
+
     }
-
-
-
-
-
 
     @FXML
     private void handleTableClickTorneosMantenimiento(MouseEvent event) {
@@ -604,6 +601,9 @@ public class TournamentMaintenanceController extends Controller implements Initi
         if (controller != null) {
             controller.recargarEquiposDesdeJSON();
         }
+
+        // 🔁 Limpiar selección restante para evitar auto-selección visual
+        chklistviewEquiposDisponibles1.getSelectionModel().clearSelection();
 
     }
 
