@@ -157,7 +157,7 @@ public class MatchController extends Controller implements Initializable {
             Parent root = loader.load();
 
             TieBreakerController controller = loader.getController();
-            controller.initializeTieBreaker(equipoA, equipoB, matchService);
+            controller.initializeTieBreaker(equipoA, equipoB, matchService, bracketService, bracketParent);
 
             Stage stage = new Stage();
             stage.setTitle("Desempate ⚔️");

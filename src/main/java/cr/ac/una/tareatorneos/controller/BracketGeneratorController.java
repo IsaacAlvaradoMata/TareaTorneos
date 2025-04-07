@@ -179,6 +179,7 @@ public class BracketGeneratorController extends Controller implements Initializa
     }
 
     public void cargarBracketDesdePartidos(List<BracketMatch> partidos) {
+        matchService.cargarPartidosDesdeArchivo(torneoActual.getNombre());
         bracketContainer.getChildren().clear();
         List<List<StackPane>> rondasVisuales = new ArrayList<>();
 
