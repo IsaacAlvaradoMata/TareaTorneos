@@ -413,6 +413,21 @@ public class TournamentMaintenanceController extends Controller implements Initi
         TournamentService service = new TournamentService();
         Tournament torneoActual = service.getTournamentByName(torneoSeleccionado.getNombre());
 
+
+        // 🛡️ Validar si realmente hubo algún cambio
+        boolean sinCambios = torneoActual.getNombre().equals(nuevoNombre) &&
+                torneoActual.getDeporte().equals(nuevoDeporte) &&
+                torneoActual.getTiempoPorPartido() == nuevoTiempo &&
+                torneoActual.getCantidadEquipos() == nuevaCantidad;
+
+        if (sinCambios) {
+            mensajeUtil.show(Alert.AlertType.INFORMATION,
+                    "Sin cambios detectados",
+                    "No se han realizado modificaciones al torneo.");
+            return;
+        }
+
+
         if (torneoActual == null) {
             mensajeUtil.show(Alert.AlertType.ERROR,
                     "Error de datos",
