@@ -6,6 +6,7 @@ import cr.ac.una.tareatorneos.service.BracketMatchService;
 import cr.ac.una.tareatorneos.service.TeamService;
 import cr.ac.una.tareatorneos.service.TournamentService;
 import io.github.palexdev.materialfx.controls.MFXButton;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -24,12 +25,13 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
+import cr.ac.una.tareatorneos.util.AnimationDepartment;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
 
 public class BracketGeneratorController extends Controller implements Initializable {
 
@@ -53,10 +55,10 @@ public class BracketGeneratorController extends Controller implements Initializa
     private BracketMatchService matchService = new BracketMatchService();
     private Tournament torneoActual;
 
-    private static final double NODE_WIDTH = 160;
-    private static final double NODE_HEIGHT = 60;
-    private static final double H_GAP = 200;
-    private static final double V_GAP = 30;
+    private static final double NODE_WIDTH = 200;
+    private static final double NODE_HEIGHT = 110;
+    private static final double H_GAP = 250;
+    private static final double V_GAP = 40;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -108,13 +110,13 @@ public class BracketGeneratorController extends Controller implements Initializa
         }
 
         if (equipo1 != null && equipo2 != null) {
-            lblPartidoActual.setText("🎯 Partido pendiente: " + equipo1 + " vs " + equipo2);
+            lblPartidoActual.setText("  🎯 Partido pendiente: " + equipo1 + " vs " + equipo2 + "  " );
             btnPlay.setDisable(false);
             return;
         }
 
         // 🔒 Caso de seguridad
-        lblPartidoActual.setText("⌛ Esperando equipos para siguiente partido...");
+        lblPartidoActual.setText("  ⌛ Esperando equipos para siguiente partido...  ");
         btnPlay.setDisable(true);
     }
 
@@ -156,7 +158,7 @@ public class BracketGeneratorController extends Controller implements Initializa
         }
 
         // 🎯 Partido regular
-        lblPartidoActual.setText("🎯 Partido pendiente: " + equipo1 + " vs " + equipo2);
+        lblPartidoActual.setText("➙Partido pendiente: " + equipo1 + " vs " + equipo2);
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/cr/ac/una/tareatorneos/view/MatchView.fxml"));
@@ -230,6 +232,17 @@ public class BracketGeneratorController extends Controller implements Initializa
 
                 StackPane destino = siguiente.get(indexDestino);
 
+                double yPadre1 = nodo1.getLayoutY();
+                double yPadre2 = (nodo2 != null) ? nodo2.getLayoutY() : yPadre1;
+
+                double centroYPadre1 = yPadre1 + NODE_HEIGHT / 2;
+                double centroYPadre2 = yPadre2 + NODE_HEIGHT / 2;
+
+                double centroDestino = (centroYPadre1 + centroYPadre2) / 2;
+                double yDestinoAjustado = centroDestino - NODE_HEIGHT / 2;
+
+                destino.setLayoutY(yDestinoAjustado);
+
                 if (nodo2 != null) {
                     dibujarConexionesBracket(nodo1, nodo2, destino);
                 } else {
@@ -252,8 +265,14 @@ public class BracketGeneratorController extends Controller implements Initializa
                                         )
                 )) {
                     StackPane nodoCampeon = crearNodoCampeon(finalMatch.getGanador());
-                    double x = maxRonda * H_GAP;
-                    double y = 0;
+                    double x = (maxRonda + 1) * H_GAP;
+
+                    // ✅ alinear con el nodo final en Y
+                    List<StackPane> ultimaRonda = rondasVisuales.get(maxRonda - 1);
+                    StackPane nodoFinal = ultimaRonda.get(0);
+                    double yCentroFinal = nodoFinal.getLayoutY() + NODE_HEIGHT / 2;
+                    double y = yCentroFinal - NODE_HEIGHT / 2;
+
                     nodoCampeon.setLayoutX(x);
                     nodoCampeon.setLayoutY(y);
                     bracketContainer.getChildren().add(nodoCampeon);
@@ -269,30 +288,30 @@ public class BracketGeneratorController extends Controller implements Initializa
         double x2 = destino.getLayoutX();
         double y2 = destino.getLayoutY() + NODE_HEIGHT / 2;
 
-        double midX = x1 + 40;
-
-        Line l1 = new Line(x1, y1, midX, y1);
-        Line l2 = new Line(midX, y1, midX, y2);
-        Line l3 = new Line(midX, y2, x2, y2);
-
-        for (Line l : List.of(l1, l2, l3)) {
-            l.setStroke(Color.GOLD);
-            l.setStrokeWidth(2);
-            bracketContainer.getChildren().add(l);
-        }
+        Line linea = new Line(x1, y1, x2, y2);
+        linea.setStroke(Color.GOLD);
+        linea.setStrokeWidth(2);
+        bracketContainer.getChildren().add(linea);
     }
+
+
 
     private StackPane crearNodoCampeon(String nombreEquipo) {
         StackPane contenedor = new StackPane();
         contenedor.setPrefSize(NODE_WIDTH, NODE_HEIGHT);
-        contenedor.setStyle("-fx-background-color: gold; -fx-border-color: black; -fx-background-radius: 5; -fx-border-radius: 5;");
+        contenedor.getStyleClass().add("bracket-contenedor-campeon");
+        Platform.runLater(() -> AnimationDepartment.glowBorder(contenedor));
 
         VBox box = new VBox(6);
         box.setAlignment(Pos.CENTER);
 
         ImageView escudo = new ImageView();
-        escudo.setFitHeight(30);
-        escudo.setFitWidth(30);
+        escudo.setFitHeight(40);
+        escudo.setFitWidth(40);
+        StackPane imageWrapper = new StackPane(escudo);
+        imageWrapper.setMaxHeight(40);
+        imageWrapper.setMaxWidth(40);
+        imageWrapper.getStyleClass().add("img-bracket");
 
         try {
             String rawPath = new TeamService().getTeamByName(nombreEquipo).getTeamImage();
@@ -303,10 +322,9 @@ public class BracketGeneratorController extends Controller implements Initializa
         }
 
         Label label = new Label("🏆 " + nombreEquipo);
-        label.setFont(new Font("Arial Bold", 14));
-        label.setTextFill(Color.DARKBLUE);
+        label.getStyleClass().add("label-bracket");
 
-        box.getChildren().addAll(escudo, label);
+        box.getChildren().addAll(imageWrapper, label);
         contenedor.getChildren().add(box);
         return contenedor;
     }
@@ -322,8 +340,8 @@ public class BracketGeneratorController extends Controller implements Initializa
 
         StackPane contenedor = new StackPane();
         contenedor.setPrefSize(NODE_WIDTH, NODE_HEIGHT);
-        contenedor.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-background-radius: 5; -fx-border-radius: 5;");
-
+        contenedor.getStyleClass().add("bracket-contenedor");
+        Platform.runLater(() -> AnimationDepartment.glowBorder(contenedor));
         VBox box = new VBox(5);
         box.setAlignment(Pos.CENTER_LEFT);
         box.setStyle("-fx-padding: 4 0 4 6;");
@@ -336,20 +354,23 @@ public class BracketGeneratorController extends Controller implements Initializa
 
         box.getChildren().add(crearItemEquipoConExtras(match.getEquipo1(), score1, esGanador1));
         box.getChildren().add(crearItemEquipoConExtras(match.getEquipo2(), score2, esGanador2));
+        contenedor.getChildren().add(box);
 
-        // 🏆 Mostrar ganador si aplica
-        if (match.isJugado() && match.getGanador() != null) {
-
+        if (esGanador1 || esGanador2) {
+            Platform.runLater(() -> AnimationDepartment.glowBorder(contenedor));
         }
 
-        contenedor.getChildren().add(box);
         return contenedor;
     }
 
     private HBox crearItemEquipoConExtras(String nombreEquipo, int puntaje, boolean esGanador) {
         ImageView escudo = new ImageView();
-        escudo.setFitHeight(25);
-        escudo.setFitWidth(25);
+        escudo.setFitHeight(35);
+        escudo.setFitWidth(35);
+
+        StackPane imageWrapper = new StackPane(escudo);
+        imageWrapper.getStyleClass().add("img-bracket");
+
 
         String logoPath = "file:teamsPhotos/default.png";
         if (nombreEquipo != null) {
@@ -366,60 +387,30 @@ public class BracketGeneratorController extends Controller implements Initializa
         escudo.setImage(new Image(logoPath));
 
         Label nombreLbl = new Label(nombreEquipo != null ? nombreEquipo : "???");
-        nombreLbl.setFont(new Font("Arial", 13));
+        nombreLbl.getStyleClass().add("label-bracket");
         nombreLbl.setWrapText(false);
         nombreLbl.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(nombreLbl, Priority.ALWAYS);
 
         Label puntajeLbl = new Label("(" + puntaje + ")");
-        puntajeLbl.setFont(new Font("Arial", 12));
+        puntajeLbl.getStyleClass().add("label-bracket");
 
         HBox info = new HBox(5, nombreLbl, puntajeLbl);
+        info.setAlignment(Pos.CENTER_LEFT); // Asegura alineación centrada vertical
+
         if (esGanador) {
             Label trofeo = new Label("🏆");
             trofeo.setFont(new Font("Arial", 13));
             info.getChildren().add(trofeo);
         }
 
-        HBox item = new HBox(8, escudo, info);
+        HBox item = new HBox(8, imageWrapper, info);
         item.setAlignment(Pos.CENTER_LEFT);
         item.setStyle("-fx-padding: 4 0 4 8;");
         return item;
     }
 
-    private HBox crearItemEquipo(String nombreEquipo) {
-        ImageView escudo = new ImageView();
-        escudo.setFitHeight(25);
-        escudo.setFitWidth(25);
 
-        String logoPath = "file:teamsPhotos/default.png";
-        try {
-            String rawPath = new TeamService().getTeamByName(nombreEquipo).getTeamImage();
-            if (rawPath != null && !rawPath.isBlank()) {
-                if (!rawPath.startsWith("file:") && !rawPath.startsWith("http")) {
-                    logoPath = "file:teamsPhotos/" + rawPath;
-                } else {
-                    logoPath = rawPath;
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("⚠ Error obteniendo logo de " + nombreEquipo);
-        }
-
-        try {
-            escudo.setImage(new Image(logoPath));
-        } catch (Exception e) {
-            escudo.setImage(new Image("file:teamsPhotos/default.png"));
-        }
-
-        Label nombre = new Label(nombreEquipo);
-        nombre.setFont(new Font("Arial", 13));
-
-        HBox item = new HBox(6, escudo, nombre);
-        item.setAlignment(Pos.CENTER_LEFT);
-        item.setStyle("-fx-padding: 0 0 0 8;");
-        return item;
-    }
 
     private void dibujarConexionesBracket(StackPane nodo1, StackPane nodo2, StackPane destino) {
         double x1 = nodo1.getLayoutX() + NODE_WIDTH;
@@ -428,13 +419,19 @@ public class BracketGeneratorController extends Controller implements Initializa
         double x2 = nodo2.getLayoutX() + NODE_WIDTH;
         double y2 = nodo2.getLayoutY() + NODE_HEIGHT / 2;
 
-        double midX = x1 + 40;
+        double offsetCorto = 12;     // para nodo1
+        double offsetLargo = 32;     // para nodo2
+
+        double midX1 = x1 + offsetCorto;
+        double midX2 = x2 + offsetLargo;
+        double midX = Math.max(midX1, midX2); // punto de encuentro
         double midY = (y1 + y2) / 2;
 
-        Line l1 = new Line(x1, y1, midX, y1);
-        Line l2 = new Line(x2, y2, midX, y2);
-        Line l3 = new Line(midX, y1, midX, y2);
-        Line l4 = new Line(midX, midY, destino.getLayoutX(), midY);
+        Line l1 = new Line(x1, y1, midX, y1); // nodo1 →
+        Line l2 = new Line(x2, y2, midX, y2); // nodo2 → (más largo ahora)
+        Line l3 = new Line(midX, y1, midX, y2); // unión vertical
+        Line l4 = new Line(midX, midY, destino.getLayoutX(), midY); // hacia el nodo destino
+
 
         for (Line l : List.of(l1, l2, l3, l4)) {
             l.setStroke(Color.GOLD);
@@ -442,6 +439,7 @@ public class BracketGeneratorController extends Controller implements Initializa
             bracketContainer.getChildren().add(l);
         }
     }
+
 
     @Override
     public void initialize() {

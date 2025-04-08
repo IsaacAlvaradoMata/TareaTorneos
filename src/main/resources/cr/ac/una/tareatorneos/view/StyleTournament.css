@@ -236,6 +236,13 @@
 
 }
 
+.boton-seleccionado {
+    -fx-background-color: #338c9b;
+    -fx-border-color: BLACK;
+    -fx-border-width: 0px 0px 0px 3px;
+}
+
+
 .sidebarItem:hover {
     -fx-background-color: #338c9b;
     -fx-border-color: BLACK;
@@ -1778,29 +1785,9 @@
 
 /*########################### VISTA DE BRACKETS #########################################################################*/
 
-.AnchorPane-Bracket {
-    -fx-background-color: #b0f0a5; /* Café suave claro */
-    -fx-border-color: #003c00; /* Café medio */
-    -fx-border-width: 5;
-    -fx-border-radius: 15;
-    -fx-background-radius: 19;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-    -fx-font-family: "Trebuchet MS", sans-serif;
-}
-
-.StackPane-Bracket {
-    -fx-background-color: #f2ffee;
-    -fx-border-color:#003c00;
-    -fx-border-width: 5;
-    -fx-border-radius: 15;
-    -fx-background-radius: 19;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
-}
-
 .lbl-TitleBracket {
     -fx-font-size: 20px;
-
-    -fx-text-fill: #FFD700;
+    -fx-text-fill: linear-gradient(#FFD700, #FFA500);
     -fx-font-weight: bold;
     -fx-padding: 5 0 5 0;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
@@ -1896,6 +1883,62 @@
 #btnPlay > ImageView {
     -fx-image: url('../resources/EspadaIcon.png ');
 }
+
+.bracket-contenedor {
+    -fx-background-color: #fff9cc;
+    -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
+    -fx-border-radius: 6;
+    -fx-background-radius: 7;
+    -fx-border-width: 3;
+    -fx-border-color: linear-gradient(
+            from 0% 0% to 100% 100%,
+            #FFD700,
+            #FFFACD,
+            #FFD700
+    );
+    -fx-min-width: 200;
+    -fx-min-height: 110;
+
+}
+
+
+.bracket-contenedor-campeon {
+    -fx-background-color: GOLD;
+    -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
+    -fx-border-radius: 6;
+    -fx-background-radius: 7;
+    -fx-border-width: 3;
+    -fx-border-color: linear-gradient(
+            from 0% 0% to 100% 100%,
+            #FFD700,
+            #FFFACD,
+            #FFD700
+    );
+    -fx-min-width: 200;
+    -fx-min-height: 110;
+
+}
+
+
+.label-bracket {
+    -fx-font-family: "Trebuchet MS", sans-serif;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: linear-gradient(#b09800, #7c5101);
+}
+
+.img-bracket {
+    -fx-border-width: 3;
+    -fx-border-color: linear-gradient(
+            from 0% 0% to 100% 100%,
+            #FFD700,
+            #FFFACD,
+            #FFD700
+    );
+    -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
+
+}
+
 
 
 /* Nombre del equipo */
