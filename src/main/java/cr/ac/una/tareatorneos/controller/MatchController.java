@@ -116,10 +116,7 @@ public class MatchController extends Controller implements Initializable {
 
         alert.setContentText(resultado.toString());
         alert.showAndWait();
-
-        // ✅ Guardar el partido con los puntajes reales y estadísticas
-        matchService.finalizarPartido();
-
+        
         // 🏆 Asignar ganador en el objeto del bracket
         String equipoGanador = puntajeA > puntajeB ? equipoA : equipoB;
         bracketService.registrarGanador(partidoActual, equipoGanador);
