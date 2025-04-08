@@ -46,6 +46,12 @@ public class BracketGeneratorController extends Controller implements Initializa
     private MFXButton btnPlay;
     @FXML
     private ScrollPane scrollBracket;
+    @FXML
+    private ImageView leftBracket;
+    @FXML
+    private Label lblNombreTorneoBracket;
+    @FXML
+    private ImageView rightBracket;
 
     private BracketMatchService matchService = new BracketMatchService();
     private Tournament torneoActual;
@@ -54,12 +60,6 @@ public class BracketGeneratorController extends Controller implements Initializa
     private static final double NODE_HEIGHT = 60;
     private static final double H_GAP = 200;
     private static final double V_GAP = 30;
-    @FXML
-    private ImageView leftBracket;
-    @FXML
-    private Label lblNombreTorneoBracket;
-    @FXML
-    private ImageView rightBracket;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -71,6 +71,7 @@ public class BracketGeneratorController extends Controller implements Initializa
         matchService.generarPartidosDesdeEquipos(torneo); // Cargar desde archivo si ya existen
         cargarBracketDesdePartidos(matchService.getTodosLosPartidos());
         actualizarLabelPartidoPendiente();
+        lblNombreTorneoBracket.setText(torneo.getNombre());
     }
 
     public void actualizarLabelPartidoPendiente() {
