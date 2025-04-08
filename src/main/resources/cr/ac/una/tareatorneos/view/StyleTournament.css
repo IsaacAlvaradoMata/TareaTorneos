@@ -1776,6 +1776,174 @@
 }
 
 
+/*########################### VISTA DE BRACKETS #########################################################################*/
+
+.AnchorPane-Bracket {
+    -fx-background-color: #b0f0a5; /* Café suave claro */
+    -fx-border-color: #003c00; /* Café medio */
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+}
+
+.StackPane-Bracket {
+    -fx-background-color: #f2ffee;
+    -fx-border-color:#003c00;
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+}
+
+.lbl-TitleBracket {
+    -fx-font-size: 20px;
+
+    -fx-text-fill: #FFD700;
+    -fx-font-weight: bold;
+    -fx-padding: 5 0 5 0;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+}
+
+.lbl-SubTitulosBracket {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill:  #FFD700;
+    -fx-padding: 5 0 5 0;
+    -fx-background-color: #bb7474;
+    -fx-border-width: 3;
+    -fx-border-radius: 4;
+    -fx-background-radius: 6;
+    -fx-min-height: 40;
+    -fx-min-width: 200;
+    -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+
+    -fx-border-color: linear-gradient(
+            from 0% 0% to 100% 100%,
+            #FFD700,
+            #FFFACD,
+            #FFD700
+    );
+}
+
+.btn-Bracket {
+    -fx-alignment: center;
+    -fx-background-color: #3c0000;
+    -fx-background-radius: 4px;
+    -fx-border-width: 0;
+    -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 10px 16px;
+    -fx-min-height: 37px;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-transition: all 0.15s ease-in-out;
+}
+
+.btn-Bracket:hover {
+    -fx-background-color: #b00000;
+    -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.5), 8, 0, 0, 4);
+    -fx-translate-y: -2px;
+}
+
+.btn-Bracket:pressed {
+    -fx-background-color: #ff0000 !important;
+    -fx-effect: innershadow(three-pass-box, #D6D6E7, 7, 0, 0, 3);
+    -fx-translate-y: 2px;
+}
+
+.btn-Bracket:focused {
+    -fx-background-color: #3c0000;
+}
+
+.btn-Bracket:focused:hover {
+    -fx-background-color: #b00000;
+}
+
+.scroll-pane-bracket{
+
+    -fx-background-color: #bb7474;
+    -fx-border-width: 3;
+    -fx-border-radius: 4;
+    -fx-background-radius: 6;
+    -fx-min-height: 40;
+    -fx-min-width: 200;
+    -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+
+    -fx-border-color: linear-gradient(
+            from 0% 0% to 100% 100%,
+            #FFD700,
+            #FFFACD,
+            #FFD700
+    );
+
+}
+
+#leftBracket {
+    -fx-image: url('../resources/BracketDecorationIcon.png');
+}
+
+#rightBracket {
+    -fx-image: url('../resources/BracketDecorationIcon.png');
+}
+
+#btnPlay > ImageView {
+    -fx-image: url('../resources/EspadaIcon.png ');
+}
+
+
+/* Nombre del equipo */
+.team-name {
+    -fx-font-size: 22px;
+    -fx-text-fill: #222;
+    -fx-font-weight: bold;
+    -fx-background-color: #574b01;;
+    -fx-border-color: #FFD700;
+    -fx-border-width: 3;
+    -fx-border-radius: 4;
+    -fx-background-radius: 6;
+    -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+}
+
+.gold-border-bracket {
+    -fx-padding: 5;
+    -fx-border-color: linear-gradient(
+            from 0% 0% to 100% 100%,
+            #FFD700,
+            #FFFACD,
+            #FFD700
+    );
+    -fx-background-color: #a83e45;
+    -fx-border-width: 5;
+    -fx-border-radius: 12;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(gaussian, #FFD700, 12, 0.5, 0, 0);
+    -fx-animation: shine 2s infinite linear;
+}
+
+.gold-border-bracket-sp {
+    -fx-padding: 5;
+    -fx-border-color: linear-gradient(
+            from 0% 0% to 100% 100%,
+            #FFD700,
+            #FFFACD,
+            #FFD700
+    );
+    -fx-background-color: #ffeeee;
+    -fx-border-width: 5;
+    -fx-border-radius: 12;
+    -fx-background-radius: 14;
+    -fx-effect: dropshadow(gaussian, #FFD700, 12, 0.5, 0, 0);
+    -fx-animation: shine 2s infinite linear;
+}
+
 
 /**IMAGENES DE BOTONES**/
 
