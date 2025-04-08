@@ -63,7 +63,7 @@ public class BracketGeneratorController extends Controller implements Initializa
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        
+
     }
 
     public void inicializarBracketDesdeTorneo(Tournament torneo) {
@@ -195,7 +195,6 @@ public class BracketGeneratorController extends Controller implements Initializa
             rondasVisuales.add(new ArrayList<>());
         }
 
-        // 🧠 Nuevo render dinámico por rondas
         double totalAltura = matchService.getPartidosPorRonda(1).size() * (NODE_HEIGHT + V_GAP);
 
         for (int ronda = 1; ronda <= maxRonda; ronda++) {
@@ -208,7 +207,8 @@ public class BracketGeneratorController extends Controller implements Initializa
                 StackPane nodo = crearNodoMatch(match);
                 if (nodo == null) continue;
 
-                double x = (ronda - 1) * H_GAP;
+                double offsetX = 30 + (ronda - 1) * 20;
+                double x = (ronda - 1) * H_GAP + offsetX;
                 double y = i * espacioVertical + (espacioVertical - NODE_HEIGHT) / 2;
 
                 nodo.setLayoutX(x);
@@ -216,7 +216,7 @@ public class BracketGeneratorController extends Controller implements Initializa
                 bracketContainer.getChildren().add(nodo);
                 nodos.add(nodo);
             }
-            rondasVisuales.add(nodos);
+            rondasVisuales.set(ronda - 1, nodos); // ← actualizar correctamente
         }
 
         for (int ronda = 0; ronda < rondasVisuales.size() - 1; ronda++) {
@@ -240,13 +240,11 @@ public class BracketGeneratorController extends Controller implements Initializa
             }
         }
 
-        // ✅ Refrescar estado del torneo para verificar si terminó
         torneoActual = new TournamentService().getTournamentByName(torneoActual.getNombre());
 
         if ("Finalizado".equalsIgnoreCase(torneoActual.getEstado())) {
             BracketMatch finalMatch = matchService.getFinalMatch();
             if (finalMatch != null && finalMatch.getGanador() != null) {
-                // ⚠️ Verifica que el nodo no haya sido dibujado antes para evitar duplicados
                 if (!bracketContainer.getChildren().stream().anyMatch(n ->
                         n instanceof StackPane &&
                                 ((StackPane) n).getChildren().stream()
@@ -330,6 +328,7 @@ public class BracketGeneratorController extends Controller implements Initializa
 
         VBox box = new VBox(5);
         box.setAlignment(Pos.CENTER_LEFT);
+        box.setStyle("-fx-padding: 0 0 0 8;");
 
         // Mostrar placeholders o equipos reales
         box.getChildren().add(crearItemEquipoConNull(equipo1));
