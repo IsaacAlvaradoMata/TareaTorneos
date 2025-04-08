@@ -481,19 +481,18 @@ public class TournamentMaintenanceController extends Controller implements Initi
 
     @FXML
     private void imgBuscarPorNombre(MouseEvent event) {
-        String nombreBuscado = txtfieldBuscarPorNombre.getText().trim();
+        String filtro = txtfieldBuscarPorNombre.getText().trim().toLowerCase();
 
-        if (nombreBuscado.isEmpty()) {
-
+        if (filtro.isEmpty()) {
             mensajeUtil.show(Alert.AlertType.WARNING,
                     "Campo vacío",
-                    "Ingrese un nombre para buscar un equipo.");
+                    "Ingrese una letra o nombre para buscar equipos.");
             return;
         }
 
-        String nombreTorneoActual = lblNombreTorneoSeleccionEquipos.getText();
+        String nombreTorneo = lblNombreTorneoSeleccionEquipos.getText();
         TournamentService torneoService = new TournamentService();
-        Tournament torneo = torneoService.getTournamentByName(nombreTorneoActual);
+        Tournament torneo = torneoService.getTournamentByName(nombreTorneo);
 
         if (torneo == null) {
             mensajeUtil.show(Alert.AlertType.WARNING,
@@ -502,35 +501,30 @@ public class TournamentMaintenanceController extends Controller implements Initi
             return;
         }
 
-        String deporteReal = torneo.getDeporte();
+        String deporte = torneo.getDeporte();
+        List<String> yaSeleccionados = torneo.getEquiposParticipantes();
 
-        TeamService service = new TeamService();
-        List<Team> equipos = service.getAllTeams();
+        TeamService teamService = new TeamService();
+        List<Team> todos = teamService.getAllTeams();
 
-        Optional<Team> equipoEncontrado = equipos.stream()
-                .filter(e -> e.getNombre().equalsIgnoreCase(nombreBuscado))
-                .filter(e -> e.getDeporte().equalsIgnoreCase(deporteReal))
-                .findFirst();
+        // 🔍 Buscar por coincidencia parcial (nombre contiene texto ingresado)
+        List<String> resultados = todos.stream()
+                .filter(team -> team.getDeporte().equalsIgnoreCase(deporte)) // mismo deporte
+                .filter(team -> team.getNombre().toLowerCase().contains(filtro)) // contiene texto
+                .map(Team::getNombre)
+                .filter(nombre -> !yaSeleccionados.contains(nombre)) // aún disponible
+                .toList();
 
-        if (equipoEncontrado.isPresent()) {
-            Team equipo = equipoEncontrado.get();
-
-            if (chklistviewEquiposSeleccionados1.getItems().contains(equipo.getNombre())) {
-                mensajeUtil.show(Alert.AlertType.INFORMATION,
-                        "Equipo ya seleccionado",
-                        "Este equipo ya ha sido agregado al torneo.");
-                chklistviewEquiposDisponibles1.getItems().clear(); // Ocultarlo si ya está seleccionado
-            } else {
-                chklistviewEquiposDisponibles1.getItems().setAll(equipo.getNombre());
-            }
-
-        } else {
+        if (resultados.isEmpty()) {
             chklistviewEquiposDisponibles1.getItems().clear();
             mensajeUtil.show(Alert.AlertType.WARNING,
                     "No encontrado",
-                    "No se encontró ningún equipo con ese nombre en el deporte del torneo.");
+                    "No se encontraron equipos que coincidan con ese texto para este deporte.");
+        } else {
+            chklistviewEquiposDisponibles1.getItems().setAll(resultados);
         }
     }
+
 
     @FXML
     void imgLimpiarBusqueda(MouseEvent event) {
