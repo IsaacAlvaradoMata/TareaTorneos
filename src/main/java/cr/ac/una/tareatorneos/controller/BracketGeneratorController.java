@@ -41,8 +41,6 @@ public class BracketGeneratorController extends Controller implements Initializa
     @FXML
     private AnchorPane bracketContainer;
     @FXML
-    private Label lblTorneoNombre;
-    @FXML
     private Label lblPartidoActual;
     @FXML
     private MFXButton btnPlay;
@@ -56,6 +54,12 @@ public class BracketGeneratorController extends Controller implements Initializa
     private static final double NODE_HEIGHT = 60;
     private static final double H_GAP = 200;
     private static final double V_GAP = 30;
+    @FXML
+    private ImageView leftBracket;
+    @FXML
+    private Label lblNombreTorneoBracket;
+    @FXML
+    private ImageView rightBracket;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
