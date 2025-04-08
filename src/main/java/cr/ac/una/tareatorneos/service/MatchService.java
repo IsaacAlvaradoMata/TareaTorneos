@@ -97,10 +97,16 @@ public class MatchService {
         statsService.actualizarPuntosDeTodosLosTorneos();
 
         TeamService teamService = new TeamService();
+
         Team equipo1 = teamService.getTeamByName(match.getEquipoA());
+        if (equipo1 != null) {
+            teamService.actualizarLogrosDeEquipo(equipo1);
+        }
+
         Team equipo2 = teamService.getTeamByName(match.getEquipoB());
-        teamService.actualizarLogrosDeEquipo(equipo1);
-        teamService.actualizarLogrosDeEquipo(equipo2);
+        if (equipo2 != null) {
+            teamService.actualizarLogrosDeEquipo(equipo2);
+        }
     }
 
     public void finalizarPartidoConDesempate(String ganadorDesempate) {

@@ -18,10 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
@@ -150,7 +147,7 @@ public class BracketGeneratorController extends Controller implements Initializa
         }
 
         // ⚠️ Caso normal de BYE (no final)
-        if (equipo1 != null && equipo2 == null) {
+        if (equipo1 != null && equipo2 == null && !siguientePartido.isJugado()) {
             matchService.registrarGanador(siguientePartido, equipo1);
             this.torneoActual = new TournamentService().getTournamentByName(torneoActual.getNombre());
             cargarBracketDesdePartidos(matchService.getTodosLosPartidos());
@@ -279,7 +276,7 @@ public class BracketGeneratorController extends Controller implements Initializa
         Line l3 = new Line(midX, y2, x2, y2);
 
         for (Line l : List.of(l1, l2, l3)) {
-            l.setStroke(Color.GRAY);
+            l.setStroke(Color.GOLD);
             l.setStrokeWidth(2);
             bracketContainer.getChildren().add(l);
         }
@@ -329,24 +326,27 @@ public class BracketGeneratorController extends Controller implements Initializa
 
         VBox box = new VBox(5);
         box.setAlignment(Pos.CENTER_LEFT);
-        box.setStyle("-fx-padding: 0 0 0 8;");
+        box.setStyle("-fx-padding: 4 0 4 6;");
 
-        // Mostrar placeholders o equipos reales
-        box.getChildren().add(crearItemEquipoConNull(equipo1));
-        box.getChildren().add(crearItemEquipoConNull(equipo2));
+        int score1 = match.getPuntajeEquipo1();
+        int score2 = match.getPuntajeEquipo2();
+
+        boolean esGanador1 = match.isJugado() && match.getGanador() != null && match.getGanador().equals(match.getEquipo1());
+        boolean esGanador2 = match.isJugado() && match.getGanador() != null && match.getGanador().equals(match.getEquipo2());
+
+        box.getChildren().add(crearItemEquipoConExtras(match.getEquipo1(), score1, esGanador1));
+        box.getChildren().add(crearItemEquipoConExtras(match.getEquipo2(), score2, esGanador2));
 
         // 🏆 Mostrar ganador si aplica
         if (match.isJugado() && match.getGanador() != null) {
-            Label ganador = new Label("🏆 " + match.getGanador());
-            ganador.setFont(new Font("Arial", 12));
-            box.getChildren().add(ganador);
+
         }
 
         contenedor.getChildren().add(box);
         return contenedor;
     }
 
-    private HBox crearItemEquipoConNull(String nombreEquipo) {
+    private HBox crearItemEquipoConExtras(String nombreEquipo, int puntaje, boolean esGanador) {
         ImageView escudo = new ImageView();
         escudo.setFitHeight(25);
         escudo.setFitWidth(25);
@@ -363,17 +363,27 @@ public class BracketGeneratorController extends Controller implements Initializa
             }
         }
 
-        try {
-            escudo.setImage(new Image(logoPath));
-        } catch (Exception e) {
-            escudo.setImage(new Image("file:teamsPhotos/default.png"));
+        escudo.setImage(new Image(logoPath));
+
+        Label nombreLbl = new Label(nombreEquipo != null ? nombreEquipo : "???");
+        nombreLbl.setFont(new Font("Arial", 13));
+        nombreLbl.setWrapText(false);
+        nombreLbl.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(nombreLbl, Priority.ALWAYS);
+
+        Label puntajeLbl = new Label("(" + puntaje + ")");
+        puntajeLbl.setFont(new Font("Arial", 12));
+
+        HBox info = new HBox(5, nombreLbl, puntajeLbl);
+        if (esGanador) {
+            Label trofeo = new Label("🏆");
+            trofeo.setFont(new Font("Arial", 13));
+            info.getChildren().add(trofeo);
         }
 
-        Label label = new Label(nombreEquipo != null ? nombreEquipo : "???");
-        label.setFont(new Font("Arial", 13));
-
-        HBox item = new HBox(6, escudo, label);
+        HBox item = new HBox(8, escudo, info);
         item.setAlignment(Pos.CENTER_LEFT);
+        item.setStyle("-fx-padding: 4 0 4 8;");
         return item;
     }
 
@@ -407,6 +417,7 @@ public class BracketGeneratorController extends Controller implements Initializa
 
         HBox item = new HBox(6, escudo, nombre);
         item.setAlignment(Pos.CENTER_LEFT);
+        item.setStyle("-fx-padding: 0 0 0 8;");
         return item;
     }
 
@@ -426,7 +437,7 @@ public class BracketGeneratorController extends Controller implements Initializa
         Line l4 = new Line(midX, midY, destino.getLayoutX(), midY);
 
         for (Line l : List.of(l1, l2, l3, l4)) {
-            l.setStroke(Color.GRAY);
+            l.setStroke(Color.GOLD);
             l.setStrokeWidth(2);
             bracketContainer.getChildren().add(l);
         }

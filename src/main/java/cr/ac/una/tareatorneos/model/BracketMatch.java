@@ -8,6 +8,8 @@ public class BracketMatch {
     private String equipo2;
     private String ganador;
     private boolean jugado;
+    private int puntajeEquipo1;
+    private int puntajeEquipo2;
 
     public BracketMatch() {
         // Constructor vacío para Jackson
@@ -70,6 +72,22 @@ public class BracketMatch {
 
     public void setJugado(boolean jugado) {
         this.jugado = jugado;
+    }
+
+    public int getPuntajeEquipo1() {
+        return puntajeEquipo1;
+    }
+
+    public void setPuntajeEquipo1(int puntajeEquipo1) {
+        this.puntajeEquipo1 = puntajeEquipo1;
+    }
+
+    public int getPuntajeEquipo2() {
+        return puntajeEquipo2;
+    }
+
+    public void setPuntajeEquipo2(int puntajeEquipo2) {
+        this.puntajeEquipo2 = puntajeEquipo2;
     }
 
     @Override

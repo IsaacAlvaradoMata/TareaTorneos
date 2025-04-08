@@ -188,11 +188,13 @@ public class BracketMatchService {
                 return rondaPendientes.get(0);
             }
 
-            // Permitir pasar equipos que estén solos
+            // Permitir pasar equipos que estén solos (BYE)
             for (BracketMatch p : rondaPendientes) {
-                if ((p.getEquipo1() == null && p.getEquipo2() != null) ||
-                        (p.getEquipo2() == null && p.getEquipo1() != null)) {
-                    return p; // avanzar este equipo automáticamente
+                if ((p.getEquipo1() != null && p.getEquipo2() == null) ||
+                        (p.getEquipo2() != null && p.getEquipo1() == null)) {
+                    String equipoGanador = p.getEquipo1() != null ? p.getEquipo1() : p.getEquipo2();
+                    registrarGanador(p, equipoGanador); // ✅ marcar como jugado y avanzar
+                    return getSiguientePartidoPendiente(); // 🔁 continuar con siguiente partido
                 }
             }
 
