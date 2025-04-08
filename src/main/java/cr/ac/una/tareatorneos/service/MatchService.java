@@ -91,9 +91,16 @@ public class MatchService {
     public void finalizarPartido() {
         match.setFinalizado(true);
         guardarMatchEnJson(match);
+
         TeamTournamentStatsService statsService = new TeamTournamentStatsService();
         statsService.guardarEstadisticaDelPartido(match);
         statsService.actualizarPuntosDeTodosLosTorneos();
+
+        TeamService teamService = new TeamService();
+        Team equipo1 = teamService.getTeamByName(match.getEquipoA());
+        Team equipo2 = teamService.getTeamByName(match.getEquipoB());
+        teamService.actualizarLogrosDeEquipo(equipo1);
+        teamService.actualizarLogrosDeEquipo(equipo2);
     }
 
     public void finalizarPartidoConDesempate(String ganadorDesempate) {
@@ -105,6 +112,12 @@ public class MatchService {
         TeamTournamentStatsService statsService = new TeamTournamentStatsService();
         statsService.guardarEstadisticaDelPartido(match, ganadorDesempate);
         statsService.actualizarPuntosDeTodosLosTorneos();
+
+        TeamService teamService = new TeamService();
+        Team equipo1 = teamService.getTeamByName(match.getEquipoA());
+        Team equipo2 = teamService.getTeamByName(match.getEquipoB());
+        teamService.actualizarLogrosDeEquipo(equipo1);
+        teamService.actualizarLogrosDeEquipo(equipo2);
 
         // 2. Actualizar estado en el bracket correctamente
         BracketMatchService bracketService = new BracketMatchService();
