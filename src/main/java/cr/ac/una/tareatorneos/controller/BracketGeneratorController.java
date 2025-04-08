@@ -15,6 +15,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -45,6 +46,8 @@ public class BracketGeneratorController extends Controller implements Initializa
     private Label lblPartidoActual;
     @FXML
     private MFXButton btnPlay;
+    @FXML
+    private ScrollPane scrollBracket;
 
     private BracketMatchService matchService = new BracketMatchService();
     private Tournament torneoActual;
@@ -56,7 +59,7 @@ public class BracketGeneratorController extends Controller implements Initializa
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // usado al cargar desde FXML
+        
     }
 
     public void inicializarBracketDesdeTorneo(Tournament torneo) {
@@ -188,22 +191,28 @@ public class BracketGeneratorController extends Controller implements Initializa
             rondasVisuales.add(new ArrayList<>());
         }
 
+        // 🧠 Nuevo render dinámico por rondas
+        double totalAltura = matchService.getPartidosPorRonda(1).size() * (NODE_HEIGHT + V_GAP);
+
         for (int ronda = 1; ronda <= maxRonda; ronda++) {
             List<BracketMatch> rondaPartidos = matchService.getPartidosPorRonda(ronda);
-            double x = (ronda - 1) * H_GAP;
+            List<StackPane> nodos = new ArrayList<>();
+            double espacioVertical = totalAltura / rondaPartidos.size();
 
             for (int i = 0; i < rondaPartidos.size(); i++) {
                 BracketMatch match = rondaPartidos.get(i);
                 StackPane nodo = crearNodoMatch(match);
-                if (nodo == null) {
-                    continue; // Evitar nodos basura
-                }
-                double y = i * (NODE_HEIGHT + V_GAP) * Math.pow(2, ronda - 1);
+                if (nodo == null) continue;
+
+                double x = (ronda - 1) * H_GAP;
+                double y = i * espacioVertical + (espacioVertical - NODE_HEIGHT) / 2;
+
                 nodo.setLayoutX(x);
                 nodo.setLayoutY(y);
                 bracketContainer.getChildren().add(nodo);
-                rondasVisuales.get(ronda - 1).add(nodo);
+                nodos.add(nodo);
             }
+            rondasVisuales.add(nodos);
         }
 
         for (int ronda = 0; ronda < rondasVisuales.size() - 1; ronda++) {
@@ -222,7 +231,6 @@ public class BracketGeneratorController extends Controller implements Initializa
                 if (nodo2 != null) {
                     dibujarConexionesBracket(nodo1, nodo2, destino);
                 } else {
-                    // 🧠 Dibujar línea solo desde nodo1 al destino
                     dibujarLineaSimple(nodo1, destino);
                 }
             }
