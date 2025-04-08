@@ -95,7 +95,7 @@ public class BracketMatchService {
     /**
      * Marca el resultado de un partido y coloca el ganador en la siguiente ronda correctamente.
      */
-    public void registrarGanador(BracketMatch partido, String equipoGanador) {
+    public void registrarGanador(BracketMatch partido, String equipoGanador, boolean skipStats) {
         if (!equipoGanador.equals(partido.getEquipo1()) &&
                 (partido.getEquipo2() == null || !equipoGanador.equals(partido.getEquipo2()))) {
             throw new IllegalArgumentException("El equipo ganador no está en este partido.");
@@ -104,31 +104,30 @@ public class BracketMatchService {
         partido.setGanador(equipoGanador);
         partido.setJugado(true);
 
-        // ⚠ Validar si equipo2 es null antes de instanciar el MatchService
-        TournamentService torneoService = new TournamentService();
-        Tournament torneo = torneoService.getTournamentByName(partido.getTorneo());
-        Team equipoA = new TeamService().getTeamByName(partido.getEquipo1());
-        Team equipoB = partido.getEquipo2() != null ? new TeamService().getTeamByName(partido.getEquipo2()) : null;
+        if (!skipStats) {
+            TournamentService torneoService = new TournamentService();
+            Tournament torneo = torneoService.getTournamentByName(partido.getTorneo());
+            Team equipoA = new TeamService().getTeamByName(partido.getEquipo1());
+            Team equipoB = partido.getEquipo2() != null ? new TeamService().getTeamByName(partido.getEquipo2()) : null;
 
-        MatchService matchService;
+            MatchService matchService;
 
-        if (equipoB == null) {
-            // ⚠️ Partido con avance automático (bye)
-            matchService = new MatchService(torneo, equipoA, null);
-            matchService.getMatch().setPuntajeA(1); // Victoria automática
-            matchService.getMatch().setPuntajeB(0);
-        } else {
-            matchService = new MatchService(torneo, equipoA, equipoB);
-            matchService.getMatch().setPuntajeA(equipoA.getNombre().equals(equipoGanador) ? 1 : 0);
-            matchService.getMatch().setPuntajeB(equipoB.getNombre().equals(equipoGanador) ? 1 : 0);
-        }
+            if (equipoB == null) {
+                matchService = new MatchService(torneo, equipoA, null);
+                matchService.getMatch().setPuntajeA(1);
+                matchService.getMatch().setPuntajeB(0);
+            } else {
+                matchService = new MatchService(torneo, equipoA, equipoB);
+                matchService.getMatch().setPuntajeA(equipoA.getNombre().equals(equipoGanador) ? 1 : 0);
+                matchService.getMatch().setPuntajeB(equipoB.getNombre().equals(equipoGanador) ? 1 : 0);
+            }
 
-        matchService.finalizarPartido(); // ✅ Guarda match, estadísticas, puntos
+            matchService.finalizarPartido();
 
-        // ✅ Cambiar estado del torneo si es la primera vez que se juega
-        if (torneo.getEstado().equalsIgnoreCase("Por comenzar")) {
-            torneo.setEstado("Iniciado");
-            torneoService.updateTournament(torneo.getNombre(), torneo);
+            if (torneo.getEstado().equalsIgnoreCase("Por comenzar")) {
+                torneo.setEstado("Iniciado");
+                torneoService.updateTournament(torneo.getNombre(), torneo);
+            }
         }
 
         // ➕ Avanza a la siguiente ronda
@@ -143,7 +142,6 @@ public class BracketMatchService {
                         p.setEquipo2(equipoGanador);
                     }
                 }, () -> {
-                    // Crear nuevo partido si no existía
                     allMatches.add(new BracketMatch(
                             partido.getTorneo(),
                             partido.getRonda() + 1,
@@ -153,9 +151,12 @@ public class BracketMatchService {
                 });
 
         guardarPartidosEnArchivo(partido.getTorneo());
-
-        // 🏆 Verificar si el torneo terminó
         verificarYGuardarGanadorDelTorneo();
+    }
+
+    // 👇 Conserva esta para compatibilidad sin stats
+    public void registrarGanador(BracketMatch partido, String equipoGanador) {
+        registrarGanador(partido, equipoGanador, false);
     }
 
     /**

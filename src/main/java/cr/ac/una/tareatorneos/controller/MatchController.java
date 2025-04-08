@@ -128,7 +128,8 @@ public class MatchController extends Controller implements Initializable {
         bracketService.cargarPartidosDesdeArchivo(partidoActual.getTorneo());
 
         // Estadísticas + puntos reales
-        matchService.finalizarPartido(); // <- usa ya los puntos válidos del partido
+        matchService.finalizarPartido();// <- usa ya los puntos válidos del partido
+        bracketService.registrarGanador(partidoActual, partidoActual.getGanador());
 
         // 🔄 Recargar todo visual
         Platform.runLater(() -> {
