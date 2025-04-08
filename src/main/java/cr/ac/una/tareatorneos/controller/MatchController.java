@@ -116,25 +116,21 @@ public class MatchController extends Controller implements Initializable {
 
         alert.setContentText(resultado.toString());
         alert.showAndWait();
-        
-        // 🏆 Asignar ganador en el objeto del bracket
-        String equipoGanador = puntajeA > puntajeB ? equipoA : equipoB;
-        bracketService.registrarGanador(partidoActual, equipoGanador);
-        partidoActual.setGanador(equipoGanador);
+
+        // 🏆 Asignar directamente los datos correctos al BracketMatch
+        partidoActual.setGanador(puntajeA > puntajeB ? equipoA : equipoB);
         partidoActual.setJugado(true);
+        partidoActual.setPuntajeEquipo1(puntajeA);
+        partidoActual.setPuntajeEquipo2(puntajeB);
 
-        // 💾 Guardar bracket actualizado
+        // 💾 Guardar correctamente la data con puntajes reales
         bracketService.guardarPartidosEnArchivo(partidoActual.getTorneo());
-
-        // 🔄 Recargar partidos desde archivo (por si hay cambios externos)
         bracketService.cargarPartidosDesdeArchivo(partidoActual.getTorneo());
 
-        // 🧪 DEBUG: Mostrar estado actualizado
-        Tournament torneo = new TournamentService().getTournamentByName(partidoActual.getTorneo());
-        System.out.println("🔁 Partidos pendientes: " + bracketService.getPartidosPendientes().size());
-        System.out.println("🏁 Estado torneo tras el partido: " + torneo.getEstado());
+        // Estadísticas + puntos reales
+        matchService.finalizarPartido(); // <- usa ya los puntos válidos del partido
 
-        // ✅ Cerrar la ventana y recargar el bracket
+        // 🔄 Recargar todo visual
         Platform.runLater(() -> {
             Tournament torneoActualizado = new TournamentService().getTournamentByName(partidoActual.getTorneo());
             bracketParent.setTorneoActual(torneoActualizado);
