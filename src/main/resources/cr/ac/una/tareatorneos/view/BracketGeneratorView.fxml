@@ -3,35 +3,22 @@
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.*?>
-<AnchorPane fx:id="root" xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="cr.ac.una.tareatorneos.controller.BracketGeneratorController">
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="root" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tareatorneos.controller.BracketGeneratorController">
 
     <!-- Label normal indicando el partido actual -->
-    <Label fx:id="lblPartidoActual"
-           layoutX="20"
-           layoutY="20"
-           text="Partido pendiente: -"/>
+    <Label fx:id="lblPartidoActual" layoutX="20" layoutY="20" text="Partido pendiente: -" />
 
     <!-- Botón MFX para jugar el partido -->
-    <MFXButton fx:id="btnPlay"
-               layoutX="20"
-               layoutY="50"
-               text="Jugar partido"
-               onAction="#onActionBtnPlay"
-               prefWidth="150"/>
-
-    <!-- Zona visual para los brackets -->
-    <Pane layoutX="0" layoutY="100" prefWidth="1200" prefHeight="800">
-        <ScrollPane fitToHeight="true" fitToWidth="true"
-                    AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
-                    AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
-            <AnchorPane fx:id="bracketContainer"
-                        minWidth="1600"
-                        minHeight="1000">
+    <MFXButton fx:id="btnPlay" layoutX="20" layoutY="50" onAction="#onActionBtnPlay" prefWidth="150" text="Jugar partido" />
+   <AnchorPane layoutX="-0.800000011920929" layoutY="99.19999694824219" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <children>
+           <ScrollPane fx:id="scrollBracket" fitToHeight="true" fitToWidth="true" layoutX="0.800000011920929" layoutY="0.8000030517578125" prefHeight="600.0" prefWidth="600.0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+               <AnchorPane fx:id="bracketContainer" minHeight="1000" minWidth="1600">
                 <!-- Aquí se insertan los nodos y líneas dinámicamente -->
             </AnchorPane>
-        </ScrollPane>
-    </Pane>
+           </ScrollPane>
+      </children>
+   </AnchorPane>
 </AnchorPane>
