@@ -118,7 +118,7 @@
     "obtenido" : false
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : true
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -157,7 +157,7 @@
     "obtenido" : false
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : true
   }, {
     "nombre" : "Regreso Triunfal",
     "obtenido" : false
@@ -497,6 +497,1446 @@
   "nombre" : "boston team",
   "deporte" : "Baseball",
   "teamImage" : "boston_team.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "1",
+  "deporte" : "Futbol",
+  "teamImage" : "1.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : true
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "2",
+  "deporte" : "Futbol",
+  "teamImage" : "2.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "3",
+  "deporte" : "Futbol",
+  "teamImage" : "3.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "4",
+  "deporte" : "Futbol",
+  "teamImage" : "4.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "5",
+  "deporte" : "Futbol",
+  "teamImage" : "5.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "6",
+  "deporte" : "Futbol",
+  "teamImage" : "6.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : true
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "7",
+  "deporte" : "Futbol",
+  "teamImage" : "7.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "8",
+  "deporte" : "Futbol",
+  "teamImage" : "8.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "9",
+  "deporte" : "Futbol",
+  "teamImage" : "9.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : true
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "10",
+  "deporte" : "Futbol",
+  "teamImage" : "10.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "11",
+  "deporte" : "Futbol",
+  "teamImage" : "11.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "12",
+  "deporte" : "Futbol",
+  "teamImage" : "12.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "13",
+  "deporte" : "Futbol",
+  "teamImage" : "13.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "14",
+  "deporte" : "Futbol",
+  "teamImage" : "14.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "15",
+  "deporte" : "Futbol",
+  "teamImage" : "15.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "16",
+  "deporte" : "Futbol",
+  "teamImage" : "16.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "17",
+  "deporte" : "Futbol",
+  "teamImage" : "17.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : true
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "18",
+  "deporte" : "Futbol",
+  "teamImage" : "18.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "19",
+  "deporte" : "Futbol",
+  "teamImage" : "19.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "20",
+  "deporte" : "Futbol",
+  "teamImage" : "20.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "21",
+  "deporte" : "Futbol",
+  "teamImage" : "21.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "22",
+  "deporte" : "Futbol",
+  "teamImage" : "22.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "23",
+  "deporte" : "Futbol",
+  "teamImage" : "23.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "24",
+  "deporte" : "Futbol",
+  "teamImage" : "24.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "25",
+  "deporte" : "Futbol",
+  "teamImage" : "25.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : true
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "26",
+  "deporte" : "Futbol",
+  "teamImage" : "26.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "27",
+  "deporte" : "Futbol",
+  "teamImage" : "27.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "28",
+  "deporte" : "Futbol",
+  "teamImage" : "28.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "29",
+  "deporte" : "Futbol",
+  "teamImage" : "29.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "30",
+  "deporte" : "Futbol",
+  "teamImage" : "30.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "31",
+  "deporte" : "Futbol",
+  "teamImage" : "31.jpg",
+  "logros" : [ {
+    "nombre" : "Dominador Supremo",
+    "obtenido" : false
+  }, {
+    "nombre" : "Leyenda Plateada",
+    "obtenido" : false
+  }, {
+    "nombre" : "Tricampeón",
+    "obtenido" : false
+  }, {
+    "nombre" : "Máxima Potencia",
+    "obtenido" : false
+  }, {
+    "nombre" : "Muralla Imbatible",
+    "obtenido" : false
+  }, {
+    "nombre" : "Equilibrio Perfecto",
+    "obtenido" : false
+  }, {
+    "nombre" : "Imparable",
+    "obtenido" : false
+  }, {
+    "nombre" : "Regreso Triunfal",
+    "obtenido" : false
+  }, {
+    "nombre" : "Campeón Inaugural",
+    "obtenido" : false
+  } ],
+  "estadisticas" : {
+    "partidosTotales" : 0,
+    "partidosGanados" : 0,
+    "partidosPerdidos" : 0,
+    "partidosEmpatados" : 0,
+    "torneosTotales" : 0,
+    "torneosGanados" : 0,
+    "torneosPerdidos" : 0,
+    "puntosGlobales" : 0,
+    "anotaciones" : 0,
+    "anotacionesEnContra" : 0
+  },
+  "estado" : "participante"
+}, {
+  "nombre" : "32",
+  "deporte" : "Futbol",
+  "teamImage" : "32.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
     "obtenido" : false
