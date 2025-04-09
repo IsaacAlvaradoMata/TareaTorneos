@@ -101,6 +101,7 @@ public class BracketMatchService {
             throw new IllegalArgumentException("El equipo ganador no está en este partido.");
         }
 
+        // Asignar ganador y marcar partido como jugado
         partido.setGanador(equipoGanador);
         partido.setJugado(true);
 
@@ -108,10 +109,9 @@ public class BracketMatchService {
             TournamentService torneoService = new TournamentService();
             Tournament torneo = torneoService.getTournamentByName(partido.getTorneo());
             Team equipoA = new TeamService().getTeamByName(partido.getEquipo1());
-            Team equipoB = partido.getEquipo2() != null ? new TeamService().getTeamByName(partido.getEquipo2()) : null;
+            Team equipoB = (partido.getEquipo2() != null) ? new TeamService().getTeamByName(partido.getEquipo2()) : null;
 
             MatchService matchService;
-
             if (equipoB == null) {
                 matchService = new MatchService(torneo, equipoA, null);
                 matchService.getMatch().setPuntajeA(1);
@@ -122,15 +122,19 @@ public class BracketMatchService {
                 matchService.getMatch().setPuntajeB(equipoB.getNombre().equals(equipoGanador) ? 1 : 0);
             }
 
+            // Aquí se actualizan las estadísticas del partido.
+            // (En MatchService.finalizarPartido() se utiliza el flag para no duplicar la actualización).
             matchService.finalizarPartido();
 
+            // Si el torneo aún está en estado "Por comenzar", lo pasamos a "Iniciado"
             if (torneo.getEstado().equalsIgnoreCase("Por comenzar")) {
                 torneo.setEstado("Iniciado");
                 torneoService.updateTournament(torneo.getNombre(), torneo);
             }
         }
 
-        // ➕ Avanza a la siguiente ronda
+        // --------------- Avanzar a la siguiente ronda ---------------
+        // Se busca el siguiente partido de la siguiente ronda donde aun falte asignar equipo.
         allMatches.stream()
                 .filter(p -> p.getRonda() == partido.getRonda() + 1)
                 .filter(p -> p.getEquipo1() == null || p.getEquipo2() == null)
@@ -142,6 +146,7 @@ public class BracketMatchService {
                         p.setEquipo2(equipoGanador);
                     }
                 }, () -> {
+                    // Si no hay partido pendiente en la siguiente ronda, se crea uno nuevo.
                     allMatches.add(new BracketMatch(
                             partido.getTorneo(),
                             partido.getRonda() + 1,
@@ -150,11 +155,12 @@ public class BracketMatchService {
                     ));
                 });
 
+        // Persiste los partidos actualizados y verifica si ya se puede declarar ganador del torneo.
         guardarPartidosEnArchivo(partido.getTorneo());
         verificarYGuardarGanadorDelTorneo();
     }
 
-    // 👇 Conserva esta para compatibilidad sin stats
+    // Sobrecarga para compatibilidad cuando no se especifique skipStats (por defecto false)
     public void registrarGanador(BracketMatch partido, String equipoGanador) {
         registrarGanador(partido, equipoGanador, false);
     }

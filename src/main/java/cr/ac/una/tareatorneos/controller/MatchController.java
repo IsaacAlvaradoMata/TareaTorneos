@@ -117,21 +117,16 @@ public class MatchController extends Controller implements Initializable {
         alert.setContentText(resultado.toString());
         alert.showAndWait();
 
-        // 🏆 Asignar directamente los datos correctos al BracketMatch
         partidoActual.setGanador(puntajeA > puntajeB ? equipoA : equipoB);
         partidoActual.setJugado(true);
         partidoActual.setPuntajeEquipo1(puntajeA);
         partidoActual.setPuntajeEquipo2(puntajeB);
 
-        // 💾 Guardar correctamente la data con puntajes reales
         bracketService.guardarPartidosEnArchivo(partidoActual.getTorneo());
         bracketService.cargarPartidosDesdeArchivo(partidoActual.getTorneo());
+        matchService.finalizarPartido();
+        bracketService.registrarGanador(partidoActual, partidoActual.getGanador(), true);
 
-        // Estadísticas + puntos reales
-        matchService.finalizarPartido();// <- usa ya los puntos válidos del partido
-        bracketService.registrarGanador(partidoActual, partidoActual.getGanador());
-
-        // 🔄 Recargar todo visual
         Platform.runLater(() -> {
             Tournament torneoActualizado = new TournamentService().getTournamentByName(partidoActual.getTorneo());
             bracketParent.setTorneoActual(torneoActualizado);

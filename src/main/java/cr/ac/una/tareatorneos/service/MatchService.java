@@ -88,46 +88,55 @@ public class MatchService {
         return new Image(file.toURI().toString());
     }
 
-    public void finalizarPartido() {
-        match.setFinalizado(true);
-        guardarMatchEnJson(match);
+    // ============================================
+    // NUEVA IMPLEMENTACIÓN: MÉTODO PRIVADO para PROCESAR ESTADÍSTICAS
+    // ============================================
+    private void procesarEstadisticas(String ganadorDesempate) {
+        if (match.isStatsProcesadas()) {
+            return;
+        }
 
+        // Actualizar estadísticas de equipo, puntos y logros (sin guardar aún)
         TeamTournamentStatsService statsService = new TeamTournamentStatsService();
-        statsService.guardarEstadisticaDelPartido(match);
+        if (ganadorDesempate != null) {
+            statsService.guardarEstadisticaDelPartido(match, ganadorDesempate);
+        } else {
+            statsService.guardarEstadisticaDelPartido(match);
+        }
         statsService.actualizarPuntosDeTodosLosTorneos();
 
+        // Actualizar logros de los equipos
         TeamService teamService = new TeamService();
-
         Team equipo1 = teamService.getTeamByName(match.getEquipoA());
         if (equipo1 != null) {
             teamService.actualizarLogrosDeEquipo(equipo1);
         }
-
         Team equipo2 = teamService.getTeamByName(match.getEquipoB());
         if (equipo2 != null) {
             teamService.actualizarLogrosDeEquipo(equipo2);
         }
+
+        // Marcar que ya se procesaron las estadísticas para este partido
+        match.setStatsProcesadas(true);
+
+        // Guardar el match actualizado en JSON (ahora con statsProcesadas true)
+        guardarMatchEnJson(match);
     }
 
+    public void finalizarPartido() {
+        match.setFinalizado(true);
+        procesarEstadisticas(null);
+    }
+
+    // Método modificado para finalizar partido con desempate.
     public void finalizarPartidoConDesempate(String ganadorDesempate) {
         match.setFinalizado(true);
+        // Se procesa la actualización de estadísticas de forma única.
+        procesarEstadisticas(ganadorDesempate);
 
-        // 1. Guardar en archivo de estadísticas
-        guardarMatchEnJson(match);
-
-        TeamTournamentStatsService statsService = new TeamTournamentStatsService();
-        statsService.guardarEstadisticaDelPartido(match, ganadorDesempate);
-        statsService.actualizarPuntosDeTodosLosTorneos();
-
-        TeamService teamService = new TeamService();
-        Team equipo1 = teamService.getTeamByName(match.getEquipoA());
-        Team equipo2 = teamService.getTeamByName(match.getEquipoB());
-        teamService.actualizarLogrosDeEquipo(equipo1);
-        teamService.actualizarLogrosDeEquipo(equipo2);
-
-        // 2. Actualizar estado en el bracket correctamente
+        // Luego, el flujo para actualizar el bracket se mantiene (sin modificar la actualización de stats).
         BracketMatchService bracketService = new BracketMatchService();
-        bracketService.cargarPartidosDesdeArchivo(match.getTorneoNombre()); // ❗ FALTA ESTO
+        bracketService.cargarPartidosDesdeArchivo(match.getTorneoNombre()); // Asegura que se tenga la lista actualizada.
 
         List<BracketMatch> partidos = bracketService.getTodosLosPartidos();
 
@@ -140,15 +149,13 @@ public class MatchService {
                     && !bm.isJugado()) {
 
                 System.out.println("🎯 ¡Match encontrado!");
-
                 bm.setGanador(ganadorDesempate);
                 bm.setJugado(true);
-
-                bracketService.registrarGanador(bm, ganadorDesempate);  // actualiza brackets
+                bracketService.registrarGanador(bm, ganadorDesempate);
                 break;
             }
         }
-        bracketService.guardarPartidosEnArchivo(match.getTorneoNombre()); // ✅ siempre guardar
+        bracketService.guardarPartidosEnArchivo(match.getTorneoNombre());
     }
 
     public String getGanador() {

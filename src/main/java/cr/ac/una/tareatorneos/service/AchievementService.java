@@ -13,7 +13,7 @@ public class AchievementService {
     private final TeamTournamentStatsService statsService = new TeamTournamentStatsService();
 
     public List<Achievement> calcularLogrosParaEquipo(String nombreEquipo) {
-        List<Achievement> logros = AchievementUtils.generarLogrosIniciales(); // ✅ base con los 9 logros predefinidos
+        List<Achievement> logros = AchievementUtils.generarLogrosIniciales();
 
         TeamTournamentStats stats = statsService.getAllStats().stream()
                 .filter(e -> e.getNombreEquipo() != null && e.getNombreEquipo().equalsIgnoreCase(nombreEquipo))
@@ -28,10 +28,15 @@ public class AchievementService {
                 case "Muralla Imbatible" -> logro.setObtenido(logroMurallaImbatible(stats));
                 case "Imparable" -> logro.setObtenido(logroImparable(stats));
                 case "Equilibrio Perfecto" -> logro.setObtenido(logroEquilibrioPerfecto(stats));
-                // Otros logros no están implementados aún, se quedan en false
+                case "Dominador Supremo" -> logro.setObtenido(logroDominadorSupremo(stats));
+                case "Leyenda Plateada" -> logro.setObtenido(logroLeyendaPlateada(stats));
+                case "Tricampeón" -> logro.setObtenido(logroTricampeon(stats));
+                case "Regreso Triunfal" -> logro.setObtenido(logroRegresoTriunfal(stats));
+                case "Campeón Inaugural" -> logro.setObtenido(logroCampeonInaugural(stats));
+                default -> {
+                }
             }
         }
-
         return logros;
     }
 
@@ -40,18 +45,25 @@ public class AchievementService {
             int totalGoles = torneo.getPartidos().stream()
                     .mapToInt(MatchStat::getAnotaciones)
                     .sum();
-            if (totalGoles > 20) return true;
+            if (totalGoles >= 20) {
+                return true;
+            }
         }
         return false;
     }
 
     private boolean logroMurallaImbatible(TeamTournamentStats stats) {
         for (TournamentStat torneo : stats.getTorneos()) {
+            if (torneo.getResultadoTorneo() == null || !torneo.getResultadoTorneo().equalsIgnoreCase("Ganador")) {
+                continue;
+            }
             boolean sinGolesEnContra = torneo.getPartidos().stream()
                     .allMatch(p -> p.getAnotacionesEnContra() == 0);
             boolean todosGanados = torneo.getPartidos().stream()
-                    .allMatch(p -> p.getResultadoReal().startsWith("Ganado"));
-            if (sinGolesEnContra && todosGanados) return true;
+                    .allMatch(p -> p.getResultadoReal() != null && p.getResultadoReal().startsWith("Ganado"));
+            if (sinGolesEnContra && todosGanados) {
+                return true;
+            }
         }
         return false;
     }
@@ -60,9 +72,11 @@ public class AchievementService {
         for (TournamentStat torneo : stats.getTorneos()) {
             int racha = 0;
             for (MatchStat p : torneo.getPartidos()) {
-                if (p.getResultadoReal().startsWith("Ganado")) {
+                if (p.getResultadoReal() != null && p.getResultadoReal().startsWith("Ganado")) {
                     racha++;
-                    if (racha >= 3) return true;
+                    if (racha >= 3) {
+                        return true;
+                    }
                 } else {
                     racha = 0;
                 }
@@ -83,4 +97,58 @@ public class AchievementService {
         }
         return contador >= 5;
     }
+
+    private boolean logroDominadorSupremo(TeamTournamentStats stats) {
+        long ganadorCount = stats.getTorneos().stream()
+                .filter(torneo -> torneo.getResultadoTorneo() != null &&
+                        torneo.getResultadoTorneo().equalsIgnoreCase("Ganador"))
+                .count();
+        return ganadorCount >= 8;
+    }
+
+    private boolean logroLeyendaPlateada(TeamTournamentStats stats) {
+        long ganadorCount = stats.getTorneos().stream()
+                .filter(torneo -> torneo.getResultadoTorneo() != null &&
+                        torneo.getResultadoTorneo().equalsIgnoreCase("Ganador"))
+                .count();
+        return ganadorCount >= 6;
+    }
+
+    private boolean logroTricampeon(TeamTournamentStats stats) {
+        long ganadorCount = stats.getTorneos().stream()
+                .filter(torneo -> torneo.getResultadoTorneo() != null &&
+                        torneo.getResultadoTorneo().equalsIgnoreCase("Ganador"))
+                .count();
+        return ganadorCount >= 3;
+    }
+
+    private boolean logroRegresoTriunfal(TeamTournamentStats stats) {
+        List<TournamentStat> torneos = stats.getTorneos();
+        if (torneos.size() < 2) {
+            return false;
+        }
+        for (int i = 1; i < torneos.size(); i++) {
+            String resultadoAnterior = torneos.get(i - 1).getResultadoTorneo();
+            String resultadoActual = torneos.get(i).getResultadoTorneo();
+            if (resultadoAnterior != null && resultadoActual != null) {
+                if (!resultadoAnterior.equalsIgnoreCase("Ganador") &&
+                        resultadoActual.equalsIgnoreCase("Ganador")) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean logroCampeonInaugural(TeamTournamentStats stats) {
+        List<TournamentStat> torneos = stats.getTorneos();
+        if (torneos.isEmpty()) {
+            return false;
+        }
+        // Suponemos que el primer torneo en la lista es el inaugural.
+        TournamentStat primerTorneo = torneos.get(0);
+        return primerTorneo.getResultadoTorneo() != null &&
+                primerTorneo.getResultadoTorneo().equalsIgnoreCase("Ganador");
+    }
+
 }

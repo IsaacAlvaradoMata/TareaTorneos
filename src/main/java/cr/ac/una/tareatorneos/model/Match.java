@@ -11,6 +11,7 @@ public class Match {
     private int puntajeA;
     private int puntajeB;
     private boolean finalizado;
+    private boolean statsProcesadas = false;
 
     private String deporte; // <--- este es el nuevo campo que se necesita
 
@@ -82,6 +83,14 @@ public class Match {
 
     public void setDeporte(String deporte) {
         this.deporte = deporte;
+    }
+
+    public boolean isStatsProcesadas() {
+        return statsProcesadas;
+    }
+
+    public void setStatsProcesadas(boolean statsProcesadas) {
+        this.statsProcesadas = statsProcesadas;
     }
 
     @Override

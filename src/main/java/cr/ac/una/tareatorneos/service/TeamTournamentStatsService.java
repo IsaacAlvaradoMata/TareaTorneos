@@ -54,9 +54,9 @@ public class TeamTournamentStatsService {
     // 🔄 NUEVO: actualiza estadísticas con opción de ganadorDesempate
     private void actualizarStatsEquipo(List<TeamTournamentStats> stats, String equipo, String rival,
                                        String torneo, int anotaciones, int enContra, String ganadorDesempate) {
-
+        // Se filtra asegurándose de que el nombre del equipo no sea nulo antes de comparar
         TeamTournamentStats equipoStats = stats.stream()
-                .filter(e -> e.getNombreEquipo().equalsIgnoreCase(equipo))
+                .filter(e -> e.getNombreEquipo() != null && e.getNombreEquipo().equalsIgnoreCase(equipo))
                 .findFirst()
                 .orElseGet(() -> {
                     TeamTournamentStats nuevo = new TeamTournamentStats();
@@ -65,8 +65,9 @@ public class TeamTournamentStatsService {
                     return nuevo;
                 });
 
+        // Se filtra el torneo, verificando que el nombre del torneo no sea nulo
         TournamentStat torneoStat = equipoStats.getTorneos().stream()
-                .filter(t -> t.getNombreTorneo().equalsIgnoreCase(torneo))
+                .filter(t -> t.getNombreTorneo() != null && t.getNombreTorneo().equalsIgnoreCase(torneo))
                 .findFirst()
                 .orElseGet(() -> {
                     TournamentStat nuevoTorneo = new TournamentStat();
@@ -82,8 +83,7 @@ public class TeamTournamentStatsService {
         nuevoPartido.setAnotacionesEnContra(enContra);
 
         boolean empate = anotaciones == enContra;
-        nuevoPartido.setResultado(empate ? "Empatado" :
-                (anotaciones > enContra ? "Ganado" : "Perdido"));
+        nuevoPartido.setResultado(empate ? "Empatado" : (anotaciones > enContra ? "Ganado" : "Perdido"));
 
         if (empate && ganadorDesempate != null) {
             nuevoPartido.setConDesempate(true);
