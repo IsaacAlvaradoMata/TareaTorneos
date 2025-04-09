@@ -5,6 +5,7 @@ import cr.ac.una.tareatorneos.model.Tournament;
 import cr.ac.una.tareatorneos.service.BracketMatchService;
 import cr.ac.una.tareatorneos.service.TeamService;
 import cr.ac.una.tareatorneos.service.TournamentService;
+import cr.ac.una.tareatorneos.util.AnimationDepartment;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -25,13 +26,12 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import cr.ac.una.tareatorneos.util.AnimationDepartment;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
 
 public class BracketGeneratorController extends Controller implements Initializable {
 
@@ -110,7 +110,7 @@ public class BracketGeneratorController extends Controller implements Initializa
         }
 
         if (equipo1 != null && equipo2 != null) {
-            lblPartidoActual.setText("  🎯 Partido pendiente: " + equipo1 + " vs " + equipo2 + "  " );
+            lblPartidoActual.setText("  🎯 Partido pendiente: " + equipo1 + " vs " + equipo2 + "  ");
             btnPlay.setDisable(false);
             return;
         }
@@ -255,7 +255,7 @@ public class BracketGeneratorController extends Controller implements Initializa
 
         if ("Finalizado".equalsIgnoreCase(torneoActual.getEstado())) {
             BracketMatch finalMatch = matchService.getFinalMatch();
-            if (finalMatch != null && finalMatch.getGanador() != null) {
+            if (finalMatch != null && finalMatch.isJugado() && finalMatch.getEquipo1() != null && finalMatch.getEquipo2() != null && finalMatch.getGanador() != null && "Finalizado".equalsIgnoreCase(torneoActual.getEstado())) {
                 if (!bracketContainer.getChildren().stream().anyMatch(n ->
                         n instanceof StackPane &&
                                 ((StackPane) n).getChildren().stream()
@@ -293,8 +293,6 @@ public class BracketGeneratorController extends Controller implements Initializa
         linea.setStrokeWidth(2);
         bracketContainer.getChildren().add(linea);
     }
-
-
 
     private StackPane crearNodoCampeon(String nombreEquipo) {
         StackPane contenedor = new StackPane();
@@ -371,7 +369,6 @@ public class BracketGeneratorController extends Controller implements Initializa
         StackPane imageWrapper = new StackPane(escudo);
         imageWrapper.getStyleClass().add("img-bracket");
 
-
         String logoPath = "file:teamsPhotos/default.png";
         if (nombreEquipo != null) {
             try {
@@ -410,8 +407,6 @@ public class BracketGeneratorController extends Controller implements Initializa
         return item;
     }
 
-
-
     private void dibujarConexionesBracket(StackPane nodo1, StackPane nodo2, StackPane destino) {
         double x1 = nodo1.getLayoutX() + NODE_WIDTH;
         double y1 = nodo1.getLayoutY() + NODE_HEIGHT / 2;
@@ -432,14 +427,12 @@ public class BracketGeneratorController extends Controller implements Initializa
         Line l3 = new Line(midX, y1, midX, y2); // unión vertical
         Line l4 = new Line(midX, midY, destino.getLayoutX(), midY); // hacia el nodo destino
 
-
         for (Line l : List.of(l1, l2, l3, l4)) {
             l.setStroke(Color.GOLD);
             l.setStrokeWidth(2);
             bracketContainer.getChildren().add(l);
         }
     }
-
 
     @Override
     public void initialize() {

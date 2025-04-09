@@ -199,9 +199,9 @@ public class BracketMatchService {
             for (BracketMatch p : rondaPendientes) {
                 if ((p.getEquipo1() != null && p.getEquipo2() == null) ||
                         (p.getEquipo2() != null && p.getEquipo1() == null)) {
-                    String equipoGanador = p.getEquipo1() != null ? p.getEquipo1() : p.getEquipo2();
-                    registrarGanador(p, equipoGanador); // ✅ marcar como jugado y avanzar
-                    return getSiguientePartidoPendiente(); // 🔁 continuar con siguiente partido
+                    // String equipoGanador = p.getEquipo1() != null ? p.getEquipo1() : p.getEquipo2();
+                    //registrarGanador(p, equipoGanador); // ✅ marcar como jugado y avanzar
+                    return p;//getSiguientePartidoPendiente(); // 🔁 continuar con siguiente partido
                 }
             }
 
@@ -281,7 +281,10 @@ public class BracketMatchService {
 
     public void verificarYGuardarGanadorDelTorneo() {
         BracketMatch finalMatch = getFinalMatch();
-        if (finalMatch == null || !finalMatch.isJugado()) return;
+        if (finalMatch == null || !finalMatch.isJugado()
+                || finalMatch.getEquipo1() == null || finalMatch.getEquipo2() == null
+                || finalMatch.getGanador() == null)
+            return;
 
         TournamentService torneoService = new TournamentService();
         Tournament torneo = torneoService.getTournamentByName(finalMatch.getTorneo());
@@ -306,7 +309,8 @@ public class BracketMatchService {
 
     public BracketMatch getFinalMatch() {
         return allMatches.stream()
-                .filter(BracketMatch::isJugado)
+                .filter(p -> p.isJugado())
+                .filter(p -> p.getEquipo1() != null && p.getEquipo2() != null)
                 .max(Comparator.comparingInt(BracketMatch::getRonda))
                 .orElse(null);
     }

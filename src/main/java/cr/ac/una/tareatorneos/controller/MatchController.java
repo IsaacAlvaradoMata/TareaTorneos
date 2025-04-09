@@ -90,6 +90,8 @@ public class MatchController extends Controller implements Initializable {
         if (popupMostrado) return;
         popupMostrado = true;
 
+        cancelarDragActivo();
+
         int puntajeA = matchService.getPuntajeA();
         int puntajeB = matchService.getPuntajeB();
         String equipoA = lblEquipoA.getText();
@@ -132,12 +134,22 @@ public class MatchController extends Controller implements Initializable {
             bracketParent.setTorneoActual(torneoActualizado);
             bracketParent.cargarBracketDesdePartidos(bracketService.getTodosLosPartidos());
             bracketParent.actualizarLabelPartidoPendiente();
-            try {
-                Stage stage = (Stage) btnFinalizar.getScene().getWindow();
-                if (stage != null) stage.close();
-            } catch (Exception e) {
-                System.out.println("❌ Error al cerrar la ventana de la final: " + e.getMessage());
-            }
+            Platform.runLater(() -> {
+                try {
+                    Stage stage = (Stage) btnFinalizar.getScene().getWindow();
+                    if (stage != null) stage.close();
+                } catch (Exception e) {
+                    System.out.println("❌ Error al cerrar la ventana de la final: " + e.getMessage());
+                }
+            });
+        });
+    }
+
+    private void cancelarDragActivo() {
+        Platform.runLater(() -> {
+            // Simular un "mouse released" manual para evitar drag congelado
+            imgBalon.setDisable(true);
+            imgBalon.setDisable(false);
         });
     }
 
