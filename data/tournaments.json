@@ -5,5 +5,15 @@
   "tiempoPorPartido" : 1,
   "cantidadEquipos" : 6,
   "equiposParticipantes" : [ "real madrid", "toronto", "china team", "govs", "Manchester city", "japan team" ],
-  "estado" : "Iniciado"
+  "estado" : "Iniciado",
+  "ganador" : null
+}, {
+  "id" : "5e66d5b1-3414-4ac5-aac2-5fa17458e5a0",
+  "nombre" : "PRUEBA 5.0",
+  "deporte" : "Futbol",
+  "tiempoPorPartido" : 1,
+  "cantidadEquipos" : 32,
+  "equiposParticipantes" : [ "1", "3", "4", "5", "6", "7", "8", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "21", "20", "2", "9", "23", "22", "24", "25", "26", "27", "28", "29", "30", "31", "32" ],
+  "estado" : "Por comenzar",
+  "ganador" : null
 } ]
