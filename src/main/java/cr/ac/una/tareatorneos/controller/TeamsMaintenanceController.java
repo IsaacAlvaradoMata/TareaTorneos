@@ -132,23 +132,14 @@ public class TeamsMaintenanceController extends Controller implements Initializa
         }
     }
 
-    public static void actualizarImagenEquipo(String nuevaFoto) {
-        TeamsMaintenanceController controller = (TeamsMaintenanceController)
-                FlowController.getInstance().getController("TeamsMaintenanceView");
-
-        if (controller != null) {
-            File file = new File(nuevaFoto);
-            if (file.exists()) {
-                Image image = new Image(file.toURI().toString());
-                controller.imgviewImagenDeporte.setImage(image);
-            }
-        }
-    }
-
     @FXML
     void OnActionBtnBarrerEquipo(ActionEvent event) {
         txtfieldNombreEquipos.clear();
+        cmbEquipos.getSelectionModel().clearSelection();
         cmbEquipos.setValue(null);
+        cmbEquipos.clearSelection();
+        cmbEquipos.getSelectionModel().clearSelection();
+        cmbEquipos.setText("");
         imgviewImagenDeporte.setImage(null);
         AppContext.getInstance().set("teamPhoto", null);
         tbvEquiposExistentes.getSelectionModel().clearSelection();

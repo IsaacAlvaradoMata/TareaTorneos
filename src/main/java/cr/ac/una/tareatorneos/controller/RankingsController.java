@@ -3,9 +3,11 @@ package cr.ac.una.tareatorneos.controller;
 
 import cr.ac.una.tareatorneos.model.Sport;
 import cr.ac.una.tareatorneos.model.Team;
+import cr.ac.una.tareatorneos.model.TeamTournamentStats;
 import cr.ac.una.tareatorneos.model.Tournament;
 import cr.ac.una.tareatorneos.service.SportService;
 import cr.ac.una.tareatorneos.service.TeamService;
+import cr.ac.una.tareatorneos.service.TeamTournamentStatsService;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXFilterComboBox;
 import io.github.palexdev.materialfx.controls.MFXTableColumn;
@@ -71,7 +73,7 @@ public class RankingsController extends Controller implements Initializable {
     private Label lblAnotacionesContra;
     @FXML
     private TableView<ObservableList<String>> tbvStatsTorneos;
-    
+    private final TeamTournamentStatsService statsService = new TeamTournamentStatsService();
     private ObservableList<Team> teamsData = FXCollections.observableArrayList();
     private TeamService teamService;
     private SportService sportService = new SportService();
@@ -87,18 +89,20 @@ public class RankingsController extends Controller implements Initializable {
         populateTableViewTeams();
         populateTableViewAdvanceStats();
         loadAllTeams();
+
+        tbvRankingEquipos.getSelectionModel().selectionProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null && !newVal.isEmpty()) {
+                Team equipoSeleccionado = newVal.get(0);
+                handleTableClickRankingEquipos(null); // 👈 actualiza labels
+            }
+        });
+
         cmbRankings.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 filtrarYOrdenarEquipos(newVal);
             }
         });
 
-        tbvRankingEquipos.getSelectionModel().selectionProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null && !newVal.isEmpty()) {
-                Team equipoSeleccionado = newVal.get(0);
-                mostrarEstadisticasEquipo(equipoSeleccionado); // 👈 actualiza labels
-            }
-        });
     }
 
     @Override
@@ -109,30 +113,109 @@ public class RankingsController extends Controller implements Initializable {
     @FXML
     private void handleTableClickRankingEquipos(MouseEvent event) {
         List<Team> seleccion = tbvRankingEquipos.getSelectionModel().getSelectedValues();
-        if (!seleccion.isEmpty()) {
-            Team seleccionado = seleccion.get(0);
-            mostrarEstadisticasEquipo(seleccionado);
-        }
-    }
+        if (seleccion.isEmpty()) return;
 
+        Team team = seleccion.get(0);
 
-    private void mostrarEstadisticasEquipo(Team team) {
-        limpiarLabelsEstadisticas(); // 👈 primero limpiamos
+        // Limpiar
+        limpiarLabelsEstadisticas();
+        tbvStatsTorneos.getItems().clear();
 
-        if (team == null || team.getEstadisticas() == null) return;
+        if (team.getEstadisticas() == null) return;
 
+        // Cargar Labels
         lblPartidosTotales.setText(String.valueOf(team.getEstadisticas().getPartidosTotales()));
         lblPartidosGanados.setText(String.valueOf(team.getEstadisticas().getPartidosGanados()));
         lblPartidosPerdidos.setText(String.valueOf(team.getEstadisticas().getPartidosPerdidos()));
         lblPartidosEmpatados.setText(String.valueOf(team.getEstadisticas().getPartidosEmpatados()));
-
         lblTorneosTotales.setText(String.valueOf(team.getEstadisticas().getTorneosTotales()));
         lblTorneosGanados.setText(String.valueOf(team.getEstadisticas().getTorneosGanados()));
         lblTorneosPerdidos.setText(String.valueOf(team.getEstadisticas().getTorneosPerdidos()));
-
         lblAnotaciones.setText(String.valueOf(team.getEstadisticas().getAnotaciones()));
         lblAnotacionesContra.setText(String.valueOf(team.getEstadisticas().getAnotacionesEnContra()));
+
+        System.out.println("→ Mostrando stats para: " + team.getNombre());
+
+        // Cargar Tabla Avanzada
+        statsService.getAllStats().stream()
+                .filter(e -> e.getNombreEquipo() != null && e.getNombreEquipo().equalsIgnoreCase(team.getNombre()))
+                .findFirst()
+                .ifPresent(stats -> {
+                    for (TeamTournamentStats.TournamentStat torneo : stats.getTorneos()) {
+                        ObservableList<String> fila = FXCollections.observableArrayList();
+                        fila.add(torneo.getNombreTorneo());
+
+                        for (int i = 0; i < 5; i++) {
+                            if (i < torneo.getPartidos().size()) {
+                                var p = torneo.getPartidos().get(i);
+                                fila.add(p.getRival() != null ? p.getRival() : "");
+                                fila.add(p.getAnotaciones() + " - " + p.getAnotacionesEnContra());
+                                fila.add(p.getResultadoReal());
+                            } else {
+                                fila.add(""); fila.add(""); fila.add("");
+                            }
+                        }
+
+                        fila.add(torneo.getResultadoTorneo() != null ? torneo.getResultadoTorneo() : "");
+                        tbvStatsTorneos.getItems().add(fila);
+                        System.out.println("✔ Datos cargados en tabla.");
+                    }
+                });
     }
+
+
+//    private void mostrarEstadisticasEquipo(Team team) {
+//        limpiarLabelsEstadisticas(); // 👈 primero limpiamos
+//        tbvStatsTorneos.getItems().clear();
+//        if (team == null || team.getEstadisticas() == null) return;
+//
+//        lblPartidosTotales.setText(String.valueOf(team.getEstadisticas().getPartidosTotales()));
+//        lblPartidosGanados.setText(String.valueOf(team.getEstadisticas().getPartidosGanados()));
+//        lblPartidosPerdidos.setText(String.valueOf(team.getEstadisticas().getPartidosPerdidos()));
+//        lblPartidosEmpatados.setText(String.valueOf(team.getEstadisticas().getPartidosEmpatados()));
+//
+//        lblTorneosTotales.setText(String.valueOf(team.getEstadisticas().getTorneosTotales()));
+//        lblTorneosGanados.setText(String.valueOf(team.getEstadisticas().getTorneosGanados()));
+//        lblTorneosPerdidos.setText(String.valueOf(team.getEstadisticas().getTorneosPerdidos()));
+//
+//        lblAnotaciones.setText(String.valueOf(team.getEstadisticas().getAnotaciones()));
+//        lblAnotacionesContra.setText(String.valueOf(team.getEstadisticas().getAnotacionesEnContra()));
+//
+//        System.out.println("→ Mostrando stats para: " + team.getNombre());
+//
+//        statsService.getAllStats().stream()
+//                .filter(e -> e.getNombreEquipo() != null && e.getNombreEquipo().equalsIgnoreCase(team.getNombre()))
+//                .findFirst()
+//                .ifPresent(stats -> {
+//                    for (TeamTournamentStats.TournamentStat torneo : stats.getTorneos()) {
+//                        ObservableList<String> fila = FXCollections.observableArrayList();
+//
+//                        // Agregar nombre del torneo
+//                        fila.add(torneo.getNombreTorneo());
+//
+//                        // Agregar hasta 5 partidos
+//                        for (int i = 0; i < 5; i++) {
+//                            if (i < torneo.getPartidos().size()) {
+//                                var p = torneo.getPartidos().get(i);
+//                                fila.add(p.getRival() != null ? p.getRival() : "");
+//                                fila.add(p.getAnotaciones() + " - " + p.getAnotacionesEnContra());
+//                                fila.add(p.getResultadoReal());
+//                            } else {
+//                                fila.add("");
+//                                fila.add("");
+//                                fila.add(""); // columnas vacías
+//                            }
+//                        }
+//
+//                        // Resultado del torneo
+//                        fila.add(torneo.getResultadoTorneo() != null ? torneo.getResultadoTorneo() : "");
+//
+//                        tbvStatsTorneos.getItems().add(fila);
+//                        System.out.println("✔ Datos encontrados y cargados a la tabla.");
+//                    }
+//                });
+//    }
+
 
     private void limpiarLabelsEstadisticas() {
         lblPartidosTotales.setText("0");
