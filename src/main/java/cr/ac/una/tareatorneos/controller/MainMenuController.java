@@ -8,11 +8,13 @@ import java.util.ResourceBundle;
 import cr.ac.una.tareatorneos.util.FlowController;
 import javafx.animation.Interpolator;
 import javafx.animation.SequentialTransition;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -20,6 +22,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
 import javafx.stage.Stage;
 import javafx.scene.Node;
+import javafx.util.Duration;
+
+import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class MainMenuController extends Controller implements Initializable {
 
@@ -158,7 +166,9 @@ public class MainMenuController extends Controller implements Initializable {
     void OnActionBtnLogros(ActionEvent event) {
         seleccionarBotonMenu(btnLogros);
         FlowController.getInstance().goView("AchievementsView");
-
+        AchievementsController controller = (AchievementsController)
+                FlowController.getInstance().getController("AchievementsView");
+        controller.refrescarLogros();
     }
 
     @FXML

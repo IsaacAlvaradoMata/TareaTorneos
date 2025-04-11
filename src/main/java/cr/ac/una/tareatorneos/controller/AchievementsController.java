@@ -22,6 +22,7 @@
     import javafx.application.Platform;
     import javafx.collections.FXCollections;
     import javafx.collections.ObservableList;
+    import javafx.event.ActionEvent;
     import javafx.fxml.FXML;
     import javafx.fxml.Initializable;
     import javafx.scene.control.Label;
@@ -35,7 +36,6 @@
     import javafx.stage.Stage;
     import javafx.util.Duration;
 
-    import javafx.event.ActionEvent;
     import java.net.URL;
     import java.util.List;
     import java.util.Map;
@@ -95,7 +95,6 @@
          */
         @Override
         public void initialize(URL url, ResourceBundle rb) {
-            // ✅ Recalcula logros de todos los equipos antes de cargar la vista
             teamService.actualizarLogrosDeTodosLosEquipos();
 
             Tooltip tooltip = new Tooltip("Haga click sobre los logros para ver la descripción de cada uno de ellos.");
@@ -300,6 +299,7 @@
             dialog.showDialog();
 
         }
+
         @FXML
         private void onActionBtnLogrosAnimacion(ActionEvent event) {
             // 1. Navega a la vista
@@ -312,7 +312,6 @@
             // 3. Llama al reset completo con el nombre del equipo
             controller.resetAndRunAnimationsLogros("Dominador Supremo"); // O usa un nombre dinámico
         }
-
 
         private void loadAllTeams() {
             equiposFiltrados.clear();
@@ -381,7 +380,18 @@
             loadSportsInComboBox();
         }
 
+        public void refrescarLogros() {
+            equiposFiltrados.clear();
+            List<Team> equipos = teamService.getAllTeams();
+            equiposFiltrados.addAll(equipos);
+            tbvLogrosEquipos.setItems(equiposFiltrados);
 
-
+            Platform.runLater(() -> {
+                if (!equiposFiltrados.isEmpty()) {
+                    tbvLogrosEquipos.getSelectionModel().selectIndex(0);
+                    actualizarIconosDeLogros(equiposFiltrados.get(0));
+                }
+            });
+        }
 
     }
