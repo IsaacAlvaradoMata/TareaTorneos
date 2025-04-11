@@ -6,6 +6,7 @@ import cr.ac.una.tareatorneos.service.BracketMatchService;
 import cr.ac.una.tareatorneos.service.TeamService;
 import cr.ac.una.tareatorneos.service.TournamentService;
 import cr.ac.una.tareatorneos.util.AnimationDepartment;
+import cr.ac.una.tareatorneos.util.FlowController;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -51,6 +52,8 @@ public class BracketGeneratorController extends Controller implements Initializa
     private Label lblNombreTorneoBracket;
     @FXML
     private ImageView rightBracket;
+    @FXML
+    private MFXButton btnSave;
 
     private BracketMatchService matchService = new BracketMatchService();
     private Tournament torneoActual;
@@ -118,6 +121,11 @@ public class BracketGeneratorController extends Controller implements Initializa
         // 🔒 Caso de seguridad
         lblPartidoActual.setText("  ⌛ Esperando equipos para siguiente partido...  ");
         btnPlay.setDisable(true);
+    }
+
+    @FXML
+    private void onActionBtnSave(ActionEvent event) {
+        FlowController.getInstance().goView("ActiveTournamentsView");
     }
 
     @FXML

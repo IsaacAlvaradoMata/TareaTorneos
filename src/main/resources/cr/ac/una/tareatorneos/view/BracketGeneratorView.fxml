@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -35,9 +36,16 @@
             <children>
                <HBox alignment="BOTTOM_CENTER" spacing="20.0" styleClass="gold-border-bracket">
                   <children>
+                     <MFXButton fx:id="btnSave" onAction="#onActionBtnSave" prefHeight="38.0" prefWidth="155.0" styleClass="btn-Bracket" text="Guardar y salir">
+                        <graphic>
+                           <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                        </graphic>
+                     </MFXButton>
+                     <Pane prefHeight="40.0" prefWidth="1.0" HBox.hgrow="ALWAYS" />
                      <ImageView fx:id="leftBracket" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
                      <Label fx:id="lblNombreTorneoBracket" styleClass="lbl-TitleBracket" text="NOMBRE DE TORNEO" />
                      <ImageView fx:id="rightBracket" fitHeight="40.0" fitWidth="40.0" layoutX="262.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                     <Pane prefHeight="40.0" prefWidth="160.0" HBox.hgrow="ALWAYS" />
                   </children>
                   <VBox.margin>
                      <Insets bottom="10.0" />
