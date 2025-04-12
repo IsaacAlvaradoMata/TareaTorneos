@@ -208,11 +208,17 @@ public class BracketMatchService {
                 return rondaPendientes.get(0);
             }
 
-            // Permitir pasar equipos que estén solos (BYE)
+            // Permitir pasar equipos que estén solos (BYE) SOLO si es el primero visualmente
             for (BracketMatch p : rondaPendientes) {
-                if ((p.getEquipo1() != null && p.getEquipo2() == null) ||
-                        (p.getEquipo2() != null && p.getEquipo1() == null)) {
-                    return p; // 🔁 continuar con siguiente partido
+                boolean isBye = (p.getEquipo1() != null && p.getEquipo2() == null) ||
+                        (p.getEquipo2() != null && p.getEquipo1() == null);
+
+                if (isBye) {
+                    // ⚠️ Validar que sea el primero visualmente
+                    BracketMatch primerPendienteVisual = rondaPendientes.get(0);
+                    if (primerPendienteVisual == p) {
+                        return p;
+                    }
                 }
             }
 
