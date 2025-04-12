@@ -20,4 +20,17 @@ public class AchievementUtils {
         logros.add(new Achievement("Campeón Inaugural", false));
         return logros;
     }
+
+    public static List<Achievement> filtrarNuevosLogros(List<Achievement> antes, List<Achievement> despues) {
+        List<Achievement> nuevos = new ArrayList<>();
+        for (int i = 0; i < despues.size(); i++) {
+            Achievement logroAntes = antes.get(i);
+            Achievement logroDespues = despues.get(i);
+            if (!logroAntes.isObtenido() && logroDespues.isObtenido()) {
+                nuevos.add(logroDespues);
+            }
+        }
+        return nuevos;
+    }
+
 }

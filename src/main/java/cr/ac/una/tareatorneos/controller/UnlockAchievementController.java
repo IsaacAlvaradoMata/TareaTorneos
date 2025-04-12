@@ -1,12 +1,10 @@
 package cr.ac.una.tareatorneos.controller;
 
-
-import java.net.URL;
-import java.util.ResourceBundle;
+import cr.ac.una.tareatorneos.model.Achievement;
 import cr.ac.una.tareatorneos.util.AnimationDepartment;
-import cr.ac.una.tareatorneos.util.FlowController;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -14,8 +12,13 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.event.ActionEvent;
+
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class UnlockAchievementController extends Controller implements Initializable {
 
@@ -48,6 +51,9 @@ public class UnlockAchievementController extends Controller implements Initializ
     @FXML
     private Pane spLluvia;
 
+    private List<Achievement> colaLogros = new ArrayList<>();
+    private int indiceActual = 0;
+    private Runnable callbackFinal; // opcional, para ejecutar algo al final
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -75,8 +81,30 @@ public class UnlockAchievementController extends Controller implements Initializ
 
     @FXML
     private void onActionBtnCerrar(ActionEvent event) {
+        Stage stage = (Stage) btnCerrar.getScene().getWindow();
+        stage.close();
 
+        // Mostrar el siguiente logro si hay más
+        Platform.runLater(() -> mostrarSiguienteLogro());
+    }
 
+    public void mostrarLogrosEnCadena(List<Achievement> logros, Runnable onFinish) {
+        if (logros == null || logros.isEmpty()) return;
+
+        this.colaLogros = logros;
+        this.indiceActual = 0;
+        this.callbackFinal = onFinish;
+
+        mostrarSiguienteLogro();
+    }
+
+    private void mostrarSiguienteLogro() {
+        if (indiceActual < colaLogros.size()) {
+            Achievement logro = colaLogros.get(indiceActual++);
+            resetAndRunAnimationsLogros(logro.getNombre());
+        } else {
+            if (callbackFinal != null) callbackFinal.run();
+        }
     }
 
     private void loadImagesLogros() {
@@ -132,7 +160,6 @@ public class UnlockAchievementController extends Controller implements Initializ
         AnimationDepartment.fadeIn(btnCerrar, Duration.seconds(5.0));
     }
 
-
     public void resetAndRunAnimationsLogros(String teamName) {
         resetAchievementView();
         AnimationDepartment.stopAnimatedLightSweep();
@@ -140,7 +167,6 @@ public class UnlockAchievementController extends Controller implements Initializ
         // 💥 Resetear transformaciones
         imgAchievement.setTranslateY(0);
         AchievementContainer.setTranslateY(0);
-
 
         // Reset de visibilidad y opacidad
         lblAchievementName.setOpacity(0);
@@ -155,11 +181,9 @@ public class UnlockAchievementController extends Controller implements Initializ
         runAchievementIntro(teamName);
     }
 
-
     private void resetAchievementView() {
         AnimationDepartment.stopRainingAchievements(spLluvia);
         AnimationDepartment.stopAnimatedLightSweep();
-
 
         spfondo.getChildren().removeIf(node ->
                 node instanceof ImageView &&
@@ -187,7 +211,5 @@ public class UnlockAchievementController extends Controller implements Initializ
         imgAchievement.setVisible(true);
         imgAchievement.setOpacity(0);
     }
-
-
 
 }
