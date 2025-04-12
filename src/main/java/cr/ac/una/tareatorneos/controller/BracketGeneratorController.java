@@ -284,6 +284,16 @@ public class BracketGeneratorController extends Controller implements Initializa
                     nodoCampeon.setLayoutX(x);
                     nodoCampeon.setLayoutY(y);
                     bracketContainer.getChildren().add(nodoCampeon);
+
+                    FlowController.getInstance().goViewInWindowModal("WinnerAnimationView", this.getStage(), false);
+
+                    // 2. Obtiene el controller
+                    WinnerAnimationController controller = (WinnerAnimationController)
+                            FlowController.getInstance().getController("WinnerAnimationView");
+
+                    // 3. Llama al reset completo con el nombre del equipo
+                    controller.resetAndRunAnimations(finalMatch.getGanador());
+                    // O usa un nombre dinámico
                 }
             }
         }

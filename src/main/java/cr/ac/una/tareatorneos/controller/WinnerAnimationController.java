@@ -59,7 +59,6 @@ public class WinnerAnimationController extends Controller implements Initializab
                 spfondo.getPrefWidth(),
                 spfondo.getPrefHeight()
         ));
-        runAnimations("Los Titanes del Código"); // Puedes reemplazar esto con el nombre dinámico del equipo
         Platform.runLater(() -> {
             javafx.scene.shape.Rectangle clip = new javafx.scene.shape.Rectangle();
             clip.widthProperty().bind(spfondo.widthProperty());
@@ -137,13 +136,12 @@ public class WinnerAnimationController extends Controller implements Initializab
     }
 
     public void resetAndRunAnimations(String teamName) {
-        AnimationDepartment.stopConfetti(); // Detiene el loop anterior
-        confettiPane.getChildren().clear(); // Limpia cualquier partícula vieja
+        AnimationDepartment.stopConfetti();
+        confettiPane.getChildren().clear();
         AnimationDepartment.stopAnimatedLightSweep();
-        winnerContainer.setTranslateY(0); // 🔁 Resetear transformaciones acumuladas
-        winnerContainer.setOpacity(0);    // Asegura opacidad reiniciada
+        winnerContainer.setTranslateY(0);
+        winnerContainer.setOpacity(0);
 
-        // Reset estados visuales
         imgCrown.setVisible(false);
         imgCrown.setOpacity(0);
         imgCrown.setTranslateY(-200);
@@ -158,17 +156,45 @@ public class WinnerAnimationController extends Controller implements Initializab
         printButton.setOpacity(0);
         winnerContainer.setOpacity(0);
         titleBox.setOpacity(0);
+        teamNameLabel.setStyle("");
 
-        // Detener confetti si ya estaba corriendo
-        AnimationDepartment.stopConfetti();
+        // 🟨 NUEVO: cargar imagen dinámica
+        try {
+            String rawPath = new cr.ac.una.tareatorneos.service.TeamService().getTeamByName(teamName).getTeamImage();
+            String finalPath = rawPath != null ? "file:teamsPhotos/" + rawPath : "file:teamsPhotos/default.png";
+            teamImage.setImage(new Image(finalPath));
+        } catch (Exception e) {
+            System.out.println("⚠ No se pudo cargar imagen del equipo " + teamName);
+            teamImage.setImage(new Image("file:teamsPhotos/default.png"));
+        }
 
-        // Reiniciar estilo del nombre
-        teamNameLabel.setStyle(""); // limpiamos estilos previos
-
-        // Ejecutar animaciones como si fuera la primera vez
-        runAnimations(teamName);
+        // 🟡 Llamar animaciones después de todo el setup
+        Platform.runLater(() -> runAnimations(teamName));
     }
 
+    public void onClose() {
+        AnimationDepartment.stopConfetti();
+        confettiPane.getChildren().clear();
+        AnimationDepartment.stopAnimatedLightSweep();
+        winnerContainer.setTranslateY(0);
+        winnerContainer.setOpacity(0);
 
+        imgCrown.setVisible(false);
+        imgCrown.setOpacity(0);
+        imgCrown.setTranslateY(-200);
+
+        imgSparkle.setVisible(false);
+        imgSparkle.setOpacity(0);
+
+        imgLuz.setVisible(false);
+        imgLuz.setOpacity(0);
+
+        teamNameLabel.setOpacity(0);
+        printButton.setOpacity(0);
+        winnerContainer.setOpacity(0);
+        titleBox.setOpacity(0);
+        teamNameLabel.setStyle("");
+        System.out.println("🎬 Animaciones detenidas correctamente al cerrar.");
+    }
 
 }

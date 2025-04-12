@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+
+import cr.ac.una.tareatorneos.controller.WinnerAnimationController;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -194,6 +197,9 @@ public class FlowController {
         stage.setOnHidden((WindowEvent event) -> {
             controller.getStage().getScene().setRoot(new Pane());
             controller.setStage(null);
+            if (controller instanceof WinnerAnimationController winnerController) {
+                winnerController.onClose(); // 💥 Detiene confetti y efectos
+            }
         });
         controller.setStage(stage);
         Parent root = loader.getRoot();
@@ -203,7 +209,7 @@ public class FlowController {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(parentStage);
         stage.centerOnScreen();
-        stage.showAndWait();
+        Platform.runLater(stage::show);
 
     }
 
