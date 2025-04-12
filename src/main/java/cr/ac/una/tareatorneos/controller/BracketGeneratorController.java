@@ -123,9 +123,29 @@ public class BracketGeneratorController extends Controller implements Initializa
         btnPlay.setDisable(true);
     }
 
+    private boolean esModoVisualizacion = false;
+
+    public void setModoVisualizacion(boolean modo) {
+        this.esModoVisualizacion = modo;
+
+        if (modo) {
+            btnSave.setText("Cerrar");
+        } else {
+            btnSave.setText("Guardar y Salir");
+        }
+    }
+
     @FXML
     private void onActionBtnSave(ActionEvent event) {
-        FlowController.getInstance().goView("ActiveTournamentsView");
+        if (esModoVisualizacion) {
+            // 🔐 Cerrar solo si fue abierto desde "Ver Torneo Finalizado"
+            Stage stage = (Stage) root.getScene().getWindow();
+            if (stage != null) stage.close();
+        } else {
+            // 🔁 Comportamiento normal
+            FlowController.getInstance().goView("ActiveTournamentsView");
+        }
+
     }
 
     @FXML
@@ -306,16 +326,13 @@ public class BracketGeneratorController extends Controller implements Initializa
                     nodoCampeon.setLayoutX(x);
                     nodoCampeon.setLayoutY(y);
                     bracketContainer.getChildren().add(nodoCampeon);
+                    if (!esModoVisualizacion) {
+                        FlowController.getInstance().goViewInWindowModal("WinnerAnimationView", this.getStage(), false);
+                        WinnerAnimationController controller = (WinnerAnimationController)
+                                FlowController.getInstance().getController("WinnerAnimationView");
+                        controller.resetAndRunAnimations(finalMatch.getGanador());
 
-                    FlowController.getInstance().goViewInWindowModal("WinnerAnimationView", this.getStage(), false);
-
-                    // 2. Obtiene el controller
-                    WinnerAnimationController controller = (WinnerAnimationController)
-                            FlowController.getInstance().getController("WinnerAnimationView");
-
-                    // 3. Llama al reset completo con el nombre del equipo
-                    controller.resetAndRunAnimations(finalMatch.getGanador());
-                    // O usa un nombre dinámico
+                    }
                 }
             }
         }

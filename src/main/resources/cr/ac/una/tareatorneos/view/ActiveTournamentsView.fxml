@@ -63,7 +63,7 @@
                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                             </VBox.margin>
                                         </MFXButton>
-                                        <MFXButton fx:id="btnAbrirMatchView" onAction="#onActionBtnAbrirMatchView" prefHeight="40.0" prefWidth="250.0" styleClass="btn-ActiveTournaments" text="Abrir MatchView (Test)">
+                                        <MFXButton fx:id="btnVerTorneo" onAction="#onActionBtnVerTorneo" prefHeight="40.0" prefWidth="250.0" styleClass="btn-ActiveTournaments" text="Ver Torneo Finalizado">
                                             <graphic>
                                                 <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" />
                                             </graphic>
@@ -71,11 +71,6 @@
                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="0.0" />
                                             </VBox.margin>
                                         </MFXButton>
-                              <MFXButton fx:id="btnWinnerAnimationTest" layoutX="117.0" layoutY="453.0" onAction="#onActionBtnWinnerAnimationTest" prefHeight="40.0" prefWidth="250.0" styleClass="btn-ActiveTournaments" text="WinnerAnimation (Test)">
-                                 <graphic>
-                                    <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" />
-                                 </graphic>
-                              </MFXButton>
                                     </children>
                                     <padding>
                                         <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />

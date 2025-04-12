@@ -4,12 +4,14 @@ import cr.ac.una.tareatorneos.model.Tournament;
 import cr.ac.una.tareatorneos.service.SportService;
 import cr.ac.una.tareatorneos.service.TournamentService;
 import cr.ac.una.tareatorneos.util.FlowController;
+import cr.ac.una.tareatorneos.util.Mensaje;
 import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.image.ImageView;
@@ -44,7 +46,7 @@ public class ActiveTournamentsController extends Controller implements Initializ
     @FXML
     private MFXListView<String> listviewEquiposSeleccionadosTorneo;
     @FXML
-    private MFXButton btnReanudarTorneo;
+    private MFXButton btnVerTorneo;
     @FXML
     private MFXFilterComboBox<String> cmbTorneosActivos;
     @FXML
@@ -102,11 +104,19 @@ public class ActiveTournamentsController extends Controller implements Initializ
 
         Tournament torneoSeleccionado = selected.get(0);
 
-        // Obtener el controlador de la vista de brackets
+        // 🛡️ Validación de estado
+        if (!"por comenzar".equalsIgnoreCase(torneoSeleccionado.getEstado()) &&
+                !"iniciado".equalsIgnoreCase(torneoSeleccionado.getEstado())) {
+            new Mensaje().showModal(Alert.AlertType.WARNING, "Estado inválido", getStage(),
+                    "Solo se pueden seleccionar torneos que estén 'Por comenzar' o 'Iniciados'.");
+            return;
+        }
+
         BracketGeneratorController controller = (BracketGeneratorController)
                 FlowController.getInstance().getController("BracketGeneratorView");
 
         if (controller != null) {
+            controller.setModoVisualizacion(false); // ✅ modo interactivo
             controller.inicializarBracketDesdeTorneo(torneoSeleccionado);
             FlowController.getInstance().goView("BracketGeneratorView");
         } else {
@@ -185,25 +195,29 @@ public class ActiveTournamentsController extends Controller implements Initializ
     }
 
     @FXML
-    private void onActionBtnAbrirMatchView(ActionEvent event) {
-        List<Tournament> selected = tbvTorneosActivos.getSelectionModel().getSelectedValues();
+    private void onActionBtnVerTorneo(ActionEvent event) {
+        Tournament torneoSeleccionado = tbvTorneosActivos.getSelectionModel().getSelectedValue();
 
-        if (selected == null || selected.isEmpty()) {
-            System.out.println("❌ No se ha seleccionado ningún torneo.");
+        if (torneoSeleccionado == null) {
+            new Mensaje().showModal(Alert.AlertType.WARNING, "Torneo no seleccionado", getStage(), "Selecciona un torneo primero.");
             return;
         }
 
-        Tournament torneoSeleccionado = selected.get(0);
-
-        MatchController controller = (MatchController)
-                FlowController.getInstance().getController("MatchView");
-
-        if (controller != null) {
-            controller.inicializarMatchDesdeTorneo(torneoSeleccionado);
-            FlowController.getInstance().goView("MatchView");
-        } else {
-            System.out.println("⚠️ No se pudo cargar el controlador de MatchView.");
+        if (!"Finalizado".equalsIgnoreCase(torneoSeleccionado.getEstado())) {
+            new Mensaje().showModal(Alert.AlertType.INFORMATION, "Estado inválido", getStage(), "Este botón solo permite visualizar torneos finalizados.");
+            return;
         }
+
+        // ✅ 1. Obtener el controller desde FlowController
+        BracketGeneratorController controller = (BracketGeneratorController)
+                FlowController.getInstance().getController("BracketGeneratorView");
+
+        // ✅ 2. Configurar modo visualización
+        controller.setModoVisualizacion(true);
+        controller.inicializarBracketDesdeTorneo(torneoSeleccionado);
+
+        // ✅ 3. Abrir ventana modal
+        FlowController.getInstance().goViewInWindowModal("BracketGeneratorView", getStage(), false);
     }
 
     @FXML
