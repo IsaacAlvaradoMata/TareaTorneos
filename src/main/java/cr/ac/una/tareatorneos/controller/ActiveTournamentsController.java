@@ -15,7 +15,6 @@ import javafx.scene.control.Separator;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
 
 import java.net.URL;
 import java.util.Arrays;
@@ -165,21 +164,11 @@ public class ActiveTournamentsController extends Controller implements Initializ
         List<Tournament> filtered;
 
         if (deporte.equalsIgnoreCase("Todos")) {
-            // Mostrar todos los torneos activos (iniciados o por comenzar)
             filtered = tournaments.stream()
-                    .filter(t -> {
-                        String estado = t.getEstado().toLowerCase();
-                        return estado.equals("iniciado") || estado.equals("por comenzar");
-                    })
                     .toList();
         } else {
-            // Filtrar por deporte
             filtered = tournaments.stream()
                     .filter(t -> t.getDeporte().equalsIgnoreCase(deporte))
-                    .filter(t -> {
-                        String estado = t.getEstado().toLowerCase();
-                        return estado.equals("iniciado") || estado.equals("por comenzar");
-                    })
                     .toList();
         }
 
@@ -229,7 +218,6 @@ public class ActiveTournamentsController extends Controller implements Initializ
         // 3. Llama al reset completo con el nombre del equipo
         controller.resetAndRunAnimations("Los Titanes del Código"); // O usa un nombre dinámico
     }
-
 
     @Override
     public void initialize() {
