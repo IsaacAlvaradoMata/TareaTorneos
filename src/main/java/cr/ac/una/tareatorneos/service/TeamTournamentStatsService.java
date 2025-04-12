@@ -104,7 +104,7 @@ public class TeamTournamentStatsService {
         List<TeamTournamentStats> stats = getAllStats();
 
         TeamTournamentStats equipoStats = stats.stream()
-                .filter(e -> e.getNombreEquipo().equalsIgnoreCase(equipo))
+                .filter(e -> e.getNombreEquipo() != null && e.getNombreEquipo().equalsIgnoreCase(equipo))
                 .findFirst()
                 .orElseGet(() -> {
                     TeamTournamentStats nuevo = new TeamTournamentStats();
