@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import cr.ac.una.tareatorneos.model.Achievement;
 import cr.ac.una.tareatorneos.model.Team;
 import cr.ac.una.tareatorneos.model.TeamStats;
+import cr.ac.una.tareatorneos.model.TeamTournamentStats;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -122,9 +123,51 @@ public class TeamService {
 
     public void actualizarLogrosDeEquipo(Team equipo) {
         AchievementService achievementService = new AchievementService();
-        List<Achievement> nuevosLogros = achievementService.calcularLogrosParaEquipo(equipo.getNombre());
-        equipo.setLogros(nuevosLogros);
-        updateTeam(equipo.getNombre(), equipo); // Esto también guarda el cambio
+
+        List<Achievement> logrosAnteriores = equipo.getLogros() != null
+                ? new ArrayList<>(equipo.getLogros())
+                : new ArrayList<>();
+
+        List<Achievement> logrosCompletos = achievementService.calcularLogrosParaEquipo(equipo.getNombre());
+
+        TeamTournamentStatsService statsService = new TeamTournamentStatsService();
+        TeamTournamentStats stats = statsService.getAllStats().stream()
+                .filter(s -> s.getNombreEquipo() != null && s.getNombreEquipo().equalsIgnoreCase(equipo.getNombre()))
+                .findFirst()
+                .orElse(null);
+
+        boolean tieneTorneoGanado = false;
+        if (stats != null) {
+            tieneTorneoGanado = stats.getTorneos().stream()
+                    .anyMatch(t -> "Ganador".equalsIgnoreCase(t.getResultadoTorneo()));
+        }
+
+        for (Achievement logro : logrosCompletos) {
+            if (List.of("Dominador Supremo", "Leyenda Plateada", "Tricampeón", "Campeón Inaugural", "Regreso Triunfal").contains(logro.getNombre())
+                    && !tieneTorneoGanado) {
+                logro.setObtenido(false);
+            }
+        }
+
+        equipo.setLogros(logrosCompletos);
+
+        boolean actualizado = updateTeam(equipo.getNombre(), equipo);
+        if (actualizado) {
+            List<Achievement> desbloqueados = new ArrayList<>();
+            for (Achievement nuevo : logrosCompletos) {
+                boolean fueObtenidoAhora = nuevo.isObtenido() &&
+                        logrosAnteriores.stream()
+                                .filter(l -> l.getNombre().equalsIgnoreCase(nuevo.getNombre()))
+                                .noneMatch(Achievement::isObtenido);
+                if (fueObtenidoAhora) {
+                    desbloqueados.add(nuevo);
+                }
+            }
+
+            if (!desbloqueados.isEmpty()) {
+                // UnlockAchievementController.getInstance().mostrarAnimacionLogros(desbloqueados);
+            }
+        }
     }
 
     public void actualizarLogrosDeTodosLosEquipos() {

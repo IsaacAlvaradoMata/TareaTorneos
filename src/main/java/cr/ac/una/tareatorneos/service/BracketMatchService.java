@@ -315,12 +315,17 @@ public class BracketMatchService {
             String ganador = finalMatch.getGanador();
 
             torneo.setGanador(ganador);
-            torneo.setEstado("Finalizado"); // ✅ PASO 3: cambiar estado
+            torneo.setEstado("Finalizado");
 
             torneoService.updateTournament(torneo.getNombre(), torneo);
-
-            // También actualiza en TeamTournamentStats
             new TeamTournamentStatsService().asignarResultadoFinalTorneo(ganador, torneo.getNombre(), "Ganador");
+            
+            TeamService teamService = new TeamService();
+            Team equipoGanador = teamService.getTeamByName(ganador);
+            if (equipoGanador != null) {
+                System.out.println("🎉 Torneo finalizado. Recalculando logros para el campeón: " + ganador);
+                teamService.actualizarLogrosDeEquipo(equipoGanador);
+            }
         }
     }
 
