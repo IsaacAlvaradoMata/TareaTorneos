@@ -96,7 +96,6 @@ public class MatchService {
             return;
         }
 
-        // Actualizar estadísticas de equipo, puntos y logros (sin guardar aún)
         TeamTournamentStatsService statsService = new TeamTournamentStatsService();
         if (ganadorDesempate != null) {
             statsService.guardarEstadisticaDelPartido(match, ganadorDesempate);
@@ -105,21 +104,18 @@ public class MatchService {
         }
         statsService.actualizarPuntosDeTodosLosTorneos();
 
-        // Actualizar logros de los equipos
         TeamService teamService = new TeamService();
         Team equipo1 = teamService.getTeamByName(match.getEquipoA());
         if (equipo1 != null) {
             teamService.actualizarLogrosDeEquipo(equipo1);
         }
+
         Team equipo2 = teamService.getTeamByName(match.getEquipoB());
         if (equipo2 != null) {
             teamService.actualizarLogrosDeEquipo(equipo2);
         }
 
-        // Marcar que ya se procesaron las estadísticas para este partido
         match.setStatsProcesadas(true);
-
-        // Guardar el match actualizado en JSON (ahora con statsProcesadas true)
         guardarMatchEnJson(match);
     }
 
@@ -194,4 +190,24 @@ public class MatchService {
             System.err.println("❌ Error al guardar partido en JSON");
         }
     }
+
+    private boolean torneoFinalizadoParaEquipo(String nombreEquipo, String torneoNombre) {
+        TeamTournamentStatsService statsService = new TeamTournamentStatsService();
+        TeamTournamentStats stats = statsService.getAllStats().stream()
+                .filter(s -> s.getNombreEquipo() != null && s.getNombreEquipo().equalsIgnoreCase(nombreEquipo))
+                .findFirst()
+                .orElse(null);
+
+        if (stats == null) return false;
+
+        TeamTournamentStats.TournamentStat torneo = stats.getTorneos().stream()
+                .filter(t -> t.getNombreTorneo().equalsIgnoreCase(torneoNombre))
+                .findFirst()
+                .orElse(null);
+
+        if (torneo == null) return false;
+
+        return "Ganador".equalsIgnoreCase(torneo.getResultadoTorneo());
+    }
+
 }
