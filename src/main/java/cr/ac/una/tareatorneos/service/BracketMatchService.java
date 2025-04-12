@@ -10,6 +10,7 @@ import cr.ac.una.tareatorneos.model.Tournament;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,6 +50,9 @@ public class BracketMatchService {
         }
 
         List<String> equipos = new ArrayList<>(torneo.getEquiposParticipantes());
+        if ("Por comenzar".equalsIgnoreCase(torneo.getEstado())) {
+            Collections.shuffle(equipos);
+        }
         allMatches.clear();
 
         // 1. Calcular la cantidad de rondas necesarias
@@ -199,9 +203,7 @@ public class BracketMatchService {
             for (BracketMatch p : rondaPendientes) {
                 if ((p.getEquipo1() != null && p.getEquipo2() == null) ||
                         (p.getEquipo2() != null && p.getEquipo1() == null)) {
-                    // String equipoGanador = p.getEquipo1() != null ? p.getEquipo1() : p.getEquipo2();
-                    //registrarGanador(p, equipoGanador); // ✅ marcar como jugado y avanzar
-                    return p;//getSiguientePartidoPendiente(); // 🔁 continuar con siguiente partido
+                    return p; // 🔁 continuar con siguiente partido
                 }
             }
 
