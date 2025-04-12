@@ -1824,7 +1824,7 @@
     -fx-font-family: "Trebuchet MS", sans-serif;
     -fx-font-size: 12px;
     -fx-font-weight: bold;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #FFD700;
     -fx-padding: 10px 16px;
     -fx-min-height: 37px;
     -fx-border-color: transparent;
@@ -1883,6 +1883,11 @@
 #btnPlay > ImageView {
     -fx-image: url('../resources/EspadaIcon.png ');
 }
+
+#btnSave > ImageView {
+    -fx-image: url('../resources/SaveNExitIcon.png ');
+}
+
 
 .bracket-contenedor {
     -fx-background-color: #fff9cc;
