@@ -262,8 +262,30 @@ public class BracketGeneratorController extends Controller implements Initializa
         torneoActual = new TournamentService().getTournamentByName(torneoActual.getNombre());
 
         if ("Finalizado".equalsIgnoreCase(torneoActual.getEstado())) {
-            BracketMatch finalMatch = matchService.getFinalMatch();
-            if (finalMatch != null && finalMatch.isJugado() && finalMatch.getEquipo1() != null && finalMatch.getEquipo2() != null && finalMatch.getGanador() != null && "Finalizado".equalsIgnoreCase(torneoActual.getEstado())) {
+            int rondaFinal = matchService.getTodosLosPartidos().stream()
+                    .mapToInt(BracketMatch::getRonda)
+                    .max()
+                    .orElse(1);
+
+            List<BracketMatch> rondaFinalPartidos = matchService.getPartidosPorRonda(rondaFinal);
+            BracketMatch finalMatch = rondaFinalPartidos.stream()
+                    .filter(p -> p.isJugado() && p.getEquipo1() != null && p.getEquipo2() != null && p.getGanador() != null)
+                    .findFirst()
+                    .orElse(null);
+
+            // ⚠️ Verifica que todos los partidos de la ronda final están jugados
+            boolean todosJugados = finalMatch != null &&
+                    matchService.getPartidosPorRonda(finalMatch.getRonda()).stream()
+                            .filter(p -> p.getEquipo1() != null && p.getEquipo2() != null)
+                            .allMatch(BracketMatch::isJugado);
+
+            if (finalMatch != null &&
+                    finalMatch.getEquipo1() != null &&
+                    finalMatch.getEquipo2() != null &&
+                    finalMatch.getGanador() != null &&
+                    finalMatch.isJugado() &&
+                    todosJugados) {
+
                 if (!bracketContainer.getChildren().stream().anyMatch(n ->
                         n instanceof StackPane &&
                                 ((StackPane) n).getChildren().stream()
