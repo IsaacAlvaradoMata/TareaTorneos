@@ -151,12 +151,21 @@ public class BracketMatchService {
                     }
                 }, () -> {
                     // Si no hay partido pendiente en la siguiente ronda, se crea uno nuevo.
-                    allMatches.add(new BracketMatch(
-                            partido.getTorneo(),
-                            partido.getRonda() + 1,
-                            equipoGanador,
-                            null
-                    ));
+                    Tournament torneo = new TournamentService().getTournamentByName(partido.getTorneo());
+
+                    int cantidadEquipos = torneo.getCantidadEquipos();
+                    int partidosEsperados = cantidadEquipos - 1;
+                    long partidosJugados = allMatches.stream().filter(BracketMatch::isJugado).count();
+
+                    // ✅ Solo crear nuevo partido si aún no se han jugado todos
+                    if (partidosJugados < partidosEsperados) {
+                        allMatches.add(new BracketMatch(
+                                partido.getTorneo(),
+                                partido.getRonda() + 1,
+                                equipoGanador,
+                                null
+                        ));
+                    }
                 });
 
         // Persiste los partidos actualizados y verifica si ya se puede declarar ganador del torneo.
