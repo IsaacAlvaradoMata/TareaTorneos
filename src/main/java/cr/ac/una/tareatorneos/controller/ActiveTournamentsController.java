@@ -17,6 +17,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.Arrays;
@@ -67,6 +68,17 @@ public class ActiveTournamentsController extends Controller implements Initializ
         cmbTorneosActivos.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 filterTournamentsBySport(newVal.toString());
+            }
+        });
+
+        root.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                Stage stage = (Stage) root.getScene().getWindow();
+                stage.focusedProperty().addListener((obsF, wasFocused, isNowFocused) -> {
+                    if (isNowFocused) {
+                        filterTournamentsBySport("Todos");
+                    }
+                });
             }
         });
     }
