@@ -81,6 +81,7 @@ public class UnlockAchievementController extends Controller implements Initializ
 
     @FXML
     private void onActionBtnCerrar(ActionEvent event) {
+        onClose();
         Stage stage = (Stage) btnCerrar.getScene().getWindow();
         stage.close();
 
@@ -210,6 +211,38 @@ public class UnlockAchievementController extends Controller implements Initializ
         // 🏆 Asegurar visibilidad inicial (oculto por opacidad)
         imgAchievement.setVisible(true);
         imgAchievement.setOpacity(0);
+    }
+
+    public void onClose() {
+        AnimationDepartment.stopRainingAchievements(spLluvia);
+        AnimationDepartment.stopAnimatedLightSweep();
+
+        spfondo.getChildren().removeIf(node ->
+                node instanceof ImageView &&
+                        node != imgAchievement &&  // 🏆 No eliminar la imagen principal del logro
+                        node != imgUnlockgif &&    // 🔓 Tampoco el gif si es visible aún
+                        node != leffUnlock && node != rightUnlock // 🔒 Iconos decorativos
+        );
+        // 🔁 Reset transformaciones
+        AchievementContainer.setTranslateY(0);
+        AchievementContainer.setLayoutY(0);
+        AchievementContainer.setOpacity(0);
+        lblAchievementName.setOpacity(0);
+        titleBox.setOpacity(0);
+        btnCerrar.setOpacity(0);
+        lblAchievementName.setStyle("");
+
+        // 👑 Preparar candado
+        imgUnlockgif.setImage(new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/PadlockGifIcon.gif"))); // 👈 volver a cargar la imagen fuerza el reinicio
+        imgUnlockgif.setVisible(true);
+        imgUnlockgif.setOpacity(1);
+        imgUnlockgif.setScaleX(1.0);
+        imgUnlockgif.setScaleY(1.0);
+
+        // 🏆 Asegurar visibilidad inicial (oculto por opacidad)
+        imgAchievement.setVisible(true);
+        imgAchievement.setOpacity(0);
+        System.out.println("🎬 Animaciones detenidas correctamente al cerrar.");
     }
 
 }
