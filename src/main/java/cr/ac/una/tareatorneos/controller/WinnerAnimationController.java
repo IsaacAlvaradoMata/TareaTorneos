@@ -1,7 +1,9 @@
 package cr.ac.una.tareatorneos.controller;
 
 import cr.ac.una.tareatorneos.util.AnimationDepartment;
+import cr.ac.una.tareatorneos.util.PdfGenerator;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -73,6 +75,30 @@ public class WinnerAnimationController extends Controller implements Initializab
     public void initialize() {
 
     }
+
+    @FXML
+    void OnActionprintButton(ActionEvent event) {
+        String nombreEquipo = teamNameLabel.getText();
+        var statsService = new cr.ac.una.tareatorneos.service.TeamTournamentStatsService();
+        var teamStats = statsService.getStatsByTeamName(nombreEquipo);
+
+        if (teamStats != null && !teamStats.getTorneos().isEmpty()) {
+            // Buscamos el torneo más reciente o el que ganó
+            var torneo = teamStats.getTorneos().get(teamStats.getTorneos().size() - 1);
+
+            String torneoNombre = torneo.getNombreTorneo();
+            String deporte = new cr.ac.una.tareatorneos.service.TournamentService()
+                    .getTournamentByName(torneoNombre)
+                    .getDeporte();
+
+            String rutaImg = "teamsPhotos/" + new cr.ac.una.tareatorneos.service.TeamService()
+                    .getTeamByName(nombreEquipo).getTeamImage();
+
+            PdfGenerator.crearCarneCampeon(nombreEquipo, torneoNombre, deporte, rutaImg, torneo);
+        }
+
+    }
+
 
     private void loadImages() {
         leftDecoration.setImage(new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/AwardIcon.png"))); // Reemplaza con tus imágenes reales

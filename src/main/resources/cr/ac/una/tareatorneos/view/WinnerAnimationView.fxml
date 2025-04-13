@@ -62,7 +62,7 @@
                                        </StackPane>
                
                                        <!-- Botón -->
-                                       <Button fx:id="printButton" opacity="0" styleClass="print-button" text="Imprimir carnet de campeón">
+                                       <Button fx:id="printButton" onAction="#OnActionprintButton" opacity="0" styleClass="print-button" text="Imprimir carnet de campeón">
                                           <VBox.margin>
                                              <Insets />
                                           </VBox.margin>
