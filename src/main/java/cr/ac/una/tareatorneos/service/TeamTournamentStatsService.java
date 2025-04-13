@@ -29,6 +29,15 @@ public class TeamTournamentStatsService {
         return new ArrayList<>();
     }
 
+    public TeamTournamentStats getStatsByTeamName(String nombreEquipo) {
+        List<TeamTournamentStats> todos = getAllStats();
+        return todos.stream()
+                .filter(s -> s.getNombreEquipo() != null && s.getNombreEquipo().equalsIgnoreCase(nombreEquipo))
+                .findFirst()
+                .orElse(null);
+    }
+
+
     // 🔄 NUEVO MÉTODO: versión extendida con ganadorDesempate
     public void guardarEstadisticaDelPartido(Match match, String ganadorDesempate) {
         List<TeamTournamentStats> stats = getAllStats();

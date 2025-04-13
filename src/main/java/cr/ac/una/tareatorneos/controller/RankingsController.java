@@ -164,59 +164,6 @@ public class RankingsController extends Controller implements Initializable {
     }
 
 
-//    private void mostrarEstadisticasEquipo(Team team) {
-//        limpiarLabelsEstadisticas(); // 👈 primero limpiamos
-//        tbvStatsTorneos.getItems().clear();
-//        if (team == null || team.getEstadisticas() == null) return;
-//
-//        lblPartidosTotales.setText(String.valueOf(team.getEstadisticas().getPartidosTotales()));
-//        lblPartidosGanados.setText(String.valueOf(team.getEstadisticas().getPartidosGanados()));
-//        lblPartidosPerdidos.setText(String.valueOf(team.getEstadisticas().getPartidosPerdidos()));
-//        lblPartidosEmpatados.setText(String.valueOf(team.getEstadisticas().getPartidosEmpatados()));
-//
-//        lblTorneosTotales.setText(String.valueOf(team.getEstadisticas().getTorneosTotales()));
-//        lblTorneosGanados.setText(String.valueOf(team.getEstadisticas().getTorneosGanados()));
-//        lblTorneosPerdidos.setText(String.valueOf(team.getEstadisticas().getTorneosPerdidos()));
-//
-//        lblAnotaciones.setText(String.valueOf(team.getEstadisticas().getAnotaciones()));
-//        lblAnotacionesContra.setText(String.valueOf(team.getEstadisticas().getAnotacionesEnContra()));
-//
-//        System.out.println("→ Mostrando stats para: " + team.getNombre());
-//
-//        statsService.getAllStats().stream()
-//                .filter(e -> e.getNombreEquipo() != null && e.getNombreEquipo().equalsIgnoreCase(team.getNombre()))
-//                .findFirst()
-//                .ifPresent(stats -> {
-//                    for (TeamTournamentStats.TournamentStat torneo : stats.getTorneos()) {
-//                        ObservableList<String> fila = FXCollections.observableArrayList();
-//
-//                        // Agregar nombre del torneo
-//                        fila.add(torneo.getNombreTorneo());
-//
-//                        // Agregar hasta 5 partidos
-//                        for (int i = 0; i < 5; i++) {
-//                            if (i < torneo.getPartidos().size()) {
-//                                var p = torneo.getPartidos().get(i);
-//                                fila.add(p.getRival() != null ? p.getRival() : "");
-//                                fila.add(p.getAnotaciones() + " - " + p.getAnotacionesEnContra());
-//                                fila.add(p.getResultadoReal());
-//                            } else {
-//                                fila.add("");
-//                                fila.add("");
-//                                fila.add(""); // columnas vacías
-//                            }
-//                        }
-//
-//                        // Resultado del torneo
-//                        fila.add(torneo.getResultadoTorneo() != null ? torneo.getResultadoTorneo() : "");
-//
-//                        tbvStatsTorneos.getItems().add(fila);
-//                        System.out.println("✔ Datos encontrados y cargados a la tabla.");
-//                    }
-//                });
-//    }
-
-
     private void limpiarLabelsEstadisticas() {
         lblPartidosTotales.setText("0");
         lblPartidosGanados.setText("0");
@@ -270,7 +217,8 @@ public class RankingsController extends Controller implements Initializable {
         // Columna de Torneo
         TableColumn<ObservableList<String>, String> torneoCol = new TableColumn<>("Torneo");
         torneoCol.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().get(0)));
-        torneoCol.setMinWidth(100);
+        torneoCol.setMinWidth(150);
+        centrarContenidoColumna(torneoCol);
         tbvStatsTorneos.getColumns().add(torneoCol);
 
         // Columnas de los 5 partidos
@@ -278,27 +226,47 @@ public class RankingsController extends Controller implements Initializable {
             int baseIndex = 1 + (i * 3);
 
             TableColumn<ObservableList<String>, String> rivalCol = new TableColumn<>("Rival " + (i + 1));
-            rivalCol.setMinWidth(100);
+            rivalCol.setMinWidth(120);
             rivalCol.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().get(baseIndex)));
+            centrarContenidoColumna(rivalCol);
 
             TableColumn<ObservableList<String>, String> marcadorCol = new TableColumn<>("Marcador " + (i + 1));
-            marcadorCol.setMinWidth(100);
+            marcadorCol.setMinWidth(120);
             marcadorCol.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().get(baseIndex + 1)));
+            centrarContenidoColumna(marcadorCol);
 
             TableColumn<ObservableList<String>, String> resultadoCol = new TableColumn<>("Resultado " + (i + 1));
-            resultadoCol.setMinWidth(100);
+            resultadoCol.setMinWidth(120);
             resultadoCol.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().get(baseIndex + 2)));
+            centrarContenidoColumna(resultadoCol);
 
             tbvStatsTorneos.getColumns().addAll(rivalCol, marcadorCol, resultadoCol);
         }
 
         // Columna de resultado final del torneo
         TableColumn<ObservableList<String>, String> resultadoTorneoCol = new TableColumn<>("Resultado Torneo");
+        resultadoTorneoCol.setMinWidth(150);
+        centrarContenidoColumna(resultadoTorneoCol);
         resultadoTorneoCol.setCellValueFactory(data ->
                 new ReadOnlyStringWrapper(data.getValue().get(data.getValue().size() - 1))
         );
         tbvStatsTorneos.getColumns().add(resultadoTorneoCol);
     }
+
+    private <T> void centrarContenidoColumna(TableColumn<ObservableList<String>, T> columna) {
+        columna.setCellFactory(tc -> {
+            TableCell<ObservableList<String>, T> cell = new TableCell<>() {
+                @Override
+                protected void updateItem(T item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(empty || item == null ? null : item.toString());
+                    setAlignment(Pos.CENTER);
+                }
+            };
+            return cell;
+        });
+    }
+
 
     private void loadAllTeams() {
         equiposFiltrados.clear();

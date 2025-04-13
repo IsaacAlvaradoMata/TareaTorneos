@@ -1,9 +1,12 @@
 package cr.ac.una.tareatorneos.controller;
 
 import cr.ac.una.tareatorneos.model.BracketMatch;
+import cr.ac.una.tareatorneos.model.Team;
+import cr.ac.una.tareatorneos.model.TeamTournamentStats;
 import cr.ac.una.tareatorneos.model.Tournament;
 import cr.ac.una.tareatorneos.service.BracketMatchService;
 import cr.ac.una.tareatorneos.service.TeamService;
+import cr.ac.una.tareatorneos.service.TeamTournamentStatsService;
 import cr.ac.una.tareatorneos.service.TournamentService;
 import cr.ac.una.tareatorneos.util.AnimationDepartment;
 import cr.ac.una.tareatorneos.util.FlowController;
@@ -331,6 +334,7 @@ public class BracketGeneratorController extends Controller implements Initializa
                         WinnerAnimationController controller = (WinnerAnimationController)
                                 FlowController.getInstance().getController("WinnerAnimationView");
                         controller.resetAndRunAnimations(finalMatch.getGanador());
+                        actualizarEstadisticasGenerales();
 
                     }
                 }
@@ -490,6 +494,69 @@ public class BracketGeneratorController extends Controller implements Initializa
             bracketContainer.getChildren().add(l);
         }
     }
+
+    private void actualizarEstadisticasGenerales() {
+        TeamService teamService = new TeamService();
+        TeamTournamentStatsService statsService = new TeamTournamentStatsService(); // necesitas esta clase
+
+        for (Team team : teamService.getAllTeams()) {
+            TeamTournamentStats statsAvanzadas = statsService.getStatsByTeamName(team.getNombre());
+            if (statsAvanzadas == null) continue;
+
+            // Acumuladores
+            int partidosTotales = 0;
+            int ganados = 0;
+            int perdidos = 0;
+            int empatados = 0;
+            int anotaciones = 0;
+            int enContra = 0;
+            int torneos = 0;
+            int torneosGanados = 0;
+            int torneosPerdidos = 0;
+            int puntosGlobales = 0;
+
+            for (TeamTournamentStats.TournamentStat torneo : statsAvanzadas.getTorneos()) {
+                torneos++;
+
+                // Torneos Ganados/Perdidos
+                if ("Ganador".equalsIgnoreCase(torneo.getResultadoTorneo())) torneosGanados++;
+                if ("Perdedor".equalsIgnoreCase(torneo.getResultadoTorneo())) torneosPerdidos++;
+
+                puntosGlobales += torneo.getPuntos();
+
+                for (var partido : torneo.getPartidos()) {
+                    partidosTotales++;
+
+                    switch (partido.getResultadoReal().toLowerCase()) {
+                        case "ganado" -> ganados++;
+                        case "perdido" -> perdidos++;
+                        case "empatado" -> empatados++;
+                    }
+
+                    anotaciones += partido.getAnotaciones();
+                    enContra += partido.getAnotacionesEnContra();
+                }
+            }
+
+            // Actualiza stats generales
+            var est = team.getEstadisticas();
+            est.setPartidosTotales(partidosTotales);
+            est.setPartidosGanados(ganados);
+            est.setPartidosPerdidos(perdidos);
+            est.setPartidosEmpatados(empatados);
+            est.setTorneosTotales(torneos);
+            est.setTorneosGanados(torneosGanados);
+            est.setTorneosPerdidos(torneosPerdidos);
+            est.setPuntosGlobales(puntosGlobales);
+            est.setAnotaciones(anotaciones);
+            est.setAnotacionesEnContra(enContra);
+
+            teamService.updateTeam(team.getNombre(), team);
+        }
+
+        System.out.println("✔️ Estadísticas generales actualizadas para todos los equipos.");
+    }
+
 
     @Override
     public void initialize() {
