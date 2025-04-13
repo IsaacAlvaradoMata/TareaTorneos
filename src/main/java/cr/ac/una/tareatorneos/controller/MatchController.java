@@ -83,8 +83,6 @@ public class MatchController extends Controller implements Initializable {
         initializeMatch(partido.getTorneo(), partido.getEquipo1(), partido.getEquipo2());
     }
 
-    // 🟢 Dentro de mostrarPopupFinalizado() (solamente ese método modificado)
-
     private void mostrarPopupFinalizado() {
         if (popupMostrado) return;
         popupMostrado = true;
@@ -123,20 +121,15 @@ public class MatchController extends Controller implements Initializable {
         partidoActual.setPuntajeEquipo1(puntajeA);
         partidoActual.setPuntajeEquipo2(puntajeB);
 
-        // Primero obtener la lista antes de los cambios
         AchievementService achievementService = new AchievementService();
         List<Achievement> antes = achievementService.calcularLogrosParaEquipo(partidoActual.getGanador());
 
-// 👉 Asegurar que se actualicen las stats y logros del equipo en disco
         bracketService.guardarPartidosEnArchivo(partidoActual.getTorneo());
         bracketService.cargarPartidosDesdeArchivo(partidoActual.getTorneo());
         matchService.finalizarPartido();
         bracketService.registrarGanador(partidoActual, partidoActual.getGanador(), true);
 
-// 🔁 Releer después de que el JSON cambió
         List<Achievement> despues = achievementService.calcularLogrosParaEquipo(partidoActual.getGanador());
-
-// 📣 Mostrar nuevos logros
         List<Achievement> nuevos = AchievementUtils.filtrarNuevosLogros(antes, despues);
 
         if (!nuevos.isEmpty()) {

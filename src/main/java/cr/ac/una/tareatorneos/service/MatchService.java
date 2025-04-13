@@ -91,10 +91,8 @@ public class MatchService {
     // ============================================
     // NUEVA IMPLEMENTACIÓN: MÉTODO PRIVADO para PROCESAR ESTADÍSTICAS
     // ============================================
-    private void procesarEstadisticas(String ganadorDesempate) {
-        if (match.isStatsProcesadas()) {
-            return;
-        }
+    private void procesarEstadisticas(String ganadorDesempate, boolean saltarRegistroJson) {
+        if (match.isStatsProcesadas()) return;
 
         TeamTournamentStatsService statsService = new TeamTournamentStatsService();
         if (ganadorDesempate != null) {
@@ -106,51 +104,47 @@ public class MatchService {
 
         TeamService teamService = new TeamService();
         Team equipo1 = teamService.getTeamByName(match.getEquipoA());
-        if (equipo1 != null) {
-            teamService.actualizarLogrosDeEquipo(equipo1);
-        }
-
+        if (equipo1 != null) teamService.actualizarLogrosDeEquipo(equipo1);
         Team equipo2 = teamService.getTeamByName(match.getEquipoB());
-        if (equipo2 != null) {
-            teamService.actualizarLogrosDeEquipo(equipo2);
-        }
+        if (equipo2 != null) teamService.actualizarLogrosDeEquipo(equipo2);
 
         match.setStatsProcesadas(true);
-        guardarMatchEnJson(match);
+        if (!saltarRegistroJson) {
+            guardarMatchEnJson(match);
+        }
     }
 
     public void finalizarPartido() {
         match.setFinalizado(true);
-        procesarEstadisticas(null);
+        procesarEstadisticas(null, false);
     }
 
-    // Método modificado para finalizar partido con desempate.
     public void finalizarPartidoConDesempate(String ganadorDesempate) {
         match.setFinalizado(true);
-        // Se procesa la actualización de estadísticas de forma única.
-        procesarEstadisticas(ganadorDesempate);
 
-        // Luego, el flujo para actualizar el bracket se mantiene (sin modificar la actualización de stats).
+        match.setPuntajeA(getPuntajeA());
+        match.setPuntajeB(getPuntajeB());
+
+        procesarEstadisticas(ganadorDesempate, false);
+
         BracketMatchService bracketService = new BracketMatchService();
-        bracketService.cargarPartidosDesdeArchivo(match.getTorneoNombre()); // Asegura que se tenga la lista actualizada.
+        bracketService.cargarPartidosDesdeArchivo(match.getTorneoNombre());
 
         List<BracketMatch> partidos = bracketService.getTodosLosPartidos();
-
         for (BracketMatch bm : partidos) {
-            System.out.println("🔎 Comparando contra BM: " + bm.getTorneo() + " | " + bm.getEquipo1() + " vs " + bm.getEquipo2());
-
             if (bm.getTorneo().equals(match.getTorneoNombre())
                     && Objects.equals(bm.getEquipo1(), match.getEquipoA())
                     && Objects.equals(bm.getEquipo2(), match.getEquipoB())
                     && !bm.isJugado()) {
-
-                System.out.println("🎯 ¡Match encontrado!");
                 bm.setGanador(ganadorDesempate);
                 bm.setJugado(true);
-                bracketService.registrarGanador(bm, ganadorDesempate);
+                bm.setPuntajeEquipo1(getPuntajeA());
+                bm.setPuntajeEquipo2(getPuntajeB());
+                bracketService.registrarGanador(bm, ganadorDesempate, true);
                 break;
             }
         }
+
         bracketService.guardarPartidosEnArchivo(match.getTorneoNombre());
     }
 
