@@ -114,13 +114,26 @@ public class ActiveTournamentsController extends Controller implements Initializ
             return;
         }
 
-        Tournament torneoSeleccionado = selected.get(0);
+        String nombreTorneo = selected.get(0).getNombre();
+        TournamentService service = new TournamentService();
+        Tournament torneoSeleccionado = service.getTournamentByName(nombreTorneo);
+
+        if (torneoSeleccionado == null) {
+            System.out.println("⚠️ No se encontró el torneo en el JSON.");
+            return;
+        }
 
         // 🛡️ Validación de estado
         if (!"por comenzar".equalsIgnoreCase(torneoSeleccionado.getEstado()) &&
                 !"iniciado".equalsIgnoreCase(torneoSeleccionado.getEstado())) {
             new Mensaje().showModal(Alert.AlertType.WARNING, "Estado inválido", getStage(),
                     "Solo se pueden seleccionar torneos que estén 'Por comenzar' o 'Iniciados'.");
+            return;
+        }
+
+        if (torneoSeleccionado.getEquiposParticipantes() == null || torneoSeleccionado.getEquiposParticipantes().size() < 2) {
+            new Mensaje().showModal(Alert.AlertType.WARNING, "Faltan equipos", getStage(),
+                    "Este torneo aún no tiene suficientes equipos para iniciar.");
             return;
         }
 
