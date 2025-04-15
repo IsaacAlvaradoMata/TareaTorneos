@@ -1,9 +1,11 @@
 package cr.ac.una.tareatorneos.controller;
 
 import cr.ac.una.tareatorneos.model.*;
-import cr.ac.una.tareatorneos.service.*;
+import cr.ac.una.tareatorneos.service.BracketMatchService;
+import cr.ac.una.tareatorneos.service.TeamService;
+import cr.ac.una.tareatorneos.service.TeamTournamentStatsService;
+import cr.ac.una.tareatorneos.service.TournamentService;
 import cr.ac.una.tareatorneos.util.AchievementAnimationQueue;
-import cr.ac.una.tareatorneos.util.AchievementUtils;
 import cr.ac.una.tareatorneos.util.AnimationDepartment;
 import cr.ac.una.tareatorneos.util.FlowController;
 import io.github.palexdev.materialfx.controls.MFXButton;
@@ -216,10 +218,12 @@ public class BracketGeneratorController extends Controller implements Initializa
         matchService.cargarPartidosDesdeArchivo(torneoActual.getNombre());
         bracketContainer.getChildren().clear();
         List<List<StackPane>> rondasVisuales = new ArrayList<>();
+        List<List<Boolean>> nodosDibujados = new ArrayList<>();
 
         int maxRonda = partidos.stream().mapToInt(BracketMatch::getRonda).max().orElse(1);
         for (int i = 0; i < maxRonda; i++) {
             rondasVisuales.add(new ArrayList<>());
+            nodosDibujados.add(new ArrayList<>());
         }
 
         double totalAltura = matchService.getPartidosPorRonda(1).size() * (NODE_HEIGHT + V_GAP);
@@ -227,12 +231,36 @@ public class BracketGeneratorController extends Controller implements Initializa
         for (int ronda = 1; ronda <= maxRonda; ronda++) {
             List<BracketMatch> rondaPartidos = matchService.getPartidosPorRonda(ronda);
             List<StackPane> nodos = new ArrayList<>();
+            List<Boolean> dibujados = new ArrayList<>();
             double espacioVertical = totalAltura / rondaPartidos.size();
 
             for (int i = 0; i < rondaPartidos.size(); i++) {
                 BracketMatch match = rondaPartidos.get(i);
+
+                boolean debeDibujarse = false;
+                if (ronda == 1) {
+                    debeDibujarse = match.getEquipo1() != null || match.getEquipo2() != null;
+                } else {
+                    List<Boolean> padresDibujados = nodosDibujados.get(ronda - 2);
+                    int idxPadre1 = i * 2;
+                    int idxPadre2 = i * 2 + 1;
+
+                    boolean padre1Activo = idxPadre1 < padresDibujados.size() && padresDibujados.get(idxPadre1);
+                    boolean padre2Activo = idxPadre2 < padresDibujados.size() && padresDibujados.get(idxPadre2);
+
+                    debeDibujarse = padre1Activo || padre2Activo || match.isJugado();
+                }
+
+                if (!debeDibujarse) {
+                    dibujados.add(false);
+                    continue;
+                }
+
                 StackPane nodo = crearNodoMatch(match);
-                if (nodo == null) continue;
+                if (nodo == null) {
+                    dibujados.add(false);
+                    continue;
+                }
 
                 double offsetX = 30 + (ronda - 1) * 20;
                 double x = (ronda - 1) * H_GAP + offsetX;
@@ -242,8 +270,11 @@ public class BracketGeneratorController extends Controller implements Initializa
                 nodo.setLayoutY(y);
                 bracketContainer.getChildren().add(nodo);
                 nodos.add(nodo);
+                dibujados.add(true);
             }
-            rondasVisuales.set(ronda - 1, nodos); // ← actualizar correctamente
+
+            rondasVisuales.set(ronda - 1, nodos);
+            nodosDibujados.set(ronda - 1, dibujados);
         }
 
         for (int ronda = 0; ronda < rondasVisuales.size() - 1; ronda++) {
@@ -292,31 +323,24 @@ public class BracketGeneratorController extends Controller implements Initializa
                     .findFirst()
                     .orElse(null);
 
-            // ⚠️ Verifica que todos los partidos de la ronda final están jugados
             boolean todosJugados = finalMatch != null &&
                     matchService.getPartidosPorRonda(finalMatch.getRonda()).stream()
                             .filter(p -> p.getEquipo1() != null && p.getEquipo2() != null)
                             .allMatch(BracketMatch::isJugado);
 
-            if (finalMatch != null &&
-                    finalMatch.getEquipo1() != null &&
-                    finalMatch.getEquipo2() != null &&
-                    finalMatch.getGanador() != null &&
-                    finalMatch.isJugado() &&
-                    todosJugados) {
-
-                if (!bracketContainer.getChildren().stream().anyMatch(n ->
+            if (finalMatch != null && finalMatch.getGanador() != null && todosJugados) {
+                boolean yaDibujado = bracketContainer.getChildren().stream().anyMatch(n ->
                         n instanceof StackPane &&
                                 ((StackPane) n).getChildren().stream()
                                         .anyMatch(c -> c instanceof VBox &&
                                                 ((VBox) c).getChildren().stream()
                                                         .anyMatch(l -> l instanceof Label && ((Label) l).getText().contains("🏆 " + finalMatch.getGanador()))
                                         )
-                )) {
+                );
+
+                if (!yaDibujado) {
                     StackPane nodoCampeon = crearNodoCampeon(finalMatch.getGanador());
                     double x = (maxRonda + 1) * H_GAP;
-
-                    // ✅ alinear con el nodo final en Y
                     List<StackPane> ultimaRonda = rondasVisuales.get(maxRonda - 1);
                     StackPane nodoFinal = ultimaRonda.get(0);
                     double yCentroFinal = nodoFinal.getLayoutY() + NODE_HEIGHT / 2;
@@ -328,7 +352,6 @@ public class BracketGeneratorController extends Controller implements Initializa
 
                     if (!esModoVisualizacion) {
                         AchievementAnimationQueue.setPermitirMostrar(true);
-
                         List<Achievement> nuevosLogros = AchievementAnimationQueue.obtenerLogrosPendientes();
 
                         AchievementAnimationQueue.ejecutarLuegoDeMostrarTodos(() -> {
@@ -344,9 +367,9 @@ public class BracketGeneratorController extends Controller implements Initializa
                                     stage.initModality(Modality.APPLICATION_MODAL);
                                     stage.setResizable(false);
                                     stage.setOnCloseRequest(e -> e.consume());
-                                    stage.showAndWait(); // 🕒 Esperar que el usuario cierre
+                                    stage.showAndWait();
 
-                                    actualizarEstadisticasGenerales(); // ✅ solo después de todo
+                                    actualizarEstadisticasGenerales();
 
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -357,7 +380,6 @@ public class BracketGeneratorController extends Controller implements Initializa
                         if (!nuevosLogros.isEmpty()) {
                             AchievementAnimationQueue.mostrarCuandoPosible(nuevosLogros);
                         } else {
-                            // 🧼 Limpia la acción y ejecuta directamente si no hay logros
                             AchievementAnimationQueue.ejecutarLuegoDeMostrarTodos(null);
 
                             try {
@@ -375,16 +397,11 @@ public class BracketGeneratorController extends Controller implements Initializa
 
                                 actualizarEstadisticasGenerales();
 
-
-
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         }
                     }
-
-
-
                 }
             }
         }
@@ -604,7 +621,6 @@ public class BracketGeneratorController extends Controller implements Initializa
 
         System.out.println("✔️ Estadísticas generales actualizadas para todos los equipos.");
     }
-
 
     @Override
     public void initialize() {
