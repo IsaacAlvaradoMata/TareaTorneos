@@ -82,7 +82,7 @@ public class ActiveTournamentsController extends Controller implements Initializ
             }
         });
     }
-
+    
     @FXML
     private void handleTableClickTorneosActivos(MouseEvent event) {
         List<Tournament> selected = tbvTorneosActivos.getSelectionModel().getSelectedValues();
@@ -144,10 +144,25 @@ public class ActiveTournamentsController extends Controller implements Initializ
             controller.setModoVisualizacion(false); // ✅ modo interactivo
             controller.inicializarBracketDesdeTorneo(torneoSeleccionado);
             FlowController.getInstance().goView("BracketGeneratorView");
+
+            TournamentService refreshedService = new TournamentService();
+            Tournament torneoActualizado = refreshedService.getTournamentByName(nombreTorneo);
+
+            filterTournamentsBySport("Todos");
+
+            List<Tournament> actualizados = tbvTorneosActivos.getItems();
+            for (int i = 0; i < actualizados.size(); i++) {
+                if (actualizados.get(i).getNombre().equalsIgnoreCase(nombreTorneo)) {
+                    tbvTorneosActivos.getSelectionModel().clearSelection();
+                    tbvTorneosActivos.getSelectionModel().selectIndex(i);
+                    break;
+                }
+            }
         } else {
             System.out.println("⚠️ No se pudo cargar el controlador de BracketGeneratorView.");
         }
     }
+
 
     private void populateTableView() {
         MFXTableColumn<Tournament> colNombre = new MFXTableColumn<>("Nombre");
