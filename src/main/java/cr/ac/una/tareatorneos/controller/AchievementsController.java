@@ -8,7 +8,6 @@
     import cr.ac.una.tareatorneos.model.Team;
     import cr.ac.una.tareatorneos.service.SportService;
     import cr.ac.una.tareatorneos.service.TeamService;
-    import cr.ac.una.tareatorneos.util.FlowController;
     import io.github.palexdev.materialfx.controls.MFXButton;
     import io.github.palexdev.materialfx.controls.MFXFilterComboBox;
     import io.github.palexdev.materialfx.controls.MFXTableColumn;
@@ -302,7 +301,7 @@
 
         @FXML
         private void onActionBtnLogrosAnimacion(ActionEvent event) {
-            // 1. Navega a la vista
+            /*// 1. Navega a la vista
             FlowController.getInstance().goView("UnlockAchievementView");
 
             // 2. Obtiene el controller
@@ -310,7 +309,7 @@
                     FlowController.getInstance().getController("UnlockAchievementView");
 
             // 3. Llama al reset completo con el nombre del equipo
-            controller.resetAndRunAnimationsLogros("Dominador Supremo"); // O usa un nombre dinámico
+            controller.resetAndRunAnimationsLogros("Dominador Supremo"); // O usa un nombre dinámico*/
         }
 
         private void loadAllTeams() {

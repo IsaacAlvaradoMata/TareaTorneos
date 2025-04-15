@@ -82,10 +82,11 @@ public class UnlockAchievementController extends Controller implements Initializ
     @FXML
     private void onActionBtnCerrar(ActionEvent event) {
         onClose();
-        Stage stage = (Stage) btnCerrar.getScene().getWindow();
-        stage.close();
 
-        // Mostrar el siguiente logro si hay más
+        // cerrar esta ventana
+        if (currentStage != null) currentStage.close();
+
+        // mostrar el siguiente logro
         Platform.runLater(() -> mostrarSiguienteLogro());
     }
 
@@ -96,13 +97,18 @@ public class UnlockAchievementController extends Controller implements Initializ
         this.indiceActual = 0;
         this.callbackFinal = onFinish;
 
+        // capturar stage actual
+        Platform.runLater(() -> {
+            currentStage = (Stage) root.getScene().getWindow();
+        });
+
         mostrarSiguienteLogro();
     }
 
     private void mostrarSiguienteLogro() {
         if (indiceActual < colaLogros.size()) {
             Achievement logro = colaLogros.get(indiceActual++);
-            resetAndRunAnimationsLogros(logro.getNombre());
+            resetAndRunAnimationsLogros(logro.getNombre(), this::mostrarSiguienteLogro);
         } else {
             if (callbackFinal != null) callbackFinal.run();
         }
@@ -115,21 +121,7 @@ public class UnlockAchievementController extends Controller implements Initializ
         imgUnlockgif.setImage(new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/PadlockGifIcon.gif")));
     }
 
-    public void runAchievementIntro(String achievementName) {
-        resetAchievementView(); // 🔁 Reset antes de todo
-        imgUnlockgif.setVisible(true);
-        imgUnlockgif.setOpacity(1);
-        imgUnlockgif.setScaleX(1.0);
-        imgUnlockgif.setScaleY(1.0);
-        imgUnlockgif.toFront();
-
-        // 🔓 Animación de candado ➜ luego aparecen componentes
-        AnimationDepartment.animateUnlockExplosion(imgUnlockgif, () -> {
-            Platform.runLater(() -> runAnimationsLogros(achievementName));
-        });
-    }
-
-    private void runAnimationsLogros(String achievementName) {
+    private void runAnimationsLogros(String achievementName, Runnable onDone) {
         lblAchievementName.setText(achievementName);
         titleLabel.setStyle("-fx-text-fill: linear-gradient(#FFD700, #FFA500);");
 
@@ -140,47 +132,61 @@ public class UnlockAchievementController extends Controller implements Initializ
         AnimationDepartment.neonGlowLoop(imgAchievement);
 
         Platform.runLater(() -> {
-            Platform.runLater(() -> {
-                double sceneHeight = spfondo.getHeight();
+            double sceneHeight = spfondo.getHeight();
 
-                AnimationDepartment.slideUpWithEpicBounceClean(AchievementContainer, Duration.seconds(1.5), sceneHeight);
-                AnimationDepartment.revealAchievementImage(imgAchievement, Duration.seconds(2.5));
+            AnimationDepartment.slideUpWithEpicBounceClean(AchievementContainer, Duration.seconds(1.5), sceneHeight);
+            AnimationDepartment.revealAchievementImage(imgAchievement, Duration.seconds(2.5));
 
-                // ⏳ Esperar a que se vea el logro antes de explotar partículas
-                PauseTransition wait = new PauseTransition(Duration.seconds(3.1));
-                wait.setOnFinished(e -> {
-                    AnimationDepartment.goldenBurstExplosion(spfondo, 250, Duration.seconds(3.0));
-                    Image logroImg = new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/8TournamentsWinnerIcon.png"));
-                    AnimationDepartment.startInfiniteRainingAchievements(spLluvia, logroImg, 6, Duration.seconds(1), Duration.seconds(5));
+            PauseTransition wait = new PauseTransition(Duration.seconds(4.0)); // más tiempo si quieres
+            wait.setOnFinished(e -> {
+                AnimationDepartment.goldenBurstExplosion(spfondo, 250, Duration.seconds(3.0));
+                Image logroImg = new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/8TournamentsWinnerIcon.png"));
+                AnimationDepartment.startInfiniteRainingAchievements(spLluvia, logroImg, 6, Duration.seconds(1), Duration.seconds(5));
 
+                // ✅ ahora sí: continuar con el siguiente logro después de delay
+                PauseTransition finalizar = new PauseTransition(Duration.seconds(4.0));
+                finalizar.setOnFinished(ev -> {
+                    if (onDone != null) onDone.run();
                 });
-                wait.play();
+                finalizar.play();
             });
+            wait.play();
         });
 
         AnimationDepartment.fadeIn(btnCerrar, Duration.seconds(5.0));
     }
 
-    public void resetAndRunAnimationsLogros(String teamName) {
+    public void resetAndRunAnimationsLogros(String achievementName, Runnable onDone) {
         resetAchievementView();
         AnimationDepartment.stopAnimatedLightSweep();
 
-        // 💥 Resetear transformaciones
         imgAchievement.setTranslateY(0);
         AchievementContainer.setTranslateY(0);
-
-        // Reset de visibilidad y opacidad
+        imgAchievement.setVisible(false);
+        imgAchievement.setOpacity(0);
         lblAchievementName.setOpacity(0);
         btnCerrar.setOpacity(0);
         AchievementContainer.setOpacity(0);
-        imgAchievement.setOpacity(0);
-        imgAchievement.setVisible(false);
-
-        titleBox.setOpacity(0);
         lblAchievementName.setStyle("");
+        titleBox.setOpacity(0);
 
-        runAchievementIntro(teamName);
+        runAchievementIntro(achievementName, onDone);
     }
+
+    public void runAchievementIntro(String achievementName, Runnable onDone) {
+        resetAchievementView();
+        imgUnlockgif.setVisible(true);
+        imgUnlockgif.setOpacity(1);
+        imgUnlockgif.setScaleX(1.0);
+        imgUnlockgif.setScaleY(1.0);
+        imgUnlockgif.toFront();
+
+        AnimationDepartment.animateUnlockExplosion(imgUnlockgif, () -> {
+            Platform.runLater(() -> runAnimationsLogros(achievementName, onDone));
+        });
+    }
+
+    private Stage currentStage;
 
     private void resetAchievementView() {
         AnimationDepartment.stopRainingAchievements(spLluvia);

@@ -24,7 +24,6 @@ public class AchievementAnimationQueue {
 
     private static Runnable accionDespuesDeLogros = null;
 
-
     // ✅ Llama esto cuando quieras intentar mostrar la cola
     public static void mostrarCuandoPosible(List<Achievement> nuevosLogros) {
         if (!permitidoMostrar || nuevosLogros == null || nuevosLogros.isEmpty()) return;
@@ -63,9 +62,8 @@ public class AchievementAnimationQueue {
 
         mostrando = true;
 
-        List<Achievement> paraMostrar = new ArrayList<>();
-        paraMostrar.add(cola.poll());
-
+        List<Achievement> paraMostrar = new ArrayList<>(cola);
+        cola.clear();
         try {
             FXMLLoader loader = new FXMLLoader(AchievementAnimationQueue.class.getResource("/cr/ac/una/tareatorneos/view/UnlockAchievementView.fxml"));
             Parent root = loader.load();
@@ -75,9 +73,8 @@ public class AchievementAnimationQueue {
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
-            stage.setOnCloseRequest(e -> e.consume()); // 🔒 evitar cierres manuales
+            stage.setOnCloseRequest(e -> e.consume());
 
-            // 👇 Aquí se da el control a la vista para animar y luego mostrar el siguiente
             controller.mostrarLogrosEnCadena(paraMostrar, () -> {
                 stage.close();
                 mostrando = false;
@@ -85,14 +82,15 @@ public class AchievementAnimationQueue {
                 new Thread(() -> {
                     try {
                         Thread.sleep(300);
-                    } catch (InterruptedException ignored) {}
+                    } catch (InterruptedException ignored) {
+                    }
                     Platform.runLater(() -> {
                         if (!cola.isEmpty()) {
-                            mostrarSiguiente(); // sigue con el siguiente
+                            mostrarSiguiente();
                         } else {
                             if (accionDespuesDeLogros != null) {
                                 Runnable temp = accionDespuesDeLogros;
-                                accionDespuesDeLogros = null; // ✅ limpiar después de usar
+                                accionDespuesDeLogros = null;
                                 temp.run();
                             }
                         }
@@ -100,8 +98,8 @@ public class AchievementAnimationQueue {
                 }).start();
             });
 
-
-            stage.show();
+            // ✅ Esta línea es clave para evitar solapamiento
+            stage.showAndWait();
 
         } catch (Exception e) {
             e.printStackTrace();

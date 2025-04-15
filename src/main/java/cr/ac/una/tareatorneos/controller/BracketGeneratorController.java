@@ -354,34 +354,7 @@ public class BracketGeneratorController extends Controller implements Initializa
                         AchievementAnimationQueue.setPermitirMostrar(true);
                         List<Achievement> nuevosLogros = AchievementAnimationQueue.obtenerLogrosPendientes();
 
-                        AchievementAnimationQueue.ejecutarLuegoDeMostrarTodos(() -> {
-                            Platform.runLater(() -> {
-                                try {
-                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/cr/ac/una/tareatorneos/view/WinnerAnimationView.fxml"));
-                                    Parent root = loader.load();
-                                    WinnerAnimationController controller = loader.getController();
-                                    controller.resetAndRunAnimations(finalMatch.getGanador());
-
-                                    Stage stage = new Stage();
-                                    stage.setScene(new Scene(root));
-                                    stage.initModality(Modality.APPLICATION_MODAL);
-                                    stage.setResizable(false);
-                                    stage.setOnCloseRequest(e -> e.consume());
-                                    stage.showAndWait();
-
-                                    actualizarEstadisticasGenerales();
-
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            });
-                        });
-
-                        if (!nuevosLogros.isEmpty()) {
-                            AchievementAnimationQueue.mostrarCuandoPosible(nuevosLogros);
-                        } else {
-                            AchievementAnimationQueue.ejecutarLuegoDeMostrarTodos(null);
-
+                        Runnable animacionCampeon = () -> Platform.runLater(() -> {
                             try {
                                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/cr/ac/una/tareatorneos/view/WinnerAnimationView.fxml"));
                                 Parent root = loader.load();
@@ -396,12 +369,29 @@ public class BracketGeneratorController extends Controller implements Initializa
                                 stage.showAndWait();
 
                                 actualizarEstadisticasGenerales();
-
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
+                        });
+
+                        if (!nuevosLogros.isEmpty()) {
+                            AchievementAnimationQueue.setPermitirMostrar(true);
+
+                            // Lanza logros y espera que el usuario cierre todos antes de continuar
+                            AchievementAnimationQueue.ejecutarLuegoDeMostrarTodos(() -> {
+                                // Este se ejecutará solo cuando se hayan cerrado TODAS las animaciones
+                                Platform.runLater(animacionCampeon);
+                            });
+
+                            // Inicia el ciclo de mostrar logros (sin bloquear)
+                            AchievementAnimationQueue.mostrarCuandoPosible(nuevosLogros);
+                        } else {
+                            // No hay logros → muestra animación campeón de una vez
+                            Platform.runLater(animacionCampeon);
                         }
+
                     }
+
                 }
             }
         }
