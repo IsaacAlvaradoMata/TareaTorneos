@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.awt.*;
@@ -96,6 +97,14 @@ public class WinnerAnimationController extends Controller implements Initializab
 
             PdfGenerator.crearCarneCampeon(nombreEquipo, torneoNombre, deporte, rutaImg, torneo);
         }
+
+        Platform.runLater(() -> {
+            Stage stage = (Stage) printButton.getScene().getWindow();
+            if (stage != null) {
+                onClose();
+                stage.close();
+            }
+        });
 
     }
 

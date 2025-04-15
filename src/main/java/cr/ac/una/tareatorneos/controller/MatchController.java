@@ -2,6 +2,7 @@ package cr.ac.una.tareatorneos.controller;
 
 import cr.ac.una.tareatorneos.model.*;
 import cr.ac.una.tareatorneos.service.*;
+import cr.ac.una.tareatorneos.util.AchievementAnimationQueue;
 import cr.ac.una.tareatorneos.util.AchievementUtils;
 import cr.ac.una.tareatorneos.util.FlowController;
 import io.github.palexdev.materialfx.controls.MFXButton;
@@ -133,14 +134,24 @@ public class MatchController extends Controller implements Initializable {
         List<Achievement> nuevos = AchievementUtils.filtrarNuevosLogros(antes, despues);
 
         if (!nuevos.isEmpty()) {
-            FlowController.getInstance().goViewInWindowModal("UnlockAchievementView", getStage(), false);
-            UnlockAchievementController controller = (UnlockAchievementController)
-                    FlowController.getInstance().getController("UnlockAchievementView");
+            Tournament torneo = new TournamentService().getTournamentByName(partidoActual.getTorneo());
+            boolean esUltimoPartido = torneo.getEstado().equalsIgnoreCase("Finalizado") &&
+                    bracketService.getPartidosPendientes().isEmpty();
 
-            controller.mostrarLogrosEnCadena(nuevos, () -> {
-                System.out.println("✅ Logros mostrados.");
-            });
+            for (Achievement logro : nuevos) {
+                AchievementAnimationQueue.agregarALaCola(logro);
+            }
+
+            if (esUltimoPartido) {
+                AchievementAnimationQueue.setPermitirMostrar(false); // ⛔ se mostrarán después
+            } else {
+                AchievementAnimationQueue.setPermitirMostrar(true);  // ✅ se muestran ahora
+                AchievementAnimationQueue.mostrarCuandoPosible(nuevos);
+            }
         }
+
+
+
 
         Platform.runLater(() -> {
             Tournament torneoActualizado = new TournamentService().getTournamentByName(partidoActual.getTorneo());

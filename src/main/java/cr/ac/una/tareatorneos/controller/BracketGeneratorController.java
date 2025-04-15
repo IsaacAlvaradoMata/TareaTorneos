@@ -1,13 +1,9 @@
 package cr.ac.una.tareatorneos.controller;
 
-import cr.ac.una.tareatorneos.model.BracketMatch;
-import cr.ac.una.tareatorneos.model.Team;
-import cr.ac.una.tareatorneos.model.TeamTournamentStats;
-import cr.ac.una.tareatorneos.model.Tournament;
-import cr.ac.una.tareatorneos.service.BracketMatchService;
-import cr.ac.una.tareatorneos.service.TeamService;
-import cr.ac.una.tareatorneos.service.TeamTournamentStatsService;
-import cr.ac.una.tareatorneos.service.TournamentService;
+import cr.ac.una.tareatorneos.model.*;
+import cr.ac.una.tareatorneos.service.*;
+import cr.ac.una.tareatorneos.util.AchievementAnimationQueue;
+import cr.ac.una.tareatorneos.util.AchievementUtils;
 import cr.ac.una.tareatorneos.util.AnimationDepartment;
 import cr.ac.una.tareatorneos.util.FlowController;
 import io.github.palexdev.materialfx.controls.MFXButton;
@@ -329,14 +325,66 @@ public class BracketGeneratorController extends Controller implements Initializa
                     nodoCampeon.setLayoutX(x);
                     nodoCampeon.setLayoutY(y);
                     bracketContainer.getChildren().add(nodoCampeon);
-                    if (!esModoVisualizacion) {
-                        FlowController.getInstance().goViewInWindowModal("WinnerAnimationView", this.getStage(), false);
-                        WinnerAnimationController controller = (WinnerAnimationController)
-                                FlowController.getInstance().getController("WinnerAnimationView");
-                        controller.resetAndRunAnimations(finalMatch.getGanador());
-                        actualizarEstadisticasGenerales();
 
+                    if (!esModoVisualizacion) {
+                        AchievementAnimationQueue.setPermitirMostrar(true);
+
+                        List<Achievement> nuevosLogros = AchievementAnimationQueue.obtenerLogrosPendientes();
+
+                        AchievementAnimationQueue.ejecutarLuegoDeMostrarTodos(() -> {
+                            Platform.runLater(() -> {
+                                try {
+                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/cr/ac/una/tareatorneos/view/WinnerAnimationView.fxml"));
+                                    Parent root = loader.load();
+                                    WinnerAnimationController controller = loader.getController();
+                                    controller.resetAndRunAnimations(finalMatch.getGanador());
+
+                                    Stage stage = new Stage();
+                                    stage.setScene(new Scene(root));
+                                    stage.initModality(Modality.APPLICATION_MODAL);
+                                    stage.setResizable(false);
+                                    stage.setOnCloseRequest(e -> e.consume());
+                                    stage.showAndWait(); // 🕒 Esperar que el usuario cierre
+
+                                    actualizarEstadisticasGenerales(); // ✅ solo después de todo
+
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+                        });
+
+                        if (!nuevosLogros.isEmpty()) {
+                            AchievementAnimationQueue.mostrarCuandoPosible(nuevosLogros);
+                        } else {
+                            // 🧼 Limpia la acción y ejecuta directamente si no hay logros
+                            AchievementAnimationQueue.ejecutarLuegoDeMostrarTodos(null);
+
+                            try {
+                                FXMLLoader loader = new FXMLLoader(getClass().getResource("/cr/ac/una/tareatorneos/view/WinnerAnimationView.fxml"));
+                                Parent root = loader.load();
+                                WinnerAnimationController controller = loader.getController();
+                                controller.resetAndRunAnimations(finalMatch.getGanador());
+
+                                Stage stage = new Stage();
+                                stage.setScene(new Scene(root));
+                                stage.initModality(Modality.APPLICATION_MODAL);
+                                stage.setResizable(false);
+                                stage.setOnCloseRequest(e -> e.consume());
+                                stage.showAndWait();
+
+                                actualizarEstadisticasGenerales();
+
+
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
+
+
+
                 }
             }
         }
