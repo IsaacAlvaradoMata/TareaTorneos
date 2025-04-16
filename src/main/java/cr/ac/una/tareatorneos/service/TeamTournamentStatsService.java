@@ -6,7 +6,6 @@ import cr.ac.una.tareatorneos.model.Match;
 import cr.ac.una.tareatorneos.model.TeamTournamentStats;
 import cr.ac.una.tareatorneos.model.TeamTournamentStats.MatchStat;
 import cr.ac.una.tareatorneos.model.TeamTournamentStats.TournamentStat;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,7 +37,6 @@ public class TeamTournamentStatsService {
     }
 
 
-    // 🔄 NUEVO MÉTODO: versión extendida con ganadorDesempate
     public void guardarEstadisticaDelPartido(Match match, String ganadorDesempate) {
         List<TeamTournamentStats> stats = getAllStats();
 
@@ -55,15 +53,12 @@ public class TeamTournamentStatsService {
         }
     }
 
-    // 🔄 MÉTODO ORIGINAL - sigue existiendo para compatibilidad si no hay desempate
     public void guardarEstadisticaDelPartido(Match match) {
         guardarEstadisticaDelPartido(match, null);
     }
 
-    // 🔄 NUEVO: actualiza estadísticas con opción de ganadorDesempate
     private void actualizarStatsEquipo(List<TeamTournamentStats> stats, String equipo, String rival,
                                        String torneo, int anotaciones, int enContra, String ganadorDesempate) {
-        // Se filtra asegurándose de que el nombre del equipo no sea nulo antes de comparar
         TeamTournamentStats equipoStats = stats.stream()
                 .filter(e -> e.getNombreEquipo() != null && e.getNombreEquipo().equalsIgnoreCase(equipo))
                 .findFirst()
@@ -74,7 +69,6 @@ public class TeamTournamentStatsService {
                     return nuevo;
                 });
 
-        // Se filtra el torneo, verificando que el nombre del torneo no sea nulo
         TournamentStat torneoStat = equipoStats.getTorneos().stream()
                 .filter(t -> t.getNombreTorneo() != null && t.getNombreTorneo().equalsIgnoreCase(torneo))
                 .findFirst()
@@ -112,7 +106,6 @@ public class TeamTournamentStatsService {
     public void asignarResultadoFinalTorneo(String equipo, String torneo, String resultado) {
         List<TeamTournamentStats> stats = getAllStats();
 
-        // Asignar resultado al equipo ganador
         TeamTournamentStats equipoStats = stats.stream()
                 .filter(e -> e.getNombreEquipo() != null && e.getNombreEquipo().equalsIgnoreCase(equipo))
                 .findFirst()
@@ -167,7 +160,7 @@ public class TeamTournamentStatsService {
                 torneo.setPuntos(puntos);
             }
         }
-        saveAllStats(statsEquipos); // Guarda todo en el JSON
+        saveAllStats(statsEquipos);
     }
 
     public void saveAllStats(List<TeamTournamentStats> stats) {

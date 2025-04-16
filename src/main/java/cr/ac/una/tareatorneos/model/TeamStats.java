@@ -15,10 +15,8 @@ public class TeamStats {
     private int anotacionesEnContra;
 
     public TeamStats() {
-        // Inicializa todo a 0 por defecto (opcional, Java ya lo hace)
     }
 
-    // 📈 Métodos de actualización interna (NO públicos para usuario)
     public void registrarVictoria(int golesAFavor, int golesEnContra) {
         partidosTotales++;
         partidosGanados++;
@@ -56,7 +54,6 @@ public class TeamStats {
         torneosPerdidos++;
     }
 
-    // ✅ Getters y Setters necesarios para serialización JSON
 
     public int getPartidosTotales() {
         return partidosTotales;
@@ -98,7 +95,6 @@ public class TeamStats {
         return anotacionesEnContra;
     }
 
-    // 🔄 Setters solo si necesitas cargar desde JSON
     public void setPartidosTotales(int partidosTotales) {
         this.partidosTotales = partidosTotales;
     }

@@ -28,7 +28,6 @@ public class Tournament {
         this.estado = estado;
     }
 
-    // Getters y Setters
     public String getId() {
         return id;
     }
@@ -87,11 +86,11 @@ public class Tournament {
 
     public String getGanador() {
         return ganador;
-    } // ✅ getter
+    }
 
     public void setGanador(String ganador) {
         this.ganador = ganador;
-    } // ✅ setter
+    }
 
     @Override
     public String toString() {
@@ -103,7 +102,7 @@ public class Tournament {
                 ", cantidadEquipos=" + cantidadEquipos +
                 ", equiposParticipantes=" + equiposParticipantes +
                 ", estado='" + estado + '\'' +
-                ", ganador='" + ganador + '\'' + // ✅ incluido en toString
+                ", ganador='" + ganador + '\'' +
                 '}';
     }
 }

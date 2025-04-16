@@ -36,7 +36,6 @@ public class Achievement {
         this.obtenido = obtenido;
     }
 
-    // 🆕 Getters y setters de equipoAsociado
     public String getEquipoAsociado() {
         return equipoAsociado;
     }

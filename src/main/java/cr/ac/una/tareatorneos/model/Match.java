@@ -2,7 +2,7 @@ package cr.ac.una.tareatorneos.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties(ignoreUnknown = true) // opcional para proteger de otros errores
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Match {
 
     private String torneoNombre;
@@ -13,7 +13,7 @@ public class Match {
     private boolean finalizado;
     private boolean statsProcesadas = false;
 
-    private String deporte; // <--- este es el nuevo campo que se necesita
+    private String deporte;
 
     public Match() {
     }
@@ -28,7 +28,6 @@ public class Match {
         this.finalizado = false;
     }
 
-    // Getters y Setters
     public String getTorneoNombre() {
         return torneoNombre;
     }

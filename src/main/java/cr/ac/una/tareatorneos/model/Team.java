@@ -10,10 +10,8 @@ public class Team {
     private List<Achievement> logros = new ArrayList<>();
     private TeamStats estadisticas = new TeamStats();
 
-    // 🆕 Estado del equipo: "disponible" o "participante"
     private String estado = "disponible";
 
-    // --- 🔨 Constructores ---
     public Team() {
         this.estadisticas = new TeamStats();
         this.estado = "disponible";
@@ -34,7 +32,6 @@ public class Team {
         this.estado = "disponible";
     }
 
-    // --- 📌 Getters y Setters ---
     public String getNombre() {
         return nombre;
     }
@@ -75,20 +72,18 @@ public class Team {
         this.estadisticas = estadisticas != null ? estadisticas : new TeamStats();
     }
 
-    // 🆕 Getter y Setter para estado
     public String getEstado() {
         return estado;
     }
 
     public void setEstado(String estado) {
         if (estado == null || (!estado.equalsIgnoreCase("participante") && !estado.equalsIgnoreCase("disponible"))) {
-            this.estado = "disponible"; // fallback
+            this.estado = "disponible";
         } else {
             this.estado = estado.toLowerCase();
         }
     }
 
-    // --- 🧪 Debugging toString ---
     @Override
     public String toString() {
         return "Team{" +

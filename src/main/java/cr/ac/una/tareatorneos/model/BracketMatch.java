@@ -11,10 +11,6 @@ public class BracketMatch {
     private int puntajeEquipo1;
     private int puntajeEquipo2;
 
-    public BracketMatch() {
-        // Constructor vacío para Jackson
-    }
-
     public BracketMatch(String torneo, int ronda, String equipo1, String equipo2) {
         this.torneo = torneo;
         this.ronda = ronda;
@@ -23,8 +19,6 @@ public class BracketMatch {
         this.ganador = null;
         this.jugado = false;
     }
-
-    // 🔽 Getters & Setters
 
     public String getTorneo() {
         return torneo;

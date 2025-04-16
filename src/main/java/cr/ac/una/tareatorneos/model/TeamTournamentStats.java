@@ -26,7 +26,7 @@ public class TeamTournamentStats {
     public static class TournamentStat {
         private String nombreTorneo;
         private List<MatchStat> partidos = new ArrayList<>();
-        private String resultadoTorneo; // "Ganador", "Perdedor", etc.
+        private String resultadoTorneo;
         private int puntos;
 
         public String getNombreTorneo() {
@@ -58,7 +58,6 @@ public class TeamTournamentStats {
             this.puntos = 0;
         }
 
-        // Getters y Setters
         public int getPuntos() {
             return puntos;
         }
@@ -74,9 +73,9 @@ public class TeamTournamentStats {
         private String rival;
         private int anotaciones;
         private int anotacionesEnContra;
-        private String resultado; // "Ganado", "Perdido", "Empatado"
-        private boolean conDesempate; // nuevo
-        private String resultadoReal; // nuevo
+        private String resultado;
+        private boolean conDesempate;
+        private String resultadoReal;
 
         public int getNumeroPartido() {
             return numeroPartido;

@@ -3,7 +3,6 @@ package cr.ac.una.tareatorneos.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cr.ac.una.tareatorneos.model.Tournament;
-
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -78,17 +77,4 @@ public class TournamentService {
                 .toList();
     }
 
-    public boolean updateTournamentTeams(String nombre, List<String> nuevosEquipos) {
-        List<Tournament> tournaments = getAllTournaments();
-        boolean modified = false;
-
-        for (Tournament t : tournaments) {
-            if (t.getNombre().equalsIgnoreCase(nombre)) {
-                t.setEquiposParticipantes(nuevosEquipos);
-                modified = true;
-                break;
-            }
-        }
-        return modified && saveTournaments(tournaments);
-    }
 }
