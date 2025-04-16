@@ -2,10 +2,7 @@ package cr.ac.una.tareatorneos.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cr.ac.una.tareatorneos.model.Achievement;
-import cr.ac.una.tareatorneos.model.Team;
-import cr.ac.una.tareatorneos.model.TeamStats;
-import cr.ac.una.tareatorneos.model.TeamTournamentStats;
+import cr.ac.una.tareatorneos.model.*;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -176,5 +173,27 @@ public class TeamService {
             actualizarLogrosDeEquipo(equipo);
         }
     }
+
+    public void liberarEquiposSiNoParticipanEnOtros(String nombreTorneoFinalizado, List<String> equiposDelTorneo) {
+        TournamentService tournamentService = new TournamentService();
+        List<Tournament> todosLosTorneos = tournamentService.getAllTournaments();
+
+        for (String nombreEquipo : equiposDelTorneo) {
+            boolean participaEnOtroTorneo = todosLosTorneos.stream()
+                    .filter(t -> !t.getNombre().equalsIgnoreCase(nombreTorneoFinalizado))
+                    .filter(t -> t.getEstado().equalsIgnoreCase("iniciado") || t.getEstado().equalsIgnoreCase("por comenzar"))
+                    .anyMatch(t -> t.getEquiposParticipantes().contains(nombreEquipo));
+
+            if (!participaEnOtroTorneo) {
+                Team equipo = getTeamByName(nombreEquipo);
+                if (equipo != null && "participante".equalsIgnoreCase(equipo.getEstado())) {
+                    equipo.setEstado("disponible");
+                    updateTeam(equipo.getNombre(), equipo);
+                    System.out.println("🔓 Equipo liberado: " + equipo.getNombre());
+                }
+            }
+        }
+    }
+
 
 }

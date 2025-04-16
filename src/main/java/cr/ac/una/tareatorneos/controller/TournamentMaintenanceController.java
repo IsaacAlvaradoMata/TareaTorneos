@@ -9,6 +9,8 @@ import cr.ac.una.tareatorneos.service.TournamentService;
 import cr.ac.una.tareatorneos.util.FlowController;
 import cr.ac.una.tareatorneos.util.Mensaje;
 import io.github.palexdev.materialfx.controls.*;
+
+import java.io.File;
 import java.net.URL;
 import java.util.*;
 import javafx.application.Platform;
@@ -142,7 +144,7 @@ public class TournamentMaintenanceController extends Controller implements Initi
                 txtfieldBuscarPorNombre.clear();
             }
         });
-        
+
     }
 
 
@@ -230,16 +232,16 @@ public class TournamentMaintenanceController extends Controller implements Initi
         }
 
         Tournament torneoActual = service.getTournamentByName(torneoSeleccionado.getNombre());
+        String estado = torneoActual.getEstado();
         int equiposAgregados = torneoActual.getEquiposParticipantes().size();
 
-        if (equiposAgregados > 0) {
+        if (!"Finalizado".equalsIgnoreCase(estado) && equiposAgregados > 0) {
             mensajeUtil.show(Alert.AlertType.WARNING,
-                    "Cambio de deporte no permitido",
-                    "Este torneo ya tiene equipos agregados y no se puede eliminar.");
+                    "Eliminación no permitida",
+                    "No se puede eliminar este torneo porque tiene equipos agregados y aún no ha finalizado.");
             return;
         }
 
-        // Confirmación (opcional)
         javafx.scene.control.Alert confirmacion = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.CONFIRMATION);
         confirmacion.setTitle("Confirmar Eliminación");
         confirmacion.setHeaderText("¿Está seguro de eliminar el torneo: " + torneoSeleccionado.getNombre() + "?");
@@ -257,12 +259,17 @@ public class TournamentMaintenanceController extends Controller implements Initi
                     "Torneo eliminado correctamente.");
             limpiarFormulario();
             cargarTorneosEnTabla();
+            File archivoPartidos = new File("data/matches_" + torneoSeleccionado.getNombre() + ".json");
+            if (archivoPartidos.exists()) {
+                archivoPartidos.delete();
+            }
         } else {
             mensajeUtil.show(javafx.scene.control.Alert.AlertType.ERROR,
                     "Error",
                     "No se pudo eliminar el torneo.");
         }
     }
+
 
 
 

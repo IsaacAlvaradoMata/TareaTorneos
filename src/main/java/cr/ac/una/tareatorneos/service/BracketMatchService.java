@@ -323,6 +323,9 @@ public class BracketMatchService {
             torneo.setEstado("Finalizado");
 
             torneoService.updateTournament(torneo.getNombre(), torneo);
+            new TeamService().liberarEquiposSiNoParticipanEnOtros(torneo.getNombre(), torneo.getEquiposParticipantes());
+
+
             new TeamTournamentStatsService().asignarResultadoFinalTorneo(ganador, torneo.getNombre(), "Ganador");
 
             TeamService teamService = new TeamService();

@@ -110,7 +110,7 @@ public class TeamsMaintenanceController extends Controller implements Initializa
     }
 
 
-    private void loadTeams() {
+    public void loadTeams() {
         List<Team> loadedTeams = teamService.getAllTeams();
         teamsData.setAll(loadedTeams);
         tbvEquiposExistentes.getItems().clear();

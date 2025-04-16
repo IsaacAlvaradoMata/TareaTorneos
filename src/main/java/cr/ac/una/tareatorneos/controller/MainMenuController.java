@@ -155,6 +155,9 @@ public class MainMenuController extends Controller implements Initializable {
     void OnActionBtnMantenimientoEquipos(ActionEvent event) {
         seleccionarBotonMenu(btnMantenimientoEquipos);
         FlowController.getInstance().goView("TeamsMaintenanceView");
+        TeamsMaintenanceController controller = (TeamsMaintenanceController)
+                FlowController.getInstance().getController("TeamsMaintenanceView");
+        controller.loadTeams();
 
     }
 
