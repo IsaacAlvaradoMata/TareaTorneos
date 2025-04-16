@@ -37,6 +37,23 @@ import java.util.ResourceBundle;
 
 public class MatchController extends Controller implements Initializable {
 
+    private final Map<String, String> fondoDeporteMap = Map.ofEntries(
+            Map.entry("futbol", "/cr/ac/una/tareatorneos/resources/FondoFutbol.png"),
+            Map.entry("soccer", "/cr/ac/una/tareatorneos/resources/FondoFutbol.png"),
+            Map.entry("futbol 7", "/cr/ac/una/tareatorneos/resources/FondoFutbol.png"),
+            Map.entry("futbol 5", "/cr/ac/una/tareatorneos/resources/FondoFutbol.png"),
+            Map.entry("baloncesto", "/cr/ac/una/tareatorneos/resources/FondoBaloncesto.png"),
+            Map.entry("basketball", "/cr/ac/una/tareatorneos/resources/FondoBaloncesto.png"),
+            Map.entry("basket", "/cr/ac/una/tareatorneos/resources/FondoBaloncesto.png"),
+            Map.entry("voley", "/cr/ac/una/tareatorneos/resources/FondoVoleibol.png"),
+            Map.entry("volleyball", "/cr/ac/una/tareatorneos/resources/FondoVoleibol.png"),
+            Map.entry("voleibol", "/cr/ac/una/tareatorneos/resources/FondoVoleibol.png"),
+            Map.entry("volibol", "/cr/ac/una/tareatorneos/resources/FondoVoleibol.png"),
+            Map.entry("tenis", "/cr/ac/una/tareatorneos/resources/FondoTenis.png"),
+            Map.entry("pingpong", "/cr/ac/una/tareatorneos/resources/FondoPinpog.png"),
+            Map.entry("tenis de mesa", "/cr/ac/una/tareatorneos/resources/FondoPinpog.png"),
+            Map.entry("baseball", "/cr/ac/una/tareatorneos/resources/FondoBaseball.png")
+    );
     @FXML
     private MFXButton btnFinalizar;
     @FXML
@@ -47,12 +64,10 @@ public class MatchController extends Controller implements Initializable {
     private AnchorPane root;
     @FXML
     private StackPane spMatch;
-
     private MatchService matchService;
     private Timeline countdown;
     private int tiempoRestante;
     private boolean popupMostrado = false;
-
     private BracketMatch partidoActual;
     private BracketMatchService bracketService;
     private BracketGeneratorController bracketParent;
@@ -349,24 +364,6 @@ public class MatchController extends Controller implements Initializable {
             System.out.println("No se pudo cargar la imagen de fondo: " + rutaImagen);
         }
     }
-
-    private final Map<String, String> fondoDeporteMap = Map.ofEntries(
-            Map.entry("futbol", "/cr/ac/una/tareatorneos/resources/FondoFutbol.png"),
-            Map.entry("soccer", "/cr/ac/una/tareatorneos/resources/FondoFutbol.png"),
-            Map.entry("futbol 7", "/cr/ac/una/tareatorneos/resources/FondoFutbol.png"),
-            Map.entry("futbol 5", "/cr/ac/una/tareatorneos/resources/FondoFutbol.png"),
-            Map.entry("baloncesto", "/cr/ac/una/tareatorneos/resources/FondoBaloncesto.png"),
-            Map.entry("basketball", "/cr/ac/una/tareatorneos/resources/FondoBaloncesto.png"),
-            Map.entry("basket", "/cr/ac/una/tareatorneos/resources/FondoBaloncesto.png"),
-            Map.entry("voley", "/cr/ac/una/tareatorneos/resources/FondoVoleibol.png"),
-            Map.entry("volleyball", "/cr/ac/una/tareatorneos/resources/FondoVoleibol.png"),
-            Map.entry("voleibol", "/cr/ac/una/tareatorneos/resources/FondoVoleibol.png"),
-            Map.entry("volibol", "/cr/ac/una/tareatorneos/resources/FondoVoleibol.png"),
-            Map.entry("tenis", "/cr/ac/una/tareatorneos/resources/FondoTenis.png"),
-            Map.entry("pingpong", "/cr/ac/una/tareatorneos/resources/FondoPinpog.png"),
-            Map.entry("tenis de mesa", "/cr/ac/una/tareatorneos/resources/FondoPinpog.png"),
-            Map.entry("baseball", "/cr/ac/una/tareatorneos/resources/FondoBaseball.png")
-    );
 
     public void inicializarMatchDesdeTorneo(Tournament torneo) {
         List<String> equipos = torneo.getEquiposParticipantes();

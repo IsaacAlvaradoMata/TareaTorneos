@@ -29,6 +29,11 @@ public class TeamTournamentStats {
         private String resultadoTorneo;
         private int puntos;
 
+        public TournamentStat() {
+            this.partidos = new ArrayList<>();
+            this.puntos = 0;
+        }
+
         public String getNombreTorneo() {
             return nombreTorneo;
         }
@@ -51,11 +56,6 @@ public class TeamTournamentStats {
 
         public void setResultadoTorneo(String resultadoTorneo) {
             this.resultadoTorneo = resultadoTorneo;
-        }
-
-        public TournamentStat() {
-            this.partidos = new ArrayList<>();
-            this.puntos = 0;
         }
 
         public int getPuntos() {

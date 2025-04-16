@@ -20,168 +20,290 @@
 
 <?import io.github.palexdev.materialfx.controls.MFXFilterComboBox?>
 <?import io.github.palexdev.materialfx.controls.MFXTableView?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-
-<AnchorPane fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="850.0" styleClass="AnchorPane-Rankings" stylesheets="@StyleTournament.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tareatorneos.controller.RankingsController">
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+            prefHeight="700.0" prefWidth="850.0" styleClass="AnchorPane-Rankings"
+            stylesheets="@StyleTournament.css" xmlns="http://javafx.com/javafx/23.0.1"
+            fx:controller="cr.ac.una.tareatorneos.controller.RankingsController">
     <children>
-        <StackPane prefHeight="600.0" prefWidth="701.0" styleClass="StackPane-Rankings" stylesheets="@StyleTournament.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
-        <BorderPane layoutX="30.285715103149414" layoutY="30.285715103149414" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+        <StackPane prefHeight="600.0" prefWidth="701.0" styleClass="StackPane-Rankings"
+                   stylesheets="@StyleTournament.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0"
+                   AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0"/>
+        <BorderPane layoutX="30.285715103149414" layoutY="30.285715103149414" AnchorPane.bottomAnchor="20.0"
+                    AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
             <center>
-                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            BorderPane.alignment="CENTER">
                     <children>
-                        <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="701.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                              prefHeight="600.0" prefWidth="701.0" spacing="10.0" AnchorPane.bottomAnchor="0.0"
+                              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
-                                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="547.0" prefWidth="300.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="-Infinity"
+                                      prefHeight="547.0" prefWidth="300.0" spacing="10.0" HBox.hgrow="ALWAYS">
                                     <children>
-                                        <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+                                        <HBox alignment="CENTER" maxHeight="1.7976931348623157E308"
+                                              maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0"
+                                              spacing="15.0">
                                             <children>
-                                                <Label styleClass="lbl-SubTitulosRankings" text="Ranking Global de Equipos por Deporte" />
-                                                <ImageView fx:id="imgRankingTrophyIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                                                <Label styleClass="lbl-SubTitulosRankings"
+                                                       text="Ranking Global de Equipos por Deporte"/>
+                                                <ImageView fx:id="imgRankingTrophyIcon" fitHeight="30.0" fitWidth="30.0"
+                                                           pickOnBounds="true" preserveRatio="true"/>
                                             </children>
                                         </HBox>
-                              <HBox alignment="CENTER" spacing="15.0">
-                                 <children>
-                                    <ImageView fx:id="imgFlechaArriba" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" rotate="90.0" />
-                                    <MFXFilterComboBox fx:id="cmbRankings" floatMode="DISABLED" prefHeight="38.0" prefWidth="207.0" promptText="Busqueda por Deporte" />
-                                 </children>
-                                 <padding>
-                                    <Insets left="30.0" />
-                                 </padding>
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" />
-                                 </VBox.margin>
-                              </HBox>
-                                        <MFXTableView fx:id="tbvRankingEquipos" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" onMouseClicked="#handleTableClickRankingEquipos" prefHeight="500.0" prefWidth="450.0" styleClass="table-view-Rankings" VBox.vgrow="ALWAYS">
+                                        <HBox alignment="CENTER" spacing="15.0">
+                                            <children>
+                                                <ImageView fx:id="imgFlechaArriba" fitHeight="30.0" fitWidth="30.0"
+                                                           pickOnBounds="true" preserveRatio="true" rotate="90.0"/>
+                                                <MFXFilterComboBox fx:id="cmbRankings" floatMode="DISABLED"
+                                                                   prefHeight="38.0" prefWidth="207.0"
+                                                                   promptText="Busqueda por Deporte"/>
+                                            </children>
+                                            <padding>
+                                                <Insets left="30.0"/>
+                                            </padding>
                                             <VBox.margin>
-                                                <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                                            </VBox.margin></MFXTableView>
+                                                <Insets bottom="10.0"/>
+                                            </VBox.margin>
+                                        </HBox>
+                                        <MFXTableView fx:id="tbvRankingEquipos" maxHeight="1.7976931348623157E308"
+                                                      maxWidth="-Infinity"
+                                                      onMouseClicked="#handleTableClickRankingEquipos"
+                                                      prefHeight="500.0" prefWidth="450.0"
+                                                      styleClass="table-view-Rankings" VBox.vgrow="ALWAYS">
+                                            <VBox.margin>
+                                                <Insets bottom="20.0" left="20.0" right="20.0" top="10.0"/>
+                                            </VBox.margin>
+                                        </MFXTableView>
                                     </children>
                                     <padding>
-                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                                     </padding>
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                                </VBox>
-                                <Separator fx:id="sprRankings" orientation="VERTICAL" prefHeight="512.0" prefWidth="10.0" HBox.hgrow="ALWAYS">
                                     <HBox.margin>
-                                        <Insets bottom="5.0" />
+                                        <Insets/>
+                                    </HBox.margin>
+                                </VBox>
+                                <Separator fx:id="sprRankings" orientation="VERTICAL" prefHeight="512.0"
+                                           prefWidth="10.0" HBox.hgrow="ALWAYS">
+                                    <HBox.margin>
+                                        <Insets bottom="5.0"/>
                                     </HBox.margin>
                                 </Separator>
-                        <TabPane HBox.hgrow="ALWAYS">
-                           <tabs>
-                              <Tab closable="false" text="Estadisticas Generales">
-                                 <content>
-                                            <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="512.0" prefWidth="316.0">
-                                                <children>
-                                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="200.0" styleClass="lbl-SubTitulosRankings" text="Estadisticas Generales:" VBox.vgrow="ALWAYS">
-                                             <VBox.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                          <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="297.0" spacing="15.0">
-                                             <children>
-                                                <Label alignment="CENTER" prefHeight="40.0" prefWidth="200.0" styleClass="lbl-SubTitulosRankings" text="Partidos Totales:" />
-                                                <Label fx:id="lblPartidosTotales" alignment="CENTER" contentDisplay="CENTER" layoutX="123.0" layoutY="24.0" prefHeight="30.0" prefWidth="150.0" styleClass="lbl-informacionRankings" HBox.hgrow="ALWAYS" />
-                                             </children>
-                                          </HBox>
-                                          <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="297.0" spacing="15.0">
-                                             <children>
-                                                <Label alignment="CENTER" prefHeight="40.0" prefWidth="200.0" styleClass="lbl-SubTitulosRankings" text="Partidos Ganados:" />
-                                                <Label fx:id="lblPartidosGanados" alignment="CENTER" contentDisplay="CENTER" layoutX="123.0" layoutY="24.0" prefHeight="30.0" prefWidth="150.0" styleClass="lbl-informacionRankings" HBox.hgrow="ALWAYS" />
-                                             </children>
-                                          </HBox>
-                                          <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="297.0" spacing="15.0">
-                                             <children>
-                                                <Label alignment="CENTER" prefHeight="40.0" prefWidth="200.0" styleClass="lbl-SubTitulosRankings" text="Partidos Perdidos:" />
-                                                <Label fx:id="lblPartidosPerdidos" alignment="CENTER" contentDisplay="CENTER" layoutX="123.0" layoutY="24.0" prefHeight="30.0" prefWidth="150.0" styleClass="lbl-informacionRankings" HBox.hgrow="ALWAYS" />
-                                             </children>
-                                          </HBox>
-                                          <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="297.0" spacing="15.0">
-                                             <children>
-                                                <Label alignment="CENTER" prefHeight="40.0" prefWidth="200.0" styleClass="lbl-SubTitulosRankings" text="Partidos Empatados:" />
-                                                <Label fx:id="lblPartidosEmpatados" alignment="CENTER" contentDisplay="CENTER" layoutX="123.0" layoutY="24.0" prefHeight="30.0" prefWidth="150.0" styleClass="lbl-informacionRankings" HBox.hgrow="ALWAYS" />
-                                             </children>
-                                          </HBox>
-                                          <HBox alignment="CENTER" layoutX="25.0" layoutY="381.0" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="297.0" spacing="15.0">
-                                             <children>
-                                                <Label alignment="CENTER" prefHeight="40.0" prefWidth="200.0" styleClass="lbl-SubTitulosRankings" text="Torneos Totales:" />
-                                                <Label fx:id="lblTorneosTotales" alignment="CENTER" contentDisplay="CENTER" layoutX="123.0" layoutY="24.0" prefHeight="30.0" prefWidth="150.0" styleClass="lbl-informacionRankings" HBox.hgrow="ALWAYS" />
-                                             </children>
-                                          </HBox>
-                                          <HBox alignment="CENTER" layoutX="25.0" layoutY="407.0" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="297.0" spacing="15.0">
-                                             <children>
-                                                <Label alignment="CENTER" prefHeight="40.0" prefWidth="200.0" styleClass="lbl-SubTitulosRankings" text="Torneos Ganados:" />
-                                                <Label fx:id="lblTorneosGanados" alignment="CENTER" contentDisplay="CENTER" layoutX="123.0" layoutY="24.0" prefHeight="30.0" prefWidth="150.0" styleClass="lbl-informacionRankings" HBox.hgrow="ALWAYS" />
-                                             </children>
-                                          </HBox>
-                                          <HBox alignment="CENTER" layoutX="25.0" layoutY="421.0" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="297.0" spacing="15.0">
-                                             <children>
-                                                <Label alignment="CENTER" prefHeight="40.0" prefWidth="200.0" styleClass="lbl-SubTitulosRankings" text="Torneos Perdidos:" />
-                                                <Label fx:id="lblTorneosPerdidos" alignment="CENTER" contentDisplay="CENTER" layoutX="123.0" layoutY="24.0" prefHeight="30.0" prefWidth="150.0" styleClass="lbl-informacionRankings" HBox.hgrow="ALWAYS" />
-                                             </children>
-                                          </HBox>
-                                          <HBox alignment="CENTER" layoutX="25.0" layoutY="431.0" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="297.0" spacing="15.0">
-                                             <children>
-                                                <Label alignment="CENTER" prefHeight="40.0" prefWidth="200.0" styleClass="lbl-SubTitulosRankings" text="Anotaciones:" />
-                                                <Label fx:id="lblAnotaciones" alignment="CENTER" contentDisplay="CENTER" layoutX="123.0" layoutY="24.0" prefHeight="30.0" prefWidth="150.0" styleClass="lbl-informacionRankings" HBox.hgrow="ALWAYS" />
-                                             </children>
-                                          </HBox>
-                                          <HBox alignment="CENTER" layoutX="25.0" layoutY="439.0" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="297.0" spacing="15.0">
-                                             <children>
-                                                <Label alignment="CENTER" prefHeight="40.0" prefWidth="200.0" styleClass="lbl-SubTitulosRankings" text="Anotaciones en Contra:" />
-                                                <Label fx:id="lblAnotacionesContra" alignment="CENTER" contentDisplay="CENTER" layoutX="123.0" layoutY="24.0" prefHeight="30.0" prefWidth="150.0" styleClass="lbl-informacionRankings" HBox.hgrow="ALWAYS" />
-                                             </children>
-                                          </HBox>
-                                                </children>
-                                                <padding>
-                                                    <Insets bottom="20.0" left="15.0" right="30.0" top="10.0" />
-                                                </padding>
-                                            </VBox>
-                                 </content>
-                              </Tab>
-                              <Tab closable="false" text="Estadisticas Avanzadas">
-                                 <content>
-                                    <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="512.0" prefWidth="316.0" spacing="15.0">
-                                       <children>
-                                          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="300.0" styleClass="lbl-SubTitulosRankings" text="Estadisticas Avanzadas Por Torneo:" VBox.vgrow="ALWAYS">
-                                             <VBox.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                          <TableView fx:id="tbvStatsTorneos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" styleClass="table-view-Rankings" VBox.vgrow="ALWAYS" />
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="25.0" left="15.0" right="30.0" top="10.0" />
-                                       </padding>
-                                    </VBox>
-                                 </content>
-                              </Tab>
-                           </tabs>
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
-                        </TabPane>
+                                <TabPane HBox.hgrow="ALWAYS">
+                                    <tabs>
+                                        <Tab closable="false" text="Estadisticas Generales">
+                                            <content>
+                                                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308"
+                                                      maxWidth="1.7976931348623157E308" prefHeight="512.0"
+                                                      prefWidth="316.0">
+                                                    <children>
+                                                        <Label alignment="CENTER" contentDisplay="CENTER"
+                                                               prefHeight="40.0" prefWidth="200.0"
+                                                               styleClass="lbl-SubTitulosRankings"
+                                                               text="Estadisticas Generales:" VBox.vgrow="ALWAYS">
+                                                            <VBox.margin>
+                                                                <Insets bottom="10.0" left="10.0" right="10.0"
+                                                                        top="10.0"/>
+                                                            </VBox.margin>
+                                                        </Label>
+                                                        <HBox alignment="CENTER" maxWidth="1.7976931348623157E308"
+                                                              prefHeight="100.0" prefWidth="297.0" spacing="15.0">
+                                                            <children>
+                                                                <Label alignment="CENTER" prefHeight="40.0"
+                                                                       prefWidth="200.0"
+                                                                       styleClass="lbl-SubTitulosRankings"
+                                                                       text="Partidos Totales:"/>
+                                                                <Label fx:id="lblPartidosTotales" alignment="CENTER"
+                                                                       contentDisplay="CENTER" layoutX="123.0"
+                                                                       layoutY="24.0" prefHeight="30.0"
+                                                                       prefWidth="150.0"
+                                                                       styleClass="lbl-informacionRankings"
+                                                                       HBox.hgrow="ALWAYS"/>
+                                                            </children>
+                                                        </HBox>
+                                                        <HBox alignment="CENTER" maxWidth="1.7976931348623157E308"
+                                                              prefHeight="100.0" prefWidth="297.0" spacing="15.0">
+                                                            <children>
+                                                                <Label alignment="CENTER" prefHeight="40.0"
+                                                                       prefWidth="200.0"
+                                                                       styleClass="lbl-SubTitulosRankings"
+                                                                       text="Partidos Ganados:"/>
+                                                                <Label fx:id="lblPartidosGanados" alignment="CENTER"
+                                                                       contentDisplay="CENTER" layoutX="123.0"
+                                                                       layoutY="24.0" prefHeight="30.0"
+                                                                       prefWidth="150.0"
+                                                                       styleClass="lbl-informacionRankings"
+                                                                       HBox.hgrow="ALWAYS"/>
+                                                            </children>
+                                                        </HBox>
+                                                        <HBox alignment="CENTER" maxWidth="1.7976931348623157E308"
+                                                              prefHeight="100.0" prefWidth="297.0" spacing="15.0">
+                                                            <children>
+                                                                <Label alignment="CENTER" prefHeight="40.0"
+                                                                       prefWidth="200.0"
+                                                                       styleClass="lbl-SubTitulosRankings"
+                                                                       text="Partidos Perdidos:"/>
+                                                                <Label fx:id="lblPartidosPerdidos" alignment="CENTER"
+                                                                       contentDisplay="CENTER" layoutX="123.0"
+                                                                       layoutY="24.0" prefHeight="30.0"
+                                                                       prefWidth="150.0"
+                                                                       styleClass="lbl-informacionRankings"
+                                                                       HBox.hgrow="ALWAYS"/>
+                                                            </children>
+                                                        </HBox>
+                                                        <HBox alignment="CENTER" maxWidth="1.7976931348623157E308"
+                                                              prefHeight="100.0" prefWidth="297.0" spacing="15.0">
+                                                            <children>
+                                                                <Label alignment="CENTER" prefHeight="40.0"
+                                                                       prefWidth="200.0"
+                                                                       styleClass="lbl-SubTitulosRankings"
+                                                                       text="Partidos Empatados:"/>
+                                                                <Label fx:id="lblPartidosEmpatados" alignment="CENTER"
+                                                                       contentDisplay="CENTER" layoutX="123.0"
+                                                                       layoutY="24.0" prefHeight="30.0"
+                                                                       prefWidth="150.0"
+                                                                       styleClass="lbl-informacionRankings"
+                                                                       HBox.hgrow="ALWAYS"/>
+                                                            </children>
+                                                        </HBox>
+                                                        <HBox alignment="CENTER" layoutX="25.0" layoutY="381.0"
+                                                              maxWidth="1.7976931348623157E308" prefHeight="100.0"
+                                                              prefWidth="297.0" spacing="15.0">
+                                                            <children>
+                                                                <Label alignment="CENTER" prefHeight="40.0"
+                                                                       prefWidth="200.0"
+                                                                       styleClass="lbl-SubTitulosRankings"
+                                                                       text="Torneos Totales:"/>
+                                                                <Label fx:id="lblTorneosTotales" alignment="CENTER"
+                                                                       contentDisplay="CENTER" layoutX="123.0"
+                                                                       layoutY="24.0" prefHeight="30.0"
+                                                                       prefWidth="150.0"
+                                                                       styleClass="lbl-informacionRankings"
+                                                                       HBox.hgrow="ALWAYS"/>
+                                                            </children>
+                                                        </HBox>
+                                                        <HBox alignment="CENTER" layoutX="25.0" layoutY="407.0"
+                                                              maxWidth="1.7976931348623157E308" prefHeight="100.0"
+                                                              prefWidth="297.0" spacing="15.0">
+                                                            <children>
+                                                                <Label alignment="CENTER" prefHeight="40.0"
+                                                                       prefWidth="200.0"
+                                                                       styleClass="lbl-SubTitulosRankings"
+                                                                       text="Torneos Ganados:"/>
+                                                                <Label fx:id="lblTorneosGanados" alignment="CENTER"
+                                                                       contentDisplay="CENTER" layoutX="123.0"
+                                                                       layoutY="24.0" prefHeight="30.0"
+                                                                       prefWidth="150.0"
+                                                                       styleClass="lbl-informacionRankings"
+                                                                       HBox.hgrow="ALWAYS"/>
+                                                            </children>
+                                                        </HBox>
+                                                        <HBox alignment="CENTER" layoutX="25.0" layoutY="421.0"
+                                                              maxWidth="1.7976931348623157E308" prefHeight="100.0"
+                                                              prefWidth="297.0" spacing="15.0">
+                                                            <children>
+                                                                <Label alignment="CENTER" prefHeight="40.0"
+                                                                       prefWidth="200.0"
+                                                                       styleClass="lbl-SubTitulosRankings"
+                                                                       text="Torneos Perdidos:"/>
+                                                                <Label fx:id="lblTorneosPerdidos" alignment="CENTER"
+                                                                       contentDisplay="CENTER" layoutX="123.0"
+                                                                       layoutY="24.0" prefHeight="30.0"
+                                                                       prefWidth="150.0"
+                                                                       styleClass="lbl-informacionRankings"
+                                                                       HBox.hgrow="ALWAYS"/>
+                                                            </children>
+                                                        </HBox>
+                                                        <HBox alignment="CENTER" layoutX="25.0" layoutY="431.0"
+                                                              maxWidth="1.7976931348623157E308" prefHeight="100.0"
+                                                              prefWidth="297.0" spacing="15.0">
+                                                            <children>
+                                                                <Label alignment="CENTER" prefHeight="40.0"
+                                                                       prefWidth="200.0"
+                                                                       styleClass="lbl-SubTitulosRankings"
+                                                                       text="Anotaciones:"/>
+                                                                <Label fx:id="lblAnotaciones" alignment="CENTER"
+                                                                       contentDisplay="CENTER" layoutX="123.0"
+                                                                       layoutY="24.0" prefHeight="30.0"
+                                                                       prefWidth="150.0"
+                                                                       styleClass="lbl-informacionRankings"
+                                                                       HBox.hgrow="ALWAYS"/>
+                                                            </children>
+                                                        </HBox>
+                                                        <HBox alignment="CENTER" layoutX="25.0" layoutY="439.0"
+                                                              maxWidth="1.7976931348623157E308" prefHeight="100.0"
+                                                              prefWidth="297.0" spacing="15.0">
+                                                            <children>
+                                                                <Label alignment="CENTER" prefHeight="40.0"
+                                                                       prefWidth="200.0"
+                                                                       styleClass="lbl-SubTitulosRankings"
+                                                                       text="Anotaciones en Contra:"/>
+                                                                <Label fx:id="lblAnotacionesContra" alignment="CENTER"
+                                                                       contentDisplay="CENTER" layoutX="123.0"
+                                                                       layoutY="24.0" prefHeight="30.0"
+                                                                       prefWidth="150.0"
+                                                                       styleClass="lbl-informacionRankings"
+                                                                       HBox.hgrow="ALWAYS"/>
+                                                            </children>
+                                                        </HBox>
+                                                    </children>
+                                                    <padding>
+                                                        <Insets bottom="20.0" left="15.0" right="30.0" top="10.0"/>
+                                                    </padding>
+                                                </VBox>
+                                            </content>
+                                        </Tab>
+                                        <Tab closable="false" text="Estadisticas Avanzadas">
+                                            <content>
+                                                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308"
+                                                      maxWidth="1.7976931348623157E308" prefHeight="512.0"
+                                                      prefWidth="316.0" spacing="15.0">
+                                                    <children>
+                                                        <Label alignment="CENTER" contentDisplay="CENTER"
+                                                               prefHeight="40.0" prefWidth="300.0"
+                                                               styleClass="lbl-SubTitulosRankings"
+                                                               text="Estadisticas Avanzadas Por Torneo:"
+                                                               VBox.vgrow="ALWAYS">
+                                                            <VBox.margin>
+                                                                <Insets bottom="10.0" left="10.0" right="10.0"
+                                                                        top="10.0"/>
+                                                            </VBox.margin>
+                                                        </Label>
+                                                        <TableView fx:id="tbvStatsTorneos"
+                                                                   maxHeight="1.7976931348623157E308"
+                                                                   maxWidth="1.7976931348623157E308" prefHeight="200.0"
+                                                                   prefWidth="200.0" styleClass="table-view-Rankings"
+                                                                   VBox.vgrow="ALWAYS"/>
+                                                    </children>
+                                                    <padding>
+                                                        <Insets bottom="25.0" left="15.0" right="30.0" top="10.0"/>
+                                                    </padding>
+                                                </VBox>
+                                            </content>
+                                        </Tab>
+                                    </tabs>
+                                    <HBox.margin>
+                                        <Insets right="10.0"/>
+                                    </HBox.margin>
+                                </TabPane>
                             </children>
                         </HBox>
                     </children>
                 </AnchorPane>
             </center>
             <top>
-                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="641.0" styleClass="AnchorPane-TituloRankings" BorderPane.alignment="CENTER">
+                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="40.0"
+                            prefWidth="641.0" styleClass="AnchorPane-TituloRankings" BorderPane.alignment="CENTER">
                     <children>
-                        <Label fx:id="lblRankingsTitulo" alignment="CENTER" contentDisplay="CENTER" layoutX="306.0" layoutY="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="673.7142857142857" styleClass="lbl-Title" text="Rankings" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Label fx:id="lblRankingsTitulo" alignment="CENTER" contentDisplay="CENTER" layoutX="306.0"
+                               layoutY="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                               prefHeight="40.0" prefWidth="673.7142857142857" styleClass="lbl-Title" text="Rankings"
+                               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                               AnchorPane.topAnchor="0.0"/>
                     </children>
                 </AnchorPane>
             </top>

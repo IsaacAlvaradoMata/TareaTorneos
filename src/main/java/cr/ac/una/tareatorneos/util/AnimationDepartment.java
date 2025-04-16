@@ -11,9 +11,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
+
 import java.util.Random;
 
 public class AnimationDepartment {
+
+    private static Timeline lightSweepTimeline;
+    private static Timeline confettiLoop;
+    private static Timeline rainingLoop;
+    private static PauseTransition rainingDelay;
 
     public static void fadeIn(Node node, Duration delay) {
         node.setOpacity(0);
@@ -115,8 +121,6 @@ public class AnimationDepartment {
         glowLoop.play();
     }
 
-    private static Timeline lightSweepTimeline;
-
     public static void animatedLightSweep(Label label) {
         stopAnimatedLightSweep();
 
@@ -144,8 +148,6 @@ public class AnimationDepartment {
             lightSweepTimeline = null;
         }
     }
-
-    private static Timeline confettiLoop;
 
     public static void startConfettiLoop(Pane container, int particlesPerBatch, Duration interval) {
         stopConfetti();
@@ -194,7 +196,6 @@ public class AnimationDepartment {
         spotlight.play();
     }
 
-
     public static void sparkleEffect(Node node, Duration delay) {
         node.setOpacity(0);
         node.setVisible(true);
@@ -236,7 +237,6 @@ public class AnimationDepartment {
         anim.play();
     }
 
-
     public static void slideUpWithEpicBounceClean(Node node, Duration delay, double sceneHeight) {
         node.setTranslateY(0);
 
@@ -264,7 +264,6 @@ public class AnimationDepartment {
                 settle
         ).play();
     }
-
 
     public static void subtleBounce(Node node) {
         TranslateTransition bounce = new TranslateTransition(Duration.seconds(2), node);
@@ -321,7 +320,6 @@ public class AnimationDepartment {
         waitBeforeZoom.play();
     }
 
-
     public static void revealAchievementImage(Node imageNode, Duration delay) {
         imageNode.setVisible(true);
         imageNode.setOpacity(0);
@@ -375,10 +373,6 @@ public class AnimationDepartment {
             spark.toBack();
         }
     }
-
-    private static Timeline rainingLoop;
-    private static PauseTransition rainingDelay;
-
 
     public static void startInfiniteRainingAchievements(Pane container, Image image, int particlesPerWave, Duration interval, Duration fallDuration) {
         stopRainingAchievements(container);

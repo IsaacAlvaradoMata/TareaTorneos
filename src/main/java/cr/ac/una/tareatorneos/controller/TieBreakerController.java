@@ -30,6 +30,7 @@ import java.net.URL;
 import java.util.*;
 
 public class TieBreakerController extends Controller implements Initializable {
+    private final Random random = new Random();
     @FXML
     private ImageView cajaA, cajaB, cajaC, imgBalon;
     @FXML
@@ -42,10 +43,7 @@ public class TieBreakerController extends Controller implements Initializable {
     private StackPane spTieBreaker;
     @FXML
     private AnchorPane root;
-
     private List<Integer> valoresCajas;
-    private final Random random = new Random();
-
     private String equipoA;
     private String equipoB;
     private boolean turnoEquipoA;

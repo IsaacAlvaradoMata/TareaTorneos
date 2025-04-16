@@ -1189,7 +1189,6 @@
 }
 
 
-
 .table-view-Rankings .virtual-flow {
     -fx-background-color: transparent !important; /* Fija el fondo del área desplazable */
 }
@@ -1646,7 +1645,7 @@
 
 .StackPane-WinnerView {
     -fx-background-color: #fff0d9;
-    -fx-border-color:#b69a00;
+    -fx-border-color: #b69a00;
     -fx-border-width: 5;
     -fx-border-radius: 15;
     -fx-background-radius: 19;
@@ -1735,7 +1734,7 @@
 
 .StackPane-LogrosAnimado {
     -fx-background-color: #cdfaf2;
-    -fx-border-color:#006ab6;
+    -fx-border-color: #006ab6;
     -fx-border-width: 5;
     -fx-border-radius: 15;
     -fx-background-radius: 19;
@@ -1807,7 +1806,7 @@
 .lbl-SubTitulosBracket {
     -fx-font-size: 12px;
     -fx-font-weight: bold;
-    -fx-text-fill:  #FFD700;
+    -fx-text-fill: #FFD700;
     -fx-padding: 5 0 5 0;
     -fx-background-color: #bb7474;
     -fx-border-width: 3;
@@ -1863,7 +1862,7 @@
     -fx-background-color: #b00000;
 }
 
-.scroll-pane-bracket{
+.scroll-pane-bracket {
 
     -fx-background-color: #bb7474;
     -fx-border-width: 3;
@@ -1954,7 +1953,6 @@
     -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
 
 }
-
 
 
 /* Nombre del equipo */

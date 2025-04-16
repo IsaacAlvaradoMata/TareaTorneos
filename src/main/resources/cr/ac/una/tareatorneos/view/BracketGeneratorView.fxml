@@ -1,83 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-
-<AnchorPane fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="700.0" styleClass="gold-border-bracket" stylesheets="@StyleTournament.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.tareatorneos.controller.BracketGeneratorController">
-   <StackPane prefHeight="600.0" prefWidth="700.0" styleClass="gold-border-bracket-sp" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
-   <BorderPane prefHeight="600.0" prefWidth="700.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
-      <center>
-         <AnchorPane BorderPane.alignment="CENTER">
-            <children>
-                 <ScrollPane fx:id="scrollBracket" fitToHeight="true" fitToWidth="true" hbarPolicy="ALWAYS" layoutX="0.800000011920929" layoutY="0.8000030517578125" prefHeight="600.0" prefWidth="600.0" styleClass="scroll-pane-bracket" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0">
-                     <AnchorPane fx:id="bracketContainer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #bb7474;">
-                     <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                     </padding>
-                  </AnchorPane>
-                  <padding>
-                     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                  </padding>
-                 </ScrollPane>
-            </children>
-         </AnchorPane>
-      </center>
-      <top>
-         <VBox alignment="TOP_CENTER" prefHeight="114.0" prefWidth="660.0" BorderPane.alignment="CENTER">
-            <children>
-               <HBox alignment="BOTTOM_CENTER" spacing="20.0" styleClass="gold-border-bracket">
-                  <children>
-                     <ImageView fx:id="leftBracket" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
-                     <Label fx:id="lblNombreTorneoBracket" styleClass="lbl-TitleBracket" text="NOMBRE DE TORNEO" />
-                     <ImageView fx:id="rightBracket" fitHeight="40.0" fitWidth="40.0" layoutX="262.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  </children>
-                  <VBox.margin>
-                     <Insets bottom="10.0" />
-                  </VBox.margin>
-               </HBox>
-               <VBox alignment="CENTER" prefHeight="111.0" prefWidth="650.0" spacing="20.0">
-                  <children>
-                  
-                            <!-- Label normal indicando el partido actual -->
-                      <Label fx:id="lblPartidoActual" alignment="CENTER" styleClass="lbl-SubTitulosBracket" text="Partido pendiente: -">
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+            prefHeight="600.0" prefWidth="700.0" styleClass="gold-border-bracket"
+            stylesheets="@StyleTournament.css" xmlns="http://javafx.com/javafx/23.0.1"
+            fx:controller="cr.ac.una.tareatorneos.controller.BracketGeneratorController">
+    <StackPane prefHeight="600.0" prefWidth="700.0" styleClass="gold-border-bracket-sp" AnchorPane.bottomAnchor="20.0"
+               AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0"/>
+    <BorderPane prefHeight="600.0" prefWidth="700.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0"
+                AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+        <center>
+            <AnchorPane BorderPane.alignment="CENTER">
+                <children>
+                    <ScrollPane fx:id="scrollBracket" fitToHeight="true" fitToWidth="true" hbarPolicy="ALWAYS"
+                                layoutX="0.800000011920929" layoutY="0.8000030517578125" prefHeight="600.0"
+                                prefWidth="600.0" styleClass="scroll-pane-bracket" vbarPolicy="ALWAYS"
+                                AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
+                                AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0">
+                        <AnchorPane fx:id="bracketContainer" maxHeight="1.7976931348623157E308"
+                                    maxWidth="1.7976931348623157E308" style="-fx-background-color: #bb7474;">
+                            <padding>
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                            </padding>
+                        </AnchorPane>
                         <padding>
-                           <Insets left="10.0" top="10.0" />
+                            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
                         </padding>
-                     </Label>
-                     <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" spacing="30.0" VBox.vgrow="ALWAYS">
+                    </ScrollPane>
+                </children>
+            </AnchorPane>
+        </center>
+        <top>
+            <VBox alignment="TOP_CENTER" prefHeight="114.0" prefWidth="660.0" BorderPane.alignment="CENTER">
+                <children>
+                    <HBox alignment="BOTTOM_CENTER" spacing="20.0" styleClass="gold-border-bracket">
                         <children>
-                           <MFXButton fx:id="btnSave" onAction="#onActionBtnSave" prefHeight="38.0" prefWidth="155.0" styleClass="btn-Bracket" text="Guardar y Salir">
-                              <graphic>
-                                 <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-                              </graphic>
-                           </MFXButton>
-                        
-                                  <!-- Botón MFX para jugar el partido -->
-                            <MFXButton fx:id="btnPlay" onAction="#onActionBtnPlay" prefWidth="150" styleClass="btn-Bracket" text="Jugar partido">
-                              <graphic>
-                                 <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-                              </graphic>
-                           </MFXButton>
+                            <ImageView fx:id="leftBracket" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true"
+                                       preserveRatio="true"/>
+                            <Label fx:id="lblNombreTorneoBracket" styleClass="lbl-TitleBracket"
+                                   text="NOMBRE DE TORNEO"/>
+                            <ImageView fx:id="rightBracket" fitHeight="40.0" fitWidth="40.0" layoutX="262.0"
+                                       layoutY="10.0" pickOnBounds="true" preserveRatio="true"/>
                         </children>
-                        <padding>
-                           <Insets left="15.0" right="15.0" />
-                        </padding>
-                     </HBox>
-                  </children>
-                  <VBox.margin>
-                     <Insets bottom="10.0" top="10.0" />
-                  </VBox.margin>
-               </VBox>
-            </children>
-         </VBox>
-      </top>
-   </BorderPane>
+                        <VBox.margin>
+                            <Insets bottom="10.0"/>
+                        </VBox.margin>
+                    </HBox>
+                    <VBox alignment="CENTER" prefHeight="111.0" prefWidth="650.0" spacing="20.0">
+                        <children>
+
+                            <!-- Label normal indicando el partido actual -->
+                            <Label fx:id="lblPartidoActual" alignment="CENTER" styleClass="lbl-SubTitulosBracket"
+                                   text="Partido pendiente: -">
+                                <padding>
+                                    <Insets left="10.0" top="10.0"/>
+                                </padding>
+                            </Label>
+                            <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" spacing="30.0"
+                                  VBox.vgrow="ALWAYS">
+                                <children>
+                                    <MFXButton fx:id="btnSave" onAction="#onActionBtnSave" prefHeight="38.0"
+                                               prefWidth="155.0" styleClass="btn-Bracket" text="Guardar y Salir">
+                                        <graphic>
+                                            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true"
+                                                       preserveRatio="true"/>
+                                        </graphic>
+                                    </MFXButton>
+
+                                    <!-- Botón MFX para jugar el partido -->
+                                    <MFXButton fx:id="btnPlay" onAction="#onActionBtnPlay" prefWidth="150"
+                                               styleClass="btn-Bracket" text="Jugar partido">
+                                        <graphic>
+                                            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true"
+                                                       preserveRatio="true"/>
+                                        </graphic>
+                                    </MFXButton>
+                                </children>
+                                <padding>
+                                    <Insets left="15.0" right="15.0"/>
+                                </padding>
+                            </HBox>
+                        </children>
+                        <VBox.margin>
+                            <Insets bottom="10.0" top="10.0"/>
+                        </VBox.margin>
+                    </VBox>
+                </children>
+            </VBox>
+        </top>
+    </BorderPane>
 </AnchorPane>

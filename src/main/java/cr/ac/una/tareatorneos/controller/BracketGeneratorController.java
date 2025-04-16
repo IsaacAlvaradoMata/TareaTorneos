@@ -37,6 +37,10 @@ import java.util.ResourceBundle;
 
 public class BracketGeneratorController extends Controller implements Initializable {
 
+    private static final double NODE_WIDTH = 200;
+    private static final double NODE_HEIGHT = 110;
+    private static final double H_GAP = 250;
+    private static final double V_GAP = 40;
     @FXML
     private AnchorPane root;
     @FXML
@@ -55,14 +59,9 @@ public class BracketGeneratorController extends Controller implements Initializa
     private ImageView rightBracket;
     @FXML
     private MFXButton btnSave;
-
     private BracketMatchService matchService = new BracketMatchService();
     private Tournament torneoActual;
-
-    private static final double NODE_WIDTH = 200;
-    private static final double NODE_HEIGHT = 110;
-    private static final double H_GAP = 250;
-    private static final double V_GAP = 40;
+    private boolean esModoVisualizacion = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -123,8 +122,6 @@ public class BracketGeneratorController extends Controller implements Initializa
         lblPartidoActual.setText("  ⌛ Esperando equipos para siguiente partido...  ");
         btnPlay.setDisable(true);
     }
-
-    private boolean esModoVisualizacion = false;
 
     public void setModoVisualizacion(boolean modo) {
         this.esModoVisualizacion = modo;

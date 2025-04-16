@@ -4,31 +4,40 @@
   "teamImage" : "barcelona-1.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -49,31 +58,40 @@
   "teamImage" : "real_madrid-2.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -94,31 +112,40 @@
   "teamImage" : "saprissa-3.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -139,31 +166,40 @@
   "teamImage" : "la_liga-4.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -184,31 +220,40 @@
   "teamImage" : "manchester_united-5.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -229,31 +274,40 @@
   "teamImage" : "perez_zeledon-6.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -274,31 +328,40 @@
   "teamImage" : "carmelita-7.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -319,31 +382,40 @@
   "teamImage" : "manchester_city-8.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -364,31 +436,40 @@
   "teamImage" : "arsenal-9.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -409,31 +490,40 @@
   "teamImage" : "liverpool-10.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -454,31 +544,40 @@
   "teamImage" : "atlanta_united-11.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -499,31 +598,40 @@
   "teamImage" : "chelsea-12.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -544,31 +652,40 @@
   "teamImage" : "villa_real-13.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -589,31 +706,40 @@
   "teamImage" : "milan-14.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -634,31 +760,40 @@
   "teamImage" : "monaco-15.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -679,31 +814,40 @@
   "teamImage" : "santos_fc-16.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -724,31 +868,40 @@
   "teamImage" : "juventus-17.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -769,31 +922,40 @@
   "teamImage" : "sporting_cp-18.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -814,31 +976,40 @@
   "teamImage" : "crytal_palace-19.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -859,31 +1030,40 @@
   "teamImage" : "sevilla-20.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -904,31 +1084,40 @@
   "teamImage" : "psg-21.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -949,31 +1138,40 @@
   "teamImage" : "boca_juniors-22.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -994,31 +1192,40 @@
   "teamImage" : "ajax-23.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -1039,31 +1246,40 @@
   "teamImage" : "benfica-24.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -1084,31 +1300,40 @@
   "teamImage" : "celtic-25.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -1129,31 +1354,40 @@
   "teamImage" : "Independiente-26.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -1174,31 +1408,40 @@
   "teamImage" : "puntarenas_fc-27.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -1219,31 +1462,40 @@
   "teamImage" : "as_puma-28.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -1264,31 +1516,40 @@
   "teamImage" : "santa_ana-29.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -1309,31 +1570,40 @@
   "teamImage" : "sporting_lisboa-30.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -1354,31 +1624,40 @@
   "teamImage" : "real_sociedad-31.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,
@@ -1399,31 +1678,40 @@
   "teamImage" : "bolonia-32.jpg",
   "logros" : [ {
     "nombre" : "Dominador Supremo",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Leyenda Plateada",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Tricampeón",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Máxima Potencia",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Muralla Imbatible",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Equilibrio Perfecto",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Imparable",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Regreso Triunfal",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   }, {
     "nombre" : "Campeón Inaugural",
-    "obtenido" : false
+    "obtenido" : false,
+    "equipoAsociado" : null
   } ],
   "estadisticas" : {
     "partidosTotales" : 0,

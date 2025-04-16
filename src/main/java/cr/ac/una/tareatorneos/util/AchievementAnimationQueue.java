@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,6 +21,7 @@ public class AchievementAnimationQueue {
     private static boolean mostrando = false;
 
     private static Runnable accionDespuesDeLogros = null;
+    private static boolean permitidoMostrar = true;
 
     public static void mostrarCuandoPosible(List<Achievement> nuevosLogros) {
         if (!permitidoMostrar || nuevosLogros == null || nuevosLogros.isEmpty()) return;
@@ -38,8 +40,6 @@ public class AchievementAnimationQueue {
             cola.offer(logro);
         }
     }
-
-    private static boolean permitidoMostrar = true;
 
     public static void setPermitirMostrar(boolean permitir) {
         permitidoMostrar = permitir;

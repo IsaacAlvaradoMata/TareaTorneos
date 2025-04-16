@@ -24,12 +24,12 @@ public class TieBreaker {
         return ganador;
     }
 
-    public boolean isFinalizado() {
-        return finalizado;
-    }
-
     public void setGanador(String ganador) {
         this.ganador = ganador;
         this.finalizado = true;
+    }
+
+    public boolean isFinalizado() {
+        return finalizado;
     }
 }

@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +59,7 @@ public class UnlockAchievementController extends Controller implements Initializ
     private int indiceActual = 0;
     private Runnable callbackFinal;
     private boolean estaVentanaActiva = true;
+    private Stage currentStage;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -113,7 +115,6 @@ public class UnlockAchievementController extends Controller implements Initializ
         });
     }
 
-
     private void mostrarSiguienteLogro() {
         if (indiceActual < colaLogros.size()) {
             Achievement logro = colaLogros.get(indiceActual);
@@ -127,8 +128,6 @@ public class UnlockAchievementController extends Controller implements Initializ
             if (callbackFinal != null) callbackFinal.run();
         }
     }
-
-
 
     private void loadImagesLogros() {
         leffUnlock.setImage(new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/UnlockIcon.png")));
@@ -162,7 +161,7 @@ public class UnlockAchievementController extends Controller implements Initializ
 
             AnimationDepartment.slideUpWithEpicBounceClean(AchievementContainer, Duration.seconds(1.5), sceneHeight);
             AnimationDepartment.revealAchievementImage(imgAchievement, Duration.seconds(2.5));
- 
+
             PauseTransition wait = new PauseTransition(Duration.seconds(4.0));
             wait.setOnFinished(e -> {
                 AnimationDepartment.goldenBurstExplosion(spfondo, 250, Duration.seconds(3.0));
@@ -188,8 +187,7 @@ public class UnlockAchievementController extends Controller implements Initializ
         AnimationDepartment.fadeIn(btnCerrar, Duration.seconds(5.0));
     }
 
-
-    public void resetAndRunAnimationsLogros(String achievementName, String equipoGanador, Runnable onDone){
+    public void resetAndRunAnimationsLogros(String achievementName, String equipoGanador, Runnable onDone) {
 
         if (!estaVentanaActiva) {
             return;
@@ -228,7 +226,6 @@ public class UnlockAchievementController extends Controller implements Initializ
         runAchievementIntro(achievementName, equipoGanador, onDone);
     }
 
-
     public void runAchievementIntro(String achievementName, String equipoGanador, Runnable onDone) {
         resetAchievementView();
         imgUnlockgif.setVisible(true);
@@ -244,10 +241,6 @@ public class UnlockAchievementController extends Controller implements Initializ
             Platform.runLater(() -> runAnimationsLogros(achievementName, equipoGanador, onDone));
         });
     }
-
-
-
-    private Stage currentStage;
 
     private void resetAchievementView() {
         AnimationDepartment.stopRainingAchievements(spLluvia);

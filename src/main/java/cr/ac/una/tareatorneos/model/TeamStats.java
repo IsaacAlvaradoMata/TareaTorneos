@@ -59,76 +59,76 @@ public class TeamStats {
         return partidosTotales;
     }
 
-    public int getPartidosGanados() {
-        return partidosGanados;
-    }
-
-    public int getPartidosPerdidos() {
-        return partidosPerdidos;
-    }
-
-    public int getPartidosEmpatados() {
-        return partidosEmpatados;
-    }
-
-    public int getTorneosTotales() {
-        return torneosTotales;
-    }
-
-    public int getTorneosGanados() {
-        return torneosGanados;
-    }
-
-    public int getTorneosPerdidos() {
-        return torneosPerdidos;
-    }
-
-    public int getPuntosGlobales() {
-        return puntosGlobales;
-    }
-
-    public int getAnotaciones() {
-        return anotaciones;
-    }
-
-    public int getAnotacionesEnContra() {
-        return anotacionesEnContra;
-    }
-
     public void setPartidosTotales(int partidosTotales) {
         this.partidosTotales = partidosTotales;
+    }
+
+    public int getPartidosGanados() {
+        return partidosGanados;
     }
 
     public void setPartidosGanados(int partidosGanados) {
         this.partidosGanados = partidosGanados;
     }
 
+    public int getPartidosPerdidos() {
+        return partidosPerdidos;
+    }
+
     public void setPartidosPerdidos(int partidosPerdidos) {
         this.partidosPerdidos = partidosPerdidos;
+    }
+
+    public int getPartidosEmpatados() {
+        return partidosEmpatados;
     }
 
     public void setPartidosEmpatados(int partidosEmpatados) {
         this.partidosEmpatados = partidosEmpatados;
     }
 
+    public int getTorneosTotales() {
+        return torneosTotales;
+    }
+
     public void setTorneosTotales(int torneosTotales) {
         this.torneosTotales = torneosTotales;
+    }
+
+    public int getTorneosGanados() {
+        return torneosGanados;
     }
 
     public void setTorneosGanados(int torneosGanados) {
         this.torneosGanados = torneosGanados;
     }
 
+    public int getTorneosPerdidos() {
+        return torneosPerdidos;
+    }
+
     public void setTorneosPerdidos(int torneosPerdidos) {
         this.torneosPerdidos = torneosPerdidos;
+    }
+
+    public int getPuntosGlobales() {
+        return puntosGlobales;
     }
 
     public void setPuntosGlobales(int puntosGlobales) {
         this.puntosGlobales = puntosGlobales;
     }
 
+    public int getAnotaciones() {
+        return anotaciones;
+    }
+
     public void setAnotaciones(int anotaciones) {
         this.anotaciones = anotaciones;
+    }
+
+    public int getAnotacionesEnContra() {
+        return anotacionesEnContra;
     }
 
     public void setAnotacionesEnContra(int anotacionesEnContra) {

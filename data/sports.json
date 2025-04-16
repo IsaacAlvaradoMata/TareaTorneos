@@ -1,5 +1,11 @@
-[ {
-  "nombre" : "Futbol",
-  "ballImage" : "Futbol.jpg",
-  "fechaCreacion" : [ 2025, 3, 31 ]
-} ]
+[
+  {
+    "nombre": "Futbol",
+    "ballImage": "Futbol.jpg",
+    "fechaCreacion": [
+      2025,
+      3,
+      31
+    ]
+  }
+]

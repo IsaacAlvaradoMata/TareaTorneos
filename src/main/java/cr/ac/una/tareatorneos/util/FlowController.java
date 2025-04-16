@@ -23,6 +23,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -53,6 +54,10 @@ public class FlowController {
             createInstance();
         }
         return INSTANCE;
+    }
+
+    public static void setIdioma(ResourceBundle idioma) {
+        FlowController.idioma = idioma;
     }
 
     @Override
@@ -223,10 +228,6 @@ public class FlowController {
 
     public void limpiarLoader(String view) {
         this.loaders.remove(view);
-    }
-
-    public static void setIdioma(ResourceBundle idioma) {
-        FlowController.idioma = idioma;
     }
 
     public void initialize() {

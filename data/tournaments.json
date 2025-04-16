@@ -1,10 +1,45 @@
-[ {
-  "id" : "aa48df06-7bbc-42a8-a8d7-868afaf97bf4",
-  "nombre" : "Liga de Campeones",
-  "deporte" : "Futbol",
-  "tiempoPorPartido" : 1,
-  "cantidadEquipos" : 32,
-  "equiposParticipantes" : [ "barcelona-1", "real madrid-2", "saprissa-3", "la liga-4", "perez zeledon-6", "manchester united-5", "carmelita-7", "manchester city-8", "arsenal-9", "atlanta united-11", "chelsea-12", "villa real-13", "milan-14", "monaco-15", "santos fc-16", "juventus-17", "sporting cp-18", "crytal palace-19", "sevilla-20", "psg-21", "boca juniors-22", "ajax-23", "benfica-24", "celtic-25", "Independiente-26", "puntarenas fc-27", "as puma-28", "santa ana-29", "sporting lisboa-30", "real sociedad-31", "bolonia-32", "liverpool-10" ],
-  "estado" : "Por comenzar",
-  "ganador" : null
-} ]
+[
+  {
+    "id": "aa48df06-7bbc-42a8-a8d7-868afaf97bf4",
+    "nombre": "Liga de Campeones",
+    "deporte": "Futbol",
+    "tiempoPorPartido": 1,
+    "cantidadEquipos": 32,
+    "equiposParticipantes": [
+      "barcelona-1",
+      "real madrid-2",
+      "saprissa-3",
+      "la liga-4",
+      "perez zeledon-6",
+      "manchester united-5",
+      "carmelita-7",
+      "manchester city-8",
+      "arsenal-9",
+      "atlanta united-11",
+      "chelsea-12",
+      "villa real-13",
+      "milan-14",
+      "monaco-15",
+      "santos fc-16",
+      "juventus-17",
+      "sporting cp-18",
+      "crytal palace-19",
+      "sevilla-20",
+      "psg-21",
+      "boca juniors-22",
+      "ajax-23",
+      "benfica-24",
+      "celtic-25",
+      "Independiente-26",
+      "puntarenas fc-27",
+      "as puma-28",
+      "santa ana-29",
+      "sporting lisboa-30",
+      "real sociedad-31",
+      "bolonia-32",
+      "liverpool-10"
+    ],
+    "estado": "Por comenzar",
+    "ganador": null
+  }
+]

@@ -9,30 +9,28 @@ import cr.ac.una.tareatorneos.service.TournamentService;
 import cr.ac.una.tareatorneos.util.FlowController;
 import cr.ac.una.tareatorneos.util.Mensaje;
 import io.github.palexdev.materialfx.controls.*;
-
-import java.io.File;
-import java.net.URL;
-import java.util.*;
-import javafx.application.Platform;
-import javafx.scene.Node;
-import javafx.scene.control.Tooltip;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
+import javafx.animation.ScaleTransition;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.PopupWindow;
-import javafx.stage.Stage;
-import javafx.util.Duration;
-import javafx.animation.ScaleTransition;
-import javafx.scene.Cursor;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
+import javafx.stage.PopupWindow;
+import javafx.util.Duration;
+
+import java.io.File;
+import java.net.URL;
+import java.util.*;
 
 /**
  * FXML Controller class
@@ -215,7 +213,6 @@ public class TournamentMaintenanceController extends Controller implements Initi
     }
 
 
-
     @FXML
     private void OnActionBtnEliminarTorneo(ActionEvent event) {
         TournamentService service = new TournamentService();
@@ -266,8 +263,6 @@ public class TournamentMaintenanceController extends Controller implements Initi
                     "No se pudo eliminar el torneo.");
         }
     }
-
-
 
 
     @FXML
@@ -651,8 +646,6 @@ public class TournamentMaintenanceController extends Controller implements Initi
     }
 
 
-
-
     private void configurarColumnasTabla() {
         tbvMantenimientoTorneo.getTableColumns().clear();
 
@@ -671,11 +664,11 @@ public class TournamentMaintenanceController extends Controller implements Initi
         tbvMantenimientoTorneo.getTableColumns().addAll(colNombre, colDeporte, colEstado);
     }
 
-    private void toolTipInfo(){
+    private void toolTipInfo() {
         Tooltip tooltip = new Tooltip("INFORMACION IMPORTANTE:\n\n" +
                 "➜ Solo podra agregar equipos despues de crear el torneo.\n" +
                 "➜ Una vez que haya agregado equipos al torneo no podra modificar su tipo de deporte.\n" +
-                "➜ El tiempo por partido debe de ser igual o mayor a 1 minuto, o menor o igual a 10 minutos.\n"+
+                "➜ El tiempo por partido debe de ser igual o mayor a 1 minuto, o menor o igual a 10 minutos.\n" +
                 "➜ La cantidad de equipos participantes debe de ser igual o mayor a 2 equipos, o igual o menor a 32 equipos.");
         tooltip.setStyle("-fx-background-color: rgba(217, 162, 253, 0.9); " +
                 "-fx-text-fill: #690093; " +
@@ -699,7 +692,7 @@ public class TournamentMaintenanceController extends Controller implements Initi
             double y = imgInfoCreacionTorneo.localToScene(imgInfoCreacionTorneo.getBoundsInLocal()).getMinY();
 
             tooltip.show(imgInfoCreacionTorneo, imgInfoCreacionTorneo.getScene().getWindow().getX() + x - 645,
-                    imgInfoCreacionTorneo.getScene().getWindow().getY() + y -55 );
+                    imgInfoCreacionTorneo.getScene().getWindow().getY() + y - 55);
         });
 
         imgInfoCreacionTorneo.setOnMouseExited(event -> tooltip.hide());
@@ -717,6 +710,7 @@ public class TournamentMaintenanceController extends Controller implements Initi
 
         chklistviewEquiposDisponibles1.getItems().setAll(filtrados);
     }
+
     private void bloquearCambioManualDeTabs() {
         Platform.runLater(() -> {
             Set<Node> tabHeaders = tabPanePrincipal.lookupAll(".tab");

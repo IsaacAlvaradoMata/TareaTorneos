@@ -5,14 +5,14 @@
  */
 package cr.ac.una.tareatorneos.util;
 
-import java.util.Optional;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Window;
 
+import java.util.Optional;
+
 /**
- *
  * @author ccarranza
  */
 public class Mensaje {
@@ -33,7 +33,7 @@ public class Mensaje {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
-    
+
     public Boolean showConfirmation(String titulo, Window padre, String mensaje) {
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle(titulo);

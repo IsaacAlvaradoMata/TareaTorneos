@@ -42,6 +42,9 @@ import java.util.ResourceBundle;
  */
 public class AchievementsController extends Controller implements Initializable {
 
+    private final SportService sportService = new SportService();
+    private final TeamService teamService = new TeamService();
+    private final ObservableList<Team> equiposFiltrados = FXCollections.observableArrayList();
     @FXML
     private AnchorPane root;
     @FXML
@@ -74,14 +77,8 @@ public class AchievementsController extends Controller implements Initializable 
     private ImageView imgInfo;
     @FXML
     private MFXFilterComboBox<String> cmbAchievements;
-
-
     private MFXGenericDialog dialogContent;
     private MFXStageDialog dialog;
-
-    private final SportService sportService = new SportService();
-    private final TeamService teamService = new TeamService();
-    private final ObservableList<Team> equiposFiltrados = FXCollections.observableArrayList();
 
     /**
      * Initializes the controller class.

@@ -11,6 +11,15 @@ public abstract class Controller {
     private Stage stage;
     private String accion;
 
+    public static void iconChanger(Stage stage, Image image) {
+        stage.getIcons().clear();
+        stage.getIcons().add(image);
+    }
+
+    public static void nameChanger(Stage stage, String name) {
+        stage.setTitle(name);
+    }
+
     public String getAccion() {
         return accion;
     }
@@ -19,12 +28,12 @@ public abstract class Controller {
         this.accion = accion;
     }
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
     public Stage getStage() {
         return stage;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 
     public void sendTabEvent(KeyEvent event) {
@@ -34,13 +43,4 @@ public abstract class Controller {
     }
 
     public abstract void initialize();
-
-    public static void iconChanger(Stage stage, Image image) {
-        stage.getIcons().clear();
-        stage.getIcons().add(image);
-    }
-
-    public static void nameChanger(Stage stage, String name) {
-        stage.setTitle(name);
-    }
 }

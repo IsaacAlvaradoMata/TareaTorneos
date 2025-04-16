@@ -16,6 +16,9 @@ import java.util.stream.Collectors;
 
 public class BracketMatchService {
 
+    private final List<BracketMatch> allMatches = new ArrayList<>();
+    private final ObjectMapper mapper = new ObjectMapper();
+
     public List<BracketGenerator> getEstadoVisualActual() {
         List<BracketGenerator> visual = new ArrayList<>();
         for (BracketMatch match : allMatches) {
@@ -28,9 +31,6 @@ public class BracketMatchService {
         }
         return visual;
     }
-
-    private final List<BracketMatch> allMatches = new ArrayList<>();
-    private final ObjectMapper mapper = new ObjectMapper();
 
     private File getMatchFile(String tournamentName) {
         return new File("data/matches_" + tournamentName + ".json");

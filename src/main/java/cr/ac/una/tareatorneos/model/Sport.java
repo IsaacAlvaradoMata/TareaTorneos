@@ -8,7 +8,8 @@ public class Sport {
     private String ballImage;
     private LocalDate fechaCreacion;
 
-    public Sport() { }
+    public Sport() {
+    }
 
     public Sport(String nombre, String ballImage) {
         this.nombre = nombre;

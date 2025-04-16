@@ -1,21 +1,16 @@
-
 package cr.ac.una.tareatorneos.controller;
 
-import cr.ac.una.tareatorneos.model.Sport;
 import cr.ac.una.tareatorneos.model.Team;
 import cr.ac.una.tareatorneos.model.TeamTournamentStats;
-import cr.ac.una.tareatorneos.model.Tournament;
 import cr.ac.una.tareatorneos.service.SportService;
 import cr.ac.una.tareatorneos.service.TeamService;
 import cr.ac.una.tareatorneos.service.TeamTournamentStatsService;
-import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXFilterComboBox;
 import io.github.palexdev.materialfx.controls.MFXTableColumn;
 import io.github.palexdev.materialfx.controls.MFXTableView;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -30,7 +25,6 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 
 /**
  * FXML Controller class
@@ -39,6 +33,8 @@ import javafx.event.ActionEvent;
  */
 public class RankingsController extends Controller implements Initializable {
 
+    private final TeamTournamentStatsService statsService = new TeamTournamentStatsService();
+    private final ObservableList<Team> equiposFiltrados = FXCollections.observableArrayList();
     @FXML
     private AnchorPane root;
     @FXML
@@ -73,11 +69,9 @@ public class RankingsController extends Controller implements Initializable {
     private Label lblAnotacionesContra;
     @FXML
     private TableView<ObservableList<String>> tbvStatsTorneos;
-    private final TeamTournamentStatsService statsService = new TeamTournamentStatsService();
     private ObservableList<Team> teamsData = FXCollections.observableArrayList();
     private TeamService teamService;
     private SportService sportService = new SportService();
-    private final ObservableList<Team> equiposFiltrados = FXCollections.observableArrayList();
 
     /**
      * Initializes the controller class.
@@ -147,7 +141,9 @@ public class RankingsController extends Controller implements Initializable {
                                 fila.add(p.getAnotaciones() + " - " + p.getAnotacionesEnContra());
                                 fila.add(p.getResultadoReal());
                             } else {
-                                fila.add(""); fila.add(""); fila.add("");
+                                fila.add("");
+                                fila.add("");
+                                fila.add("");
                             }
                         }
 
@@ -287,7 +283,7 @@ public class RankingsController extends Controller implements Initializable {
         sports.add("Todos");
         sportService.getAllSports().forEach(s -> sports.add(s.getNombre()));
         cmbRankings.setItems(sports);
-        cmbRankings.selectFirst(); 
+        cmbRankings.selectFirst();
     }
 
     public void actualizarComboBoxRankings() {
@@ -317,7 +313,6 @@ public class RankingsController extends Controller implements Initializable {
             tbvRankingEquipos.requestFocus();
         });
     }
-
 
 
 }

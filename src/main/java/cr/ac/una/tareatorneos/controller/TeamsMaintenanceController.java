@@ -63,6 +63,13 @@ public class TeamsMaintenanceController extends Controller implements Initializa
     private String currentTeamImagePath = "";
     private Mensaje mensajeUtil = new Mensaje();
 
+    public static void actualizarListaDeportes() {
+        TeamsMaintenanceController controller = (TeamsMaintenanceController) FlowController.getInstance().getController("TeamsMaintenanceView");
+        if (controller != null) {
+            controller.populateComboBoxDeportes();
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         teamService = new TeamService();
@@ -109,7 +116,6 @@ public class TeamsMaintenanceController extends Controller implements Initializa
         tbvEquiposExistentes.getTableColumns().addAll(colNombre, colDeporte, colEstado);
     }
 
-
     public void loadTeams() {
         List<Team> loadedTeams = teamService.getAllTeams();
         teamsData.setAll(loadedTeams);
@@ -123,13 +129,6 @@ public class TeamsMaintenanceController extends Controller implements Initializa
         cmbEquipos.setItems(sportsNames);
         cmbEquipos.getSelectionModel().clearSelection();
         cmbEquipos.setValue(null);
-    }
-
-    public static void actualizarListaDeportes() {
-        TeamsMaintenanceController controller = (TeamsMaintenanceController) FlowController.getInstance().getController("TeamsMaintenanceView");
-        if (controller != null) {
-            controller.populateComboBoxDeportes();
-        }
     }
 
     @FXML
