@@ -86,8 +86,6 @@ public class CameraController extends Controller implements Initializable {
             BufferedImage tempImage = webcam.getImage();
 
             AppContext.getInstance().set("tempTeamImage", tempImage);
-            System.out.println("Imagen capturada y almacenada en memoria temporal.");
-
             imgviewDefinitivaFoto.setImage(SwingFXUtils.toFXImage(tempImage, null));
 
         } catch (Exception e) {
@@ -119,8 +117,6 @@ public class CameraController extends Controller implements Initializable {
         }
 
         AppContext.getInstance().set("teamPhotoTemp", tempImage);
-        System.out.println("Imagen lista para ser guardada con el equipo.");
-
         showAlert("Imagen lista para guardar con el equipo.");
         stopCamera();
         closeWindow();

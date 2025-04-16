@@ -107,7 +107,6 @@ public class ActiveTournamentsController extends Controller implements Initializ
         List<Tournament> selected = tbvTorneosActivos.getSelectionModel().getSelectedValues();
 
         if (selected == null || selected.isEmpty()) {
-            System.out.println("❌ No se ha seleccionado ningún torneo.");
             return;
         }
 
@@ -116,7 +115,6 @@ public class ActiveTournamentsController extends Controller implements Initializ
         Tournament torneoSeleccionado = service.getTournamentByName(nombreTorneo);
 
         if (torneoSeleccionado == null) {
-            System.out.println("⚠️ No se encontró el torneo en el JSON.");
             return;
         }
 
@@ -156,7 +154,7 @@ public class ActiveTournamentsController extends Controller implements Initializ
                 }
             }
         } else {
-            System.out.println("⚠️ No se pudo cargar el controlador de BracketGeneratorView.");
+            System.out.println("No se pudo cargar el controlador de BracketGeneratorView.");
         }
     }
 

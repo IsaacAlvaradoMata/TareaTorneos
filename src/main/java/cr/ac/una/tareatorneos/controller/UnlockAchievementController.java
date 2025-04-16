@@ -140,7 +140,6 @@ public class UnlockAchievementController extends Controller implements Initializ
     private void runAnimationsLogros(String achievementName, String equipoGanador, Runnable onDone) {
 
         if (!estaVentanaActiva) {
-            System.out.println("⛔ Cancelado runAnimationsLogros: ventana cerrada.");
             return;
         }
 
@@ -168,16 +167,13 @@ public class UnlockAchievementController extends Controller implements Initializ
             wait.setOnFinished(e -> {
                 AnimationDepartment.goldenBurstExplosion(spfondo, 250, Duration.seconds(3.0));
                 if (logroActualImagen == null) {
-                    System.err.println("⛔ No se puede iniciar lluvia: imagen del logro '" + achievementName + "' no fue cargada correctamente.");
                     return;
                 }
 
                 if (!estaVentanaActiva) {
-                    System.out.println("⛔ No iniciar lluvia: ventana ya fue cerrada.");
                     return;
                 }
 
-                System.out.println("🌧 Iniciando lluvia con imagen de logro: " + achievementName);
                 AnimationDepartment.startInfiniteRainingAchievements(spLluvia, logroActualImagen, 6, Duration.seconds(1), Duration.seconds(5));
 
                 PauseTransition finalizar = new PauseTransition(Duration.seconds(4.0));
@@ -196,7 +192,6 @@ public class UnlockAchievementController extends Controller implements Initializ
     public void resetAndRunAnimationsLogros(String achievementName, String equipoGanador, Runnable onDone){
 
         if (!estaVentanaActiva) {
-            System.out.println("⛔ Cancelado resetAndRunAnimationsLogros: ventana cerrada.");
             return;
         }
 
@@ -244,7 +239,6 @@ public class UnlockAchievementController extends Controller implements Initializ
 
         AnimationDepartment.animateUnlockExplosion(imgUnlockgif, () -> {
             if (!estaVentanaActiva) {
-                System.out.println("⛔ Cancelado antes de animar logro: ventana cerrada.");
                 return;
             }
             Platform.runLater(() -> runAnimationsLogros(achievementName, equipoGanador, onDone));
@@ -315,7 +309,6 @@ public class UnlockAchievementController extends Controller implements Initializ
 
         imgAchievement.setVisible(true);
         imgAchievement.setOpacity(0);
-        System.out.println("🎬 Animaciones detenidas correctamente al cerrar.");
     }
 
 }

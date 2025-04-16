@@ -159,7 +159,7 @@ public class MatchController extends Controller implements Initializable {
                     Stage stage = (Stage) btnFinalizar.getScene().getWindow();
                     if (stage != null) stage.close();
                 } catch (Exception e) {
-                    System.out.println("❌ Error al cerrar la ventana de la final: " + e.getMessage());
+                    System.out.println("Error al cerrar la ventana de la final: " + e.getMessage());
                 }
             });
         });
@@ -346,7 +346,7 @@ public class MatchController extends Controller implements Initializable {
             Image fondo = new Image(getClass().getResourceAsStream(rutaImagen));
             imgFondoDeporte.setImage(fondo);
         } catch (Exception e) {
-            System.out.println("⚠ No se pudo cargar la imagen de fondo: " + rutaImagen);
+            System.out.println("No se pudo cargar la imagen de fondo: " + rutaImagen);
         }
     }
 
@@ -371,7 +371,7 @@ public class MatchController extends Controller implements Initializable {
     public void inicializarMatchDesdeTorneo(Tournament torneo) {
         List<String> equipos = torneo.getEquiposParticipantes();
         if (equipos.size() < 2) {
-            System.out.println("❌ El torneo no tiene suficientes equipos para iniciar un partido.");
+            System.out.println("El torneo no tiene suficientes equipos para iniciar un partido.");
             return;
         }
 

@@ -406,7 +406,6 @@ public class TeamsMaintenanceController extends Controller implements Initializa
             if (file.exists()) {
                 Image image = new Image(file.toURI().toString());
                 imgviewImagenDeporte.setImage(image);
-                System.out.println("✅ Imagen cargada desde disco: " + photoPath);
                 return;
             }
         }
@@ -415,7 +414,6 @@ public class TeamsMaintenanceController extends Controller implements Initializa
         if (tempImage != null) {
             Image fxImage = SwingFXUtils.toFXImage(tempImage, null);
             imgviewImagenDeporte.setImage(fxImage);
-            System.out.println("✅ Imagen mostrada desde memoria (camara)");
         }
     }
 

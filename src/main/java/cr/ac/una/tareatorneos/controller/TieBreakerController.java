@@ -114,7 +114,7 @@ public class TieBreakerController extends Controller implements Initializable {
         try {
             imgBalon.setImage(matchService.getImagenBalon());
         } catch (Exception e) {
-            System.out.println("⚠ No se pudo cargar imagen del balón desde MatchService");
+            System.out.println("No se pudo cargar imagen del balón desde MatchService");
         }
 
         try {
@@ -123,7 +123,7 @@ public class TieBreakerController extends Controller implements Initializable {
             cajaB.setImage(imgCaja);
             cajaC.setImage(imgCaja);
         } catch (Exception e) {
-            System.out.println("⚠ No se pudo cargar la imagen de caja-empate.png");
+            System.out.println("No se pudo cargar la imagen de caja-empate.png");
         }
 
         prepararNuevaRonda();
@@ -185,17 +185,11 @@ public class TieBreakerController extends Controller implements Initializable {
 
         if (turnoEquipoA) {
             equipoAAcierto = acierto;
-            System.out.println(acierto
-                    ? "✅ ACIERTO - " + equipoA
-                    : "❌ FALLÓ - " + equipoA);
             turnoEquipoA = false;
             lblTurno.setText("Turno: " + equipoB);
             prepararNuevaRonda();
         } else {
             equipoBAcierto = acierto;
-            System.out.println(acierto
-                    ? "✅ ACIERTO - " + equipoB
-                    : "❌ FALLÓ - " + equipoB);
             verificarGanador();
         }
     }
@@ -241,7 +235,7 @@ public class TieBreakerController extends Controller implements Initializable {
                 try {
                     root.getScene().getWindow().hide();
                 } catch (Exception e) {
-                    System.out.println("❌ Error al cerrar TieBreaker: " + e.getMessage());
+                    System.out.println("Error al cerrar TieBreaker: " + e.getMessage());
                 }
 
                 bracketMatchService.cargarPartidosDesdeArchivo(matchService.getMatch().getTorneoNombre());
@@ -309,7 +303,7 @@ public class TieBreakerController extends Controller implements Initializable {
                     "/cr/ac/una/tareatorneos/resources/FondoGeneral.png"));
             imgFondoDeporte.setImage(fondo);
         } catch (Exception e) {
-            System.out.println("⚠ No se pudo cargar FondoGeneral.png");
+            System.out.println("No se pudo cargar FondoGeneral.png");
         }
     }
 

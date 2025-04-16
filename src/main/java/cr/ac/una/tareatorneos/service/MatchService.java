@@ -82,7 +82,6 @@ public class MatchService {
             System.err.println("⚠️ Imagen no encontrada para " + tipo + ": " + path);
             return null;
         }
-        System.out.println("✅ Imagen cargada para " + tipo + ": " + path);
         return new Image(file.toURI().toString());
     }
 
@@ -179,7 +178,6 @@ public class MatchService {
 
             partidos.add(matchFinalizado);
             mapper.writerWithDefaultPrettyPrinter().writeValue(archivo, partidos);
-            System.out.println("💾 Partido guardado exitosamente en matches.json");
 
         } catch (IOException e) {
             e.printStackTrace();

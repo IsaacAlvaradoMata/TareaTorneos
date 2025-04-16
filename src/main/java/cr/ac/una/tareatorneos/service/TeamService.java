@@ -167,7 +167,6 @@ public class TeamService {
                 if (equipo != null && "participante".equalsIgnoreCase(equipo.getEstado())) {
                     equipo.setEstado("disponible");
                     updateTeam(equipo.getNombre(), equipo);
-                    System.out.println("🔓 Equipo liberado: " + equipo.getNombre());
                 }
             }
         }

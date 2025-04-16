@@ -132,8 +132,6 @@ public class RankingsController extends Controller implements Initializable {
         lblAnotaciones.setText(String.valueOf(team.getEstadisticas().getAnotaciones()));
         lblAnotacionesContra.setText(String.valueOf(team.getEstadisticas().getAnotacionesEnContra()));
 
-        System.out.println("→ Mostrando stats para: " + team.getNombre());
-
         statsService.getAllStats().stream()
                 .filter(e -> e.getNombreEquipo() != null && e.getNombreEquipo().equalsIgnoreCase(team.getNombre()))
                 .findFirst()
@@ -155,7 +153,6 @@ public class RankingsController extends Controller implements Initializable {
 
                         fila.add(torneo.getResultadoTorneo() != null ? torneo.getResultadoTorneo() : "");
                         tbvStatsTorneos.getItems().add(fila);
-                        System.out.println("✔ Datos cargados en tabla.");
                     }
                 });
     }

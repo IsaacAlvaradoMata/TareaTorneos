@@ -282,7 +282,6 @@ public class BracketMatchService {
                 .filter(p -> p.isJugado() && p.esPartidoReal())
                 .count();
 
-        System.out.println("🎯 Jugados reales: " + partidosJugadosReales + " de esperados: " + partidosEsperados);
 
         if (partidosJugadosReales == partidosEsperados) {
             String ganador = finalMatch.getGanador();
@@ -300,7 +299,6 @@ public class BracketMatchService {
             Team equipoGanadorAntes = teamService.getTeamByName(ganador);
 
             if (equipoGanadorAntes != null) {
-                System.out.println("🏁 Torneo finalizado. Recalculando logros para el campeón: " + ganador);
 
                 AchievementService achievementService = new AchievementService();
                 List<Achievement> antes = achievementService.calcularLogrosParaEquipo(ganador);
@@ -310,10 +308,8 @@ public class BracketMatchService {
                 Team equipoGanadorDespues = teamService.getTeamByName(ganador);
                 List<Achievement> despues = equipoGanadorDespues.getLogros();
 
-                System.out.println("📋 Logros nuevos detectados:");
                 List<Achievement> nuevos = AchievementUtils.filtrarNuevosLogros(antes, despues);
                 for (Achievement logro : nuevos) {
-                    System.out.println("   ✅ " + logro.getNombre());
                     AchievementAnimationQueue.agregarALaCola(logro);
                 }
 

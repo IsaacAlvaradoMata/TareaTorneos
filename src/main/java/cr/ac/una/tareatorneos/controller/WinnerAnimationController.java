@@ -130,8 +130,6 @@ public class WinnerAnimationController extends Controller implements Initializab
         Platform.runLater(() -> {
             Platform.runLater(() -> {
                 double sceneHeight = spfondo.getHeight();
-                System.out.println("✅ Altura confirmada al segundo frame: " + sceneHeight);
-
                 AnimationDepartment.slideUpWithEpicBounceClean(winnerContainer, Duration.seconds(1.5), sceneHeight);
             });
         });
@@ -180,7 +178,7 @@ public class WinnerAnimationController extends Controller implements Initializab
             String finalPath = rawPath != null ? "file:teamsPhotos/" + rawPath : "file:teamsPhotos/default.png";
             teamImage.setImage(new Image(finalPath));
         } catch (Exception e) {
-            System.out.println("⚠ No se pudo cargar imagen del equipo " + teamName);
+            System.out.println("No se pudo cargar imagen del equipo " + teamName);
             teamImage.setImage(new Image("file:teamsPhotos/default.png"));
         }
 
@@ -209,7 +207,6 @@ public class WinnerAnimationController extends Controller implements Initializab
         winnerContainer.setOpacity(0);
         titleBox.setOpacity(0);
         teamNameLabel.setStyle("");
-        System.out.println("🎬 Animaciones detenidas correctamente al cerrar.");
     }
 
 }

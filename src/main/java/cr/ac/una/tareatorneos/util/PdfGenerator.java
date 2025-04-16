@@ -45,7 +45,7 @@ public class PdfGenerator {
                 logo.setHorizontalAlignment(HorizontalAlignment.CENTER);
                 doc.add(logo);
             } catch (Exception e) {
-                System.out.println("⚠ No se pudo cargar el logo institucional");
+                System.out.println("No se pudo cargar el logo institucional");
             }
 
             doc.add(new Paragraph("\n"));
@@ -93,7 +93,7 @@ public class PdfGenerator {
                 firma.setHorizontalAlignment(HorizontalAlignment.CENTER);
                 doc.add(firma);
             } catch (Exception e) {
-                System.out.println("⚠ No se pudo cargar imagen de firma.");
+                System.out.println("No se pudo cargar imagen de firma.");
             }
 
             doc.add(new Paragraph("__________________________").setTextAlignment(TextAlignment.CENTER));
@@ -103,7 +103,7 @@ public class PdfGenerator {
             doc.close();
 
             java.awt.Desktop.getDesktop().open(new File(pdfPath));
-            System.out.println("✅ Certificado generado en: " + pdfPath);
+            System.out.println("Certificado generado en: " + pdfPath);
 
         } catch (Exception e) {
             e.printStackTrace();

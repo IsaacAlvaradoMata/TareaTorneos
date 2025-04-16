@@ -20,6 +20,9 @@ public class BracketMatch {
         this.jugado = false;
     }
 
+    public BracketMatch() {
+    }
+
     public String getTorneo() {
         return torneo;
     }

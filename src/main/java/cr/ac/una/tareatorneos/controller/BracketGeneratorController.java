@@ -483,7 +483,7 @@ public class BracketGeneratorController extends Controller implements Initializa
                     logoPath = rawPath.startsWith("file:") ? rawPath : "file:teamsPhotos/" + rawPath;
                 }
             } catch (Exception e) {
-                System.out.println("⚠ Error obteniendo logo de " + nombreEquipo);
+                System.out.println("Error obteniendo logo de " + nombreEquipo);
             }
         }
 
@@ -597,7 +597,6 @@ public class BracketGeneratorController extends Controller implements Initializa
             teamService.updateTeam(team.getNombre(), team);
         }
 
-        System.out.println("✔️ Estadísticas generales actualizadas para todos los equipos.");
     }
 
     @Override

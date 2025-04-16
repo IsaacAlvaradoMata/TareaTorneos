@@ -293,7 +293,6 @@ public class AnimationDepartment {
     }
 
     public static void animateUnlockExplosion(Node lockNode, Runnable onFinished) {
-        System.out.println("🔒 Mostrando candado...");
 
         PauseTransition waitBeforeZoom = new PauseTransition(Duration.seconds(1.5));
 
@@ -391,7 +390,6 @@ public class AnimationDepartment {
                         double containerWidth = container.getWidth();
                         double containerHeight = container.getHeight();
 
-                        System.out.println("🌧 Width: " + containerWidth + " | Height: " + containerHeight);
 
                         if (containerWidth < 10 || containerHeight < 10) return;
 
@@ -452,7 +450,6 @@ public class AnimationDepartment {
                         ((ImageView) node).getFitHeight() == 60 &&
                         ((ImageView) node).getOpacity() < 1.0
         );
-        System.out.println("🛑 Lluvia cancelada correctamente.");
 
     }
 

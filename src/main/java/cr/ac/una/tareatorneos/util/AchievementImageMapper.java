@@ -26,7 +26,7 @@ public class AchievementImageMapper {
             return null;
         }
         String ruta = "/cr/ac/una/tareatorneos/resources/" + fileName;
-        System.out.println("🔍 Ruta mapeada para logro '" + nombreLogro + "': " + ruta);
+        System.out.println("Ruta mapeada para logro '" + nombreLogro + "': " + ruta);
         return ruta;
     }
 }

@@ -95,12 +95,12 @@ public class SportService {
 
             if (imageFile.exists()) {
                 if (imageFile.delete()) {
-                    System.out.println("✅ Imagen eliminada: " + imageFileName);
+                    System.out.println("Imagen eliminada: " + imageFileName);
                 } else {
-                    System.out.println("⚠️ No se pudo eliminar la imagen: " + imageFileName);
+                    System.out.println("No se pudo eliminar la imagen: " + imageFileName);
                 }
             } else {
-                System.out.println("ℹ️ La imagen no existe en la carpeta.");
+                System.out.println("La imagen no existe en la carpeta.");
             }
 
             boolean removed = sports.remove(sportToRemove);
