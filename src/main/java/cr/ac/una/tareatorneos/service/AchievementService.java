@@ -74,13 +74,16 @@ public class AchievementService {
         for (TournamentStat torneo : stats.getTorneos()) {
             int racha = 0;
             for (MatchStat p : torneo.getPartidos()) {
-                if (p.getResultadoReal() != null && p.getResultadoReal().startsWith("Ganado")) {
+                boolean rivalValido = p.getRival() != null && !p.getRival().isBlank();
+                boolean partidoGanado = p.getResultadoReal() != null && p.getResultadoReal().startsWith("Ganado");
+
+                if (rivalValido && partidoGanado) {
                     racha++;
                     if (racha >= 3) {
                         return true;
                     }
                 } else {
-                    racha = 0;
+                    racha = 0; // se rompe la racha si falla cualquiera de las dos
                 }
             }
         }

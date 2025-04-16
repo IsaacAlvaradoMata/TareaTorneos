@@ -1,5 +1,6 @@
 package cr.ac.una.tareatorneos.controller;
 
+import cr.ac.una.tareatorneos.model.Achievement;
 import cr.ac.una.tareatorneos.model.BracketMatch;
 import cr.ac.una.tareatorneos.service.BracketMatchService;
 import cr.ac.una.tareatorneos.service.MatchService;
@@ -217,7 +218,9 @@ public class TieBreakerController extends Controller implements Initializable {
         cajaC.setDisable(true);
 
         String ganadorDesempate = equipoAAcierto ? equipoA : equipoB;
-        matchService.finalizarPartidoConDesempate(ganadorDesempate);
+
+        // 👉 Guardar los logros nuevos sin mostrarlos
+        List<Achievement> nuevosLogros = matchService.finalizarPartidoConDesempate(ganadorDesempate);
 
         PauseTransition delay = new PauseTransition(Duration.seconds(0.5));
         delay.setOnFinished(event -> {
@@ -226,16 +229,24 @@ public class TieBreakerController extends Controller implements Initializable {
                 alert.setTitle("🎯 Desempate Resuelto");
                 alert.setHeaderText(mensaje);
                 alert.setContentText("¡Felicidades al equipo ganador!");
-                alert.showAndWait();
+                alert.showAndWait(); // ⏳ Esperamos que el usuario lo cierre
 
-                // ✅ Cerrar ventana
+                // ✅ MOSTRAR LAS ANIMACIONES AQUÍ
+                if (!nuevosLogros.isEmpty()) {
+                    cr.ac.una.tareatorneos.util.AchievementAnimationQueue.setPermitirMostrar(true);
+                    for (Achievement logro : nuevosLogros) {
+                        cr.ac.una.tareatorneos.util.AchievementAnimationQueue.agregarALaCola(logro);
+                    }
+                    cr.ac.una.tareatorneos.util.AchievementAnimationQueue.mostrarCuandoPosible(nuevosLogros);
+                }
+
+                // ✅ Cerrar ventana y actualizar
                 try {
                     root.getScene().getWindow().hide();
                 } catch (Exception e) {
                     System.out.println("❌ Error al cerrar TieBreaker: " + e.getMessage());
                 }
 
-                // ✅ ⚠ REFORZAMOS: recarga de torneo y partidos desde archivo
                 bracketMatchService.cargarPartidosDesdeArchivo(matchService.getMatch().getTorneoNombre());
                 parentController.setTorneoActual(new TournamentService().getTournamentByName(matchService.getMatch().getTorneoNombre()));
                 parentController.cargarBracketDesdePartidos(bracketMatchService.getTodosLosPartidos());
@@ -244,6 +255,7 @@ public class TieBreakerController extends Controller implements Initializable {
         });
         delay.play();
     }
+
 
     private void mostrarEmpateParcial() {
         PauseTransition delay = new PauseTransition(Duration.seconds(0.5));
