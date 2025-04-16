@@ -141,14 +141,13 @@ public class AchievementService {
     }
 
     private boolean logroCampeonInaugural(TeamTournamentStats stats) {
-        List<TournamentStat> torneos = stats.getTorneos();
-        if (torneos.isEmpty()) {
-            return false;
+        for (TournamentStat torneo : stats.getTorneos()) {
+            if ("Ganador".equalsIgnoreCase(torneo.getResultadoTorneo())) {
+                return true; // La primera vez que el equipo gana un torneo
+            }
         }
-        // Suponemos que el primer torneo en la lista es el inaugural.
-        TournamentStat primerTorneo = torneos.get(0);
-        return primerTorneo.getResultadoTorneo() != null &&
-                primerTorneo.getResultadoTorneo().equalsIgnoreCase("Ganador");
+        return false;
     }
+
 
 }

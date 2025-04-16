@@ -2,24 +2,17 @@ package cr.ac.una.tareatorneos.util;
 
 import javafx.animation.*;
 import javafx.application.Platform;
-import javafx.geometry.Bounds;
-import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
-import javafx.scene.control.Label;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
-import java.awt.*;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
 
 public class AnimationDepartment {
 
@@ -291,7 +284,6 @@ public class AnimationDepartment {
     }
 
 
-
     public static void subtleBounce(Node node) {
         TranslateTransition bounce = new TranslateTransition(Duration.seconds(2), node);
         bounce.setByY(5);
@@ -352,7 +344,6 @@ public class AnimationDepartment {
     }
 
 
-
     public static void revealAchievementImage(Node imageNode, Duration delay) {
         imageNode.setVisible(true);
         imageNode.setOpacity(0);
@@ -386,7 +377,7 @@ public class AnimationDepartment {
 
             // 🎯 Calcular dirección y distancia aleatoria
             double angle = 2 * Math.PI * random.nextDouble();
-            double distance = 150 + random.nextDouble() * 200; // 150–250 px
+            double distance = 150 + random.nextDouble() * 255; // 150–250 px
 
             double deltaX = distance * Math.cos(angle);
             double deltaY = distance * Math.sin(angle);
@@ -473,7 +464,6 @@ public class AnimationDepartment {
     }
 
 
-
     public static void stopRainingAchievements(Pane container) {
         if (rainingDelay != null) {
             rainingDelay.stop();
@@ -494,7 +484,6 @@ public class AnimationDepartment {
         System.out.println("🛑 Lluvia cancelada correctamente.");
 
     }
-
 
 
 }

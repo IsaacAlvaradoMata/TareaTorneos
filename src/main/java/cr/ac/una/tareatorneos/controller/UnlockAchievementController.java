@@ -1,6 +1,7 @@
 package cr.ac.una.tareatorneos.controller;
 
 import cr.ac.una.tareatorneos.model.Achievement;
+import cr.ac.una.tareatorneos.util.AchievementImageMapper;
 import cr.ac.una.tareatorneos.util.AnimationDepartment;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
@@ -50,6 +51,7 @@ public class UnlockAchievementController extends Controller implements Initializ
     private Button btnCerrar;
     @FXML
     private Pane spLluvia;
+    private Image logroActualImagen; // Guarda la imagen del logro actual
 
     private List<Achievement> colaLogros = new ArrayList<>();
     private int indiceActual = 0;
@@ -136,7 +138,6 @@ public class UnlockAchievementController extends Controller implements Initializ
             return;
         }
 
-
         lblAchievementName.setText(achievementName);
         titleLabel.setStyle("-fx-text-fill: linear-gradient(#FFD700, #FFA500);");
 
@@ -151,20 +152,24 @@ public class UnlockAchievementController extends Controller implements Initializ
 
             AnimationDepartment.slideUpWithEpicBounceClean(AchievementContainer, Duration.seconds(1.5), sceneHeight);
             AnimationDepartment.revealAchievementImage(imgAchievement, Duration.seconds(2.5));
-
-            PauseTransition wait = new PauseTransition(Duration.seconds(4.0)); // más tiempo si quieres
+ 
+            PauseTransition wait = new PauseTransition(Duration.seconds(4.0));
             wait.setOnFinished(e -> {
                 AnimationDepartment.goldenBurstExplosion(spfondo, 250, Duration.seconds(3.0));
-                Image logroImg = new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/8TournamentsWinnerIcon.png"));
+                if (logroActualImagen == null) {
+                    System.err.println("⛔ No se puede iniciar lluvia: imagen del logro '" + achievementName + "' no fue cargada correctamente.");
+                    return;
+                }
 
                 if (!estaVentanaActiva) {
                     System.out.println("⛔ No iniciar lluvia: ventana ya fue cerrada.");
                     return;
                 }
 
-                AnimationDepartment.startInfiniteRainingAchievements(spLluvia, logroImg, 6, Duration.seconds(1), Duration.seconds(5));
+//                AnimationDepartment.startInfiniteRainingAchievements(spLluvia, logroImg, 6, Duration.seconds(1), Duration.seconds(5));
+                System.out.println("🌧 Iniciando lluvia con imagen de logro: " + achievementName);
+                AnimationDepartment.startInfiniteRainingAchievements(spLluvia, logroActualImagen, 6, Duration.seconds(1), Duration.seconds(5));
 
-                // ✅ ahora sí: continuar con el siguiente logro después de delay
                 PauseTransition finalizar = new PauseTransition(Duration.seconds(4.0));
                 finalizar.setOnFinished(ev -> {
                     if (onDone != null) onDone.run();
@@ -177,15 +182,30 @@ public class UnlockAchievementController extends Controller implements Initializ
         AnimationDepartment.fadeIn(btnCerrar, Duration.seconds(5.0));
     }
 
+
     public void resetAndRunAnimationsLogros(String achievementName, Runnable onDone) {
         if (!estaVentanaActiva) {
             System.out.println("⛔ Cancelado resetAndRunAnimationsLogros: ventana cerrada.");
             return;
         }
 
-
         resetAchievementView();
         AnimationDepartment.stopAnimatedLightSweep();
+
+        String ruta = AchievementImageMapper.getRutaImagen(achievementName);
+        if (ruta == null) {
+            System.err.println("⛔ Animación cancelada: no hay ruta válida para el logro '" + achievementName + "'");
+            return;
+        }
+
+        var stream = getClass().getResourceAsStream(ruta);
+        if (stream == null) {
+            System.err.println("⛔ No se encontró la imagen del logro '" + achievementName + "' en: " + ruta);
+            return;
+        }
+
+        logroActualImagen = new Image(stream);
+        imgAchievement.setImage(logroActualImagen);
 
         imgAchievement.setTranslateY(0);
         AchievementContainer.setTranslateY(0);
@@ -199,6 +219,7 @@ public class UnlockAchievementController extends Controller implements Initializ
 
         runAchievementIntro(achievementName, onDone);
     }
+
 
     public void runAchievementIntro(String achievementName, Runnable onDone) {
         resetAchievementView();
