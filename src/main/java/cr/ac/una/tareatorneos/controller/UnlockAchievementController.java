@@ -102,13 +102,22 @@ public class UnlockAchievementController extends Controller implements Initializ
 
         this.colaLogros = logros;
         this.indiceActual = 0;
-        this.callbackFinal = onFinish;
+
+        // ✅ Guardamos el callback para llamarlo luego
+        this.callbackFinal = () -> {
+            estaVentanaActiva = false;
+            onClose();
+            if (currentStage != null) currentStage.close();
+
+            if (onFinish != null) onFinish.run(); // Ejecutar lógica adicional si aplica
+        };
 
         Platform.runLater(() -> {
             currentStage = (Stage) root.getScene().getWindow();
-            mostrarSiguienteLogro(); // se ejecuta desde aquí para garantizar el stage actual
+            mostrarSiguienteLogro(); // 🧠 comienza la cadena
         });
     }
+
 
     private void mostrarSiguienteLogro() {
         if (indiceActual < colaLogros.size()) {
@@ -116,17 +125,15 @@ public class UnlockAchievementController extends Controller implements Initializ
             indiceActual++;
 
             resetAndRunAnimationsLogros(logro.getNombre(), logro.getEquipoAsociado(), () -> {
-
-                // Espera que el usuario presione "Cerrar", NO pasa automáticamente
-                btnCerrar.setOnAction(event -> {
-                    mostrarSiguienteLogro(); // avanza cuando el usuario lo decida
-                });
+                btnCerrar.setOnAction(event -> mostrarSiguienteLogro());
             });
 
         } else {
-            if (callbackFinal != null) callbackFinal.run();
+            if (callbackFinal != null) callbackFinal.run(); // ✅ Esto se encarga del cierre
         }
     }
+
+
 
     private void loadImagesLogros() {
         leffUnlock.setImage(new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/UnlockIcon.png")));
