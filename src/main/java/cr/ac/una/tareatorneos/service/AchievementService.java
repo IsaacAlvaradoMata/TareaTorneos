@@ -44,11 +44,13 @@ public class AchievementService {
 
     private boolean logroMaximaPotencia(TeamTournamentStats stats) {
         for (TournamentStat torneo : stats.getTorneos()) {
-            int totalGoles = torneo.getPartidos().stream()
-                    .mapToInt(MatchStat::getAnotaciones)
-                    .sum();
-            if (totalGoles >= 20) {
-                return true;
+            for (MatchStat partido : torneo.getPartidos()) {
+                int anotaciones = partido.getAnotaciones();
+                String resultadoReal = partido.getResultadoReal();
+
+                if (anotaciones >= 20 && resultadoReal != null && resultadoReal.startsWith("Ganado")) {
+                    return true;
+                }
             }
         }
         return false;
