@@ -236,8 +236,8 @@
             MFXFontIcon infoIcon = new MFXFontIcon("fas-bolt-lightning", 18);
             dialogContent.setHeaderIcon(infoIcon);
             dialogContent.setHeaderText("Máxima Potencia");
-            dialogContent.setContentText("¡Pura ofensiva! Tu equipo ha logrado marcar 20 anotaciones o más en un solo torneo, demostrando que el ataque es su mejor defensa.\n\n" +
-                    "🔓 Cómo conseguirlo: Anota 20 anotaciones o más a lo largo de un torneo.");
+            dialogContent.setContentText("¡Explosión ofensiva total! Tu equipo ha demostrado su supremacía marcando al menos 20 anotaciones en un torneo y coronando su hazaña con una victoria en el partido decisivo.\n\n" +
+                    "🔓 Cómo conseguirlo: Alcanzar o superar las 20 anotaciones acumuladas en un torneo y ganar el partido en el que se logra dicha marca.");
             convertDialogTo("mfx-info-dialog");
             dialog.showDialog();
         }
