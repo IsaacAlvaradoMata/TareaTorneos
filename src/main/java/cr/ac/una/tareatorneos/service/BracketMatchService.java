@@ -2,16 +2,9 @@ package cr.ac.una.tareatorneos.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cr.ac.una.tareatorneos.controller.BracketGeneratorController;
-import cr.ac.una.tareatorneos.controller.WinnerAnimationController;
 import cr.ac.una.tareatorneos.model.*;
 import cr.ac.una.tareatorneos.util.AchievementAnimationQueue;
 import cr.ac.una.tareatorneos.util.AchievementUtils;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -327,28 +320,35 @@ public class BracketMatchService {
             new TeamTournamentStatsService().asignarResultadoFinalTorneo(ganador, torneo.getNombre(), "Ganador");
 
             TeamService teamService = new TeamService();
-            Team equipoGanador = teamService.getTeamByName(ganador);
-            if (equipoGanador != null) {
-                System.out.println("🎉 Torneo finalizado. Recalculando logros para el campeón: " + ganador);
-                teamService.actualizarLogrosDeEquipo(equipoGanador);
+            Team equipoGanadorAntes = teamService.getTeamByName(ganador);
 
-                // 🔥 Recalcular logros *después* de cerrar torneo y agregar a la cola
+            if (equipoGanadorAntes != null) {
+                System.out.println("🏁 Torneo finalizado. Recalculando logros para el campeón: " + ganador);
+
                 AchievementService achievementService = new AchievementService();
                 List<Achievement> antes = achievementService.calcularLogrosParaEquipo(ganador);
 
-                teamService.actualizarLogrosDeEquipo(equipoGanador); // 🔁 ya existe
+                teamService.actualizarLogrosDeEquipo(equipoGanadorAntes); // ✅ actualiza logros en JSON
 
-                List<Achievement> despues = achievementService.calcularLogrosParaEquipo(ganador);
+                Team equipoGanadorDespues = teamService.getTeamByName(ganador);
+                List<Achievement> despues = equipoGanadorDespues.getLogros();
+
+                System.out.println("📋 Logros nuevos detectados:");
                 List<Achievement> nuevos = AchievementUtils.filtrarNuevosLogros(antes, despues);
-
                 for (Achievement logro : nuevos) {
+                    System.out.println("   ✅ " + logro.getNombre());
                     AchievementAnimationQueue.agregarALaCola(logro);
                 }
 
-
+                // ✅ Procesar logros justo después
+                if (!nuevos.isEmpty()) {
+                    AchievementAnimationQueue.setPermitirMostrar(true);
+                    AchievementAnimationQueue.mostrarCuandoPosible(nuevos);
+                }
             }
         }
     }
+
 
     public BracketMatch getFinalMatch() {
         return allMatches.stream()

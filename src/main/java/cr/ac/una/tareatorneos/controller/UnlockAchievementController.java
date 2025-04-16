@@ -97,18 +97,24 @@ public class UnlockAchievementController extends Controller implements Initializ
         this.indiceActual = 0;
         this.callbackFinal = onFinish;
 
-        // capturar stage actual
         Platform.runLater(() -> {
             currentStage = (Stage) root.getScene().getWindow();
+            mostrarSiguienteLogro(); // se ejecuta desde aquí para garantizar el stage actual
         });
-
-        mostrarSiguienteLogro();
     }
 
     private void mostrarSiguienteLogro() {
         if (indiceActual < colaLogros.size()) {
-            Achievement logro = colaLogros.get(indiceActual++);
-            resetAndRunAnimationsLogros(logro.getNombre(), this::mostrarSiguienteLogro);
+            Achievement logro = colaLogros.get(indiceActual);
+            indiceActual++;
+
+            resetAndRunAnimationsLogros(logro.getNombre(), () -> {
+                // Espera que el usuario presione "Cerrar", NO pasa automáticamente
+                btnCerrar.setOnAction(event -> {
+                    mostrarSiguienteLogro(); // avanza cuando el usuario lo decida
+                });
+            });
+
         } else {
             if (callbackFinal != null) callbackFinal.run();
         }

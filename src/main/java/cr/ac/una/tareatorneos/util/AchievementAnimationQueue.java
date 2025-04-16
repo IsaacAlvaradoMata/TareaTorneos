@@ -62,53 +62,52 @@ public class AchievementAnimationQueue {
 
         mostrando = true;
 
-        List<Achievement> paraMostrar = new ArrayList<>(cola);
-        cola.clear();
-        try {
-            FXMLLoader loader = new FXMLLoader(AchievementAnimationQueue.class.getResource("/cr/ac/una/tareatorneos/view/UnlockAchievementView.fxml"));
-            Parent root = loader.load();
-            UnlockAchievementController controller = loader.getController();
+        Achievement siguienteLogro = cola.poll(); // solo uno a la vez
 
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setResizable(false);
-            stage.setOnCloseRequest(e -> e.consume());
+        Platform.runLater(() -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(AchievementAnimationQueue.class.getResource("/cr/ac/una/tareatorneos/view/UnlockAchievementView.fxml"));
+                Parent root = loader.load();
+                UnlockAchievementController controller = loader.getController();
 
-            controller.mostrarLogrosEnCadena(paraMostrar, () -> {
-                stage.close();
-                mostrando = false;
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setResizable(false);
+                stage.setOnCloseRequest(e -> e.consume());
 
-                new Thread(() -> {
-                    try {
-                        Thread.sleep(300);
-                    } catch (InterruptedException ignored) {
-                    }
+                // ✅ Mostrar solo un logro y esperar a que se cierre manualmente
+                controller.mostrarLogrosEnCadena(List.of(siguienteLogro), () -> {
+                    stage.close(); // cierra manualmente
+
+                    // Espera antes de pasar al siguiente
                     Platform.runLater(() -> {
+                        mostrando = false;
+
                         if (!cola.isEmpty()) {
                             mostrarSiguiente();
-                        } else {
-                            if (accionDespuesDeLogros != null) {
-                                Runnable temp = accionDespuesDeLogros;
-                                accionDespuesDeLogros = null;
-                                temp.run();
-                            }
+                        } else if (accionDespuesDeLogros != null) {
+                            Runnable temp = accionDespuesDeLogros;
+                            accionDespuesDeLogros = null;
+                            temp.run();
                         }
                     });
-                }).start();
-            });
+                });
 
-            // ✅ Esta línea es clave para evitar solapamiento
-            stage.showAndWait();
+                stage.showAndWait(); // bloquea hasta que se cierre
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            mostrando = false;
-        }
+            } catch (Exception e) {
+                e.printStackTrace();
+                mostrando = false;
+            }
+        });
     }
+
 
     // 📦 Método de respaldo para mostrar después de la vista del campeón
     public static List<Achievement> obtenerLogrosPendientes() {
         return new ArrayList<>(cola); // Copia segura
     }
+
+
 }

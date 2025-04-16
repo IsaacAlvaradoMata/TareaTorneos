@@ -376,26 +376,17 @@ public class BracketGeneratorController extends Controller implements Initializa
 
                         if (!nuevosLogros.isEmpty()) {
                             AchievementAnimationQueue.setPermitirMostrar(true);
-
-                            // Lanza logros y espera que el usuario cierre todos antes de continuar
-                            AchievementAnimationQueue.ejecutarLuegoDeMostrarTodos(() -> {
-                                // Este se ejecutará solo cuando se hayan cerrado TODAS las animaciones
-                                Platform.runLater(animacionCampeon);
-                            });
-
-                            // Inicia el ciclo de mostrar logros (sin bloquear)
+                            AchievementAnimationQueue.ejecutarLuegoDeMostrarTodos(animacionCampeon);
                             AchievementAnimationQueue.mostrarCuandoPosible(nuevosLogros);
                         } else {
-                            // No hay logros → muestra animación campeón de una vez
                             Platform.runLater(animacionCampeon);
                         }
-
                     }
-
                 }
             }
         }
     }
+
 
     private void dibujarLineaSimple(StackPane origen, StackPane destino) {
         double x1 = origen.getLayoutX() + NODE_WIDTH;
