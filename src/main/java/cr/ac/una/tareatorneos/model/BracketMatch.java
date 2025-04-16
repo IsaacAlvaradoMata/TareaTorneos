@@ -90,6 +90,10 @@ public class BracketMatch {
         this.puntajeEquipo2 = puntajeEquipo2;
     }
 
+    public boolean esPartidoReal() {
+        return equipo1 != null && equipo2 != null;
+    }
+
     @Override
     public String toString() {
         return "Ronda " + ronda + ": " + equipo1 + " vs " +

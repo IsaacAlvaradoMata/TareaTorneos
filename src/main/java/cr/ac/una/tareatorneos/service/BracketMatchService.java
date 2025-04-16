@@ -307,10 +307,16 @@ public class BracketMatchService {
 
         int cantidadEquipos = torneo.getCantidadEquipos();
         int partidosEsperados = cantidadEquipos - 1;
-        long partidosJugados = allMatches.stream().filter(BracketMatch::isJugado).count();
 
-        // Solo si se han jugado todos los partidos esperados
-        if (partidosJugados == partidosEsperados) {
+        // 🔍 Solo contar partidos jugados REALES (sin BYE)
+        long partidosJugadosReales = allMatches.stream()
+                .filter(p -> p.isJugado() && p.esPartidoReal())
+                .count();
+
+        System.out.println("🎯 Jugados reales: " + partidosJugadosReales + " de esperados: " + partidosEsperados);
+
+        // Solo si se han jugado todos los partidos reales esperados
+        if (partidosJugadosReales == partidosEsperados) {
             String ganador = finalMatch.getGanador();
 
             torneo.setGanador(ganador);
