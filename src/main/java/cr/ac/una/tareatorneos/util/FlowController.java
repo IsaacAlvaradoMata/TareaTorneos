@@ -23,7 +23,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -200,7 +199,7 @@ public class FlowController {
             controller.getStage().getScene().setRoot(new Pane());
             controller.setStage(null);
             if (controller instanceof WinnerAnimationController winnerController) {
-                winnerController.onClose(); // 💥 Detiene confetti y efectos
+                winnerController.onClose();
             }
             if (controller instanceof UnlockAchievementController unlockAchievementController) {
                 unlockAchievementController.onClose();

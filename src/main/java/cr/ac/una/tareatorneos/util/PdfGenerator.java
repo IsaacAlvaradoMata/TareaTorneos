@@ -23,17 +23,14 @@ public class PdfGenerator {
     public static void crearCarneCampeon(String equipoNombre, String torneoNombre, String deporte,
                                          String rutaImagen, TeamTournamentStats.TournamentStat torneoStats) {
         try {
-            // 🗂 Crear directorio
             String dir = "certificados";
             new File(dir).mkdirs();
 
-            // 📄 Definir nombre PDF
             String pdfPath = dir + "/certificado_" + torneoNombre.replaceAll("\\s+", "_") + "_" + equipoNombre.replaceAll("\\s+", "_") + ".pdf";
             PdfWriter writer = new PdfWriter(pdfPath);
             PdfDocument pdf = new PdfDocument(writer);
             Document doc = new Document(pdf);
 
-            // 🏆 Título dorado
             Paragraph titulo = new Paragraph("🏆 Certificado de Campeón 🏆")
                     .setTextAlignment(TextAlignment.CENTER)
                     .setFontSize(26)
@@ -42,7 +39,6 @@ public class PdfGenerator {
             doc.add(titulo);
             doc.add(new Paragraph("\n"));
 
-            // 🖼 Logo institucional arriba
             try {
                 ImageData logoImg = ImageDataFactory.create(PdfGenerator.class.getResource("/cr/ac/una/tareatorneos/resources/LogoUNArojo.png"));
                 Image logo = new Image(logoImg).scaleToFit(50, 50);
@@ -54,7 +50,6 @@ public class PdfGenerator {
 
             doc.add(new Paragraph("\n"));
 
-            // 🧍‍♂️ Imagen del equipo con borde dorado
             if (rutaImagen != null && new File(rutaImagen).exists()) {
                 ImageData imageData = ImageDataFactory.create(rutaImagen);
                 Image img = new Image(imageData).scaleToFit(130, 130)
@@ -65,7 +60,6 @@ public class PdfGenerator {
 
             doc.add(new Paragraph("\n"));
 
-            // 📝 Datos del torneo (validados)
             doc.add(new Paragraph("Equipo: " + validar(equipoNombre)).setBold().setFontSize(14));
             doc.add(new Paragraph("Torneo: " + validar(torneoNombre)));
             doc.add(new Paragraph("Deporte: " + validar(deporte)));
@@ -74,7 +68,6 @@ public class PdfGenerator {
 
             doc.add(new Paragraph("\n🧾 Desempeño del equipo:\n").setBold());
 
-            // 📊 Tabla de resultados
             Table table = new Table(4).useAllAvailableWidth();
             table.addHeaderCell(new Cell().add(new Paragraph("Rival")).setBackgroundColor(ColorConstants.LIGHT_GRAY));
             table.addHeaderCell(new Cell().add(new Paragraph("Anotaciones")).setBackgroundColor(ColorConstants.LIGHT_GRAY));
@@ -91,11 +84,9 @@ public class PdfGenerator {
             doc.add(table);
             doc.add(new Paragraph("\n"));
 
-            // ✅ Validación oficial
             doc.add(new Paragraph("Este certificado es emitido por la Universidad Nacional de Costa Rica, Sede Región Brunca PZ, como reconocimiento oficial al equipo campeón.").setItalic().setFontSize(12).setTextAlignment(TextAlignment.CENTER));
             doc.add(new Paragraph("\n\n"));
 
-            // ✍️ Firma visual
             try {
                 ImageData firmaImg = ImageDataFactory.create(PdfGenerator.class.getResource("/cr/ac/una/tareatorneos/resources/SigniatureIcon.png"));
                 Image firma = new Image(firmaImg).scaleToFit(150, 80);
@@ -111,7 +102,6 @@ public class PdfGenerator {
 
             doc.close();
 
-            // 🎉 Abrir automáticamente
             java.awt.Desktop.getDesktop().open(new File(pdfPath));
             System.out.println("✅ Certificado generado en: " + pdfPath);
 
@@ -120,7 +110,6 @@ public class PdfGenerator {
         }
     }
 
-    // Función auxiliar para evitar valores nulos
     private static String validar(String texto) {
         return (texto == null || texto.isBlank()) ? "N/A" : texto;
     }

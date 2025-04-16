@@ -8,7 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,15 +15,12 @@ import java.util.Queue;
 
 public class AchievementAnimationQueue {
 
-    // 🧠 Cola interna de logros pendientes
     private static final Queue<Achievement> cola = new LinkedList<>();
 
-    // 🔒 Evita mostrar más de una ventana al mismo tiempo
     private static boolean mostrando = false;
 
     private static Runnable accionDespuesDeLogros = null;
 
-    // ✅ Llama esto cuando quieras intentar mostrar la cola
     public static void mostrarCuandoPosible(List<Achievement> nuevosLogros) {
         if (!permitidoMostrar || nuevosLogros == null || nuevosLogros.isEmpty()) return;
 
@@ -53,7 +49,6 @@ public class AchievementAnimationQueue {
         accionDespuesDeLogros = accionFinal;
     }
 
-    // 🧨 Método interno: muestra una ventana con el siguiente logro
     private static void mostrarSiguiente() {
         if (!permitidoMostrar || cola.isEmpty()) {
             mostrando = false;
@@ -62,7 +57,7 @@ public class AchievementAnimationQueue {
 
         mostrando = true;
 
-        Achievement siguienteLogro = cola.poll(); // solo uno a la vez
+        Achievement siguienteLogro = cola.poll();
 
         Platform.runLater(() -> {
             try {
@@ -76,11 +71,9 @@ public class AchievementAnimationQueue {
                 stage.setResizable(false);
                 stage.setOnCloseRequest(e -> e.consume());
 
-                // ✅ Mostrar solo un logro y esperar a que se cierre manualmente
                 controller.mostrarLogrosEnCadena(List.of(siguienteLogro), () -> {
-                    stage.close(); // cierra manualmente
+                    stage.close();
 
-                    // Espera antes de pasar al siguiente
                     Platform.runLater(() -> {
                         mostrando = false;
 
@@ -94,7 +87,7 @@ public class AchievementAnimationQueue {
                     });
                 });
 
-                stage.showAndWait(); // bloquea hasta que se cierre
+                stage.showAndWait();
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -103,10 +96,8 @@ public class AchievementAnimationQueue {
         });
     }
 
-
-    // 📦 Método de respaldo para mostrar después de la vista del campeón
     public static List<Achievement> obtenerLogrosPendientes() {
-        return new ArrayList<>(cola); // Copia segura
+        return new ArrayList<>(cola);
     }
 
 

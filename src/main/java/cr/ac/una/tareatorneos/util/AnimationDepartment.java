@@ -11,7 +11,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
-
 import java.util.Random;
 
 public class AnimationDepartment {
@@ -29,22 +28,18 @@ public class AnimationDepartment {
         node.setVisible(true);
         node.setOpacity(0);
 
-        // 💡 Posición inicial fuera de pantalla (hacia arriba)
         node.setTranslateY(-200);
 
-        // 🔽 Animación de bajada
         TranslateTransition drop = new TranslateTransition(Duration.seconds(1), node);
-        drop.setToY(0); // Volver a la posición original
+        drop.setToY(0);
         drop.setInterpolator(Interpolator.EASE_OUT);
         drop.setDelay(delay);
 
-        // 🌫 Fade-in
         FadeTransition fade = new FadeTransition(Duration.seconds(1), node);
         fade.setFromValue(0);
         fade.setToValue(1);
         fade.setDelay(delay);
 
-        // 🔁 Rebote sutil
         ScaleTransition bounce = new ScaleTransition(Duration.seconds(0.5), node);
         bounce.setFromX(1.2);
         bounce.setFromY(1.2);
@@ -54,7 +49,6 @@ public class AnimationDepartment {
         bounce.setAutoReverse(true);
         bounce.setDelay(delay.add(Duration.seconds(1)));
 
-        // 🧩 Ejecutar animaciones en secuencia
         SequentialTransition crownDrop = new SequentialTransition(
                 new ParallelTransition(drop, fade),
                 bounce
@@ -67,16 +61,15 @@ public class AnimationDepartment {
     public static void launchGoldenConfetti(Pane container, int count, Duration duration) {
         Random random = new Random();
 
-        double margin = 5; // Margen para no tocar bordes
+        double margin = 5;
 
         for (int i = 0; i < count; i++) {
             Circle confetti = new Circle(5, Color.GOLD);
             double containerWidth = container.getWidth();
             double containerHeight = container.getHeight();
 
-            // ❗ Restringimos el rango de aparición en X y caída en Y
             double startX = margin + random.nextDouble() * (containerWidth - 2 * margin);
-            double endY = containerHeight - margin; // no más allá del fondo visible
+            double endY = containerHeight - margin;
 
             confetti.setTranslateX(startX);
             confetti.setLayoutY(-50);
@@ -95,7 +88,7 @@ public class AnimationDepartment {
 
     public static void neonGlowLoop(Node node) {
         DropShadow neonGlow = new DropShadow();
-        neonGlow.setColor(Color.web("#FFD700")); // Dorado brillante
+        neonGlow.setColor(Color.web("#FFD700"));
         neonGlow.setRadius(10);
         neonGlow.setSpread(0.7);
         neonGlow.setOffsetX(0);
@@ -122,10 +115,10 @@ public class AnimationDepartment {
         glowLoop.play();
     }
 
-    private static Timeline lightSweepTimeline; // 🌟 Referencia global
+    private static Timeline lightSweepTimeline;
 
     public static void animatedLightSweep(Label label) {
-        stopAnimatedLightSweep(); // 🔁 Detener si ya estaba corriendo
+        stopAnimatedLightSweep();
 
         lightSweepTimeline = new Timeline();
         final int[] step = {0};
@@ -155,22 +148,21 @@ public class AnimationDepartment {
     private static Timeline confettiLoop;
 
     public static void startConfettiLoop(Pane container, int particlesPerBatch, Duration interval) {
-        stopConfetti(); // Limpia si ya estaba corriendo
+        stopConfetti();
 
         confettiLoop = new Timeline(
                 new KeyFrame(Duration.ZERO, e -> {
                     launchGoldenConfetti(container, particlesPerBatch, Duration.seconds(3));
                 }),
-                new KeyFrame(interval) // intervalo entre "disparos"
+                new KeyFrame(interval)
         );
         confettiLoop.setCycleCount(Animation.INDEFINITE);
         confettiLoop.play();
     }
 
     public static void startConfettiLoopWithDelay(Pane container, int particlesPerBatch, Duration interval, Duration initialDelay) {
-        stopConfetti(); // Detiene cualquier loop anterior si ya está corriendo
+        stopConfetti();
 
-        // ⏳ Esperar el delay antes de lanzar el confeti
         PauseTransition delay = new PauseTransition(initialDelay);
         delay.setOnFinished(e -> startConfettiLoop(container, particlesPerBatch, interval));
         delay.play();
@@ -187,16 +179,13 @@ public class AnimationDepartment {
         lightNode.setOpacity(0);
         lightNode.setVisible(true);
 
-        // Fade in
         FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), lightNode);
         fadeIn.setFromValue(0);
         fadeIn.setToValue(1);
         fadeIn.setDelay(delay);
 
-        // Mantener la luz durante la caída
         PauseTransition hold = new PauseTransition(Duration.seconds(1.2));
 
-        // Fade out
         FadeTransition fadeOut = new FadeTransition(Duration.seconds(0.5), lightNode);
         fadeOut.setFromValue(1);
         fadeOut.setToValue(0);
@@ -210,10 +199,8 @@ public class AnimationDepartment {
         node.setOpacity(0);
         node.setVisible(true);
 
-        // ☑️ Impedir cualquier evento permanentemente (sin interferir)
         node.setMouseTransparent(true);
 
-        // 💥 Explosión visual
         ScaleTransition scale = new ScaleTransition(Duration.seconds(0.9), node);
         scale.setFromX(0.1);
         scale.setFromY(0.1);
@@ -228,9 +215,6 @@ public class AnimationDepartment {
 
         ParallelTransition sparkle = new ParallelTransition(scale, fade);
         sparkle.setDelay(delay);
-
-        // 🚫 REMOVER: esto hace que vuelva a bloquear tras la animación
-        // sparkle.setOnFinished(e -> node.setMouseTransparent(false));
 
         sparkle.play();
     }
@@ -254,10 +238,8 @@ public class AnimationDepartment {
 
 
     public static void slideUpWithEpicBounceClean(Node node, Duration delay, double sceneHeight) {
-        // ⛔ Reset antes de animar
-        node.setTranslateY(0); // 💥 Esto evita acumulación de desplazamiento
+        node.setTranslateY(0);
 
-        // ✅ Empezamos fuera de pantalla
         double startY = sceneHeight + 100;
         node.setOpacity(0);
 
@@ -310,15 +292,12 @@ public class AnimationDepartment {
         timeline.play();
     }
 
-    // ✨ Mostrar candado con animación de zoom explosivo y fade
     public static void animateUnlockExplosion(Node lockNode, Runnable onFinished) {
         System.out.println("🔒 Mostrando candado...");
 
-        // ⏳ Esperar que el GIF se vea durante 1.5 segundos (ajústalo según el GIF)
         PauseTransition waitBeforeZoom = new PauseTransition(Duration.seconds(1.5));
 
         waitBeforeZoom.setOnFinished(e -> {
-            // 🎬 Zoom explosivo + desvanecimiento
             ScaleTransition scale = new ScaleTransition(Duration.seconds(1.2), lockNode);
             scale.setFromX(1.0);
             scale.setFromY(1.0);
@@ -340,7 +319,7 @@ public class AnimationDepartment {
             transition.play();
         });
 
-        waitBeforeZoom.play(); // ⏱️ Inicia espera antes del efecto
+        waitBeforeZoom.play();
     }
 
 
@@ -355,7 +334,6 @@ public class AnimationDepartment {
         fade.setToValue(1);
         fade.setDelay(delay);
 
-//        glowBorder(imageNode);
         subtleBounce(imageNode);
 
         fade.play();
@@ -364,25 +342,21 @@ public class AnimationDepartment {
     public static void goldenBurstExplosion(Pane container, int count, Duration duration) {
         Random random = new Random();
 
-        // 🧠 Obtener centro real del contenedor
         double centerX = container.getWidth() / 2.0;
         double centerY = container.getHeight() / 2.0;
 
         for (int i = 0; i < count; i++) {
             Circle spark = new Circle(4, Color.GOLD);
 
-            // 📌 Posición absoluta en el centro
             spark.setLayoutX(centerX);
             spark.setLayoutY(centerY);
 
-            // 🎯 Calcular dirección y distancia aleatoria
             double angle = 2 * Math.PI * random.nextDouble();
-            double distance = 150 + random.nextDouble() * 255; // 150–250 px
+            double distance = 150 + random.nextDouble() * 255;
 
             double deltaX = distance * Math.cos(angle);
             double deltaY = distance * Math.sin(angle);
 
-            // 🚀 Movimiento relativo desde el centro
             TranslateTransition move = new TranslateTransition(duration, spark);
             move.setFromX(0);
             move.setFromY(0);
@@ -390,17 +364,15 @@ public class AnimationDepartment {
             move.setToY(deltaY);
             move.setInterpolator(Interpolator.EASE_OUT);
 
-            // 💨 Desvanecer mientras se mueve
             FadeTransition fade = new FadeTransition(duration, spark);
             fade.setFromValue(1.0);
             fade.setToValue(0.0);
 
-            // 🎇 Ejecutar y remover al terminar
             ParallelTransition animation = new ParallelTransition(move, fade);
             animation.setOnFinished(e -> container.getChildren().remove(spark));
             animation.play();
 
-            container.getChildren().add(spark); // 👈 Agregar al final
+            container.getChildren().add(spark);
             spark.toBack();
         }
     }
@@ -410,7 +382,6 @@ public class AnimationDepartment {
 
 
     public static void startInfiniteRainingAchievements(Pane container, Image image, int particlesPerWave, Duration interval, Duration fallDuration) {
-        // 🚫 Aseguramos que no haya una transición anterior
         stopRainingAchievements(container);
 
         rainingDelay = new PauseTransition(Duration.seconds(0.2));

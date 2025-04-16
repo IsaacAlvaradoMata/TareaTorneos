@@ -12,7 +12,7 @@ public class AchievementImageMapper {
         logroToImageMap.put("Leyenda Plateada", "6TournamentsWinnerIcon.png");
         logroToImageMap.put("Tricampeón", "3TournamentsWinnerIcon.png");
         logroToImageMap.put("Máxima Potencia", "20GoalsIcon.png");
-        logroToImageMap.put("Muralla Imbatible", "DefenseIcon.png"); // ✅ corregido
+        logroToImageMap.put("Muralla Imbatible", "DefenseIcon.png");
         logroToImageMap.put("Equilibrio Perfecto", "TieIcon.png");
         logroToImageMap.put("Imparable", "10GamesConsecutiveIcon.png");
         logroToImageMap.put("Regreso Triunfal", "WinAfterLosing.png");
