@@ -79,7 +79,7 @@ public class MatchService {
     private Image cargarImagen(String path, String tipo) {
         File file = new File(path);
         if (!file.exists()) {
-            System.err.println("⚠️ Imagen no encontrada para " + tipo + ": " + path);
+            System.err.println("Imagen no encontrada para " + tipo + ": " + path);
             return null;
         }
         return new Image(file.toURI().toString());
@@ -181,7 +181,7 @@ public class MatchService {
 
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("❌ Error al guardar partido en JSON");
+            System.err.println("Error al guardar partido en JSON");
         }
     }
 

@@ -200,13 +200,13 @@ public class UnlockAchievementController extends Controller implements Initializ
 
         String ruta = AchievementImageMapper.getRutaImagen(achievementName);
         if (ruta == null) {
-            System.err.println("⛔ Animación cancelada: no hay ruta válida para el logro '" + achievementName + "'");
+            System.err.println("Animación cancelada: no hay ruta válida para el logro '" + achievementName + "'");
             return;
         }
 
         var stream = getClass().getResourceAsStream(ruta);
         if (stream == null) {
-            System.err.println("⛔ No se encontró la imagen del logro '" + achievementName + "' en: " + ruta);
+            System.err.println("No se encontró la imagen del logro '" + achievementName + "' en: " + ruta);
             return;
         }
 

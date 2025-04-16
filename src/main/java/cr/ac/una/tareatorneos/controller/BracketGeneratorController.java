@@ -204,7 +204,7 @@ public class BracketGeneratorController extends Controller implements Initializa
             stage.show();
 
         } catch (IOException e) {
-            System.err.println("❌ Error al abrir MatchView.fxml");
+            System.err.println("Error al abrir MatchView.fxml");
             e.printStackTrace();
         }
     }

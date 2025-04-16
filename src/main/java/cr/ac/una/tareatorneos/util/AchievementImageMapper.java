@@ -22,7 +22,7 @@ public class AchievementImageMapper {
     public static String getRutaImagen(String nombreLogro) {
         String fileName = logroToImageMap.get(nombreLogro);
         if (fileName == null) {
-            System.err.println("⛔ No hay imagen registrada para el logro: " + nombreLogro);
+            System.err.println("No hay imagen registrada para el logro: " + nombreLogro);
             return null;
         }
         String ruta = "/cr/ac/una/tareatorneos/resources/" + fileName;
