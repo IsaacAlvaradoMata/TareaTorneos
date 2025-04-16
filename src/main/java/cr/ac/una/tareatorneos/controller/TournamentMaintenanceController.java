@@ -113,16 +113,15 @@ public class TournamentMaintenanceController extends Controller implements Initi
 
         configurarColumnasTabla();
         populateComboBoxMantenimientoDeporte();
-        cmbMantenimientoTorneo.selectFirst(); // 👈 Auto-selecciona "Todos"
+        cmbMantenimientoTorneo.selectFirst();
 
         populateComboBoxRegistroDeporte();
         cargarTodosLosTorneos();
         cmbMantenimientoTorneo.setOnAction(e -> {
             cargarTorneosEnTabla();
 
-            // 🧠 Evitar que quede el focus atrapado en el combo box
             Platform.runLater(() -> {
-                root.requestFocus(); // root es tu AnchorPane padre
+                root.requestFocus();
             });
         });
         toolTipInfo();
@@ -175,7 +174,6 @@ public class TournamentMaintenanceController extends Controller implements Initi
             return;
         }
 
-        // ✅ Validación de rango tiempo por partido
         if (tiempoPorPartido < 1 || tiempoPorPartido > 10) {
             mensajeUtil.show(Alert.AlertType.ERROR,
                     "Tiempo inválido",
@@ -183,7 +181,6 @@ public class TournamentMaintenanceController extends Controller implements Initi
             return;
         }
 
-        // ✅ Validación de rango cantidad de equipos
         if (cantidadEquipos < 2 || cantidadEquipos > 32) {
             mensajeUtil.show(Alert.AlertType.ERROR,
                     "Cantidad inválida",
@@ -209,7 +206,7 @@ public class TournamentMaintenanceController extends Controller implements Initi
                     "Éxito",
                     "Torneo guardado exitosamente.");
             limpiarFormulario();
-            cargarTorneosEnTabla(); // (Implementar)
+            cargarTorneosEnTabla();
         } else {
             mensajeUtil.show(javafx.scene.control.Alert.AlertType.ERROR,
                     "Error",
@@ -300,7 +297,6 @@ public class TournamentMaintenanceController extends Controller implements Initi
         for (String nombre : aEliminar) {
             Team equipo = teamService.getTeamByName(nombre);
             if (equipo != null) {
-                // ✅ Verifica si sigue participando en algún otro torneo distinto al actual
                 boolean participaEnOtro = todosLosTorneos.stream()
                         .filter(t -> !t.getNombre().equalsIgnoreCase(torneo.getNombre()))
                         .anyMatch(t -> t.getEquiposParticipantes().contains(nombre));
@@ -312,7 +308,6 @@ public class TournamentMaintenanceController extends Controller implements Initi
             }
         }
 
-        // 🧼 Refrescar interfaz
         chklistviewEquiposSeleccionados1.getItems().removeAll(aEliminar);
         chklistviewEquiposDisponibles1.getItems().addAll(aEliminar);
 
@@ -322,27 +317,13 @@ public class TournamentMaintenanceController extends Controller implements Initi
         if (controller != null) {
             controller.recargarEquiposDesdeJSON();
         }
-        // 🔁 Limpiar selección restante en la lista seleccionada
         chklistviewEquiposSeleccionados1.getSelectionModel().clearSelection();
 
     }
 
     @FXML
     private void handleTableClickTorneosMantenimiento(MouseEvent event) {
-//        tbvMantenimientoTorneo.getSelectionModel().selectionProperty().addListener((obs, oldSelection, newSelection) -> {
-//            if (newSelection != null && !newSelection.isEmpty()) {
-//                Tournament torneoSeleccionado = newSelection.values().iterator().next();
-//
-//
-//                cmbDeportesRegistradosMantenimiento.selectItem(torneoSeleccionado.getDeporte());
-//                txtfieldNombreMantenimiento.setText(torneoSeleccionado.getNombre());
-//                txtfieldTiempoMantenimiento.setText(String.valueOf(torneoSeleccionado.getTiempoPorPartido()));
-//                txtfieldCantidadMantenimiento.setText(String.valueOf(torneoSeleccionado.getCantidadEquipos()));
-//                lblNombreTorneoSeleccionEquipos.setText(torneoSeleccionado.getNombre());
-//                lblCantidadEquiposSeleccionEquipos.setText(String.valueOf(torneoSeleccionado.getCantidadEquipos()));
-//                txtfieldBuscarPorNombre.clear();
-//            }
-//        });
+
     }
 
     @FXML
@@ -359,12 +340,11 @@ public class TournamentMaintenanceController extends Controller implements Initi
         tabPanePrincipal.getSelectionModel().select(tabSeleccionEquipos);
 
         Platform.runLater(() -> {
-            tabSeleccionEquipos.getContent().requestFocus(); // o root.requestFocus();
+            tabSeleccionEquipos.getContent().requestFocus();
         });
 
         chklistviewEquiposSeleccionados1.getItems().setAll(torneo.getEquiposParticipantes());
 
-        // Cargar disponibles (por deporte)
         cargarEquiposDisponiblesPorDeporte(torneo.getDeporte(), torneo.getEquiposParticipantes());
     }
 
@@ -422,7 +402,6 @@ public class TournamentMaintenanceController extends Controller implements Initi
         Tournament torneoActual = service.getTournamentByName(torneoSeleccionado.getNombre());
 
 
-        // 🛡️ Validar si realmente hubo algún cambio
         boolean sinCambios = torneoActual.getNombre().equals(nuevoNombre) &&
                 torneoActual.getDeporte().equals(nuevoDeporte) &&
                 torneoActual.getTiempoPorPartido() == nuevoTiempo &&
@@ -445,7 +424,6 @@ public class TournamentMaintenanceController extends Controller implements Initi
 
         int equiposAgregados = torneoActual.getEquiposParticipantes().size();
 
-        // 🛑 Validar si se intenta reducir cantidad por debajo de equipos existentes
         if (nuevaCantidad < equiposAgregados) {
             mensajeUtil.show(Alert.AlertType.ERROR,
                     "Cantidad inválida",
@@ -454,7 +432,6 @@ public class TournamentMaintenanceController extends Controller implements Initi
             return;
         }
 
-        // 🛑 Validar cambio de deporte si ya hay equipos agregados
         if (!torneoActual.getDeporte().equalsIgnoreCase(nuevoDeporte) && equiposAgregados > 0) {
             mensajeUtil.show(Alert.AlertType.WARNING,
                     "Cambio de deporte no permitido",
@@ -462,7 +439,6 @@ public class TournamentMaintenanceController extends Controller implements Initi
             return;
         }
 
-        // ✅ Actualizar torneo
         torneoActual.setNombre(nuevoNombre);
         torneoActual.setDeporte(nuevoDeporte);
         torneoActual.setTiempoPorPartido(nuevoTiempo);
@@ -518,12 +494,11 @@ public class TournamentMaintenanceController extends Controller implements Initi
         TeamService teamService = new TeamService();
         List<Team> todos = teamService.getAllTeams();
 
-        // 🔍 Buscar por coincidencia parcial (nombre contiene texto ingresado)
         List<String> resultados = todos.stream()
-                .filter(team -> team.getDeporte().equalsIgnoreCase(deporte)) // mismo deporte
-                .filter(team -> team.getNombre().toLowerCase().contains(filtro)) // contiene texto
+                .filter(team -> team.getDeporte().equalsIgnoreCase(deporte))
+                .filter(team -> team.getNombre().toLowerCase().contains(filtro))
                 .map(Team::getNombre)
-                .filter(nombre -> !yaSeleccionados.contains(nombre)) // aún disponible
+                .filter(nombre -> !yaSeleccionados.contains(nombre))
                 .toList();
 
         if (resultados.isEmpty()) {
@@ -541,14 +516,12 @@ public class TournamentMaintenanceController extends Controller implements Initi
     void imgLimpiarBusqueda(MouseEvent event) {
         txtfieldBuscarPorNombre.clear();
 
-        // Obtener torneo actual
         String nombreTorneoActual = lblNombreTorneoSeleccionEquipos.getText();
         TournamentService torneoService = new TournamentService();
         Tournament torneo = torneoService.getTournamentByName(nombreTorneoActual);
 
         if (torneo == null) return;
 
-        // Recargar equipos disponibles para ese deporte
         cargarEquiposDisponiblesPorDeporte(torneo.getDeporte(), torneo.getEquiposParticipantes());
 
     }
@@ -556,7 +529,7 @@ public class TournamentMaintenanceController extends Controller implements Initi
     @FXML
     private void OnActionBtnAgregarEquiposSeleccionEquipos(ActionEvent event) {
         TournamentService service = new TournamentService();
-        TeamService teamService = new TeamService(); // 👈 Agregado
+        TeamService teamService = new TeamService();
 
         String nombreTorneo = lblNombreTorneoSeleccionEquipos.getText();
         Tournament torneo = service.getTournamentByName(nombreTorneo);
@@ -584,7 +557,6 @@ public class TournamentMaintenanceController extends Controller implements Initi
             return;
         }
 
-        // ✅ Agregar equipos y actualizar su estado
         torneo.getEquiposParticipantes().addAll(seleccionados);
         service.updateTournament(torneo.getNombre(), torneo);
 
@@ -599,7 +571,6 @@ public class TournamentMaintenanceController extends Controller implements Initi
         chklistviewEquiposSeleccionados1.getItems().addAll(seleccionados);
         chklistviewEquiposDisponibles1.getItems().removeAll(seleccionados);
 
-        // 🔄 Refrescar la vista de mantenimiento si está cargada
         TeamsMaintenanceController controller = (TeamsMaintenanceController)
                 FlowController.getInstance().getController("TeamsMaintenanceView");
 
@@ -607,7 +578,6 @@ public class TournamentMaintenanceController extends Controller implements Initi
             controller.recargarEquiposDesdeJSON();
         }
 
-        // 🔁 Limpiar selección restante para evitar auto-selección visual
         chklistviewEquiposDisponibles1.getSelectionModel().clearSelection();
 
     }
@@ -623,7 +593,7 @@ public class TournamentMaintenanceController extends Controller implements Initi
         SportService service = new SportService();
         List<Sport> deportes = service.getAllSports();
 
-        Set<String> nombresDeportesUnicos = new TreeSet<>(); // ordenado alfabéticamente
+        Set<String> nombresDeportesUnicos = new TreeSet<>();
         for (Sport deporte : deportes) {
             if (deporte.getNombre() != null && !deporte.getNombre().isBlank()) {
                 nombresDeportesUnicos.add(deporte.getNombre());
@@ -631,7 +601,7 @@ public class TournamentMaintenanceController extends Controller implements Initi
         }
 
         ObservableList<String> deportesList = FXCollections.observableArrayList();
-        deportesList.add("Todos"); // 🟣 Opción especial
+        deportesList.add("Todos");
         deportesList.addAll(nombresDeportesUnicos);
 
         cmbMantenimientoTorneo.setItems(deportesList);
@@ -671,9 +641,9 @@ public class TournamentMaintenanceController extends Controller implements Initi
         List<Tournament> torneos;
 
         if (deporteSeleccionado == null || deporteSeleccionado.isBlank() || deporteSeleccionado.equals("Todos")) {
-            torneos = service.getAllTournaments(); // ✅ Desde archivo
+            torneos = service.getAllTournaments();
         } else {
-            torneos = service.getTournamentsBySport(deporteSeleccionado); // ✅ filtrado en tiempo real
+            torneos = service.getTournamentsBySport(deporteSeleccionado);
         }
 
         tbvMantenimientoTorneo.getSelectionModel().clearSelection();
@@ -719,33 +689,30 @@ public class TournamentMaintenanceController extends Controller implements Initi
                 "-fx-font-weight: bold; " +
                 "-fx-font-size: 12px;");
 
-        // 🔹 Configurar la duración de la visibilidad
-        tooltip.setShowDelay(Duration.millis(200)); // Aparece después de 200ms
-        tooltip.setHideDelay(Duration.millis(100)); // Desaparece rápido al salir
+        tooltip.setShowDelay(Duration.millis(200));
+        tooltip.setHideDelay(Duration.millis(100));
 
-        // 🔹 Asociar el Tooltip al icono
         tooltip.setAnchorLocation(PopupWindow.AnchorLocation.WINDOW_TOP_LEFT);
 
-        // 🔹 Manejar manualmente la posición del Tooltip
         imgInfoCreacionTorneo.setOnMouseEntered(event -> {
             double x = imgInfoCreacionTorneo.localToScene(imgInfoCreacionTorneo.getBoundsInLocal()).getMinX();
             double y = imgInfoCreacionTorneo.localToScene(imgInfoCreacionTorneo.getBoundsInLocal()).getMinY();
 
             tooltip.show(imgInfoCreacionTorneo, imgInfoCreacionTorneo.getScene().getWindow().getX() + x - 645,
-                    imgInfoCreacionTorneo.getScene().getWindow().getY() + y -55 ); // Ajusta posición arriba del icono
+                    imgInfoCreacionTorneo.getScene().getWindow().getY() + y -55 );
         });
 
-        imgInfoCreacionTorneo.setOnMouseExited(event -> tooltip.hide()); // Ocultar tooltip al salir del icono
+        imgInfoCreacionTorneo.setOnMouseExited(event -> tooltip.hide());
     }
 
     private void cargarEquiposDisponiblesPorDeporte(String deporte, List<String> yaSeleccionados) {
-        TeamService service = new TeamService(); // o como se llame tu clase
+        TeamService service = new TeamService();
         List<Team> todos = service.getAllTeams();
 
         List<String> filtrados = todos.stream()
                 .filter(equipo -> equipo.getDeporte().equalsIgnoreCase(deporte))
                 .map(Team::getNombre)
-                .filter(nombre -> !yaSeleccionados.contains(nombre)) // Ignorar los ya seleccionados
+                .filter(nombre -> !yaSeleccionados.contains(nombre))
                 .toList();
 
         chklistviewEquiposDisponibles1.getItems().setAll(filtrados);
@@ -755,27 +722,25 @@ public class TournamentMaintenanceController extends Controller implements Initi
             Set<Node> tabHeaders = tabPanePrincipal.lookupAll(".tab");
 
             for (Node tabHeader : tabHeaders) {
-                tabHeader.setMouseTransparent(true); // 🛡️ Ignora clicks, pero se ve igual
-                tabHeader.setFocusTraversable(false); // Evita foco por tabulación
+                tabHeader.setMouseTransparent(true);
+                tabHeader.setFocusTraversable(false);
             }
         });
     }
 
     private void cargarTodosLosTorneos() {
         TournamentService service = new TournamentService();
-        List<Tournament> todos = service.getAllTournaments(); // ✅ Carga desde JSON cada vez
+        List<Tournament> todos = service.getAllTournaments();
         tbvMantenimientoTorneo.getItems().setAll(todos);
     }
 
 
     private void animarImagenComoBoton(ImageView imageView) {
-        // 🔮 Efecto Glow (DropShadow)
         DropShadow glow = new DropShadow();
-        glow.setColor(Color.web("#9a3aff")); // 💜 Purpura eléctrico
+        glow.setColor(Color.web("#9a3aff"));
         glow.setRadius(20);
         glow.setSpread(0.3);
 
-        // 🧠 Hover IN: Aplica glow + zoom
         imageView.setOnMouseEntered(e -> {
             imageView.setEffect(glow);
             ScaleTransition st = new ScaleTransition(Duration.millis(150), imageView);
@@ -784,7 +749,6 @@ public class TournamentMaintenanceController extends Controller implements Initi
             st.play();
         });
 
-        // 👋 Hover OUT: Quita efecto y vuelve a tamaño normal
         imageView.setOnMouseExited(e -> {
             imageView.setEffect(null);
             ScaleTransition st = new ScaleTransition(Duration.millis(150), imageView);
@@ -793,7 +757,6 @@ public class TournamentMaintenanceController extends Controller implements Initi
             st.play();
         });
 
-        // 🖱️ Click PRESSED: Achica imagen momentáneamente
         imageView.setOnMousePressed(e -> {
             ScaleTransition st = new ScaleTransition(Duration.millis(80), imageView);
             st.setToX(0.9);
@@ -801,7 +764,6 @@ public class TournamentMaintenanceController extends Controller implements Initi
             st.play();
         });
 
-        // ✅ Click RELEASED: vuelve al tamaño hover
         imageView.setOnMouseReleased(e -> {
             ScaleTransition st = new ScaleTransition(Duration.millis(80), imageView);
             st.setToX(1.1);
@@ -809,7 +771,6 @@ public class TournamentMaintenanceController extends Controller implements Initi
             st.play();
         });
 
-        // 🖱️ Cambia cursor a "hand" como un botón
         imageView.setCursor(Cursor.HAND);
     }
 

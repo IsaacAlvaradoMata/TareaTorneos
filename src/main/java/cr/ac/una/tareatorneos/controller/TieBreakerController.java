@@ -81,8 +81,8 @@ public class TieBreakerController extends Controller implements Initializable {
                 "-fx-font-weight: bold; " +
                 "-fx-font-size: 12px;");
 
-        tooltip.setShowDelay(Duration.millis(200)); // Aparece después de 200ms
-        tooltip.setHideDelay(Duration.millis(100)); // Desaparece rápido al salir
+        tooltip.setShowDelay(Duration.millis(200));
+        tooltip.setHideDelay(Duration.millis(100));
         tooltip.setAnchorLocation(PopupWindow.AnchorLocation.WINDOW_TOP_LEFT);
 
         imgInfoTie.setOnMouseEntered(event -> {
@@ -96,7 +96,7 @@ public class TieBreakerController extends Controller implements Initializable {
             });
         });
 
-        imgInfoTie.setOnMouseExited(event -> tooltip.hide()); // Ocultar tooltip al salir del icono
+        imgInfoTie.setOnMouseExited(event -> tooltip.hide());
 
     }
 
@@ -106,7 +106,7 @@ public class TieBreakerController extends Controller implements Initializable {
         this.matchService = matchService;
         this.bracketMatchService = bracketMatchService;
         this.parentController = parentController;
-        this.bracketMatch = null; // ← puedes usarlo más adelante si querés guardar referencia específica
+        this.bracketMatch = null;
 
         turnoEquipoA = true;
         lblTurno.setText("Turno: " + equipoA);
@@ -135,7 +135,7 @@ public class TieBreakerController extends Controller implements Initializable {
             ClipboardContent content = new ClipboardContent();
 
             content.putString("balon");
-            content.putImage(imgBalon.getImage()); // para que se vea el balón al arrastrar
+            content.putImage(imgBalon.getImage());
 
             db.setContent(content);
             event.consume();
@@ -190,7 +190,7 @@ public class TieBreakerController extends Controller implements Initializable {
                     : "❌ FALLÓ - " + equipoA);
             turnoEquipoA = false;
             lblTurno.setText("Turno: " + equipoB);
-            prepararNuevaRonda(); // se mezcla para que el siguiente intento tenga nuevos valores
+            prepararNuevaRonda();
         } else {
             equipoBAcierto = acierto;
             System.out.println(acierto
@@ -219,7 +219,6 @@ public class TieBreakerController extends Controller implements Initializable {
 
         String ganadorDesempate = equipoAAcierto ? equipoA : equipoB;
 
-        // 👉 Guardar los logros nuevos sin mostrarlos
         List<Achievement> nuevosLogros = matchService.finalizarPartidoConDesempate(ganadorDesempate);
 
         PauseTransition delay = new PauseTransition(Duration.seconds(0.5));
@@ -229,9 +228,8 @@ public class TieBreakerController extends Controller implements Initializable {
                 alert.setTitle("🎯 Desempate Resuelto");
                 alert.setHeaderText(mensaje);
                 alert.setContentText("¡Felicidades al equipo ganador!");
-                alert.showAndWait(); // ⏳ Esperamos que el usuario lo cierre
+                alert.showAndWait();
 
-                // ✅ MOSTRAR LAS ANIMACIONES AQUÍ
                 if (!nuevosLogros.isEmpty()) {
                     cr.ac.una.tareatorneos.util.AchievementAnimationQueue.setPermitirMostrar(true);
                     for (Achievement logro : nuevosLogros) {
@@ -240,7 +238,6 @@ public class TieBreakerController extends Controller implements Initializable {
                     cr.ac.una.tareatorneos.util.AchievementAnimationQueue.mostrarCuandoPosible(nuevosLogros);
                 }
 
-                // ✅ Cerrar ventana y actualizar
                 try {
                     root.getScene().getWindow().hide();
                 } catch (Exception e) {
@@ -275,11 +272,9 @@ public class TieBreakerController extends Controller implements Initializable {
     }
 
     private void animarAcierto(ImageView caja) {
-        // Efecto glow
         Glow glow = new Glow(0.8);
         caja.setEffect(glow);
 
-        // Animación de escala (rebote)
         ScaleTransition scale = new ScaleTransition(Duration.seconds(0.4), caja);
         scale.setFromX(1.0);
         scale.setFromY(1.0);
@@ -292,13 +287,11 @@ public class TieBreakerController extends Controller implements Initializable {
     }
 
     private void animarFallo(ImageView caja) {
-        // Efecto de color rojo temporal
         ColorAdjust red = new ColorAdjust();
         red.setBrightness(-0.3);
         red.setHue(-0.05);
         caja.setEffect(red);
 
-        // Animación de sacudida
         TranslateTransition shake = new TranslateTransition(Duration.millis(60), caja);
         shake.setByX(10);
         shake.setAutoReverse(true);
@@ -313,7 +306,7 @@ public class TieBreakerController extends Controller implements Initializable {
     private void cargarFondoPredeterminado() {
         try {
             Image fondo = new Image(getClass().getResourceAsStream(
-                    "/cr/ac/una/tareatorneos/resources/FondoGeneral.png")); // fondo genérico
+                    "/cr/ac/una/tareatorneos/resources/FondoGeneral.png"));
             imgFondoDeporte.setImage(fondo);
         } catch (Exception e) {
             System.out.println("⚠ No se pudo cargar FondoGeneral.png");

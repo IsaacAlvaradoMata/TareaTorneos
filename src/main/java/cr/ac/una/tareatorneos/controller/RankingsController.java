@@ -93,7 +93,7 @@ public class RankingsController extends Controller implements Initializable {
         tbvRankingEquipos.getSelectionModel().selectionProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null && !newVal.isEmpty()) {
                 Team equipoSeleccionado = newVal.get(0);
-                handleTableClickRankingEquipos(null); // 👈 actualiza labels
+                handleTableClickRankingEquipos(null);
             }
         });
 
@@ -117,13 +117,11 @@ public class RankingsController extends Controller implements Initializable {
 
         Team team = seleccion.get(0);
 
-        // Limpiar
         limpiarLabelsEstadisticas();
         tbvStatsTorneos.getItems().clear();
 
         if (team.getEstadisticas() == null) return;
 
-        // Cargar Labels
         lblPartidosTotales.setText(String.valueOf(team.getEstadisticas().getPartidosTotales()));
         lblPartidosGanados.setText(String.valueOf(team.getEstadisticas().getPartidosGanados()));
         lblPartidosPerdidos.setText(String.valueOf(team.getEstadisticas().getPartidosPerdidos()));
@@ -136,7 +134,6 @@ public class RankingsController extends Controller implements Initializable {
 
         System.out.println("→ Mostrando stats para: " + team.getNombre());
 
-        // Cargar Tabla Avanzada
         statsService.getAllStats().stream()
                 .filter(e -> e.getNombreEquipo() != null && e.getNombreEquipo().equalsIgnoreCase(team.getNombre()))
                 .findFirst()
@@ -183,7 +180,7 @@ public class RankingsController extends Controller implements Initializable {
         colNombre.setMinWidth(150);
         colNombre.setRowCellFactory(team -> {
             MFXTableRowCell<Team, String> cell = new MFXTableRowCell<>(Team::getNombre);
-            cell.setAlignment(Pos.CENTER); // CENTRADO
+            cell.setAlignment(Pos.CENTER);
             return cell;
         });
 
@@ -191,7 +188,7 @@ public class RankingsController extends Controller implements Initializable {
         colDeporte.setMinWidth(110);
         colDeporte.setRowCellFactory(team -> {
             MFXTableRowCell<Team, String> cell = new MFXTableRowCell<>(Team::getDeporte);
-            cell.setAlignment(Pos.CENTER); // CENTRADO
+            cell.setAlignment(Pos.CENTER);
             return cell;
         });
 
@@ -201,7 +198,7 @@ public class RankingsController extends Controller implements Initializable {
             MFXTableRowCell<Team, String> cell = new MFXTableRowCell<>(
                     t -> String.valueOf(t.getEstadisticas().getPuntosGlobales())
             );
-            cell.setAlignment(Pos.CENTER); // CENTRADO
+            cell.setAlignment(Pos.CENTER);
             return cell;
         });
 
@@ -214,14 +211,12 @@ public class RankingsController extends Controller implements Initializable {
     private void populateTableViewAdvanceStats() {
         tbvStatsTorneos.getColumns().clear();
 
-        // Columna de Torneo
         TableColumn<ObservableList<String>, String> torneoCol = new TableColumn<>("Torneo");
         torneoCol.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().get(0)));
         torneoCol.setMinWidth(150);
         centrarContenidoColumna(torneoCol);
         tbvStatsTorneos.getColumns().add(torneoCol);
 
-        // Columnas de los 5 partidos
         for (int i = 0; i < 5; i++) {
             int baseIndex = 1 + (i * 3);
 
@@ -243,7 +238,6 @@ public class RankingsController extends Controller implements Initializable {
             tbvStatsTorneos.getColumns().addAll(rivalCol, marcadorCol, resultadoCol);
         }
 
-        // Columna de resultado final del torneo
         TableColumn<ObservableList<String>, String> resultadoTorneoCol = new TableColumn<>("Resultado Torneo");
         resultadoTorneoCol.setMinWidth(150);
         centrarContenidoColumna(resultadoTorneoCol);
@@ -293,10 +287,10 @@ public class RankingsController extends Controller implements Initializable {
 
     private void populateComboBoxRankings() {
         ObservableList<String> sports = FXCollections.observableArrayList();
-        sports.add("Todos"); // 👈 Agregar opción especial
+        sports.add("Todos");
         sportService.getAllSports().forEach(s -> sports.add(s.getNombre()));
         cmbRankings.setItems(sports);
-        cmbRankings.selectFirst(); // Selecciona "Todos" al cargar
+        cmbRankings.selectFirst(); 
     }
 
     public void actualizarComboBoxRankings() {

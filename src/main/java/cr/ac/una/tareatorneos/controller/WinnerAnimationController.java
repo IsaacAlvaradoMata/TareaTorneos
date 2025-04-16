@@ -13,8 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -54,7 +52,6 @@ public class WinnerAnimationController extends Controller implements Initializab
     private Pane confettiPane;
 
 
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         loadImages();
@@ -68,8 +65,6 @@ public class WinnerAnimationController extends Controller implements Initializab
             clip.heightProperty().bind(spfondo.heightProperty());
             spfondo.setClip(clip);
         });
-
-
     }
 
     @Override
@@ -84,7 +79,6 @@ public class WinnerAnimationController extends Controller implements Initializab
         var teamStats = statsService.getStatsByTeamName(nombreEquipo);
 
         if (teamStats != null && !teamStats.getTorneos().isEmpty()) {
-            // Buscamos el torneo más reciente o el que ganó
             var torneo = teamStats.getTorneos().get(teamStats.getTorneos().size() - 1);
 
             String torneoNombre = torneo.getNombreTorneo();
@@ -108,12 +102,11 @@ public class WinnerAnimationController extends Controller implements Initializab
 
     }
 
-
     private void loadImages() {
-        leftDecoration.setImage(new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/AwardIcon.png"))); // Reemplaza con tus imágenes reales
+        leftDecoration.setImage(new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/AwardIcon.png")));
         rightDecoration.setImage(new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/AwardIcon.png")));
         podiumImage.setImage(new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/Winner1Icon.png")));
-        teamImage.setImage(new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/LakersIcon.jpg"))); // Reemplaza con imagen dinámica si quieres
+        teamImage.setImage(new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/LakersIcon.jpg")));
         imgCrown.setImage(new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/CrownIcon.png")));
         imgCrown.setVisible(false);
         imgSparkle.setImage(new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/SparkleIcon.png")));
@@ -125,39 +118,28 @@ public class WinnerAnimationController extends Controller implements Initializab
     private void runAnimations(String teamName) {
         teamNameLabel.setText(teamName);
         titleLabel.setStyle("-fx-text-fill: linear-gradient(#FFD700, #FFA500);");
-//        teamNameLabel.setStyle("-fx-text-fill: linear-gradient(#FFD700, #cc8702);");
 
-        // Animar el contenedor principal (fade in total)
         AnimationDepartment.fadeIn(mainVBox, Duration.seconds(0));
 
-        // Animar el título y decoraciones desde arriba
         AnimationDepartment.slideFromTop(titleBox, Duration.seconds(0.5));
 
-        // Nombre del equipo (fade in simple)
         AnimationDepartment.fadeIn(teamNameLabel, Duration.seconds(1.5));
 
-//        AnimationDepartment.neonGlowLoop(teamNameLabel);
         AnimationDepartment.animatedLightSweep(teamNameLabel);
 
-        // Imagen del podio y foto del equipo desde abajo
-//        AnimationDepartment.slideUpWithEpicBounce(winnerContainer, Duration.seconds(1.5));
         Platform.runLater(() -> {
             Platform.runLater(() -> {
-                double sceneHeight = spfondo.getHeight(); // o root.getHeight()
+                double sceneHeight = spfondo.getHeight();
                 System.out.println("✅ Altura confirmada al segundo frame: " + sceneHeight);
 
                 AnimationDepartment.slideUpWithEpicBounceClean(winnerContainer, Duration.seconds(1.5), sceneHeight);
             });
         });
 
-
-        // Aplicar animación de borde brillante
         AnimationDepartment.glowBorder(teamImageBorder);
 
-        // Movimiento sutil del podio
         AnimationDepartment.subtleBounce(winnerContainer);
 
-        // Mostrar el botón al final
         AnimationDepartment.fadeIn(printButton, Duration.seconds(5.0));
 
         AnimationDepartment.spotlightEffect(imgLuz, Duration.seconds(3.0));
@@ -193,7 +175,6 @@ public class WinnerAnimationController extends Controller implements Initializab
         titleBox.setOpacity(0);
         teamNameLabel.setStyle("");
 
-        // 🟨 NUEVO: cargar imagen dinámica
         try {
             String rawPath = new cr.ac.una.tareatorneos.service.TeamService().getTeamByName(teamName).getTeamImage();
             String finalPath = rawPath != null ? "file:teamsPhotos/" + rawPath : "file:teamsPhotos/default.png";
@@ -203,7 +184,6 @@ public class WinnerAnimationController extends Controller implements Initializab
             teamImage.setImage(new Image("file:teamsPhotos/default.png"));
         }
 
-        // 🟡 Llamar animaciones después de todo el setup
         Platform.runLater(() -> runAnimations(teamName));
     }
 

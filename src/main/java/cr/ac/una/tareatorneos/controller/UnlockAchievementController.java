@@ -15,7 +15,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,11 +52,11 @@ public class UnlockAchievementController extends Controller implements Initializ
     private Label lblEquipoGanador;
     @FXML
     private Pane spLluvia;
-    private Image logroActualImagen; // Guarda la imagen del logro actual
+    private Image logroActualImagen;
 
     private List<Achievement> colaLogros = new ArrayList<>();
     private int indiceActual = 0;
-    private Runnable callbackFinal; // opcional, para ejecutar algo al final
+    private Runnable callbackFinal;
     private boolean estaVentanaActiva = true;
 
     @Override
@@ -81,7 +80,6 @@ public class UnlockAchievementController extends Controller implements Initializ
 
     @Override
     public void initialize() {
-        // vacío porque ya usamos el otro método
     }
 
     @FXML
@@ -90,10 +88,8 @@ public class UnlockAchievementController extends Controller implements Initializ
 
         onClose();
 
-        // cerrar esta ventana
         if (currentStage != null) currentStage.close();
 
-        // mostrar el siguiente logro
         Platform.runLater(() -> mostrarSiguienteLogro());
     }
 
@@ -103,18 +99,17 @@ public class UnlockAchievementController extends Controller implements Initializ
         this.colaLogros = logros;
         this.indiceActual = 0;
 
-        // ✅ Guardamos el callback para llamarlo luego
         this.callbackFinal = () -> {
             estaVentanaActiva = false;
             onClose();
             if (currentStage != null) currentStage.close();
 
-            if (onFinish != null) onFinish.run(); // Ejecutar lógica adicional si aplica
+            if (onFinish != null) onFinish.run();
         };
 
         Platform.runLater(() -> {
             currentStage = (Stage) root.getScene().getWindow();
-            mostrarSiguienteLogro(); // 🧠 comienza la cadena
+            mostrarSiguienteLogro();
         });
     }
 
@@ -129,7 +124,7 @@ public class UnlockAchievementController extends Controller implements Initializ
             });
 
         } else {
-            if (callbackFinal != null) callbackFinal.run(); // ✅ Esto se encarga del cierre
+            if (callbackFinal != null) callbackFinal.run();
         }
     }
 
@@ -182,7 +177,6 @@ public class UnlockAchievementController extends Controller implements Initializ
                     return;
                 }
 
-//                AnimationDepartment.startInfiniteRainingAchievements(spLluvia, logroImg, 6, Duration.seconds(1), Duration.seconds(5));
                 System.out.println("🌧 Iniciando lluvia con imagen de logro: " + achievementName);
                 AnimationDepartment.startInfiniteRainingAchievements(spLluvia, logroActualImagen, 6, Duration.seconds(1), Duration.seconds(5));
 
@@ -236,7 +230,7 @@ public class UnlockAchievementController extends Controller implements Initializ
         lblEquipoGanador.setText("");
         lblEquipoGanador.setOpacity(0);
 
-        runAchievementIntro(achievementName, equipoGanador, onDone); // 👈 ahora correcto
+        runAchievementIntro(achievementName, equipoGanador, onDone);
     }
 
 
@@ -267,11 +261,10 @@ public class UnlockAchievementController extends Controller implements Initializ
 
         spfondo.getChildren().removeIf(node ->
                 node instanceof ImageView &&
-                        node != imgAchievement &&  // 🏆 No eliminar la imagen principal del logro
-                        node != imgUnlockgif &&    // 🔓 Tampoco el gif si es visible aún
-                        node != leffUnlock && node != rightUnlock // 🔒 Iconos decorativos
+                        node != imgAchievement &&
+                        node != imgUnlockgif &&
+                        node != leffUnlock && node != rightUnlock
         );
-        // 🔁 Reset transformaciones
         AchievementContainer.setTranslateY(0);
         AchievementContainer.setLayoutY(0);
         AchievementContainer.setOpacity(0);
@@ -282,14 +275,12 @@ public class UnlockAchievementController extends Controller implements Initializ
         lblEquipoGanador.setText("");
         lblEquipoGanador.setOpacity(0);
 
-        // 👑 Preparar candado
-        imgUnlockgif.setImage(new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/PadlockGifIcon.gif"))); // 👈 volver a cargar la imagen fuerza el reinicio
+        imgUnlockgif.setImage(new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/PadlockGifIcon.gif")));
         imgUnlockgif.setVisible(true);
         imgUnlockgif.setOpacity(1);
         imgUnlockgif.setScaleX(1.0);
         imgUnlockgif.setScaleY(1.0);
 
-        // 🏆 Asegurar visibilidad inicial (oculto por opacidad)
         imgAchievement.setVisible(true);
         imgAchievement.setOpacity(0);
     }
@@ -302,11 +293,10 @@ public class UnlockAchievementController extends Controller implements Initializ
 
         spfondo.getChildren().removeIf(node ->
                 node instanceof ImageView &&
-                        node != imgAchievement &&  // 🏆 No eliminar la imagen principal del logro
-                        node != imgUnlockgif &&    // 🔓 Tampoco el gif si es visible aún
-                        node != leffUnlock && node != rightUnlock // 🔒 Iconos decorativos
+                        node != imgAchievement &&
+                        node != imgUnlockgif &&
+                        node != leffUnlock && node != rightUnlock
         );
-        // 🔁 Reset transformaciones
         AchievementContainer.setTranslateY(0);
         AchievementContainer.setLayoutY(0);
         AchievementContainer.setOpacity(0);
@@ -317,14 +307,12 @@ public class UnlockAchievementController extends Controller implements Initializ
         lblEquipoGanador.setText("");
         lblEquipoGanador.setOpacity(0);
 
-        // 👑 Preparar candado
-        imgUnlockgif.setImage(new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/PadlockGifIcon.gif"))); // 👈 volver a cargar la imagen fuerza el reinicio
+        imgUnlockgif.setImage(new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/PadlockGifIcon.gif")));
         imgUnlockgif.setVisible(true);
         imgUnlockgif.setOpacity(1);
         imgUnlockgif.setScaleX(1.0);
         imgUnlockgif.setScaleY(1.0);
 
-        // 🏆 Asegurar visibilidad inicial (oculto por opacidad)
         imgAchievement.setVisible(true);
         imgAchievement.setOpacity(0);
         System.out.println("🎬 Animaciones detenidas correctamente al cerrar.");

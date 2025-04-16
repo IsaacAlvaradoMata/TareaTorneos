@@ -189,22 +189,20 @@ public class TeamsMaintenanceController extends Controller implements Initializa
         String nombreEquipo = txtfieldNombreEquipos.getText().trim();
         String deporteSeleccionado = cmbEquipos.getValue();
 
-        // 🔁 INTENTA GUARDAR LA IMAGEN TEMPORAL PRIMERO
         BufferedImage tempImage = (BufferedImage) AppContext.getInstance().get("teamPhotoTemp");
         if (tempImage != null) {
             String fileName = nombreEquipo.replace(" ", "_") + ".jpg";
             File destinationFile = new File("teamsPhotos", fileName);
             try {
                 ImageIO.write(tempImage, "jpg", destinationFile);
-                currentTeamImagePath = destinationFile.getAbsolutePath(); // ✅ ACTUALIZA LA RUTA
-                AppContext.getInstance().set("teamPhotoTemp", null); // 🧹 Limpia buffer temporal
+                currentTeamImagePath = destinationFile.getAbsolutePath();
+                AppContext.getInstance().set("teamPhotoTemp", null);
             } catch (IOException e) {
                 mensajeUtil.show(AlertType.ERROR, "Error", "No se pudo guardar la imagen desde la cámara.");
                 return;
             }
         }
 
-        // ⚠️ AHORA VALIDÁS DESPUÉS DE INTENTAR GUARDAR
         if (nombreEquipo.isEmpty() || currentTeamImagePath.isEmpty()) {
             mensajeUtil.show(AlertType.WARNING, "Guardar Equipo", "Debe ingresar el nombre y la imagen.");
             return;
@@ -223,14 +221,13 @@ public class TeamsMaintenanceController extends Controller implements Initializa
             }
         }
 
-        // ✅ Copiar imagen a carpeta destino y guardar solo el nombre en JSON
         File directory = new File("teamsPhotos");
         if (!directory.exists()) directory.mkdirs();
 
         File destinationFile = new File(directory, nombreEquipo.replace(" ", "_") + ".jpg");
         try {
             java.nio.file.Files.copy(new File(currentTeamImagePath).toPath(), destinationFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-            currentTeamImagePath = destinationFile.getName(); // Solo el nombre del archivo para JSON
+            currentTeamImagePath = destinationFile.getName();
         } catch (IOException e) {
             mensajeUtil.show(AlertType.ERROR, "Error", "No se pudo copiar la imagen.");
             return;
@@ -245,7 +242,7 @@ public class TeamsMaintenanceController extends Controller implements Initializa
             teamsData.add(newTeam);
             tbvEquiposExistentes.setItems(FXCollections.observableArrayList(teamsData));
             loadTeams();
-            OnActionBtnBarrerEquipo(event); // Limpia campos
+            OnActionBtnBarrerEquipo(event);
             cmbEquipos.getSelectionModel().clearSelection();
             cmbEquipos.setValue(null);
             cmbEquipos.clearSelection();
@@ -276,22 +273,18 @@ public class TeamsMaintenanceController extends Controller implements Initializa
         String newNombre = txtfieldNombreEquipos.getText().trim();
         String newDeporte = cmbEquipos.getValue();
 
-        // Limpiar nombres de imagen
         String imagenActual = originalFoto == null ? "" : new File(originalFoto).getName();
         String imagenFinal = currentTeamImagePath.isEmpty()
                 ? imagenActual
                 : new File(currentTeamImagePath).getName();
 
-        // Detectar cambios de imagen desde cámara
         BufferedImage tempImage = (BufferedImage) AppContext.getInstance().get("teamPhotoTemp");
         boolean imageChangedFromCamera = tempImage != null;
 
-        // Detectar cambios de imagen desde explorador
         boolean imageChangedFromExplorer = !currentTeamImagePath.isEmpty()
                 && new File(currentTeamImagePath).isAbsolute()
                 && !imagenActual.equalsIgnoreCase(imagenFinal);
 
-        // Verificar si hubo cambios reales
         boolean nameChanged = !oldNombre.equals(newNombre);
         boolean sportChanged = !originalDeporte.equalsIgnoreCase(newDeporte);
         boolean imageChanged = imageChangedFromCamera || imageChangedFromExplorer;
@@ -301,7 +294,6 @@ public class TeamsMaintenanceController extends Controller implements Initializa
             return;
         }
 
-        // Si la imagen proviene de la cámara
         if (imageChangedFromCamera) {
             String fileName = newNombre.replace(" ", "_") + ".jpg";
             File destination = new File("teamsPhotos", fileName);
@@ -309,28 +301,26 @@ public class TeamsMaintenanceController extends Controller implements Initializa
                 ImageIO.write(tempImage, "jpg", destination);
                 currentTeamImagePath = destination.getAbsolutePath();
                 imagenFinal = fileName;
-                AppContext.getInstance().set("teamPhotoTemp", null); // limpiar memoria
+                AppContext.getInstance().set("teamPhotoTemp", null);
             } catch (IOException e) {
                 mensajeUtil.show(AlertType.ERROR, "Error", "No se pudo guardar la imagen de la cámara.");
                 return;
             }
         }
 
-        // Si es una imagen nueva desde el explorador
         if (imageChangedFromExplorer) {
             File origin = new File(currentTeamImagePath);
-            String fileName = newNombre.replace(" ", "_") + ".jpg"; // 🔁 renombrar con el nombre del equipo
+            String fileName = newNombre.replace(" ", "_") + ".jpg";
             File dest = new File("teamsPhotos", fileName);
             try {
                 java.nio.file.Files.copy(origin.toPath(), dest.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-                imagenFinal = fileName; // ✅ actualizar imagenFinal para guardar correctamente en el JSON
+                imagenFinal = fileName;
             } catch (IOException e) {
                 mensajeUtil.show(AlertType.ERROR, "Error", "No se pudo copiar la imagen seleccionada.");
                 return;
             }
         }
 
-        // Si se cambió el nombre del equipo y no la imagen
         if (nameChanged && !imageChangedFromCamera && !imageChangedFromExplorer) {
             File oldImageFile = new File("teamsPhotos", imagenActual);
             File newImageFile = new File("teamsPhotos", newNombre.replace(" ", "_") + ".jpg");
@@ -342,7 +332,6 @@ public class TeamsMaintenanceController extends Controller implements Initializa
             }
         }
 
-        // Aplicar cambios
         selectedTeam.setNombre(newNombre);
         selectedTeam.setDeporte(newDeporte);
         selectedTeam.setTeamImage(imagenFinal);
@@ -375,15 +364,14 @@ public class TeamsMaintenanceController extends Controller implements Initializa
             txtfieldNombreEquipos.setText(originalNombre);
             cmbEquipos.setValue(originalDeporte);
 
-            // 🧠 Cargar imagen del equipo si existe
             if (originalFoto != null && !originalFoto.isEmpty()) {
                 File imageFile = new File("teamsPhotos/" + originalFoto);
                 if (imageFile.exists()) {
                     imgviewImagenDeporte.setImage(new Image(imageFile.toURI().toString()));
-                    currentTeamImagePath = imageFile.getAbsolutePath(); // ✅ Actualizar ruta completa
+                    currentTeamImagePath = imageFile.getAbsolutePath();
                 } else {
                     imgviewImagenDeporte.setImage(null);
-                    currentTeamImagePath = ""; // 🧹 Limpiar ruta si no existe
+                    currentTeamImagePath = "";
                 }
             } else {
                 imgviewImagenDeporte.setImage(null);
@@ -403,10 +391,8 @@ public class TeamsMaintenanceController extends Controller implements Initializa
         File selectedFile = fileChooser.showOpenDialog(stage);
 
         if (selectedFile != null) {
-            // ✅ Guardamos la ruta temporalmente
             currentTeamImagePath = selectedFile.getAbsolutePath();
 
-            // ✅ Mostrar la imagen en la interfaz sin copiarla todavía
             Image image = new Image(selectedFile.toURI().toString());
             imgviewImagenDeporte.setImage(image);
         }
@@ -414,7 +400,6 @@ public class TeamsMaintenanceController extends Controller implements Initializa
     }
 
     private void updateImageFromAppContext() {
-        // 📌 Si se cargó desde archivo (explorador)
         String photoPath = (String) AppContext.getInstance().get("teamPhoto");
         if (photoPath != null && !photoPath.isEmpty()) {
             File file = new File(photoPath);
@@ -426,7 +411,6 @@ public class TeamsMaintenanceController extends Controller implements Initializa
             }
         }
 
-        // 📌 Si fue tomada desde la cámara y aún no se guardó
         BufferedImage tempImage = (BufferedImage) AppContext.getInstance().get("teamPhotoTemp");
         if (tempImage != null) {
             Image fxImage = SwingFXUtils.toFXImage(tempImage, null);
