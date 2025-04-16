@@ -50,8 +50,7 @@ public class ActiveTournamentsController extends Controller implements Initializ
     private MFXButton btnVerTorneo;
     @FXML
     private MFXFilterComboBox<String> cmbTorneosActivos;
-    @FXML
-    private MFXButton btnWinnerAnimationTest;
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -258,19 +257,6 @@ public class ActiveTournamentsController extends Controller implements Initializ
 
         // ✅ 3. Abrir ventana modal
         FlowController.getInstance().goViewInWindowModal("BracketGeneratorView", getStage(), false);
-    }
-
-    @FXML
-    void onActionBtnWinnerAnimationTest(ActionEvent event) {
-        // 1. Navega a la vista
-        FlowController.getInstance().goView("WinnerAnimationView");
-
-        // 2. Obtiene el controller
-        WinnerAnimationController controller = (WinnerAnimationController)
-                FlowController.getInstance().getController("WinnerAnimationView");
-
-        // 3. Llama al reset completo con el nombre del equipo
-        controller.resetAndRunAnimations("Los Titanes del Código"); // O usa un nombre dinámico
     }
 
     @Override

@@ -25,6 +25,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.PopupWindow;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.animation.ScaleTransition;
 import javafx.scene.Cursor;
@@ -107,8 +108,11 @@ public class TournamentMaintenanceController extends Controller implements Initi
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         configurarColumnasTabla();
         populateComboBoxMantenimientoDeporte();
+        cmbMantenimientoTorneo.selectFirst(); // 👈 Auto-selecciona "Todos"
+
         populateComboBoxRegistroDeporte();
         cargarTodosLosTorneos();
         cmbMantenimientoTorneo.setOnAction(e -> {
@@ -138,7 +142,7 @@ public class TournamentMaintenanceController extends Controller implements Initi
                 txtfieldBuscarPorNombre.clear();
             }
         });
-
+        
     }
 
 
@@ -653,21 +657,22 @@ public class TournamentMaintenanceController extends Controller implements Initi
 
     }
 
-    private void cargarTorneosEnTabla() {
-        String deporteSeleccionado = cmbMantenimientoTorneo.getSelectedItem();
+    public void cargarTorneosEnTabla() {
         TournamentService service = new TournamentService();
 
+        String deporteSeleccionado = cmbMantenimientoTorneo.getSelectedItem();
         List<Tournament> torneos;
 
         if (deporteSeleccionado == null || deporteSeleccionado.isBlank() || deporteSeleccionado.equals("Todos")) {
-            torneos = service.getAllTournaments();
+            torneos = service.getAllTournaments(); // ✅ Desde archivo
         } else {
-            torneos = service.getTournamentsBySport(deporteSeleccionado);
+            torneos = service.getTournamentsBySport(deporteSeleccionado); // ✅ filtrado en tiempo real
         }
 
-        tbvMantenimientoTorneo.getSelectionModel().clearSelection(); // 👈 Limpia la selección primero
+        tbvMantenimientoTorneo.getSelectionModel().clearSelection();
         tbvMantenimientoTorneo.getItems().setAll(torneos);
     }
+
 
 
 
@@ -751,9 +756,10 @@ public class TournamentMaintenanceController extends Controller implements Initi
 
     private void cargarTodosLosTorneos() {
         TournamentService service = new TournamentService();
-        List<Tournament> todos = service.getAllTournaments();
+        List<Tournament> todos = service.getAllTournaments(); // ✅ Carga desde JSON cada vez
         tbvMantenimientoTorneo.getItems().setAll(todos);
     }
+
 
     private void animarImagenComoBoton(ImageView imageView) {
         // 🔮 Efecto Glow (DropShadow)
