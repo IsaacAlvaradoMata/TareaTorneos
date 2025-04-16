@@ -6,19 +6,16 @@ import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.borders.SolidBorder;
-import com.itextpdf.layout.element.*;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
-
-import com.itextpdf.layout.properties.UnitValue;
-import com.itextpdf.layout.properties.VerticalAlignment;
 import cr.ac.una.tareatorneos.model.TeamTournamentStats;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.time.LocalDate;
 
 public class PdfGenerator {
@@ -43,7 +40,6 @@ public class PdfGenerator {
                     .setBold()
                     .setFontColor(ColorConstants.ORANGE);
             doc.add(titulo);
-
             doc.add(new Paragraph("\n"));
 
             // 🖼 Logo institucional arriba
@@ -69,12 +65,12 @@ public class PdfGenerator {
 
             doc.add(new Paragraph("\n"));
 
-            // 📝 Datos del torneo
-            doc.add(new Paragraph("Equipo: " + equipoNombre).setBold().setFontSize(14));
-            doc.add(new Paragraph("Torneo: " + torneoNombre));
-            doc.add(new Paragraph("Deporte: " + deporte));
+            // 📝 Datos del torneo (validados)
+            doc.add(new Paragraph("Equipo: " + validar(equipoNombre)).setBold().setFontSize(14));
+            doc.add(new Paragraph("Torneo: " + validar(torneoNombre)));
+            doc.add(new Paragraph("Deporte: " + validar(deporte)));
             doc.add(new Paragraph("Fecha de victoria: " + LocalDate.now()));
-            doc.add(new Paragraph("Resultado del torneo: " + torneoStats.getResultadoTorneo()));
+            doc.add(new Paragraph("Resultado del torneo: " + validar(torneoStats.getResultadoTorneo())));
 
             doc.add(new Paragraph("\n🧾 Desempeño del equipo:\n").setBold());
 
@@ -86,10 +82,10 @@ public class PdfGenerator {
             table.addHeaderCell(new Cell().add(new Paragraph("Resultado")).setBackgroundColor(ColorConstants.LIGHT_GRAY));
 
             for (var p : torneoStats.getPartidos()) {
-                table.addCell(new Cell().add(new Paragraph(p.getRival())));
+                table.addCell(new Cell().add(new Paragraph(validar(p.getRival()))));
                 table.addCell(new Cell().add(new Paragraph(String.valueOf(p.getAnotaciones()))));
                 table.addCell(new Cell().add(new Paragraph(String.valueOf(p.getAnotacionesEnContra()))));
-                table.addCell(new Cell().add(new Paragraph(p.getResultadoReal())));
+                table.addCell(new Cell().add(new Paragraph(validar(p.getResultadoReal()))));
             }
 
             doc.add(table);
@@ -109,7 +105,6 @@ public class PdfGenerator {
                 System.out.println("⚠ No se pudo cargar imagen de firma.");
             }
 
-            // ✍️ Firma falsa
             doc.add(new Paragraph("__________________________").setTextAlignment(TextAlignment.CENTER));
             doc.add(new Paragraph("Dirección de Deportes y Recreación").setTextAlignment(TextAlignment.CENTER));
             doc.add(new Paragraph("Universidad Nacional - PZ").setTextAlignment(TextAlignment.CENTER));
@@ -123,6 +118,11 @@ public class PdfGenerator {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    // Función auxiliar para evitar valores nulos
+    private static String validar(String texto) {
+        return (texto == null || texto.isBlank()) ? "N/A" : texto;
     }
 
 
