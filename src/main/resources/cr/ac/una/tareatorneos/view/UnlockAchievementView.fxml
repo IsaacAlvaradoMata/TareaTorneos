@@ -49,6 +49,11 @@
                                           <Insets />
                                        </VBox.margin>
                                     </StackPane>
+                                    <Label fx:id="lblEquipoGanador" styleClass="team-LogrosAnimado">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </Label>
                                     <Button fx:id="btnCerrar" onAction="#onActionBtnCerrar" opacity="0" styleClass="close-btn-LogrosAnimado" text="Cerrar">
                                        <VBox.margin>
                                           <Insets top="20.0" />

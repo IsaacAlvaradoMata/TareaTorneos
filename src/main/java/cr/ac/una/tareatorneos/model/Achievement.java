@@ -3,6 +3,7 @@ package cr.ac.una.tareatorneos.model;
 public class Achievement {
     private String nombre;
     private boolean obtenido;
+    private String equipoAsociado;
 
     public Achievement() {
     }
@@ -11,6 +12,13 @@ public class Achievement {
         this.nombre = nombre;
         this.obtenido = obtenido;
     }
+
+    public Achievement(String nombre, boolean obtenido, String equipoAsociado) {
+        this.nombre = nombre;
+        this.obtenido = obtenido;
+        this.equipoAsociado = equipoAsociado;
+    }
+
 
     public String getNombre() {
         return nombre;
@@ -28,11 +36,21 @@ public class Achievement {
         this.obtenido = obtenido;
     }
 
+    // 🆕 Getters y setters de equipoAsociado
+    public String getEquipoAsociado() {
+        return equipoAsociado;
+    }
+
+    public void setEquipoAsociado(String equipoAsociado) {
+        this.equipoAsociado = equipoAsociado;
+    }
+
     @Override
     public String toString() {
         return "Achievement{" +
                 "nombre='" + nombre + '\'' +
                 ", obtenido=" + obtenido +
+                ", equipoAsociado='" + equipoAsociado + '\'' +
                 '}';
     }
 }

@@ -23,6 +23,8 @@ public class AchievementService {
         if (stats == null) return logros;
 
         for (Achievement logro : logros) {
+            logro.setEquipoAsociado(nombreEquipo);
+
             switch (logro.getNombre()) {
                 case "Máxima Potencia" -> logro.setObtenido(logroMaximaPotencia(stats));
                 case "Muralla Imbatible" -> logro.setObtenido(logroMurallaImbatible(stats));

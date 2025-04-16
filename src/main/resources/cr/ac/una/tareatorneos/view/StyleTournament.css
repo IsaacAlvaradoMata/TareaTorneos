@@ -1765,10 +1765,22 @@
     -fx-font-family: "Trebuchet MS", sans-serif;
 }
 
+.team-LogrosAnimado {
+    -fx-font-size: 15px;
+    -fx-text-fill: linear-gradient(#FFD700, #FFA500);
+    -fx-font-weight: bold;
+    -fx-background-color: transparent;
+    -fx-border-color: #transparent;
+    -fx-border-width: 3;
+    -fx-border-radius: 4;
+    -fx-background-radius: 6;
+    -fx-font-family: "Trebuchet MS", sans-serif;
+}
+
 /* Botón imprimir */
 .close-btn-LogrosAnimado {
     -fx-background-color: #006ab6;
-    -fx-text-fill: black;
+    -fx-text-fill: linear-gradient(#FFD700, #FFA500);
     -fx-font-weight: bold;
     -fx-padding: 10 20;
     -fx-border-radius: 10;

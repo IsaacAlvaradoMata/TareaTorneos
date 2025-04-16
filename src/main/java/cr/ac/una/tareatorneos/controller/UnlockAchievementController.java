@@ -50,6 +50,8 @@ public class UnlockAchievementController extends Controller implements Initializ
     @FXML
     private Button btnCerrar;
     @FXML
+    private Label lblEquipoGanador;
+    @FXML
     private Pane spLluvia;
     private Image logroActualImagen; // Guarda la imagen del logro actual
 
@@ -113,7 +115,8 @@ public class UnlockAchievementController extends Controller implements Initializ
             Achievement logro = colaLogros.get(indiceActual);
             indiceActual++;
 
-            resetAndRunAnimationsLogros(logro.getNombre(), () -> {
+            resetAndRunAnimationsLogros(logro.getNombre(), logro.getEquipoAsociado(), () -> {
+
                 // Espera que el usuario presione "Cerrar", NO pasa automáticamente
                 btnCerrar.setOnAction(event -> {
                     mostrarSiguienteLogro(); // avanza cuando el usuario lo decida
@@ -132,7 +135,8 @@ public class UnlockAchievementController extends Controller implements Initializ
         imgUnlockgif.setImage(new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/PadlockGifIcon.gif")));
     }
 
-    private void runAnimationsLogros(String achievementName, Runnable onDone) {
+    private void runAnimationsLogros(String achievementName, String equipoGanador, Runnable onDone) {
+
         if (!estaVentanaActiva) {
             System.out.println("⛔ Cancelado runAnimationsLogros: ventana cerrada.");
             return;
@@ -141,10 +145,15 @@ public class UnlockAchievementController extends Controller implements Initializ
         lblAchievementName.setText(achievementName);
         titleLabel.setStyle("-fx-text-fill: linear-gradient(#FFD700, #FFA500);");
 
+        lblEquipoGanador.setText("¡Felicidades! El equipo " + equipoGanador + " ha conseguido un nuevo logro.");
+        lblEquipoGanador.setOpacity(0);
+
+
         AnimationDepartment.fadeIn(mainVBox, Duration.seconds(0));
         AnimationDepartment.slideFromTop(titleBox, Duration.seconds(0.5));
         AnimationDepartment.fadeIn(lblAchievementName, Duration.seconds(1.5));
         AnimationDepartment.animatedLightSweep(lblAchievementName);
+        AnimationDepartment.fadeIn(lblEquipoGanador, Duration.seconds(3.0));
         AnimationDepartment.neonGlowLoop(imgAchievement);
 
         Platform.runLater(() -> {
@@ -183,7 +192,8 @@ public class UnlockAchievementController extends Controller implements Initializ
     }
 
 
-    public void resetAndRunAnimationsLogros(String achievementName, Runnable onDone) {
+    public void resetAndRunAnimationsLogros(String achievementName, String equipoGanador, Runnable onDone){
+
         if (!estaVentanaActiva) {
             System.out.println("⛔ Cancelado resetAndRunAnimationsLogros: ventana cerrada.");
             return;
@@ -216,12 +226,14 @@ public class UnlockAchievementController extends Controller implements Initializ
         AchievementContainer.setOpacity(0);
         lblAchievementName.setStyle("");
         titleBox.setOpacity(0);
+        lblEquipoGanador.setText("");
+        lblEquipoGanador.setOpacity(0);
 
-        runAchievementIntro(achievementName, onDone);
+        runAchievementIntro(achievementName, equipoGanador, onDone); // 👈 ahora correcto
     }
 
 
-    public void runAchievementIntro(String achievementName, Runnable onDone) {
+    public void runAchievementIntro(String achievementName, String equipoGanador, Runnable onDone) {
         resetAchievementView();
         imgUnlockgif.setVisible(true);
         imgUnlockgif.setOpacity(1);
@@ -234,9 +246,10 @@ public class UnlockAchievementController extends Controller implements Initializ
                 System.out.println("⛔ Cancelado antes de animar logro: ventana cerrada.");
                 return;
             }
-            Platform.runLater(() -> runAnimationsLogros(achievementName, onDone));
+            Platform.runLater(() -> runAnimationsLogros(achievementName, equipoGanador, onDone));
         });
     }
+
 
 
     private Stage currentStage;
@@ -259,6 +272,8 @@ public class UnlockAchievementController extends Controller implements Initializ
         titleBox.setOpacity(0);
         btnCerrar.setOpacity(0);
         lblAchievementName.setStyle("");
+        lblEquipoGanador.setText("");
+        lblEquipoGanador.setOpacity(0);
 
         // 👑 Preparar candado
         imgUnlockgif.setImage(new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/PadlockGifIcon.gif"))); // 👈 volver a cargar la imagen fuerza el reinicio
@@ -292,6 +307,8 @@ public class UnlockAchievementController extends Controller implements Initializ
         titleBox.setOpacity(0);
         btnCerrar.setOpacity(0);
         lblAchievementName.setStyle("");
+        lblEquipoGanador.setText("");
+        lblEquipoGanador.setOpacity(0);
 
         // 👑 Preparar candado
         imgUnlockgif.setImage(new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/PadlockGifIcon.gif"))); // 👈 volver a cargar la imagen fuerza el reinicio
