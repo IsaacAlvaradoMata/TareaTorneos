@@ -70,8 +70,8 @@ public class BracketGeneratorController extends Controller implements Initializa
     }
 
     public void inicializarBracketDesdeTorneo(Tournament torneo) {
-        this.torneoActual = torneo; // ✅ Asignar torneo actual
-        matchService.generarPartidosDesdeEquipos(torneo); // Cargar desde archivo si ya existen
+        this.torneoActual = torneo;
+        matchService.generarPartidosDesdeEquipos(torneo);
         cargarBracketDesdePartidos(matchService.getTodosLosPartidos());
         actualizarLabelPartidoPendiente();
         lblNombreTorneoBracket.setText(torneo.getNombre());
@@ -80,7 +80,7 @@ public class BracketGeneratorController extends Controller implements Initializa
     public void actualizarLabelPartidoPendiente() {
         torneoActual = new TournamentService().getTournamentByName(torneoActual.getNombre());
 
-        // Filtra solo partidos válidos
+
         List<BracketMatch> pendientes = matchService.getPartidosPendientes().stream()
                 .filter(p -> p.getEquipo1() != null || p.getEquipo2() != null)
                 .toList();
@@ -119,7 +119,7 @@ public class BracketGeneratorController extends Controller implements Initializa
             return;
         }
 
-        // 🔒 Caso de seguridad
+
         lblPartidoActual.setText("  ⌛ Esperando equipos para siguiente partido...  ");
         btnPlay.setDisable(true);
     }
@@ -139,11 +139,11 @@ public class BracketGeneratorController extends Controller implements Initializa
     @FXML
     private void onActionBtnSave(ActionEvent event) {
         if (esModoVisualizacion) {
-            // 🔐 Cerrar solo si fue abierto desde "Ver Torneo Finalizado"
+
             Stage stage = (Stage) root.getScene().getWindow();
             if (stage != null) stage.close();
         } else {
-            // 🔁 Comportamiento normal
+
             FlowController.getInstance().goView("ActiveTournamentsView");
         }
 
@@ -164,20 +164,20 @@ public class BracketGeneratorController extends Controller implements Initializa
 
         boolean esUltimo = matchService.getPartidosPendientes().size() == 1;
 
-        // 🏆 Si es el último partido y solo hay un equipo → declarar campeón y refrescar todo
+
         if (equipo1 != null && equipo2 == null && esUltimo) {
             matchService.registrarGanador(siguientePartido, equipo1);
 
-            // 🔁 Refrescar estado del torneo para que diga "Finalizado"
+
             this.torneoActual = new TournamentService().getTournamentByName(torneoActual.getNombre());
 
-            // 🔄 Redibujar todo y actualizar texto
+
             cargarBracketDesdePartidos(matchService.getTodosLosPartidos());
             actualizarLabelPartidoPendiente();
             return;
         }
 
-        // ⚠️ Caso normal de BYE (no final)
+
         if (equipo1 != null && equipo2 == null && !siguientePartido.isJugado()) {
             matchService.registrarGanador(siguientePartido, equipo1);
             this.torneoActual = new TournamentService().getTournamentByName(torneoActual.getNombre());
@@ -186,7 +186,6 @@ public class BracketGeneratorController extends Controller implements Initializa
             return;
         }
 
-        // 🎯 Partido regular
         lblPartidoActual.setText("➙Partido pendiente: " + equipo1 + " vs " + equipo2);
 
         try {
@@ -438,7 +437,7 @@ public class BracketGeneratorController extends Controller implements Initializa
         String equipo1 = match.getEquipo1();
         String equipo2 = match.getEquipo2();
 
-        // ✅ Evitar nodos basura en ronda 1 (ambos null)
+
         if (match.getRonda() == 1 && equipo1 == null && equipo2 == null) {
             return null;
         }
@@ -500,7 +499,7 @@ public class BracketGeneratorController extends Controller implements Initializa
         puntajeLbl.getStyleClass().add("label-bracket");
 
         HBox info = new HBox(5, nombreLbl, puntajeLbl);
-        info.setAlignment(Pos.CENTER_LEFT); // Asegura alineación centrada vertical
+        info.setAlignment(Pos.CENTER_LEFT);
 
         if (esGanador) {
             Label trofeo = new Label("🏆");
@@ -521,18 +520,18 @@ public class BracketGeneratorController extends Controller implements Initializa
         double x2 = nodo2.getLayoutX() + NODE_WIDTH;
         double y2 = nodo2.getLayoutY() + NODE_HEIGHT / 2;
 
-        double offsetCorto = 12;     // para nodo1
-        double offsetLargo = 32;     // para nodo2
+        double offsetCorto = 12;
+        double offsetLargo = 32;
 
         double midX1 = x1 + offsetCorto;
         double midX2 = x2 + offsetLargo;
-        double midX = Math.max(midX1, midX2); // punto de encuentro
+        double midX = Math.max(midX1, midX2);
         double midY = (y1 + y2) / 2;
 
-        Line l1 = new Line(x1, y1, midX, y1); // nodo1 →
-        Line l2 = new Line(x2, y2, midX, y2); // nodo2 → (más largo ahora)
-        Line l3 = new Line(midX, y1, midX, y2); // unión vertical
-        Line l4 = new Line(midX, midY, destino.getLayoutX(), midY); // hacia el nodo destino
+        Line l1 = new Line(x1, y1, midX, y1);
+        Line l2 = new Line(x2, y2, midX, y2);
+        Line l3 = new Line(midX, y1, midX, y2);
+        Line l4 = new Line(midX, midY, destino.getLayoutX(), midY);
 
         for (Line l : List.of(l1, l2, l3, l4)) {
             l.setStroke(Color.GOLD);
@@ -543,13 +542,13 @@ public class BracketGeneratorController extends Controller implements Initializa
 
     private void actualizarEstadisticasGenerales() {
         TeamService teamService = new TeamService();
-        TeamTournamentStatsService statsService = new TeamTournamentStatsService(); // necesitas esta clase
+        TeamTournamentStatsService statsService = new TeamTournamentStatsService();
 
         for (Team team : teamService.getAllTeams()) {
             TeamTournamentStats statsAvanzadas = statsService.getStatsByTeamName(team.getNombre());
             if (statsAvanzadas == null) continue;
 
-            // Acumuladores
+
             int partidosTotales = 0;
             int ganados = 0;
             int perdidos = 0;
@@ -564,7 +563,6 @@ public class BracketGeneratorController extends Controller implements Initializa
             for (TeamTournamentStats.TournamentStat torneo : statsAvanzadas.getTorneos()) {
                 torneos++;
 
-                // Torneos Ganados/Perdidos
                 if ("Ganador".equalsIgnoreCase(torneo.getResultadoTorneo())) torneosGanados++;
                 if ("Perdedor".equalsIgnoreCase(torneo.getResultadoTorneo())) torneosPerdidos++;
 
@@ -584,7 +582,6 @@ public class BracketGeneratorController extends Controller implements Initializa
                 }
             }
 
-            // Actualiza stats generales
             var est = team.getEstadisticas();
             est.setPartidosTotales(partidosTotales);
             est.setPartidosGanados(ganados);

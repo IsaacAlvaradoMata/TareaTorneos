@@ -1,44 +1,51 @@
 package cr.ac.una.tareatorneos.controller;
 
-import cr.ac.una.tareatorneos.util.AppContext;
-import io.github.palexdev.materialfx.controls.MFXButton;
-
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
-import javafx.event.ActionEvent;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamResolution;
+import cr.ac.una.tareatorneos.util.AppContext;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.utils.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
-import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javax.imageio.ImageIO;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class CameraController extends Controller implements Initializable {
 
-    @FXML private AnchorPane root;
-    @FXML private Label lblMantenimientoEquiposTitulo;
-    @FXML private StackPane spImagenEquipos;
-    @FXML private ImageView imgviewPrevistaFoto;
-    @FXML private Separator sprTeamsMaintenance;
-    @FXML private ImageView imgviewDefinitivaFoto;
-    @FXML private MFXButton btnCapturarFoto;
-    @FXML private MFXButton btnReintentarFoto;
-    @FXML private MFXButton btnGuardarFoto;
-    @FXML private MFXButton btnSalirFoto;
+    @FXML
+    private AnchorPane root;
+    @FXML
+    private Label lblMantenimientoEquiposTitulo;
+    @FXML
+    private StackPane spImagenEquipos;
+    @FXML
+    private ImageView imgviewPrevistaFoto;
+    @FXML
+    private Separator sprTeamsMaintenance;
+    @FXML
+    private ImageView imgviewDefinitivaFoto;
+    @FXML
+    private MFXButton btnCapturarFoto;
+    @FXML
+    private MFXButton btnReintentarFoto;
+    @FXML
+    private MFXButton btnGuardarFoto;
+    @FXML
+    private MFXButton btnSalirFoto;
 
     private Webcam webcam;
     private ScheduledExecutorService executor;
@@ -53,7 +60,7 @@ public class CameraController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Implementación vacía para cumplir con la clase abstracta.
+
     }
 
     private void openCamera() {
@@ -78,18 +85,15 @@ public class CameraController extends Controller implements Initializable {
         try {
             BufferedImage tempImage = webcam.getImage();
 
-            // 📌 Guardarla en memoria usando AppContext (sin escribir en disco aún)
             AppContext.getInstance().set("tempTeamImage", tempImage);
             System.out.println("Imagen capturada y almacenada en memoria temporal.");
 
-            // 📌 Mostrar la imagen en la vista de la cámara
             imgviewDefinitivaFoto.setImage(SwingFXUtils.toFXImage(tempImage, null));
 
         } catch (Exception e) {
             System.err.println("Error al capturar la imagen: " + e.getMessage());
         }
 
-        // ✅ Habilitar botones de reintentar y guardar
         btnReintentarFoto.setDisable(false);
         btnGuardarFoto.setDisable(false);
         btnCapturarFoto.setDisable(true);
@@ -114,11 +118,9 @@ public class CameraController extends Controller implements Initializable {
             return;
         }
 
-        // 📌 Guardamos la imagen en AppContext para que pueda ser usada en la vista de mantenimiento de equipos
         AppContext.getInstance().set("teamPhotoTemp", tempImage);
         System.out.println("Imagen lista para ser guardada con el equipo.");
 
-        // ✅ Notificar al usuario y cerrar la ventana de la cámara
         showAlert("Imagen lista para guardar con el equipo.");
         stopCamera();
         closeWindow();

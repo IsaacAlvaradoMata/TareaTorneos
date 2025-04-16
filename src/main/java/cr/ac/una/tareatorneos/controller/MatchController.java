@@ -4,7 +4,6 @@ import cr.ac.una.tareatorneos.model.*;
 import cr.ac.una.tareatorneos.service.*;
 import cr.ac.una.tareatorneos.util.AchievementAnimationQueue;
 import cr.ac.una.tareatorneos.util.AchievementUtils;
-import cr.ac.una.tareatorneos.util.FlowController;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -67,7 +66,6 @@ public class MatchController extends Controller implements Initializable {
 
     @Override
     public void initialize() {
-        // requerido por clase Controller base
     }
 
     public void inicializarMatch(BracketMatch partido, BracketMatchService bracketMatchService, BracketGeneratorController parentController) {
@@ -143,14 +141,12 @@ public class MatchController extends Controller implements Initializable {
             }
 
             if (esUltimoPartido) {
-                AchievementAnimationQueue.setPermitirMostrar(false); // ⛔ se mostrarán después
+                AchievementAnimationQueue.setPermitirMostrar(false);
             } else {
-                AchievementAnimationQueue.setPermitirMostrar(true);  // ✅ se muestran ahora
+                AchievementAnimationQueue.setPermitirMostrar(true);
                 AchievementAnimationQueue.mostrarCuandoPosible(nuevos);
             }
         }
-
-
 
 
         Platform.runLater(() -> {
@@ -171,7 +167,6 @@ public class MatchController extends Controller implements Initializable {
 
     private void cancelarDragActivo() {
         Platform.runLater(() -> {
-            // Simular un "mouse released" manual para evitar drag congelado
             imgBalon.setDisable(true);
             imgBalon.setDisable(false);
         });
@@ -179,13 +174,11 @@ public class MatchController extends Controller implements Initializable {
 
     private void iniciarPantallaDesempate(String equipoA, String equipoB) {
         try {
-            // 🚪 Cerrar la ventana actual de partido antes de abrir desempate
             Stage matchStage = (Stage) btnFinalizar.getScene().getWindow();
             if (matchStage != null) {
-                matchStage.close(); // <- 💥 cierra MatchView.fxml
+                matchStage.close();
             }
 
-            // 🆕 Cargar vista de desempate
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/cr/ac/una/tareatorneos/view/TieBreakerView.fxml"));
             Parent root = loader.load();
 
@@ -197,7 +190,7 @@ public class MatchController extends Controller implements Initializable {
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
-            stage.setOnCloseRequest(e -> e.consume()); // evitar bugs por cierre manual
+            stage.setOnCloseRequest(e -> e.consume());
             stage.showAndWait();
 
         } catch (IOException e) {
@@ -269,7 +262,7 @@ public class MatchController extends Controller implements Initializable {
 
     @FXML
     void onActionBtnFinalizar(ActionEvent event) {
-        detenerTiempo(); // ⏸️ Pausar temporamente el tiempo
+        detenerTiempo();
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("🚨 Confirmar Finalización");
@@ -279,12 +272,10 @@ public class MatchController extends Controller implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            // ✅ Confirmado: terminar partido
             lblTiempo.setText("Tiempo: 00:00");
             desactivarControles();
             mostrarPopupFinalizado();
         } else {
-            // ❌ Cancelado o cerró con la X: reanudar normal
             activarControlesDragAndDrop();
             reanudarCuentaRegresiva();
         }

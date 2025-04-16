@@ -56,7 +56,7 @@ public class ActiveTournamentsController extends Controller implements Initializ
     public void initialize(URL url, ResourceBundle rb) {
         populateTableView();
         loadSportsToComboBox();
-        filterTournamentsBySport("Todos"); // 👈 carga todos los torneos activos desde el inicio
+        filterTournamentsBySport("Todos");
 
         tbvTorneosActivos.getSelectionModel().selectionProperty().addListener((obs, oldSel, newSel) -> {
             if (newSel != null) {
@@ -81,23 +81,21 @@ public class ActiveTournamentsController extends Controller implements Initializ
             }
         });
     }
-    
+
     @FXML
     private void handleTableClickTorneosActivos(MouseEvent event) {
         List<Tournament> selected = tbvTorneosActivos.getSelectionModel().getSelectedValues();
         if (!selected.isEmpty()) {
             TournamentService service = new TournamentService();
-            Tournament selectedTournament = service.getTournamentByName(selected.get(0).getNombre()); // 🔁 Relee desde JSON actualizado
+            Tournament selectedTournament = service.getTournamentByName(selected.get(0).getNombre());
 
             if (selectedTournament == null) return;
 
-            // 🟨 Actualiza los labels
             lblNombreTorneo.setText(selectedTournament.getNombre());
             lblDeporteTorneo.setText(selectedTournament.getDeporte());
             lblTiempoTorneo.setText(String.valueOf(selectedTournament.getTiempoPorPartido()));
             lblCantidadEquiposTorneo.setText(String.valueOf(selectedTournament.getCantidadEquipos()));
 
-            // ✅ Refresca lista de equipos actuales en el torneo
             listviewEquiposSeleccionadosTorneo.setItems(
                     FXCollections.observableArrayList(selectedTournament.getEquiposParticipantes())
             );
@@ -122,7 +120,7 @@ public class ActiveTournamentsController extends Controller implements Initializ
             return;
         }
 
-        // 🛡️ Validación de estado
+
         if (!"por comenzar".equalsIgnoreCase(torneoSeleccionado.getEstado()) &&
                 !"iniciado".equalsIgnoreCase(torneoSeleccionado.getEstado())) {
             new Mensaje().showModal(Alert.AlertType.WARNING, "Estado inválido", getStage(),
@@ -140,7 +138,7 @@ public class ActiveTournamentsController extends Controller implements Initializ
                 FlowController.getInstance().getController("BracketGeneratorView");
 
         if (controller != null) {
-            controller.setModoVisualizacion(false); // ✅ modo interactivo
+            controller.setModoVisualizacion(false);
             controller.inicializarBracketDesdeTorneo(torneoSeleccionado);
             FlowController.getInstance().goView("BracketGeneratorView");
 
@@ -183,7 +181,7 @@ public class ActiveTournamentsController extends Controller implements Initializ
     private void loadTournaments() {
         TournamentService tournamentService = new TournamentService();
         List<Tournament> tournaments = tournamentService.getAllTournaments();
-        // Filtra solo los torneos activos (estado "iniciado")
+
         List<Tournament> activeTournaments = tournaments.stream()
                 .filter(t -> "iniciado".equalsIgnoreCase(t.getEstado()))
                 .toList();
@@ -197,13 +195,13 @@ public class ActiveTournamentsController extends Controller implements Initializ
                 .map(s -> s.getNombre())
                 .toList();
 
-        // Agrega la opción "Todos" al principio
+
         List<String> opciones = FXCollections.observableArrayList();
         opciones.add("Todos");
         opciones.addAll(nombresDeportes);
 
         cmbTorneosActivos.setItems(FXCollections.observableArrayList(opciones));
-        cmbTorneosActivos.selectFirst(); // Auto-selecciona "Todos" al inicio
+        cmbTorneosActivos.selectFirst();
     }
 
     private void filterTournamentsBySport(String deporte) {
@@ -247,20 +245,16 @@ public class ActiveTournamentsController extends Controller implements Initializ
             return;
         }
 
-        // ✅ 1. Obtener el controller desde FlowController
         BracketGeneratorController controller = (BracketGeneratorController)
                 FlowController.getInstance().getController("BracketGeneratorView");
 
-        // ✅ 2. Configurar modo visualización
         controller.setModoVisualizacion(true);
         controller.inicializarBracketDesdeTorneo(torneoSeleccionado);
 
-        // ✅ 3. Abrir ventana modal
         FlowController.getInstance().goViewInWindowModal("BracketGeneratorView", getStage(), false);
     }
 
     @Override
     public void initialize() {
-        // Método vacío para cumplir con la clase abstracta.
     }
 }

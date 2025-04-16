@@ -1,13 +1,6 @@
 package cr.ac.una.tareatorneos.controller;
 
-import io.github.palexdev.materialfx.controls.MFXButton;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
 import cr.ac.una.tareatorneos.util.FlowController;
-import javafx.animation.Interpolator;
-import javafx.animation.SequentialTransition;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
@@ -19,9 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.util.Duration;
 import javafx.stage.Stage;
-import javafx.scene.Node;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -71,7 +62,6 @@ public class MainMenuController extends Controller implements Initializable {
     private List<MFXButton> botonesMenu;
 
 
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         botonesMenu = Arrays.asList(
@@ -95,12 +85,12 @@ public class MainMenuController extends Controller implements Initializable {
 
         imgMinimizar.setOnMouseClicked(event -> {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setIconified(true); // Minimiza la ventana
+            stage.setIconified(true);
         });
 
         imgFullScreen.setOnMouseClicked(event -> {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setMaximized(!stage.isMaximized()); // Alterna entre maximizado y normal
+            stage.setMaximized(!stage.isMaximized());
         });
 
 
