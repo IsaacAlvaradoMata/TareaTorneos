@@ -20,7 +20,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -28,15 +30,24 @@ import java.util.ResourceBundle;
 
 public class SportsMaintenanceController extends Controller implements Initializable {
 
-    @FXML private MFXButton btnBarrerDeporte;
-    @FXML private MFXButton btnBuscarImagen;
-    @FXML private MFXButton btnEliminarDeporte;
-    @FXML private MFXButton btnGuardarDeporte;
-    @FXML private MFXButton btnModificar;
-    @FXML private ImageView imgviewImagenDeporte;
-    @FXML private AnchorPane root;
-    @FXML private MFXTableView<Sport> tbvDeportesExistentes;
-    @FXML private MFXTextField txtfieldNombreDeporte;
+    @FXML
+    private MFXButton btnBarrerDeporte;
+    @FXML
+    private MFXButton btnBuscarImagen;
+    @FXML
+    private MFXButton btnEliminarDeporte;
+    @FXML
+    private MFXButton btnGuardarDeporte;
+    @FXML
+    private MFXButton btnModificar;
+    @FXML
+    private ImageView imgviewImagenDeporte;
+    @FXML
+    private AnchorPane root;
+    @FXML
+    private MFXTableView<Sport> tbvDeportesExistentes;
+    @FXML
+    private MFXTextField txtfieldNombreDeporte;
 
     private ObservableList<Sport> sportsData = FXCollections.observableArrayList();
     private SportService sportService;
@@ -57,7 +68,6 @@ public class SportsMaintenanceController extends Controller implements Initializ
 
     @Override
     public void initialize() {
-        // Implementación vacía para cumplir con la clase abstracta.
     }
 
     private void populateTableView() {
@@ -77,7 +87,6 @@ public class SportsMaintenanceController extends Controller implements Initializ
         tbvDeportesExistentes.getItems().addAll(sportsData);
     }
 
-
     @FXML
     void OnActionBtnBarrerCampos(ActionEvent event) {
         imgviewImagenDeporte.setImage(null);
@@ -86,7 +95,6 @@ public class SportsMaintenanceController extends Controller implements Initializ
         tbvDeportesExistentes.getSelectionModel().clearSelection();
     }
 
-
     @FXML
     void OnActionBtnBuscarImagen(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
@@ -94,19 +102,16 @@ public class SportsMaintenanceController extends Controller implements Initializ
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg", "*.gif")
         );
-        File picturesDir = new File(System.getProperty("user.home") + "/Pictures");
-        if (picturesDir.exists() && picturesDir.isDirectory()) {
-            fileChooser.setInitialDirectory(picturesDir);
-        }
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         File selectedFile = fileChooser.showOpenDialog(stage);
+
         if (selectedFile != null) {
             currentBallImagePath = selectedFile.getAbsolutePath();
+
             Image image = new Image(selectedFile.toURI().toString());
             imgviewImagenDeporte.setImage(image);
         }
     }
-
 
     @FXML
     void OnActionBtnEliminar(ActionEvent event) {
@@ -130,14 +135,17 @@ public class SportsMaintenanceController extends Controller implements Initializ
                 mensajeUtil.show(javafx.scene.control.Alert.AlertType.INFORMATION, "Eliminar Deporte", "Deporte eliminado exitosamente.");
                 loadSports();
                 OnActionBtnBarrerCampos(event);
-
                 TeamsMaintenanceController.actualizarListaDeportes();
+                notificarActualizacionComboBoxesTorneo();
+                ActualizacionComboBoxTeamsManintenace();
+                ActualizacionComboBoxActiveTournaments();
+                ActualizacionComboBoxAchievements();
+
             } else {
                 mensajeUtil.show(javafx.scene.control.Alert.AlertType.ERROR, "Eliminar Deporte", "No se pudo eliminar el deporte.");
             }
         }
     }
-
 
     @FXML
     void OnActionBtnGuardar(ActionEvent event) {
@@ -162,6 +170,26 @@ public class SportsMaintenanceController extends Controller implements Initializ
             }
         }
 
+        File directory = new File(System.getProperty("user.dir") + "/sportsPhotos");
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        String fileName = nombre.replace(" ", "_") + ".jpg";
+        File destinationFile = new File(directory, fileName);
+
+        try {
+            java.nio.file.Files.copy(new File(currentBallImagePath).toPath(), destinationFile.toPath(),
+                    java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+
+            currentBallImagePath = fileName;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            mensajeUtil.show(javafx.scene.control.Alert.AlertType.ERROR, "Error", "No se pudo copiar la imagen.");
+            return;
+        }
+
         Sport newSport = new Sport(nombre, currentBallImagePath);
         boolean success = sportService.addSport(newSport);
         if (success) {
@@ -170,12 +198,17 @@ public class SportsMaintenanceController extends Controller implements Initializ
             loadSports();
             OnActionBtnBarrerCampos(event);
             TeamsMaintenanceController.actualizarListaDeportes();
+            notificarActualizacionComboBoxesTorneo();
+            ActualizacionComboBoxTeamsManintenace();
+            ActualizacionComboBoxActiveTournaments();
+            ActualizacionComboBoxAchievements();
+
         } else {
             mensajeUtil.show(javafx.scene.control.Alert.AlertType.ERROR,
                     "Guardar Deporte", "No se pudo guardar el deporte.");
         }
-    }
 
+    }
 
     @FXML
     void OnActionBtnModificar(ActionEvent event) {
@@ -188,37 +221,79 @@ public class SportsMaintenanceController extends Controller implements Initializ
         Sport selectedSport = selectedItems.get(0);
         String oldNombre = selectedSport.getNombre();
         String newNombre = txtfieldNombreDeporte.getText().trim();
+
         String newImage = currentBallImagePath.isEmpty() ? selectedSport.getBallImage() : currentBallImagePath;
 
-        if (newNombre.isEmpty()) {
-            mensajeUtil.show(javafx.scene.control.Alert.AlertType.WARNING, "Modificar Deporte", "El nombre del deporte no puede estar vacío.");
-            return;
+        if (new File(newImage).isAbsolute()) {
+            File sourceFile = new File(newImage);
+            String imageFileName = newNombre.replace(" ", "_") + ".jpg";
+            File destinationFile = new File("sportsPhotos", imageFileName);
+            try {
+                java.nio.file.Files.copy(sourceFile.toPath(), destinationFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                newImage = imageFileName;
+            } catch (IOException e) {
+                mensajeUtil.show(javafx.scene.control.Alert.AlertType.ERROR, "Error", "No se pudo copiar la imagen seleccionada.");
+                return;
+            }
         }
 
-              for (Sport s : sportsData) {
-            if (!s.getNombre().equals(oldNombre) && s.getNombre().equalsIgnoreCase(newNombre)) {
+        for (Sport s : sportsData) {
+            if (!s.getNombre().equalsIgnoreCase(oldNombre) && s.getNombre().equalsIgnoreCase(newNombre)) {
                 mensajeUtil.show(javafx.scene.control.Alert.AlertType.WARNING, "Modificar Deporte", "Ya existe un deporte con ese nombre.");
                 return;
             }
         }
 
-           if (oldNombre.equals(newNombre) && selectedSport.getBallImage().equals(newImage)) {
-            mensajeUtil.show(javafx.scene.control.Alert.AlertType.WARNING, "Modificar Deporte", "No se han realizado cambios para modificar.");
+        String imagenActual = selectedSport.getBallImage() != null
+                ? selectedSport.getBallImage()
+                : "";
+
+        String imagenFinal = newImage != null
+                ? newImage
+                : "";
+
+        boolean nameChanged = !oldNombre.equals(newNombre);
+
+        boolean imageChanged = !currentBallImagePath.isEmpty() &&
+                new File(currentBallImagePath).isAbsolute();
+
+        if (!nameChanged && !imageChanged) {
+            mensajeUtil.show(javafx.scene.control.Alert.AlertType.WARNING, "Modificar Deporte", "No se han realizado cambios.");
             return;
         }
-              selectedSport.setNombre(newNombre);
-        selectedSport.setBallImage(newImage);
-        boolean success = sportService.updateSport(oldNombre, selectedSport);
 
+        if (!oldNombre.equalsIgnoreCase(newNombre)) {
+            File oldFile = new File("sportsPhotos/" + selectedSport.getBallImage());
+            File renamedFile = new File("sportsPhotos/" + newNombre.replace(" ", "_") + ".jpg");
+
+            if (oldFile.exists() && !imagenActual.equalsIgnoreCase(renamedFile.getName())) {
+                boolean renamed = oldFile.renameTo(renamedFile);
+                if (renamed) {
+                    newImage = renamedFile.getName();
+                }
+            }
+        }
+
+        if (newImage.startsWith("sportsPhotos/")) {
+            newImage = newImage.replace("sportsPhotos/", "");
+        }
+
+        selectedSport.setNombre(newNombre);
+        selectedSport.setBallImage(newImage);
+
+        boolean success = sportService.updateSport(oldNombre, selectedSport);
         if (success) {
             mensajeUtil.show(javafx.scene.control.Alert.AlertType.INFORMATION, "Modificar Deporte", "Deporte modificado exitosamente.");
-            loadSports(); // Recargar la tabla
+            loadSports();
             OnActionBtnBarrerCampos(event);
+            notificarActualizacionComboBoxesTorneo();
+            ActualizacionComboBoxTeamsManintenace();
+            ActualizacionComboBoxActiveTournaments();
+            ActualizacionComboBoxAchievements();
         } else {
             mensajeUtil.show(javafx.scene.control.Alert.AlertType.ERROR, "Modificar Deporte", "No se pudo modificar el deporte.");
         }
     }
-
 
     @FXML
     void handleTableClickDeportesExistentes(MouseEvent event) {
@@ -226,14 +301,67 @@ public class SportsMaintenanceController extends Controller implements Initializ
         if (!selected.isEmpty()) {
             Sport selectedSport = selected.get(0);
             txtfieldNombreDeporte.setText(selectedSport.getNombre());
+
             if (selectedSport.getBallImage() != null && !selectedSport.getBallImage().isEmpty()) {
-                currentBallImagePath = selectedSport.getBallImage();
-                Image image = new Image(new File(currentBallImagePath).toURI().toString());
-                imgviewImagenDeporte.setImage(image);
+                currentBallImagePath = "sportsPhotos/" + selectedSport.getBallImage();
+                File imageFile = new File(currentBallImagePath);
+                if (imageFile.exists()) {
+                    Image image = new Image(imageFile.toURI().toString());
+                    imgviewImagenDeporte.setImage(image);
+                } else {
+                    imgviewImagenDeporte.setImage(null);
+                }
             } else {
                 imgviewImagenDeporte.setImage(null);
             }
         }
+
     }
+
+    private void notificarActualizacionComboBoxesTorneo() {
+        TournamentMaintenanceController torneoController = (TournamentMaintenanceController)
+                FlowController.getInstance().getController("TournamentMaintenanceView");
+
+        if (torneoController != null) {
+            torneoController.actualizarComboBoxesDeportes();
+        }
+    }
+
+    private void ActualizacionComboBoxTeamsManintenace() {
+        TeamsMaintenanceController EquiposController = (TeamsMaintenanceController)
+                FlowController.getInstance().getController("TeamsMaintenanceView");
+
+        if (EquiposController != null) {
+            EquiposController.actualizarComboBoxTeamsManintenance();
+        }
+    }
+
+    private void ActualizacionComboBoxActiveTournaments() {
+        ActiveTournamentsController ActiveController = (ActiveTournamentsController)
+                FlowController.getInstance().getController("ActiveTournamentsView");
+
+        if (ActiveController != null) {
+            ActiveController.actualizarComboBoxActiveTournaments();
+        }
+    }
+
+    private void ActualizacionComboBoxAchievements() {
+        AchievementsController ActiveController = (AchievementsController)
+                FlowController.getInstance().getController("AchievementsView");
+
+        if (ActiveController != null) {
+            ActiveController.actualizarComboBoxAchievements();
+        }
+    }
+
+    private void ActualizacionComboBoxRankings() {
+        RankingsController ActiveController = (RankingsController)
+                FlowController.getInstance().getController("RankingsView");
+
+        if (ActiveController != null) {
+            ActiveController.actualizarComboBoxRankings();
+        }
+    }
+
 
 }

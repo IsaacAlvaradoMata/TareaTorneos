@@ -1,42 +1,51 @@
 package cr.ac.una.tareatorneos.controller;
 
-import cr.ac.una.tareatorneos.util.AppContext;
-import io.github.palexdev.materialfx.controls.MFXButton;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
-import javafx.event.ActionEvent;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamResolution;
+import cr.ac.una.tareatorneos.util.AppContext;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.utils.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
-import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javax.imageio.ImageIO;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class CameraController extends Controller implements Initializable {
 
-    @FXML private AnchorPane root;
-    @FXML private Label lblMantenimientoEquiposTitulo;
-    @FXML private StackPane spImagenEquipos;
-    @FXML private ImageView imgviewPrevistaFoto;
-    @FXML private Separator sprTeamsMaintenance;
-    @FXML private ImageView imgviewDefinitivaFoto;
-    @FXML private MFXButton btnCapturarFoto;
-    @FXML private MFXButton btnReintentarFoto;
-    @FXML private MFXButton btnGuardarFoto;
-    @FXML private MFXButton btnSalirFoto;
+    @FXML
+    private AnchorPane root;
+    @FXML
+    private Label lblMantenimientoEquiposTitulo;
+    @FXML
+    private StackPane spImagenEquipos;
+    @FXML
+    private ImageView imgviewPrevistaFoto;
+    @FXML
+    private Separator sprTeamsMaintenance;
+    @FXML
+    private ImageView imgviewDefinitivaFoto;
+    @FXML
+    private MFXButton btnCapturarFoto;
+    @FXML
+    private MFXButton btnReintentarFoto;
+    @FXML
+    private MFXButton btnGuardarFoto;
+    @FXML
+    private MFXButton btnSalirFoto;
 
     private Webcam webcam;
     private ScheduledExecutorService executor;
@@ -51,7 +60,7 @@ public class CameraController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Implementación vacía para cumplir con la clase abstracta.
+
     }
 
     private void openCamera() {
@@ -74,21 +83,13 @@ public class CameraController extends Controller implements Initializable {
     @FXML
     private void OnActionBtnCapturarFoto() {
         try {
-            String folderPath = "./Photos";
-            File folder = new File(folderPath);
-            if (!folder.exists()) {
-                folder.mkdir();
-            }
+            BufferedImage tempImage = webcam.getImage();
 
-            String uniqueName = "captured_photo_" + System.currentTimeMillis() + ".jpg";
-            savedImageFile = new File(folder, uniqueName);
+            AppContext.getInstance().set("tempTeamImage", tempImage);
+            imgviewDefinitivaFoto.setImage(SwingFXUtils.toFXImage(tempImage, null));
 
-            ImageIO.write(webcam.getImage(), "JPG", savedImageFile);
-            System.out.println("Imagen guardada correctamente en: " + savedImageFile.getAbsolutePath());
-
-            displayCapturedImage(savedImageFile);
-        } catch (IOException e) {
-            System.err.println("Error al guardar la imagen: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Error al capturar la imagen: " + e.getMessage());
         }
 
         btnReintentarFoto.setDisable(false);
@@ -108,10 +109,15 @@ public class CameraController extends Controller implements Initializable {
 
     @FXML
     public void OnActionBtnGuardarFoto() {
-        AppContext.getInstance().set("teamPhoto", savedImageFile.getAbsolutePath());
-        TeamsMaintenanceController.actualizarImagenEquipo(savedImageFile.getAbsolutePath());
+        BufferedImage tempImage = (BufferedImage) AppContext.getInstance().get("tempTeamImage");
 
-        showAlert("Foto guardada exitosamente.");
+        if (tempImage == null) {
+            showAlert("No hay imagen para guardar.");
+            return;
+        }
+
+        AppContext.getInstance().set("teamPhotoTemp", tempImage);
+        showAlert("Imagen lista para guardar con el equipo.");
         stopCamera();
         closeWindow();
     }

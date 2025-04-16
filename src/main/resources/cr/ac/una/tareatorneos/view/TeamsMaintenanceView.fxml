@@ -67,7 +67,7 @@
                                         </Label>
                                         <StackPane fx:id="spImagenEquipos" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" prefHeight="260.0" prefWidth="260.0">
                                             <children>
-                                                <ImageView fx:id="imgviewImagenDeporte" fitHeight="151.0" fitWidth="220.0" pickOnBounds="true" preserveRatio="true">
+                                                <ImageView fx:id="imgviewImagenDeporte" fitHeight="160.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                                                     <StackPane.margin>
                                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                     </StackPane.margin>

@@ -1,15 +1,10 @@
 package cr.ac.una.tareatorneos;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import cr.ac.una.tareatorneos.util.FlowController;
-import javafx.stage.StageStyle;
-
 import java.io.IOException;
-import static javafx.application.Application.launch;
 
 
 /**
@@ -22,9 +17,8 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         stage.setScene(scene);
-        stage.setMinWidth(1200); // Ancho mínimo
-        stage.setMinHeight(800); // Alto mínimo
-//        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setMinWidth(1350);
+        stage.setMinHeight(800);
         FlowController.getInstance().InitializeFlow(stage, null);
         FlowController.getInstance().goMain("MainMenuView");
 

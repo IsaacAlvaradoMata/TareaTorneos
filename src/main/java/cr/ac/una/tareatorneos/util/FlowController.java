@@ -6,24 +6,27 @@
 package cr.ac.una.tareatorneos.util;
 
 import cr.ac.una.tareatorneos.App;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
+import cr.ac.una.tareatorneos.controller.Controller;
+import cr.ac.una.tareatorneos.controller.UnlockAchievementController;
+import cr.ac.una.tareatorneos.controller.WinnerAnimationController;
+import io.github.palexdev.materialfx.css.themes.MFXThemeManager;
+import io.github.palexdev.materialfx.css.themes.Themes;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import cr.ac.una.tareatorneos.controller.Controller;
-import io.github.palexdev.materialfx.css.themes.MFXThemeManager;
-import io.github.palexdev.materialfx.css.themes.Themes;
-import javafx.scene.layout.Priority;
-import javafx.geometry.Insets;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
 
 public class FlowController {
 
@@ -153,7 +156,6 @@ public class FlowController {
         }
     }
 
-
     public void goViewInStage(String viewName, Stage stage) {
         FXMLLoader loader = getLoader(viewName);
         Controller controller = loader.getController();
@@ -190,10 +192,18 @@ public class FlowController {
         Stage stage = new Stage();
         // stage.getIcons().add(new
         // Image("cr/ac/una/unaplanillaj21/resources/LogoUNArojo.png"));
-        stage.setResizable(resizable);
+
+        stage.setMinWidth(1000);
+        stage.setMinHeight(800);
         stage.setOnHidden((WindowEvent event) -> {
             controller.getStage().getScene().setRoot(new Pane());
             controller.setStage(null);
+            if (controller instanceof WinnerAnimationController winnerController) {
+                winnerController.onClose();
+            }
+            if (controller instanceof UnlockAchievementController unlockAchievementController) {
+                unlockAchievementController.onClose();
+            }
         });
         controller.setStage(stage);
         Parent root = loader.getRoot();
@@ -203,7 +213,7 @@ public class FlowController {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(parentStage);
         stage.centerOnScreen();
-        stage.showAndWait();
+        Platform.runLater(stage::show);
 
     }
 

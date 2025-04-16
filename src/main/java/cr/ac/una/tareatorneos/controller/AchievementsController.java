@@ -1,33 +1,37 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package cr.ac.una.tareatorneos.controller;
 
-
+import cr.ac.una.tareatorneos.model.Achievement;
+import cr.ac.una.tareatorneos.model.Team;
+import cr.ac.una.tareatorneos.service.SportService;
+import cr.ac.una.tareatorneos.service.TeamService;
 import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXFilterComboBox;
+import io.github.palexdev.materialfx.controls.MFXTableColumn;
 import io.github.palexdev.materialfx.controls.MFXTableView;
+import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.dialogs.MFXGenericDialog;
 import io.github.palexdev.materialfx.dialogs.MFXGenericDialogBuilder;
 import io.github.palexdev.materialfx.dialogs.MFXStageDialog;
 import io.github.palexdev.materialfx.enums.ScrimPriority;
 import io.github.palexdev.mfxresources.fonts.MFXFontIcon;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.control.Tooltip;
 import javafx.stage.Modality;
 import javafx.stage.PopupWindow;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -43,9 +47,7 @@ public class AchievementsController extends Controller implements Initializable 
     @FXML
     private Label lblLogrosTitulo;
     @FXML
-    private MFXTableView<?> tbvLogrosEquipos;
-    @FXML
-    private ImageView imgFlechaArribaLogros;
+    private MFXTableView<Team> tbvLogrosEquipos;
     @FXML
     private Separator sprLogros;
     @FXML
@@ -70,21 +72,24 @@ public class AchievementsController extends Controller implements Initializable 
     private ImageView imgMedallaTorneo;
     @FXML
     private ImageView imgInfo;
+    @FXML
+    private MFXFilterComboBox<String> cmbAchievements;
 
 
     private MFXGenericDialog dialogContent;
     private MFXStageDialog dialog;
+
+    private final SportService sportService = new SportService();
+    private final TeamService teamService = new TeamService();
+    private final ObservableList<Team> equiposFiltrados = FXCollections.observableArrayList();
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }
+        teamService.actualizarLogrosDeTodosLosEquipos();
 
-    @Override
-    public void initialize() {
         Tooltip tooltip = new Tooltip("Haga click sobre los logros para ver la descripción de cada uno de ellos.");
         tooltip.setStyle("-fx-background-color: rgba(238, 189, 149, 0.9); " +
                 "-fx-text-fill: #a25600; " +
@@ -96,24 +101,18 @@ public class AchievementsController extends Controller implements Initializable 
                 "-fx-font-weight: bold; " +
                 "-fx-font-size: 12px;");
 
-        // 🔹 Configurar la duración de la visibilidad
-        tooltip.setShowDelay(Duration.millis(200)); // Aparece después de 200ms
-        tooltip.setHideDelay(Duration.millis(100)); // Desaparece rápido al salir
-
-        // 🔹 Asociar el Tooltip al icono
+        tooltip.setShowDelay(Duration.millis(200));
+        tooltip.setHideDelay(Duration.millis(100));
         tooltip.setAnchorLocation(PopupWindow.AnchorLocation.WINDOW_TOP_LEFT);
 
-        // 🔹 Manejar manualmente la posición del Tooltip
         imgInfo.setOnMouseEntered(event -> {
             double x = imgInfo.localToScene(imgInfo.getBoundsInLocal()).getMinX();
             double y = imgInfo.localToScene(imgInfo.getBoundsInLocal()).getMinY();
-
-            tooltip.show(imgInfo, imgInfo.getScene().getWindow().getX() + x -200,
-                    imgInfo.getScene().getWindow().getY() + y -52); // Ajusta posición arriba del icono
+            tooltip.show(imgInfo, imgInfo.getScene().getWindow().getX() + x - 200,
+                    imgInfo.getScene().getWindow().getY() + y - 52);
         });
 
-        imgInfo.setOnMouseExited(event -> tooltip.hide()); // Ocultar tooltip al salir del icono
-
+        imgInfo.setOnMouseExited(event -> tooltip.hide());
 
         Platform.runLater(() -> {
             Stage stage = (Stage) root.getScene().getWindow();
@@ -134,16 +133,63 @@ public class AchievementsController extends Controller implements Initializable 
                     .get();
 
             dialogContent.addActions(
-
                     Map.entry(new MFXButton("Cerrar"), event -> dialog.close())
             );
 
             dialogContent.setMaxSize(400, 200);
         });
+
+        loadSportsInComboBox();
+        setupTablaEquipos();
+
+        cmbAchievements.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                if (newVal.equalsIgnoreCase("Todos")) {
+                    loadAllTeams();
+                } else {
+                    cargarEquiposPorDeporte(newVal);
+                }
+            }
+        });
+
+        tbvLogrosEquipos.getSelectionModel().selectionProperty().addListener((obs, oldSel, newSel) -> {
+            if (newSel != null) {
+                handleTableClickLogrosEquipos(null);
+            }
+        });
+
+        loadAllTeams();
+    }
+
+    @Override
+    public void initialize() {
+
     }
 
     @FXML
     private void handleTableClickLogrosEquipos(MouseEvent event) {
+        List<Team> selected = tbvLogrosEquipos.getSelectionModel().getSelectedValues();
+        if (!selected.isEmpty()) {
+            Team team = selected.get(0);
+            actualizarIconosDeLogros(team);
+        }
+    }
+
+    private void actualizarIconosDeLogros(Team team) {
+        for (Achievement logro : team.getLogros()) {
+            boolean activo = logro.isObtenido();
+            switch (logro.getNombre()) {
+                case "Dominador Supremo" -> imgGanador8Torneos.setOpacity(activo ? 1 : 0.25);
+                case "Leyenda Plateada" -> imgGanador6Torneos.setOpacity(activo ? 1 : 0.25);
+                case "Tricampeón" -> imgGanador3Torneos.setOpacity(activo ? 1 : 0.25);
+                case "Máxima Potencia" -> img20Puntos.setOpacity(activo ? 1 : 0.25);
+                case "Muralla Imbatible" -> imgEscudo.setOpacity(activo ? 1 : 0.25);
+                case "Equilibrio Perfecto" -> imgBalanza.setOpacity(activo ? 1 : 0.25);
+                case "Imparable" -> img3Consecutivos.setOpacity(activo ? 1 : 0.25);
+                case "Regreso Triunfal" -> imgMontanaRusa.setOpacity(activo ? 1 : 0.25);
+                case "Campeón Inaugural" -> imgMedallaTorneo.setOpacity(activo ? 1 : 0.25);
+            }
+        }
     }
 
     @FXML
@@ -184,8 +230,8 @@ public class AchievementsController extends Controller implements Initializable 
         MFXFontIcon infoIcon = new MFXFontIcon("fas-bolt-lightning", 18);
         dialogContent.setHeaderIcon(infoIcon);
         dialogContent.setHeaderText("Máxima Potencia");
-        dialogContent.setContentText("¡Pura ofensiva! Tu equipo ha logrado marcar más de 20 puntos en un solo torneo, demostrando que el ataque es su mejor defensa.\n\n" +
-                "🔓 Cómo conseguirlo: Anota más de 20 puntos a lo largo de un torneo.");
+        dialogContent.setContentText("¡Explosión ofensiva total! Tu equipo ha demostrado su supremacía marcando al menos 20 anotaciones en un torneo y coronando su hazaña con una victoria en el partido decisivo.\n\n" +
+                "🔓 Cómo conseguirlo: Alcanzar o superar las 20 anotaciones acumuladas en un torneo y ganar el partido en el que se logra dicha marca.");
         convertDialogTo("mfx-info-dialog");
         dialog.showDialog();
     }
@@ -247,6 +293,22 @@ public class AchievementsController extends Controller implements Initializable 
 
     }
 
+
+    private void loadAllTeams() {
+        equiposFiltrados.clear();
+        equiposFiltrados.addAll(teamService.getAllTeams());
+
+        tbvLogrosEquipos.getSelectionModel().clearSelection();
+        tbvLogrosEquipos.setItems(null);
+        tbvLogrosEquipos.setItems(equiposFiltrados);
+
+
+        Platform.runLater(() -> {
+            tbvLogrosEquipos.getSelectionModel().clearSelection();
+            tbvLogrosEquipos.requestFocus();
+        });
+    }
+
     private void convertDialogTo(String styleClass) {
         dialogContent.getStyleClass().removeIf(
                 s -> s.equals("mfx-info-dialog") || s.equals("mfx-warn-dialog") || s.equals("mfx-error-dialog")
@@ -254,6 +316,62 @@ public class AchievementsController extends Controller implements Initializable 
 
         if (styleClass != null)
             dialogContent.getStyleClass().add(styleClass);
+    }
+
+    private void setupTablaEquipos() {
+        MFXTableColumn<Team> colNombre = new MFXTableColumn<>("Equipo");
+        colNombre.setRowCellFactory(e -> new MFXTableRowCell<>(Team::getNombre));
+        colNombre.setMinWidth(200);
+
+        tbvLogrosEquipos.getTableColumns().clear();
+        tbvLogrosEquipos.getTableColumns().add(colNombre);
+        tbvLogrosEquipos.setItems(equiposFiltrados);
+    }
+
+    private void cargarEquiposPorDeporte(String deporte) {
+        equiposFiltrados.clear();
+
+        List<Team> todos = teamService.getAllTeams();
+        for (Team team : todos) {
+            if (team.getDeporte() != null && team.getDeporte().equalsIgnoreCase(deporte)) {
+                equiposFiltrados.add(team);
+            }
+        }
+
+        tbvLogrosEquipos.getSelectionModel().clearSelection();
+        tbvLogrosEquipos.setItems(null);
+        tbvLogrosEquipos.setItems(equiposFiltrados);
+
+        Platform.runLater(() -> {
+            tbvLogrosEquipos.getSelectionModel().clearSelection();
+            tbvLogrosEquipos.requestFocus();
+        });
+    }
+
+    private void loadSportsInComboBox() {
+        ObservableList<String> sports = FXCollections.observableArrayList();
+        sports.add("Todos");
+        sportService.getAllSports().forEach(s -> sports.add(s.getNombre()));
+        cmbAchievements.setItems(sports);
+        cmbAchievements.selectFirst();
+    }
+
+    public void actualizarComboBoxAchievements() {
+        loadSportsInComboBox();
+    }
+
+    public void refrescarLogros() {
+        equiposFiltrados.clear();
+        List<Team> equipos = teamService.getAllTeams();
+        equiposFiltrados.addAll(equipos);
+        tbvLogrosEquipos.setItems(equiposFiltrados);
+
+        Platform.runLater(() -> {
+            if (!equiposFiltrados.isEmpty()) {
+                tbvLogrosEquipos.getSelectionModel().selectIndex(0);
+                actualizarIconosDeLogros(equiposFiltrados.get(0));
+            }
+        });
     }
 
 }
