@@ -121,12 +121,17 @@ public class MatchService {
 
     public void finalizarPartidoConDesempate(String ganadorDesempate) {
         match.setFinalizado(true);
-
         match.setPuntajeA(getPuntajeA());
         match.setPuntajeB(getPuntajeB());
 
+        // 🧠 Obtener logros antes del partido
+        AchievementService achievementService = new AchievementService();
+        List<Achievement> antes = achievementService.calcularLogrosParaEquipo(ganadorDesempate);
+
+        // 🧾 Procesar estadísticas con marcador de desempate
         procesarEstadisticas(ganadorDesempate, false);
 
+        // 🔁 Actualizar Bracket y registrar ganador
         BracketMatchService bracketService = new BracketMatchService();
         bracketService.cargarPartidosDesdeArchivo(match.getTorneoNombre());
 
@@ -146,7 +151,21 @@ public class MatchService {
         }
 
         bracketService.guardarPartidosEnArchivo(match.getTorneoNombre());
+
+        // 🧠 Volver a calcular logros después
+        List<Achievement> despues = achievementService.calcularLogrosParaEquipo(ganadorDesempate);
+        List<Achievement> nuevos = cr.ac.una.tareatorneos.util.AchievementUtils.filtrarNuevosLogros(antes, despues);
+
+        // 🎉 Mostrar animaciones si hay nuevos logros
+        if (!nuevos.isEmpty()) {
+            cr.ac.una.tareatorneos.util.AchievementAnimationQueue.setPermitirMostrar(true);
+            for (Achievement logro : nuevos) {
+                cr.ac.una.tareatorneos.util.AchievementAnimationQueue.agregarALaCola(logro);
+            }
+            cr.ac.una.tareatorneos.util.AchievementAnimationQueue.mostrarCuandoPosible(nuevos);
+        }
     }
+
 
     public String getGanador() {
         if (match.getPuntajeA() > match.getPuntajeB()) {
