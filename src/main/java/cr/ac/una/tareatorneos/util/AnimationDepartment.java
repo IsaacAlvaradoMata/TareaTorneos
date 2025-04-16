@@ -415,11 +415,15 @@ public class AnimationDepartment {
     }
 
     private static Timeline rainingLoop;
+    private static PauseTransition rainingDelay;
+
+
     public static void startInfiniteRainingAchievements(Pane container, Image image, int particlesPerWave, Duration interval, Duration fallDuration) {
+        // 🚫 Aseguramos que no haya una transición anterior
+        stopRainingAchievements(container);
 
-
-        PauseTransition delay = new PauseTransition(Duration.seconds(0.2)); // ⚠️ espera a layout
-        delay.setOnFinished(event -> {
+        rainingDelay = new PauseTransition(Duration.seconds(0.2));
+        rainingDelay.setOnFinished(event -> {
             rainingLoop = new Timeline(
                     new KeyFrame(Duration.ZERO, e -> {
                         double containerWidth = container.getWidth();
@@ -427,7 +431,7 @@ public class AnimationDepartment {
 
                         System.out.println("🌧 Width: " + containerWidth + " | Height: " + containerHeight);
 
-                        if (containerWidth < 10 || containerHeight < 10) return; // Seguridad
+                        if (containerWidth < 10 || containerHeight < 10) return;
 
                         for (int i = 0; i < particlesPerWave; i++) {
                             ImageView rain = new ImageView(image);
@@ -435,21 +439,18 @@ public class AnimationDepartment {
                             rain.setFitHeight(60);
                             rain.setOpacity(0.25 + Math.random() * 0.4);
 
-                            // ⬇️ Posición inicial arriba y aleatoria horizontal
-                            double startX = Math.random() * (containerWidth - 60); // evitar que se salga del borde
+                            double startX = Math.random() * (containerWidth - 60);
                             double startY = Math.random() * 100;
 
-                            // ⬅️ ¡Usar translate en lugar de layout!
                             rain.setTranslateX(startX);
                             rain.setTranslateY(startY);
 
                             container.getChildren().add(rain);
                             rain.toBack();
 
-                            // ⬇️ Animación de caída
                             TranslateTransition fall = new TranslateTransition(fallDuration, rain);
                             fall.setFromY(startY);
-                            fall.setToY(containerHeight); // más allá del fondo
+                            fall.setToY(containerHeight);
                             fall.setInterpolator(Interpolator.LINEAR);
 
                             FadeTransition fade = new FadeTransition(fallDuration, rain);
@@ -468,24 +469,32 @@ public class AnimationDepartment {
             rainingLoop.play();
         });
 
-        delay.play(); // ⏳ Esperamos antes de iniciar la lluvia
+        rainingDelay.play();
     }
 
 
+
     public static void stopRainingAchievements(Pane container) {
+        if (rainingDelay != null) {
+            rainingDelay.stop();
+            rainingDelay = null;
+        }
+
         if (rainingLoop != null) {
             rainingLoop.stop();
             rainingLoop = null;
         }
 
-        // 🔥 Eliminar todos los nodos que fueron agregados como lluvia (trofeos)
         container.getChildren().removeIf(node ->
                 node instanceof ImageView &&
                         ((ImageView) node).getFitWidth() == 60 &&
                         ((ImageView) node).getFitHeight() == 60 &&
                         ((ImageView) node).getOpacity() < 1.0
         );
+        System.out.println("🛑 Lluvia cancelada correctamente.");
+
     }
+
 
 
 }

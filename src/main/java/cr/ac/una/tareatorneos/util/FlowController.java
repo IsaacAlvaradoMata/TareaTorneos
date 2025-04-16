@@ -203,7 +203,7 @@ public class FlowController {
                 winnerController.onClose(); // 💥 Detiene confetti y efectos
             }
             if (controller instanceof UnlockAchievementController unlockAchievementController) {
-                unlockAchievementController.onClose(); // 💥 Detiene confetti y efectos
+                unlockAchievementController.onClose();
             }
         });
         controller.setStage(stage);

@@ -54,6 +54,7 @@ public class UnlockAchievementController extends Controller implements Initializ
     private List<Achievement> colaLogros = new ArrayList<>();
     private int indiceActual = 0;
     private Runnable callbackFinal; // opcional, para ejecutar algo al final
+    private boolean estaVentanaActiva = true;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -81,6 +82,8 @@ public class UnlockAchievementController extends Controller implements Initializ
 
     @FXML
     private void onActionBtnCerrar(ActionEvent event) {
+        estaVentanaActiva = false;
+
         onClose();
 
         // cerrar esta ventana
@@ -128,6 +131,12 @@ public class UnlockAchievementController extends Controller implements Initializ
     }
 
     private void runAnimationsLogros(String achievementName, Runnable onDone) {
+        if (!estaVentanaActiva) {
+            System.out.println("⛔ Cancelado runAnimationsLogros: ventana cerrada.");
+            return;
+        }
+
+
         lblAchievementName.setText(achievementName);
         titleLabel.setStyle("-fx-text-fill: linear-gradient(#FFD700, #FFA500);");
 
@@ -147,6 +156,12 @@ public class UnlockAchievementController extends Controller implements Initializ
             wait.setOnFinished(e -> {
                 AnimationDepartment.goldenBurstExplosion(spfondo, 250, Duration.seconds(3.0));
                 Image logroImg = new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/8TournamentsWinnerIcon.png"));
+
+                if (!estaVentanaActiva) {
+                    System.out.println("⛔ No iniciar lluvia: ventana ya fue cerrada.");
+                    return;
+                }
+
                 AnimationDepartment.startInfiniteRainingAchievements(spLluvia, logroImg, 6, Duration.seconds(1), Duration.seconds(5));
 
                 // ✅ ahora sí: continuar con el siguiente logro después de delay
@@ -163,6 +178,12 @@ public class UnlockAchievementController extends Controller implements Initializ
     }
 
     public void resetAndRunAnimationsLogros(String achievementName, Runnable onDone) {
+        if (!estaVentanaActiva) {
+            System.out.println("⛔ Cancelado resetAndRunAnimationsLogros: ventana cerrada.");
+            return;
+        }
+
+
         resetAchievementView();
         AnimationDepartment.stopAnimatedLightSweep();
 
@@ -188,9 +209,14 @@ public class UnlockAchievementController extends Controller implements Initializ
         imgUnlockgif.toFront();
 
         AnimationDepartment.animateUnlockExplosion(imgUnlockgif, () -> {
+            if (!estaVentanaActiva) {
+                System.out.println("⛔ Cancelado antes de animar logro: ventana cerrada.");
+                return;
+            }
             Platform.runLater(() -> runAnimationsLogros(achievementName, onDone));
         });
     }
+
 
     private Stage currentStage;
 
@@ -226,6 +252,8 @@ public class UnlockAchievementController extends Controller implements Initializ
     }
 
     public void onClose() {
+        estaVentanaActiva = false;
+
         AnimationDepartment.stopRainingAchievements(spLluvia);
         AnimationDepartment.stopAnimatedLightSweep();
 
