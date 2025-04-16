@@ -32,14 +32,11 @@ public class BracketMatchService {
     private final List<BracketMatch> allMatches = new ArrayList<>();
     private final ObjectMapper mapper = new ObjectMapper();
 
-    // 📁 Archivo por torneo
     private File getMatchFile(String tournamentName) {
         return new File("data/matches_" + tournamentName + ".json");
     }
 
-    /**
-     * Genera los partidos para el torneo solo si no existen previamente.
-     */
+
     public void generarPartidosDesdeEquipos(Tournament torneo) {
         File file = getMatchFile(torneo.getNombre());
 
@@ -54,17 +51,14 @@ public class BracketMatchService {
         }
         allMatches.clear();
 
-        // 1. Calcular la cantidad de rondas necesarias
         int totalEquipos = equipos.size();
-        int rondas = (int) Math.ceil(Math.log(totalEquipos) / Math.log(2)); // ej: 8 equipos = 3 rondas
+        int rondas = (int) Math.ceil(Math.log(totalEquipos) / Math.log(2));
 
-        // 2. Rellenar con "BYEs" si es necesario
-        int totalSlots = (int) Math.pow(2, rondas); // ej: 8 → 8, 6 → 8
+        int totalSlots = (int) Math.pow(2, rondas);
         while (equipos.size() < totalSlots) {
-            equipos.add(null); // espacio vacío
+            equipos.add(null);
         }
 
-        // 3. Crear partidos por rondas (estructura completa)
         List<String> rondaActual = new ArrayList<>(equipos);
         int matchId = 0;
 
@@ -78,7 +72,6 @@ public class BracketMatchService {
                 BracketMatch match = new BracketMatch(torneo.getNombre(), ronda, equipo1, equipo2);
                 allMatches.add(match);
 
-                // En la siguiente ronda solo agregamos espacios vacíos por ahora
                 siguienteRonda.add(null);
             }
 
@@ -87,24 +80,17 @@ public class BracketMatchService {
 
         guardarPartidosEnArchivo(torneo.getNombre());
 
-        // ✅ Actualiza el estado del torneo a "Iniciado" y guarda el cambio
         torneo.setEstado("Iniciado");
         new TournamentService().updateTournament(torneo.getNombre(), torneo);
     }
 
-    /**
-     * Marca el resultado de un partido y genera el próximo match si aplica.
-     */
-    /**
-     * Marca el resultado de un partido y coloca el ganador en la siguiente ronda correctamente.
-     */
+
     public void registrarGanador(BracketMatch partido, String equipoGanador, boolean skipStats) {
         if (!equipoGanador.equals(partido.getEquipo1()) &&
                 (partido.getEquipo2() == null || !equipoGanador.equals(partido.getEquipo2()))) {
             throw new IllegalArgumentException("El equipo ganador no está en este partido.");
         }
 
-        // Asignar ganador y marcar partido como jugado
         partido.setGanador(equipoGanador);
         partido.setJugado(true);
 
@@ -125,19 +111,14 @@ public class BracketMatchService {
                 matchService.getMatch().setPuntajeB(equipoB.getNombre().equals(equipoGanador) ? 1 : 0);
             }
 
-            // Aquí se actualizan las estadísticas del partido.
-            // (En MatchService.finalizarPartido() se utiliza el flag para no duplicar la actualización).
             matchService.finalizarPartido();
 
-            // Si el torneo aún está en estado "Por comenzar", lo pasamos a "Iniciado"
             if (torneo.getEstado().equalsIgnoreCase("Por comenzar")) {
                 torneo.setEstado("Iniciado");
                 torneoService.updateTournament(torneo.getNombre(), torneo);
             }
         }
 
-        // --------------- Avanzar a la siguiente ronda ---------------
-        // Se busca el siguiente partido de la siguiente ronda donde aun falte asignar equipo.
         allMatches.stream()
                 .filter(p -> p.getRonda() == partido.getRonda() + 1)
                 .filter(p -> p.getEquipo1() == null || p.getEquipo2() == null)
@@ -149,14 +130,12 @@ public class BracketMatchService {
                         p.setEquipo2(equipoGanador);
                     }
                 }, () -> {
-                    // Si no hay partido pendiente en la siguiente ronda, se crea uno nuevo.
                     Tournament torneo = new TournamentService().getTournamentByName(partido.getTorneo());
 
                     int cantidadEquipos = torneo.getCantidadEquipos();
                     int partidosEsperados = cantidadEquipos - 1;
                     long partidosJugados = allMatches.stream().filter(BracketMatch::isJugado).count();
 
-                    // ✅ Solo crear nuevo partido si aún no se han jugado todos
                     if (partidosJugados < partidosEsperados) {
                         allMatches.add(new BracketMatch(
                                 partido.getTorneo(),
@@ -167,23 +146,18 @@ public class BracketMatchService {
                     }
                 });
 
-        // Persiste los partidos actualizados y verifica si ya se puede declarar ganador del torneo.
         guardarPartidosEnArchivo(partido.getTorneo());
         verificarYGuardarGanadorDelTorneo();
     }
 
-    // Sobrecarga para compatibilidad cuando no se especifique skipStats (por defecto false)
     public void registrarGanador(BracketMatch partido, String equipoGanador) {
         registrarGanador(partido, equipoGanador, false);
     }
 
-    /**
-     * Retorna el siguiente partido pendiente por jugar.
-     */
+
     public BracketMatch getSiguientePartidoPendiente() {
         List<BracketMatch> partidos = getTodosLosPartidos();
 
-        // Obtener rondas ordenadas
         int maxRonda = partidos.stream().mapToInt(BracketMatch::getRonda).max().orElse(1);
 
         for (int ronda = 1; ronda <= maxRonda; ronda++) {
@@ -202,18 +176,15 @@ public class BracketMatchService {
                     .filter(p -> (p.getEquipo1() == null || p.getEquipo2() == null))
                     .count();
 
-            // Caso: solo 1 partido con dos equipos -> final
             if (rondaPendientes.size() == 1 && partidosJugables == 1) {
                 return rondaPendientes.get(0);
             }
 
-            // Permitir pasar equipos que estén solos (BYE) SOLO si es el primero visualmente
             for (BracketMatch p : rondaPendientes) {
                 boolean isBye = (p.getEquipo1() != null && p.getEquipo2() == null) ||
                         (p.getEquipo2() != null && p.getEquipo1() == null);
 
                 if (isBye) {
-                    // ⚠️ Validar que sea el primero visualmente
                     BracketMatch primerPendienteVisual = rondaPendientes.get(0);
                     if (primerPendienteVisual == p) {
                         return p;
@@ -221,7 +192,6 @@ public class BracketMatchService {
                 }
             }
 
-            // Luego retornar partidos normales
             for (BracketMatch p : rondaPendientes) {
                 if (p.getEquipo1() != null && p.getEquipo2() != null) {
                     return p;
@@ -229,7 +199,7 @@ public class BracketMatchService {
             }
         }
 
-        return null; // todos jugados
+        return null;
     }
 
     /**
@@ -308,14 +278,12 @@ public class BracketMatchService {
         int cantidadEquipos = torneo.getCantidadEquipos();
         int partidosEsperados = cantidadEquipos - 1;
 
-        // 🔍 Solo contar partidos jugados REALES (sin BYE)
         long partidosJugadosReales = allMatches.stream()
                 .filter(p -> p.isJugado() && p.esPartidoReal())
                 .count();
 
         System.out.println("🎯 Jugados reales: " + partidosJugadosReales + " de esperados: " + partidosEsperados);
 
-        // Solo si se han jugado todos los partidos reales esperados
         if (partidosJugadosReales == partidosEsperados) {
             String ganador = finalMatch.getGanador();
 
@@ -337,7 +305,7 @@ public class BracketMatchService {
                 AchievementService achievementService = new AchievementService();
                 List<Achievement> antes = achievementService.calcularLogrosParaEquipo(ganador);
 
-                teamService.actualizarLogrosDeEquipo(equipoGanadorAntes); // ✅ actualiza logros en JSON
+                teamService.actualizarLogrosDeEquipo(equipoGanadorAntes);
 
                 Team equipoGanadorDespues = teamService.getTeamByName(ganador);
                 List<Achievement> despues = equipoGanadorDespues.getLogros();
@@ -349,7 +317,6 @@ public class BracketMatchService {
                     AchievementAnimationQueue.agregarALaCola(logro);
                 }
 
-                // ✅ Procesar logros justo después
                 if (!nuevos.isEmpty()) {
                     AchievementAnimationQueue.setPermitirMostrar(true);
                     AchievementAnimationQueue.mostrarCuandoPosible(nuevos);

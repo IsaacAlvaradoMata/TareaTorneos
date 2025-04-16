@@ -90,7 +90,6 @@ public class SportService {
         }
 
         if (sportToRemove != null) {
-            // 📌 Eliminar el archivo de imagen asociado
             String imageFileName = sportToRemove.getBallImage();
             File imageFile = new File(System.getProperty("user.dir") + "/sportsPhotos/" + imageFileName);
 
@@ -104,7 +103,6 @@ public class SportService {
                 System.out.println("ℹ️ La imagen no existe en la carpeta.");
             }
 
-            // 📌 Eliminar el deporte del JSON
             boolean removed = sports.remove(sportToRemove);
             if (removed) {
                 return saveSports(sports);

@@ -19,7 +19,6 @@ public class MatchService {
     private Sport deporte;
     private Match match;
 
-    // 🔹 Constructor normal (modificado)
     public MatchService(Tournament torneo, Team equipoA, Team equipoB) {
         this.torneo = torneo;
         this.equipoA = equipoA;
@@ -32,7 +31,6 @@ public class MatchService {
         this.match = new Match(torneo.getNombre(), nombreA, nombreB, torneo.getDeporte());
     }
 
-    // 🔹 Constructor para BracketMatch (igual pero con null-safe)
     public MatchService(BracketMatch matchData) {
         this.torneo = new TournamentService().getTournamentByName(matchData.getTorneo());
         this.equipoA = new TeamService().getTeamByName(matchData.getEquipo1());
@@ -88,9 +86,7 @@ public class MatchService {
         return new Image(file.toURI().toString());
     }
 
-    // ============================================
-    // NUEVA IMPLEMENTACIÓN: MÉTODO PRIVADO para PROCESAR ESTADÍSTICAS
-    // ============================================
+
     private void procesarEstadisticas(String ganadorDesempate, boolean saltarRegistroJson) {
         if (match.isStatsProcesadas()) return;
 

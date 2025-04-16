@@ -85,7 +85,7 @@ public class AchievementService {
                         return true;
                     }
                 } else {
-                    racha = 0; // se rompe la racha si falla cualquiera de las dos
+                    racha = 0;
                 }
             }
         }
@@ -150,7 +150,7 @@ public class AchievementService {
     private boolean logroCampeonInaugural(TeamTournamentStats stats) {
         for (TournamentStat torneo : stats.getTorneos()) {
             if ("Ganador".equalsIgnoreCase(torneo.getResultadoTorneo())) {
-                return true; // La primera vez que el equipo gana un torneo
+                return true;
             }
         }
         return false;
