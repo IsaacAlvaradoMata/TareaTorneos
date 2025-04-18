@@ -79,7 +79,6 @@ public class BracketGeneratorController extends Controller implements Initializa
     public void actualizarLabelPartidoPendiente() {
         torneoActual = new TournamentService().getTournamentByName(torneoActual.getNombre());
 
-
         List<BracketMatch> pendientes = matchService.getPartidosPendientes().stream()
                 .filter(p -> p.getEquipo1() != null || p.getEquipo2() != null)
                 .toList();
@@ -117,7 +116,6 @@ public class BracketGeneratorController extends Controller implements Initializa
             btnPlay.setDisable(false);
             return;
         }
-
 
         lblPartidoActual.setText("  ⌛ Esperando equipos para siguiente partido...  ");
         btnPlay.setDisable(true);
@@ -161,19 +159,15 @@ public class BracketGeneratorController extends Controller implements Initializa
 
         boolean esUltimo = matchService.getPartidosPendientes().size() == 1;
 
-
         if (equipo1 != null && equipo2 == null && esUltimo) {
             matchService.registrarGanador(siguientePartido, equipo1);
 
-
             this.torneoActual = new TournamentService().getTournamentByName(torneoActual.getNombre());
-
 
             cargarBracketDesdePartidos(matchService.getTodosLosPartidos());
             actualizarLabelPartidoPendiente();
             return;
         }
-
 
         if (equipo1 != null && equipo2 == null && !siguientePartido.isJugado()) {
             matchService.registrarGanador(siguientePartido, equipo1);
@@ -383,6 +377,10 @@ public class BracketGeneratorController extends Controller implements Initializa
         }
     }
 
+    private String truncarNombreEquipo(String nombre, int maxLength) {
+        if (nombre == null) return "";
+        return nombre.length() <= maxLength ? nombre : nombre.substring(0, maxLength) + "...";
+    }
 
     private void dibujarLineaSimple(StackPane origen, StackPane destino) {
         double x1 = origen.getLayoutX() + NODE_WIDTH;
@@ -433,7 +431,6 @@ public class BracketGeneratorController extends Controller implements Initializa
     private StackPane crearNodoMatch(BracketMatch match) {
         String equipo1 = match.getEquipo1();
         String equipo2 = match.getEquipo2();
-
 
         if (match.getRonda() == 1 && equipo1 == null && equipo2 == null) {
             return null;
@@ -486,7 +483,7 @@ public class BracketGeneratorController extends Controller implements Initializa
 
         escudo.setImage(new Image(logoPath));
 
-        Label nombreLbl = new Label(nombreEquipo != null ? nombreEquipo : "???");
+        Label nombreLbl = new Label(truncarNombreEquipo(nombreEquipo, 10));
         nombreLbl.getStyleClass().add("label-bracket");
         nombreLbl.setWrapText(false);
         nombreLbl.setMaxWidth(Double.MAX_VALUE);
@@ -544,7 +541,6 @@ public class BracketGeneratorController extends Controller implements Initializa
         for (Team team : teamService.getAllTeams()) {
             TeamTournamentStats statsAvanzadas = statsService.getStatsByTeamName(team.getNombre());
             if (statsAvanzadas == null) continue;
-
 
             int partidosTotales = 0;
             int ganados = 0;
