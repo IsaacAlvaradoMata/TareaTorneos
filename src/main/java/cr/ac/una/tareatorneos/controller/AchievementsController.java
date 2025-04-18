@@ -27,7 +27,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.PopupWindow;
-import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -112,7 +112,11 @@ public class AchievementsController extends Controller implements Initializable 
         imgInfo.setOnMouseExited(event -> tooltip.hide());
 
         Platform.runLater(() -> {
-            Stage stage = (Stage) root.getScene().getWindow();
+            if (root.getScene() != null && root.getScene().getWindow() != null) {
+                Window window = root.getScene().getWindow();
+            } else {
+                System.err.println("El AnchorPane no está asociado a una escena o ventana.");
+            }
 
             this.dialogContent = MFXGenericDialogBuilder.build()
                     .makeScrollable(true)

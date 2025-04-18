@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 public abstract class Controller {
 
-    private Stage stage;
+    public Stage stage;
     private String accion;
 
     public static void iconChanger(Stage stage, Image image) {
