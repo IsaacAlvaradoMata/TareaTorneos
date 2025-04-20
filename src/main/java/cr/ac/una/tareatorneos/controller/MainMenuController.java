@@ -171,6 +171,9 @@ public class MainMenuController extends Controller implements Initializable {
     void OnActionBtnTorneosActivos(ActionEvent event) {
         seleccionarBotonMenu(btnTorneosActivos);
         FlowController.getInstance().goView("ActiveTournamentsView");
+        ActiveTournamentsController controller = (ActiveTournamentsController)
+                FlowController.getInstance().getController("ActiveTournamentsView");
+        controller.filterTournamentsBySport("Todos");
 
     }
 

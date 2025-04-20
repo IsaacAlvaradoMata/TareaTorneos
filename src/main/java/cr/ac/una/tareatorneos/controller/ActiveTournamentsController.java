@@ -202,7 +202,7 @@ public class ActiveTournamentsController extends Controller implements Initializ
         cmbTorneosActivos.selectFirst();
     }
 
-    private void filterTournamentsBySport(String deporte) {
+    public void filterTournamentsBySport(String deporte) {
         TournamentService tournamentService = new TournamentService();
         List<Tournament> tournaments = tournamentService.getAllTournaments();
 
