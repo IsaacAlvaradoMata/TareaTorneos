@@ -210,7 +210,6 @@ public class TieBreakerController extends Controller implements Initializable {
         cajaC.setDisable(true);
 
         String ganadorDesempate = equipoAAcierto ? equipoA : equipoB;
-
         List<Achievement> nuevosLogros = matchService.finalizarPartidoConDesempate(ganadorDesempate);
 
         PauseTransition delay = new PauseTransition(Duration.seconds(0.5));
@@ -227,23 +226,32 @@ public class TieBreakerController extends Controller implements Initializable {
                     for (Achievement logro : nuevosLogros) {
                         cr.ac.una.tareatorneos.util.AchievementAnimationQueue.agregarALaCola(logro);
                     }
+                    cr.ac.una.tareatorneos.util.AchievementAnimationQueue.ejecutarLuegoDeMostrarTodos(() -> {
+                        cerrarVistaYActualizarBracket();
+                    });
+
                     cr.ac.una.tareatorneos.util.AchievementAnimationQueue.mostrarCuandoPosible(nuevosLogros);
+                } else {
+                    cerrarVistaYActualizarBracket();
                 }
-
-                try {
-                    root.getScene().getWindow().hide();
-                } catch (Exception e) {
-                    System.out.println("Error al cerrar TieBreaker: " + e.getMessage());
-                }
-
-                bracketMatchService.cargarPartidosDesdeArchivo(matchService.getMatch().getTorneoNombre());
-                parentController.setTorneoActual(new TournamentService().getTournamentByName(matchService.getMatch().getTorneoNombre()));
-                parentController.cargarBracketDesdePartidos(bracketMatchService.getTodosLosPartidos());
-                parentController.actualizarLabelPartidoPendiente();
             });
         });
         delay.play();
     }
+
+    private void cerrarVistaYActualizarBracket() {
+        try {
+            root.getScene().getWindow().hide();
+        } catch (Exception e) {
+            System.out.println("Error al cerrar TieBreaker: " + e.getMessage());
+        }
+
+        bracketMatchService.cargarPartidosDesdeArchivo(matchService.getMatch().getTorneoNombre());
+        parentController.setTorneoActual(new TournamentService().getTournamentByName(matchService.getMatch().getTorneoNombre()));
+        parentController.cargarBracketDesdePartidos(bracketMatchService.getTodosLosPartidos());
+        parentController.actualizarLabelPartidoPendiente();
+    }
+
 
 
     private void mostrarEmpateParcial() {
