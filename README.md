@@ -14,6 +14,19 @@
 
 ---
 
+## Tips Interactivos en la Interfaz
+
+La aplicación incorpora **íconos informativos** (ℹ️) en diferentes pantallas. Al pasar el mouse sobre estos íconos, se despliegan **tooltips explicativos** con consejos y detalles importantes sobre el uso de cada funcionalidad.
+
+Estas ayudas contextuales permiten a los usuarios:
+- Comprender mejor cómo usar los módulos (torneos, desempates, estadísticas).
+- Aprender el propósito de cada botón o animación.
+- Identificar cómo se obtienen ciertos logros.
+
+> Ejemplo: En la vista de desempates, el ícono ℹ️ muestra instrucciones detalladas sobre cómo funciona la mecánica del minijuego para desempatar en caso de empate.
+
+---
+
 ## Instrucciones de Ejecución
 
 ### 1. Requisitos
