@@ -29,14 +29,14 @@ Estas ayudas contextuales permiten a los usuarios:
 
 ## Instrucciones de Ejecución
 
-## 1. Requisitos
+## Requisitos
 
 - Java 21 o superior
 - Maven 3.x
 - JavaFX JDK 23.0.1
 - Scene Builder (opcional, para editar FXML)
 
-## 2. Clonar y Ejecutar
+## Clonar y Ejecutar
 
 ```bash
 git clone https://github.com/IsaacAlvaradoMata/TareaTorneos.git
