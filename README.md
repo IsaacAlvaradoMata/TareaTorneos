@@ -50,6 +50,7 @@ javafx:run
 ---
 
 ## Estructura del Proyecto
+```bash
 
 TareaTorneos/
 │
@@ -71,7 +72,7 @@ TareaTorneos/
 ├── data/                                          # Datos persistentes en formato JSON
 ├── pom.xml                                        # Configuración del proyecto Maven
 └── README.md                                      # Documentación del proyecto
-
+```
 ---
 
 ## Logros del Torneo
