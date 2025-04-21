@@ -43,7 +43,7 @@ git clone https://github.com/IsaacAlvaradoMata/TareaTorneos.git
 cd TareaTorneos
 mvn clean 
 javafx:run
-
+```
 
  En caso de errores, asegurarse de tener el JavaFX JDK configurado correctamente en tu IDE (IntelliJ/Eclipse) o variable de entorno `PATH`.
 
