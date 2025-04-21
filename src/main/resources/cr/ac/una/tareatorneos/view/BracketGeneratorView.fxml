@@ -15,7 +15,7 @@
     <StackPane prefHeight="600.0" prefWidth="700.0" styleClass="gold-border-bracket-sp" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
     <BorderPane prefHeight="600.0" prefWidth="700.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
         <center>
-            <AnchorPane mouseTransparent="true" BorderPane.alignment="CENTER">
+            <AnchorPane BorderPane.alignment="CENTER">
                 <children>
                     <ScrollPane fx:id="scrollBracket" fitToHeight="true" fitToWidth="true" hbarPolicy="ALWAYS" layoutX="0.800000011920929" layoutY="0.8000030517578125" prefHeight="600.0" prefWidth="600.0" styleClass="scroll-pane-bracket" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0">
                         <AnchorPane fx:id="bracketContainer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #bb7474;">

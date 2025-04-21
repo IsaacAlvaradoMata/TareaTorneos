@@ -155,6 +155,9 @@ public class MainMenuController extends Controller implements Initializable {
     void OnActionBtnRankings(ActionEvent event) {
         seleccionarBotonMenu(btnRankings);
         FlowController.getInstance().goView("RankingsView");
+        RankingsController controller = (RankingsController)
+                FlowController.getInstance().getController("RankingsView");
+        controller.loadAllTeams();
 
     }
 

@@ -255,7 +255,7 @@ public class RankingsController extends Controller implements Initializable {
     }
 
 
-    private void loadAllTeams() {
+    public void loadAllTeams() {
         equiposFiltrados.clear();
 
         List<Team> equipos = teamService.getAllTeams().stream()
