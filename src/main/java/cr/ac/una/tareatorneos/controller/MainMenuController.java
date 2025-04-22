@@ -122,6 +122,11 @@ public class MainMenuController extends Controller implements Initializable {
             });
         });
 
+        Platform.runLater(() -> {
+            FlowController.getInstance().goView("HomeView");
+        });
+
+
     }
 
     @FXML

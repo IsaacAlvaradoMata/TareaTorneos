@@ -2002,6 +2002,106 @@
 }
 
 
+/*########################### HOME VIEW  #########################################################################*/
+
+.AnchorPane-HomeView {
+    -fx-background-color: LIGHTBLUE;
+    -fx-border-color: linear-gradient(
+            from 0% 0% to 100% 100%,
+            #FFD700,
+            #fc9300,
+            #FFD700
+    );
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+
+}
+
+.StackPane-HomeView {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #e0f7fa, #ffecb3);
+    -fx-border-color: linear-gradient(
+            from 0% 0% to 100% 100%,
+            #FFD700,
+            #fc9300,
+            #FFD700
+    );
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-background-radius: 19;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+}
+
+.title-HomeView {
+    -fx-font-size: 18px;
+    -fx-text-fill: #21636e;
+    -fx-font-weight: bold;
+}
+
+.subtitle-HomeView {
+    -fx-font-size: 16px;
+    -fx-text-fill: #21636e;
+    -fx-font-weight: bold;
+}
+
+.lbl-SubTitulosHomeView {
+    -fx-background-color: LIGHTBLUE;
+    -fx-padding: 5 0 5 0;
+    -fx-border-width: 3;
+    -fx-border-radius: 4;
+    -fx-background-radius: 6;
+    -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+
+    -fx-border-color: linear-gradient(
+            from 0% 0% to 100% 100%,
+            #FFD700,
+            #fc9300,
+            #FFD700
+    );
+}
+
+.lbl-TitulosHomeView {
+    -fx-background-color: LIGHTBLUE;
+    -fx-text-fill: #21636e;
+    -fx-padding: 5 0 5 0;
+    -fx-border-width: 3;
+    -fx-border-radius: 4;
+    -fx-background-radius: 6;
+    -fx-effect: dropshadow(three-pass-box, rgba(45, 35, 66, 0.4), 4, 0, 0, 2);
+    -fx-font-family: "Trebuchet MS", sans-serif;
+
+    -fx-border-color: linear-gradient(
+            from 0% 0% to 100% 100%,
+            #FFD700,
+            #fc9300,
+            #FFD700
+    );
+}
+
+.spHomeIcon {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #e0f7fa, #ffecb3);
+    -fx-background-radius: 17;
+    -fx-border-color: linear-gradient(
+            from 0% 0% to 100% 100%,
+            #FFD700,
+            #fc9300,
+            #FFD700
+    );
+    -fx-border-width: 5;
+    -fx-border-radius: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+}
+
+#imgHomeIcon {
+    -fx-image: url('../resources/HomeIcon.png');
+}
+
+
+
+
 /**IMAGENES DE BOTONES**/
 
 /*########################### IMAGENES DE MENU PRINCIPAL #########################################################################*/
