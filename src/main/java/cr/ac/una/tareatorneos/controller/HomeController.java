@@ -49,7 +49,8 @@ public class HomeController extends Controller implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        vboxTitle.setTranslateY(0);
+        vboxTitle.setOpacity(0);
         AnimationDepartment.slideFromTop(vboxIcon, Duration.seconds(1));
         AnimationDepartment.fadeIn(vboxTitle, Duration.seconds(2));
 
@@ -61,11 +62,6 @@ public class HomeController extends Controller implements Initializable {
                 AnimationDepartment.slideUpWithEpicBounceClean(vboxSubtitle, Duration.seconds(2.5), sceneHeight);
             });
         });
-        trophyRain = new Image(getClass().getResourceAsStream("/cr/ac/una/tareatorneos/resources/TrophyRainIcon.png"));
-        AnimationDepartment.startInfiniteRainingAchievements(spFondoHome, trophyRain, 6, Duration.seconds(1), Duration.seconds(5));
-
-
-
     }
 
     @Override
